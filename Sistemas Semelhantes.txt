@@ -1,5 +1,0 @@
-Sistemas de Biblioteca:
-
-   - Aleph
-   - Koha
-   - Mandarin

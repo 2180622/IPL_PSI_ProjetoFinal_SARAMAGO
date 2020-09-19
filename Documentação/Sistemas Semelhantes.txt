@@ -1,0 +1,11 @@
+Sistemas de Biblioteca:
+
+   - Aleph (Automated Library Expandable Program)
+   - Alexandria
+   - Pergamum
+   - Sophia
+   - Koha
+   - Mandarin
+
+
+VER https://en.wikipedia.org/wiki/List_of_library_catalogs
