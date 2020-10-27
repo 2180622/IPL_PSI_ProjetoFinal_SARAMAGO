@@ -26,42 +26,6 @@ class m201023_142905_init_rbac extends Migration
     {
         $auth = Yii::$app->authManager;
 
-        #region Dados da Entidade
-        // add "verDadosEntidade" permission
-        $verDadosEntidade = $auth->createPermission('verDadosEntidade');
-        $verDadosEntidade->description = 'Ver dados da entidade';
-        $auth->add($verDadosEntidade);
-
-        // add "inserirDadosEntidade" permission
-        $inserirDadosEntidade = $auth->createPermission('inserirDadosEntidade');
-        $inserirDadosEntidade->description = 'Inserir dados da entidade';
-        $auth->add($inserirDadosEntidade);
-
-        // add "editarDadosEntidade" permission
-        $editarDadosEntidade = $auth->createPermission('editarDadosEntidade');
-        $editarDadosEntidade->description = 'Editar dados da entidade';
-        $auth->add($editarDadosEntidade);
-        #endregion
-
-        #region Horário de atividade
-
-        // add "updatePost" permission
-        $verHorario = $auth->createPermission('verHorario');
-        $verHorario->description = 'Ver horario de atividade';
-        $auth->add($verHorario);
-
-        // add "updatePost" permission
-        $inserirHorario = $auth->createPermission('inserirHorario');
-        $inserirHorario->description = 'Inserir horario de atividade';
-        $auth->add($inserirHorario);
-
-        // add "updatePost" permission
-        $editarHorario = $auth->createPermission('editarHorario');
-        $editarHorario->description = 'Editar horario de atividade';
-        $auth->add($editarHorario);
-
-        #endregion
-
         #region Gestão de equipa
 
         // add "verOperadores" permission
@@ -86,6 +50,23 @@ class m201023_142905_init_rbac extends Migration
 
         #endregion
 
+        #region Dados da Entidade
+        // add "verDadosEntidade" permission
+        $verDadosEntidade = $auth->createPermission('verDadosEntidade');
+        $verDadosEntidade->description = 'Ver dados da entidade';
+        $auth->add($verDadosEntidade);
+
+        // add "inserirDadosEntidade" permission
+        $inserirDadosEntidade = $auth->createPermission('inserirDadosEntidade');
+        $inserirDadosEntidade->description = 'Inserir dados da entidade';
+        $auth->add($inserirDadosEntidade);
+
+        // add "editarDadosEntidade" permission
+        $editarDadosEntidade = $auth->createPermission('editarDadosEntidade');
+        $editarDadosEntidade->description = 'Editar dados da entidade';
+        $auth->add($editarDadosEntidade);
+        #endregion
+
         #region Bibliotecas
 
         $verBibliotecas = $auth->createPermission('verBibliotecas');
@@ -102,15 +83,26 @@ class m201023_142905_init_rbac extends Migration
 
         #endregion
 
+        #region Horário de atividade  // TODO VERIFICAR NA COLUNA ENTIDADE BIBLIOTECA
+
+        // add "updatePost" permission
+        $verHorario = $auth->createPermission('verHorario');
+        $verHorario->description = 'Ver horario de atividade';
+        $auth->add($verHorario);
+
+        // add "updatePost" permission
+        $inserirHorario = $auth->createPermission('inserirHorario');
+        $inserirHorario->description = 'Inserir horario de atividade';
+        $auth->add($inserirHorario);
+
+        // add "updatePost" permission
+        $editarHorario = $auth->createPermission('editarHorario');
+        $editarHorario->description = 'Editar horario de atividade';
+        $auth->add($editarHorario);
+
+        #endregion
+
         #region OPAC
-
-        $ativarRegisto = $auth->createPermission('ativarRegisto');
-        $ativarRegisto->description = 'Ativar registo';
-        $auth->add($ativarRegisto);
-
-        $desativarRegisto = $auth->createPermission('desativarRegisto');
-        $desativarRegisto->description = 'Desativar registo';
-        $auth->add($desativarRegisto);
 
         $ativacaoCancelarReservaLivros = $auth->createPermission('ativacaoCancelarReservaLivros');
         $ativacaoCancelarReservaLivros->description = 'Ativacao do leitor poder cancelar a reserva de livros';
@@ -120,15 +112,351 @@ class m201023_142905_init_rbac extends Migration
         $desativacaoCancelarReservaLivros->description = 'Ativacao do leitor poder cancelar a reserva de livros';
         $auth->add($desativacaoCancelarReservaLivros);
 
+        $ativarObrasSlideShow = $auth->createPermission('ativarObrasSlideShow');
+        $ativarObrasSlideShow->description = 'Ativar registo';
+        $auth->add($ativarObrasSlideShow);
+
+        $desativarObrasSlideShow = $auth->createPermission('desativarObrasSlideShow');
+        $desativarObrasSlideShow->description = 'Desativar registo';
+        $auth->add($desativarObrasSlideShow);
+
         #endregion
 
-        #region
+        #region Postos de Trabalho
 
-        $desativacaoCancelarReservaLivros = $auth->createPermission('desativacaoCancelarReservaLivros');
-        $desativacaoCancelarReservaLivros->description = 'Ativacao do leitor poder cancelar a reserva de livros';
-        $auth->add($desativacaoCancelarReservaLivros);
+        $verPostosTrabalho = $auth->createPermission('verPostosTrabalho');
+        $verPostosTrabalho->description = 'Ver Postos de Trabalho';
+        $auth->add($verPostosTrabalho);
+
+        $inserirPostosTrabalho = $auth->createPermission('inserirPostosTrabalho');
+        $inserirPostosTrabalho->description = 'Inserir Postos de Trabalho';
+        $auth->add($inserirPostosTrabalho);
+
+        $editarPostosTrabalho = $auth->createPermission('editarPostosTrabalho');
+        $editarPostosTrabalho->description = 'Editar Postos de Trabalho';
+        $auth->add($editarPostosTrabalho);
+
+        $eliminarPostosTrabalho = $auth->createPermission('eliminarPostosTrabalho');
+        $eliminarPostosTrabalho->description = 'Eliminar Postos de Trabalho';
+        $auth->add($eliminarPostosTrabalho);
+
+        // Tipo de postos de trabalho
+        $verTipoPostosTrabalho = $auth->createPermission('verTipoPostosTrabalho');
+        $verTipoPostosTrabalho->description = 'Ver o tipo de Postos de Trabalho';
+        $auth->add($verTipoPostosTrabalho);
+
+        $inserirTipoPostosTrabalho = $auth->createPermission('inserirTipoPostosTrabalho');
+        $inserirTipoPostosTrabalho->description = 'Inserir o tipo de Postos de Trabalho';
+        $auth->add($inserirTipoPostosTrabalho);
+
+        $editarTipoPostosTrabalho = $auth->createPermission('editarTipoPostosTrabalho');
+        $editarTipoPostosTrabalho->description = 'Editar o tipo de Postos de Trabalho';
+        $auth->add($editarTipoPostosTrabalho);
+
+        $eliminarTipoPostosTrabalho = $auth->createPermission('eliminarTipoPostosTrabalho');
+        $eliminarTipoPostosTrabalho->description = 'Eliminar o tipo de Postos de Trabalho';
+        $auth->add($eliminarTipoPostosTrabalho);
 
         #endregion
+
+        #region Recibos
+
+        // recibos de empréstimos
+        $ativacaoRecibosEmprestimos = $auth->createPermission('ativacaoRecibosEmprestimos');
+        $ativacaoRecibosEmprestimos->description = 'Ativacao de envio de recibos de Emprestimo';
+        $auth->add($ativacaoRecibosEmprestimos);
+
+        $desativacaoRecibosEmprestimos = $auth->createPermission('desativacaoRecibosEmprestimos');
+        $desativacaoRecibosEmprestimos->description = 'Desativacao de envio de recibos de Emprestimo';
+        $auth->add($desativacaoRecibosEmprestimos);
+
+        // recibos de devoluções
+        $ativacaoRecibosDevolucoes = $auth->createPermission('ativacaoRecibosDevolucoes');
+        $ativacaoRecibosDevolucoes->description = 'Ativacao de envio de recibos de Devolucoes';
+        $auth->add($ativacaoRecibosDevolucoes);
+
+        $desativacaoRecibosDevolucoes = $auth->createPermission('desativacaoRecibosDevolucoes');
+        $desativacaoRecibosDevolucoes->description = 'Desativacao de envio de recibos de Devolucoes';
+        $auth->add($desativacaoRecibosDevolucoes);
+
+        // recibos de renovações
+        $ativacaoRecibosRenovacoes = $auth->createPermission('ativacaoRecibosRenovacoes');
+        $ativacaoRecibosRenovacoes->description = 'Ativacao de envio de recibos de Renovacoes';
+        $auth->add($ativacaoRecibosRenovacoes);
+
+        $desativacaoRecibosRenovacoes = $auth->createPermission('desativacaoRecibosRenovacoes');
+        $desativacaoRecibosRenovacoes->description = 'Desativacao de envio de recibos de Renovacoes';
+        $auth->add($desativacaoRecibosRenovacoes);
+
+        // recibos de reservas de exemplares
+        $ativacaoRecibosReservasExemplares = $auth->createPermission('ativacaoRecibosReservasExemplares');
+        $ativacaoRecibosReservasExemplares->description = 'Ativacao de envio de recibos de Reservas de Exemplares';
+        $auth->add($ativacaoRecibosReservasExemplares);
+
+        $desativacaoRecibosReservasExemplares = $auth->createPermission('desativacaoRecibosReservasExemplares');
+        $desativacaoRecibosReservasExemplares->description = 'Desativacao de envio de recibos de Reservas de Exemplares';
+        $auth->add($desativacaoRecibosReservasExemplares);
+
+        //recibos de reservas de postos de trabalho
+        $ativacaoRecibosReservaPostoTrabalho = $auth->createPermission('ativacaoRecibosReservaPostoTrabalho');
+        $ativacaoRecibosReservaPostoTrabalho->description = 'Ativacao de envio de recibos de Reservas de Postos de Trabalho';
+        $auth->add($ativacaoRecibosReservaPostoTrabalho);
+
+        $desativacaoRecibosReservaPostoTrabalho = $auth->createPermission('desativacaoRecibosReservaPostoTrabalho');
+        $desativacaoRecibosReservaPostoTrabalho->description = 'Desativacao de envio de recibos de Reservas de Postos de Trabalho';
+        $auth->add($desativacaoRecibosReservaPostoTrabalho);
+
+        #endregion
+
+        #region Em Arrumação
+
+        $ativacaoEmArrumacao = $auth->createPermission('ativacaoEmArrumacao');
+        $ativacaoEmArrumacao->description = 'Ativação do módulo "Em arrumacao"';
+        $auth->add($ativacaoEmArrumacao);
+
+        $desativacaoEmArrumacao = $auth->createPermission('desativacaoEmArrumacao');
+        $desativacaoEmArrumacao->description = 'Desativação do módulo "Em arrumacao"';
+        $auth->add($desativacaoEmArrumacao);
+
+        #endregion
+
+        #region CDU
+
+        $verCDU = $auth->createPermission('verCDU');
+        $verCDU->description = 'Ver CDU';
+        $auth->add($verCDU);
+
+        $inserirCDU = $auth->createPermission('inserirCDU');
+        $inserirCDU->description = 'Inserir CDU';
+        $auth->add($inserirCDU);
+
+        $eliminarCDU = $auth->createPermission('eliminarCDU');
+        $eliminarCDU->description = 'Eliminar CDU';
+        $auth->add($eliminarCDU);
+
+        #endregion
+
+        #region Irregularidades
+
+        $verTiposIrregularidades = $auth->createPermission('verTiposIrregularidades');
+        $verTiposIrregularidades->description = 'Ver Tipos de Irregularidades';
+        $auth->add($verTiposIrregularidades);
+
+        $inserirTiposIrregularidades = $auth->createPermission('inserirTiposIrregularidades');
+        $inserirTiposIrregularidades->description = 'Inserir Tipos de Irregularidades';
+        $auth->add($inserirTiposIrregularidades);
+
+        $eliminarTiposIrregularidades = $auth->createPermission('eliminarTiposIrregularidades');
+        $eliminarTiposIrregularidades->description = 'Eliminar Tipos de Irregularidades';
+        $auth->add($eliminarTiposIrregularidades);
+
+        #endregion
+
+        #region Estatutos do Leitor
+
+        $verTiposLeitor = $auth->createPermission('verTiposLeitor');
+        $verTiposLeitor->description = 'Ver Tipos de Leitor';
+        $auth->add($verTiposLeitor);
+
+        $inserirTiposLeitor = $auth->createPermission('inserirTiposLeitor');
+        $inserirTiposLeitor->description = 'Inserir Tipos de Leitor';
+        $auth->add($inserirTiposLeitor);
+
+        $eliminarTiposLeitor = $auth->createPermission('eliminarTiposLeitor');
+        $eliminarTiposLeitor->description = 'Eliminar Tipos de Leitor';
+        $auth->add($eliminarTiposLeitor);
+
+        #endregion
+
+        #region Tipos de Exemplares
+
+        $verTiposExemplares = $auth->createPermission('verTiposExemplares');
+        $verTiposExemplares->description = 'Ver Tipos de Exemplares';
+        $auth->add($verTiposExemplares);
+
+        $inserirTiposExemplares = $auth->createPermission('inserirTiposExemplares');
+        $inserirTiposExemplares->description = 'Inserir Tipos de Exemplares';
+        $auth->add($inserirTiposExemplares);
+
+        $eliminarTiposExemplares = $auth->createPermission('eliminarTiposExemplares');
+        $eliminarTiposExemplares->description = 'Eliminar Tipos de Exemplares';
+        $auth->add($eliminarTiposExemplares);
+
+        #endregion
+
+        #region Estatuto dos Exemplares
+
+        $verEstatutosExemplares = $auth->createPermission('verEstatutosExemplares');
+        $verEstatutosExemplares->description = 'Ver Tipos de Exemplares';
+        $auth->add($verEstatutosExemplares);
+
+        $inserirEstatutosExemplares = $auth->createPermission('inserirEstatutosExemplares');
+        $inserirEstatutosExemplares->description = 'Inserir Tipos de Exemplares';
+        $auth->add($inserirEstatutosExemplares);
+
+        $eliminarTiposExemplares = $auth->createPermission('eliminarEstatutosExemplares');
+        $eliminarTiposExemplares->description = 'Eliminar Tipos de Exemplares';
+        $auth->add($eliminarTiposExemplares);
+
+        #endregion
+
+        #region Logotipos
+
+        $verLogotipos = $auth->createPermission('verLogotipos');
+        $verLogotipos->description = 'Ver Logotipos';
+        $auth->add($verLogotipos);
+
+        $inserirLogotipos = $auth->createPermission('inserirLogotipos');
+        $inserirLogotipos->description = 'Inserir Logotipos';
+        $auth->add($inserirLogotipos);
+
+        $eliminarLogotipos = $auth->createPermission('eliminarLogotipos');
+        $eliminarLogotipos->description = 'Eliminar Logotipos';
+        $auth->add($eliminarLogotipos);
+
+        #endregion
+
+        #region Listagem de Leitores
+
+        $verLeitores = $auth->createPermission('verLeitores');
+        $verLeitores->description = 'Visualização filtrada de Leitores';
+        $auth->add($verLeitores);
+
+        $inserirLeitores = $auth->createPermission('inserirLeitores');
+        $inserirLeitores->description = 'Inserir Leitores';
+        $auth->add($inserirLeitores);
+
+        $editarLeitores = $auth->createPermission('editarLeitores');
+        $editarLeitores->description = 'Editar Leitores';
+        $auth->add($editarLeitores);
+
+        $eliminarLeitores = $auth->createPermission('eliminarLeitores');
+        $eliminarLeitores->description = 'Eliminar Leitores';
+        $auth->add($eliminarLeitores);
+
+        #endregion
+
+        #region Ficha do leitor
+
+        $verReservasLeitor = $auth->createPermission('verReservasLeitor');
+        $verReservasLeitor->description = 'Visualização de Reservas do Leitor';
+        $auth->add($verReservasLeitor);
+
+        $verPedidosReprograficosLeitor = $auth->createPermission('verPedidosReprograficosLeitor');
+        $verPedidosReprograficosLeitor->description = 'Visualização de pedidos Reprograficos do Leitor';
+        $auth->add($verPedidosReprograficosLeitor);
+
+        $verHistoricoLeitor = $auth->createPermission('verHistoricoLeitor');
+        $verHistoricoLeitor->description = 'Visualização filtrada do Historico do Leitor';
+        $auth->add($verHistoricoLeitor);
+
+        #endregion
+
+        #region Catalogacao
+
+        // OBRAS
+        $verObras = $auth->createPermission('verObras');
+        $verObras->description = 'Visualização de Obras';
+        $auth->add($verObras);
+
+        $inserirObras = $auth->createPermission('inserirObras');
+        $inserirObras->description = 'Insercao de Obras';
+        $auth->add($inserirObras);
+
+        $editarObras = $auth->createPermission('editarObras');
+        $editarObras->description = 'Edicao de Obras';
+        $auth->add($editarObras);
+
+        $eliminarObras = $auth->createPermission('eliminarObras');
+        $eliminarObras->description = 'Eliminacao de Obras';
+        $auth->add($eliminarObras);
+
+        // EXEMPLARES
+        $verExemplares = $auth->createPermission('verExemplares');
+        $verExemplares->description = 'Visualizacao de Exemplares';
+        $auth->add($verExemplares);
+
+        $inserirExemplares = $auth->createPermission('inserirExemplares');
+        $inserirExemplares->description = 'Insercao de Exemplares';
+        $auth->add($inserirExemplares);
+
+        $editarExemplares = $auth->createPermission('editarExemplares');
+        $editarExemplares->description = 'Edicao de Exemplares';
+        $auth->add($editarExemplares);
+
+        $eliminarExemplares = $auth->createPermission('eliminarExemplares');
+        $eliminarExemplares->description = 'Eliminacao de Exemplares';
+        $auth->add($eliminarExemplares);
+
+        // EXEMPLARES PERDIDOS
+        $verExemplaresPerdidos = $auth->createPermission('verExemplaresPerdidos');
+        $verExemplaresPerdidos->description = 'Visualizacao de Exemplares Perdidos';
+        $auth->add($verExemplaresPerdidos);
+
+        $inserirExemplaresPerdidos = $auth->createPermission('inserirExemplaresPerdidos');
+        $inserirExemplaresPerdidos->description = 'Insercao de Exemplares Perdidos';
+        $auth->add($inserirExemplaresPerdidos);
+
+        #endregion
+
+        #region Empréstimos
+
+        $inserirMultiplosEmprestimos = $auth->createPermission('inserirMultiplosEmprestimos');
+        $inserirMultiplosEmprestimos->description = 'Inserção de multiplos empréstimos';
+        $auth->add($inserirMultiplosEmprestimos);
+
+        $verEmprestimosDia = $auth->createPermission('verEmprestimosDia');
+        $verEmprestimosDia->description = 'Visualização rápida dos empréstimos efetuados no dia';
+        $auth->add($verEmprestimosDia);
+
+        $verExemplaresAtrasados = $auth->createPermission('verExemplaresAtrasados');
+        $verExemplaresAtrasados->description = 'Visualização de exemplares atrasados';
+        $auth->add($verExemplaresAtrasados);
+
+        #endregion
+
+        #region Consulta de Obras em Tempo Real
+
+        $verFundoEspeciaisTR = $auth->createPermission('verFundoEspeciaisTR');
+        $verFundoEspeciaisTR->description = 'Visualizacao de Consultas em Tempo Real de Fundo Especiais';
+        $auth->add($verFundoEspeciaisTR);
+
+        $inserirFundoEspeciaisTR = $auth->createPermission('inserirFundoEspeciaisTR');
+        $inserirFundoEspeciaisTR->description = 'Insercao de Consultas em Tempo Real de Fundo Especiais';
+        $auth->add($inserirFundoEspeciaisTR);
+
+        $eliminarFundoEspeciaisTR = $auth->createPermission('eliminarFundoEspeciaisTR');
+        $eliminarFundoEspeciaisTR->description = 'Eliminacao de Consultas em Tempo Real de Fundo Especiais';
+        $auth->add($eliminarFundoEspeciaisTR);
+
+        $verHistoricoFundoEspeciais = $auth->createPermission('verHistoricoFundoEspeciais');
+        $verHistoricoFundoEspeciais->description = 'Visualizacaoo do Histórico de Consultas do Fundo Especiais';
+        $auth->add($verHistoricoFundoEspeciais);
+
+        #endregion
+
+        #region Renovações
+
+        $inserirRenovarEmprestimos = $auth->createPermission('inserirRenovarEmprestimos');
+        $inserirRenovarEmprestimos->description = 'Inserção Rápida de Empréstimos a Renovar';
+        $auth->add($inserirRenovarEmprestimos);
+
+        #endregion
+
+        #region Devoluções
+
+        $inserirRenovacao = $auth->createPermission('inserirDevolucao');
+        $inserirRenovacao->description = 'Inserção de uma Devolucao';
+        $auth->add($inserirRenovacao);
+
+        $inserirRenovarEmprestimos = $auth->createPermission('inserirRenovarEmprestimos');
+        $inserirRenovarEmprestimos->description = 'Inserção Rápida de Empréstimos a Renovar';
+        $auth->add($inserirRenovarEmprestimos);
+
+        #endregion
+
+
+
 
         // add "leitorAluno" role and give this role permissions
         // as well as the permissions of the "author" role
