@@ -83,25 +83,6 @@ class m201023_142905_init_rbac extends Migration
 
         #endregion
 
-        #region Horário de atividade  // TODO VERIFICAR NA COLUNA ENTIDADE BIBLIOTECA
-
-        // add "updatePost" permission
-        $verHorario = $auth->createPermission('verHorario');
-        $verHorario->description = 'Ver horario de atividade';
-        $auth->add($verHorario);
-
-        // add "updatePost" permission
-        $inserirHorario = $auth->createPermission('inserirHorario');
-        $inserirHorario->description = 'Inserir horario de atividade';
-        $auth->add($inserirHorario);
-
-        // add "updatePost" permission
-        $editarHorario = $auth->createPermission('editarHorario');
-        $editarHorario->description = 'Editar horario de atividade';
-        $auth->add($editarHorario);
-
-        #endregion
-
         #region OPAC
 
         $ativacaoCancelarReservaLivros = $auth->createPermission('ativacaoCancelarReservaLivros');
@@ -446,16 +427,126 @@ class m201023_142905_init_rbac extends Migration
         #region Devoluções
 
         $inserirRenovacao = $auth->createPermission('inserirDevolucao');
-        $inserirRenovacao->description = 'Inserção de uma Devolucao';
+        $inserirRenovacao->description = 'Insercao de uma Devolucao';
         $auth->add($inserirRenovacao);
 
-        $inserirRenovarEmprestimos = $auth->createPermission('inserirRenovarEmprestimos');
-        $inserirRenovarEmprestimos->description = 'Inserção Rápida de Empréstimos a Renovar';
-        $auth->add($inserirRenovarEmprestimos);
+        $verDevolucoesDia = $auth->createPermission('verDevolucoesDia');
+        $verDevolucoesDia->description = 'Visualização Rápida de Devolucoes Efetuadas no Dia';
+        $auth->add($verDevolucoesDia);
 
         #endregion
 
+        #region Fila de Espera
 
+        $verReservaFilaEspera = $auth->createPermission('verReservaFilaEspera');
+        $verReservaFilaEspera->description = 'Visualizacao de Reservas em Fila de Espera';
+        $auth->add($verReservaFilaEspera);
+
+        $cancelarReservaFilaEspera = $auth->createPermission('cancelarReservaFilaEspera');
+        $cancelarReservaFilaEspera->description = 'Cancelamento de Reservas em Fila de Espera';
+        $auth->add($cancelarReservaFilaEspera);
+
+        #endregion
+
+        #region Aguarda Recolha
+
+        $verReservaAguardaRecolha = $auth->createPermission('verReservaAguardaRecolha');
+        $verReservaAguardaRecolha->description = 'Visualizacao de Reservas que Aguardam Recolha';
+        $auth->add($verReservaAguardaRecolha);
+
+        $cancelarReservaAguardaRecolha = $auth->createPermission('cancelarReservaAguardaRecolha');
+        $cancelarReservaAguardaRecolha->description = 'Cancelamento de Reservas que Aguardam Recolha';
+        $auth->add($cancelarReservaAguardaRecolha);
+
+        #endregion
+
+        #region Exemplares não Levantados
+
+        $verReservaNaoLevantada = $auth->createPermission('verReservaNaoLevantada');
+        $verReservaNaoLevantada->description = 'Visualizacao de Reservas Nao Levantadas';
+        $auth->add($verReservaNaoLevantada);
+
+        $retornarReservaNaoLevantada = $auth->createPermission('retornarReservaNaoLevantada');
+        $retornarReservaNaoLevantada->description = 'Retorno de Reservas Nao Levantadas';
+        $auth->add($retornarReservaNaoLevantada);
+
+        #endregion
+
+        #region Transferências
+
+        $verExemplaresAReceber = $auth->createPermission('verExemplaresAReceber');
+        $verExemplaresAReceber->description = 'Visualizacao de Exemplares a Receber';
+        $auth->add($verExemplaresAReceber);
+
+        #endregion
+
+        #region Serviços Reprográficos
+
+        $verPedidosReprograficos = $auth->createPermission('verPedidosReprograficos');
+        $verPedidosReprograficos->description = 'Visualizacao de Pedidos Reprograficos';
+        $auth->add($verPedidosReprograficos);
+
+        $inserirPedidosReprograficos = $auth->createPermission('inserirPedidosReprograficos');
+        $inserirPedidosReprograficos->description = 'Insercao de Pedidos Reprograficos';
+        $auth->add($inserirPedidosReprograficos);
+
+        $aceitarPedidosReprograficos = $auth->createPermission('aceitarPedidosReprograficos');
+        $aceitarPedidosReprograficos->description = 'Aceitacao de Pedidos Reprograficos';
+        $auth->add($aceitarPedidosReprograficos);
+
+        $verPedidosRepPorLevantar = $auth->createPermission('verPedidosRepPorLevantar');
+        $verPedidosRepPorLevantar->description = 'Visualizacao de Pedidos Reprograficos por Levantar';
+        $auth->add($verPedidosRepPorLevantar);
+
+        $verPedidosRepEntregues = $auth->createPermission('verPedidosRepEntregues');
+        $verPedidosRepEntregues->description = 'Visualizacao de Pedidos Reprograficos Entregues ';
+        $auth->add($verPedidosRepEntregues);
+
+        #endregion
+
+        #region Postos de Trabalho
+
+        $verPostosTrabalhoOcupadosTR = $auth->createPermission('verPostosTrabalhoOcupadosTR');
+        $verPostosTrabalhoOcupadosTR->description = 'Visualizacao de Postos de Trabalho Ocupados em Tempo Real';
+        $auth->add($verPostosTrabalhoOcupadosTR);
+
+        $verPostosTrabalhoTR = $auth->createPermission('verReservasPostosTrabalho');
+        $verPostosTrabalhoTR->description = 'Visualizacao de Reservas de Postos de Trabalho';
+        $auth->add($verPostosTrabalhoTR);
+
+        $inserirReservasPostosTrabalho = $auth->createPermission('inserirReservasPostosTrabalho');
+        $inserirReservasPostosTrabalho->description = 'Insercao de Reservas de Postos de Trabalho';
+        $auth->add($inserirReservasPostosTrabalho);
+
+        $eliminarReservasPostosTrabalho = $auth->createPermission('eliminarReservasPostosTrabalho');
+        $eliminarReservasPostosTrabalho->description = 'Aceitacao de Pedidos Reprograficos';
+        $auth->add($eliminarReservasPostosTrabalho);
+
+        #endregion
+
+        #region Área Pessoal
+
+        $verMorada = $auth->createPermission('verMorada');
+        $verMorada->description = 'Visualização de endereco/morada';
+        $auth->add($verMorada);
+
+        #endregion
+
+        #region Notícias
+
+        $verNoticias = $auth->createPermission('verNoticias');
+        $verNoticias->description = 'Visualização de noticias gerais que a entidade disponibiliza';
+        $auth->add($verNoticias);
+
+        #endregion
+
+        #region Horário de atividade / Contactos
+
+        $verHorario = $auth->createPermission('verHorario');
+        $verHorario->description = 'Ver horario de atividade';
+        $auth->add($verHorario);
+
+        #endregion
 
 
         // add "leitorAluno" role and give this role permissions
