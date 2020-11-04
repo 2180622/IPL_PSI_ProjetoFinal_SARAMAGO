@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_principal"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_launcher_foreground"
@@ -14,7 +16,7 @@
             android:title="Pedidos" />
     </group>
 
-    <item>
+    <item android:id="@+id/menu_logoff">
         <menu>
             <item
                 android:id="@+id/nav_logOff"

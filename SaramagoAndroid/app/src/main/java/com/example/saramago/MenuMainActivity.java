@@ -7,16 +7,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity {
 
-    public static final String NOME = "NOME";
+    public static final String EMAIL = "EMAIL";
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private String email = "";
     private FragmentManager fragmentManager;
     private ImageView imgUser;
 
@@ -35,6 +36,20 @@ public class MenuMainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         //navigationView.setNavigationItemSelectedListener(this);
         fragmentManager = getSupportFragmentManager();
+
+        carregarCabecalho();
+    }
+
+    private void carregarCabecalho() {
+        String email = "";
+        String nome = "";
+
+        email = getIntent().getStringExtra(EMAIL);
+        View hview = navigationView.getHeaderView(0);
+        TextView tv_nome = hview.findViewById(R.id.tvNome);
+        tv_nome.setText(nome);
+        TextView tv_email = hview.findViewById(R.id.tvEmail);
+        tv_email.setText(email);
     }
 }
 
