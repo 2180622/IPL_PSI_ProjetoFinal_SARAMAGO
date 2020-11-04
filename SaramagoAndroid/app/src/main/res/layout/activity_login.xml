@@ -82,6 +82,7 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:background="@drawable/rounded_button"
+        android:onClick="onClickLogin"
         android:text="Iniciar Sessão" />
 
     <Space

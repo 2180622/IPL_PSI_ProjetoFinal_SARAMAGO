@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/nav_pedidos"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Pedidos" />
+    </group>
+
+    <item>
+        <menu>
+            <item
+                android:id="@+id/nav_logOff"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Terminar Sessão" />
+        </menu>
+    </item>
+</menu>
