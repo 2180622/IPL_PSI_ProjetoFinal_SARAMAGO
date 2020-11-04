@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -17,6 +18,7 @@ public class MenuMainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private String email = "";
     private FragmentManager fragmentManager;
+    private ImageView imgUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +29,12 @@ public class MenuMainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
-              //  toolbar, "", "Fechar");
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.ndOpen, R.string.ndClose);
+
+        toggle.syncState();
+        drawer.addDrawerListener(toggle);
+        //navigationView.setNavigationItemSelectedListener(this);
+        fragmentManager = getSupportFragmentManager();
     }
 }
 
