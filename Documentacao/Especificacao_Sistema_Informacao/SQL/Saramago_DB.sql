@@ -955,6 +955,8 @@ INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAU
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Envio de recibo de reserva de Postos de Trabalho', 'recibo_postoTrabalho', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Envio de recibo de renovações', 'recibo_renovacao', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Envio de reserva de exemplares', 'recibo_reservaExemplar', '1');
+INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Duração das reservas de exemplares (em dias)', 'reservaExemplar_duracao', '3');
+
 
 COMMIT;
 
