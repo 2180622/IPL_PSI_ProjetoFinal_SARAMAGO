@@ -208,17 +208,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `yii2saramago`.`Uc`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `yii2saramago`.`Uc` (
-  `id` INT NOT NULL,
-  `designacao` VARCHAR(255) NOT NULL COMMENT 'Unidade curricular',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `yii2saramago`.`Colecao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`Colecao` (
@@ -272,20 +261,13 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`LeituraRecomendada` (
   `dataInicial` DATE NOT NULL COMMENT 'Data de inicio',
   `dataFinal` DATE NULL DEFAULT NULL COMMENT 'Data de termino',
   `Funcionario_id` INT NOT NULL COMMENT 'Chave estrangeira',
-  `Uc_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Obra_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_LeituraRecomendada_Funcionario1_idx` (`Funcionario_id` ASC) ,
-  INDEX `fk_LeituraRecomendada_UC1_idx` (`Uc_id` ASC) ,
   INDEX `fk_LeituraRecomendada_Obra1_idx` (`Obra_id` ASC) ,
   CONSTRAINT `fk_LeituraRecomendada_Funcionario1`
     FOREIGN KEY (`Funcionario_id`)
     REFERENCES `yii2saramago`.`Funcionario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_LeituraRecomendada_UC1`
-    FOREIGN KEY (`Uc_id`)
-    REFERENCES `yii2saramago`.`Uc` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_LeituraRecomendada_Obra1`
@@ -513,6 +495,17 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`TipoIrregularidade` (
   `diasAtivacao` INT NOT NULL DEFAULT 7 COMMENT 'Ativação do bloqueio (em dias)',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `irregularidade_UNIQUE` (`irregularidade` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `yii2saramago`.`Uc`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `yii2saramago`.`Uc` (
+  `id` INT NOT NULL,
+  `designacao` VARCHAR(255) NOT NULL COMMENT 'Unidade curricular',
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -766,6 +759,52 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+-- -----------------------------------------------------
+-- Table `yii2saramago`.`Uc_has_LeituraRecomendada`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `yii2saramago`.`Uc_has_LeituraRecomendada` (
+  `Uc_id` INT NOT NULL,
+  `LeituraRecomendada_id` INT NOT NULL,
+  PRIMARY KEY (`Uc_id`, `LeituraRecomendada_id`),
+  INDEX `fk_Uc_has_LeituraRecomendada_LeituraRecomendada1_idx` (`LeituraRecomendada_id` ASC) ,
+  INDEX `fk_Uc_has_LeituraRecomendada_Uc1_idx` (`Uc_id` ASC) ,
+  CONSTRAINT `fk_Uc_has_LeituraRecomendada_Uc1`
+    FOREIGN KEY (`Uc_id`)
+    REFERENCES `yii2saramago`.`Uc` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Uc_has_LeituraRecomendada_LeituraRecomendada1`
+    FOREIGN KEY (`LeituraRecomendada_id`)
+    REFERENCES `yii2saramago`.`LeituraRecomendada` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `yii2saramago`.`LeituraRecomendada_Uc`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `yii2saramago`.`LeituraRecomendada_Uc` (
+  `LeituraRecomendada_id` INT NOT NULL,
+  `Uc_id` INT NOT NULL,
+  PRIMARY KEY (`LeituraRecomendada_id`, `Uc_id`),
+  INDEX `fk_LeituraRecomendada_has_Uc_Uc1_idx` (`Uc_id` ASC) ,
+  INDEX `fk_LeituraRecomendada_has_Uc_LeituraRecomendada1_idx` (`LeituraRecomendada_id` ASC) ,
+  CONSTRAINT `fk_LeituraRecomendada_has_Uc_LeituraRecomendada1`
+    FOREIGN KEY (`LeituraRecomendada_id`)
+    REFERENCES `yii2saramago`.`LeituraRecomendada` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_LeituraRecomendada_has_Uc_Uc1`
+    FOREIGN KEY (`Uc_id`)
+    REFERENCES `yii2saramago`.`Uc` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -956,7 +995,6 @@ INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAU
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Envio de recibo de renovações', 'recibo_renovacao', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Envio de reserva de exemplares', 'recibo_reservaExemplar', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Duração das reservas de exemplares (em dias)', 'reservaExemplar_duracao', '3');
-
 
 COMMIT;
 
