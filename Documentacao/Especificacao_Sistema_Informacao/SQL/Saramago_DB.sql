@@ -760,29 +760,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `yii2saramago`.`Uc_has_LeituraRecomendada`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `yii2saramago`.`Uc_has_LeituraRecomendada` (
-  `Uc_id` INT NOT NULL,
-  `LeituraRecomendada_id` INT NOT NULL,
-  PRIMARY KEY (`Uc_id`, `LeituraRecomendada_id`),
-  INDEX `fk_Uc_has_LeituraRecomendada_LeituraRecomendada1_idx` (`LeituraRecomendada_id` ASC) ,
-  INDEX `fk_Uc_has_LeituraRecomendada_Uc1_idx` (`Uc_id` ASC) ,
-  CONSTRAINT `fk_Uc_has_LeituraRecomendada_Uc1`
-    FOREIGN KEY (`Uc_id`)
-    REFERENCES `yii2saramago`.`Uc` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Uc_has_LeituraRecomendada_LeituraRecomendada1`
-    FOREIGN KEY (`LeituraRecomendada_id`)
-    REFERENCES `yii2saramago`.`LeituraRecomendada` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `yii2saramago`.`LeituraRecomendada_Uc`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`LeituraRecomendada_Uc` (
