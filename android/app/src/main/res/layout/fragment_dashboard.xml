@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="#112D32"
@@ -62,125 +62,93 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="50dp">
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_leitores"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Leitores"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_button" />
 
             <Button
                 android:id="@+id/btn_catalogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Catalogo"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_button" />
 
             <Button
                 android:id="@+id/btn_renovacoes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Renovacoes"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="36dp"
+                android:background="@drawable/bg_button" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="50dp">
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_circulacao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="circulacao"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="36dp"
+                android:background="@drawable/bg_button" />
 
             <Button
                 android:id="@+id/btn_arrumar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="arrumar"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_button" />
 
             <Button
                 android:id="@+id/btn_reservas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="reservas"
-                app:cornerRadius="24dp" />
-
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="36dp"
+                android:background="@drawable/bg_button" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_transferencias"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="transferencias"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="36dp"
+                android:background="@drawable/bg_button" />
 
             <Button
                 android:id="@+id/btn_postos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="postos"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_button" />
 
             <Button
                 android:id="@+id/btn_reprografia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="reprografia"
-                app:cornerRadius="24dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="36dp"
+                android:background="@drawable/bg_button" />
         </LinearLayout>
 
     </LinearLayout>
