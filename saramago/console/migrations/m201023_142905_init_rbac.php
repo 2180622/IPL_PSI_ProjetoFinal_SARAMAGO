@@ -553,43 +553,43 @@ class m201023_142905_init_rbac extends Migration
         // as well as the permissions of the "author" role
         $leitorAluno = $auth->createRole('leitorAluno');
         $auth->add($leitorAluno);
-        $auth->addChild($leitorAluno, $createPost);
+        //$auth->addChild($leitorAluno, $createPost);
 
         // add "leitorExterno" role and give this role permissions
         // as well as the permissions of the "author" role
         $leitorExterno = $auth->createRole('leitorExterno');
         $auth->add($leitorExterno);
-        $auth->addChild($leitorExterno, $createPost);
+        //$auth->addChild($leitorExterno, $createPost);
 
         // add "leitorFuncionario" role and give this role permissions
         // as well as the permissions of the "author" role
         $leitorFuncionario = $auth->createRole('leitorFuncionario');
         $auth->add($leitorFuncionario);
-        $auth->addChild($leitorFuncionario, $createPost);
+        //$auth->addChild($leitorFuncionario, $createPost);
 
         // add "operadorCirculacao" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorCirculacao = $auth->createRole('operadorCirculacao');
         $auth->add($operadorCirculacao);
-        $auth->addChild($operadorCirculacao, $createPost);
+        //$auth->addChild($operadorCirculacao, $createPost);
 
         // add "operadorCatalogacao" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorCatalogacao = $auth->createRole('operadorCatalogacao');
         $auth->add($operadorCatalogacao);
-        $auth->addChild($operadorCatalogacao, $createPost);
+        //$auth->addChild($operadorCatalogacao, $createPost);
 
         // add "operadorChefe" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorChefe = $auth->createRole('operadorChefe');
         $auth->add($operadorChefe);
-        $auth->addChild($operadorChefe, $createPost);
+        //$auth->addChild($operadorChefe, $createPost);
 
         // add "admin" role and give this role permissions
         // as well as the permissions of the "author" role
         $admin = $auth->createRole('admin');
         $auth->add($admin);
-        $auth->addChild($admin, $createPost);
+        //$auth->addChild($admin, $createPost);
 
         // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
         // usually implemented in your User model.
