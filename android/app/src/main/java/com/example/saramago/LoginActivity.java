@@ -16,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword, etAPI;
     private CheckBox cbAPI, cbGuardaSessao;
     private String email;
+    private String nome;
 
 
     @Override
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickLogin(View view){
         Context context = getApplicationContext();
         email = etEmail.getText().toString();
+        nome = "John Doe";
 
         if(!isEmailValid(email)){
             Toast.makeText(context, "Email inválido", Toast.LENGTH_LONG).show();
@@ -43,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, MenuMainActivity.class);
+        intent.putExtra(MenuMainActivity.EMAIL, email);
+        intent.putExtra(MenuMainActivity.NOME, nome);
         startActivity(intent);
         finish();
     }
