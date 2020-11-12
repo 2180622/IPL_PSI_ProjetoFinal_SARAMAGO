@@ -24,16 +24,11 @@ class m130524_201442_init extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
-        // TODO: Listar no relatório
-        $this->addColumn('{{%Leitor}}', 'user_id', $this->integer()->notNull());
 
-        $this->addForeignKey('FK_user_id', '{{%Leitor}}', 'user_id', '{{%user}}', 'id', $delete = null, $update = null);
-        //
     }
 
     public function down()
     {
         $this->dropTable('{{%user}}');
-        $this->dropColumn('{{%Leitor}}', 'user_id');
     }
 }

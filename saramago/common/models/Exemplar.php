@@ -16,10 +16,12 @@ use Yii;
  * @property int $Biblioteca_id Chave estrangeira
  * @property int $EstatutoExemplar_id Chave estrangeira
  * @property int $TipoExemplar_id Chave estrangeira
+ * @property int $Obra_id
  *
  * @property Consultatreal[] $consultatreals
  * @property Biblioteca $biblioteca
  * @property Estatutoexemplar $estatutoExemplar
+ * @property Obra $obra
  * @property Tipoexemplar $tipoExemplar
  * @property Fundo[] $fundos
  * @property RequisicaoExemplar[] $requisicaoExemplars
@@ -42,12 +44,14 @@ class Exemplar extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cota', 'codBarras', 'estado', 'Biblioteca_id', 'EstatutoExemplar_id', 'TipoExemplar_id'], 'required'],
-            [['suplemento', 'Biblioteca_id', 'EstatutoExemplar_id', 'TipoExemplar_id'], 'integer'],
+            [['cota', 'codBarras', 'estado', 'Biblioteca_id', 'EstatutoExemplar_id', 'TipoExemplar_id', 'Obra_id'], 'required'],
+            [['suplemento', 'Biblioteca_id', 'EstatutoExemplar_id', 'TipoExemplar_id', 'Obra_id'], 'integer'],
             [['estado'], 'string'],
             [['cota', 'codBarras', 'notaInterna'], 'string', 'max' => 45],
+            [['codBarras'], 'unique'],
             [['Biblioteca_id'], 'exist', 'skipOnError' => true, 'targetClass' => Biblioteca::className(), 'targetAttribute' => ['Biblioteca_id' => 'id']],
             [['EstatutoExemplar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estatutoexemplar::className(), 'targetAttribute' => ['EstatutoExemplar_id' => 'id']],
+            [['Obra_id'], 'exist', 'skipOnError' => true, 'targetClass' => Obra::className(), 'targetAttribute' => ['Obra_id' => 'id']],
             [['TipoExemplar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoexemplar::className(), 'targetAttribute' => ['TipoExemplar_id' => 'id']],
         ];
     }
@@ -67,6 +71,7 @@ class Exemplar extends \yii\db\ActiveRecord
             'Biblioteca_id' => 'Chave estrangeira',
             'EstatutoExemplar_id' => 'Chave estrangeira',
             'TipoExemplar_id' => 'Chave estrangeira',
+            'Obra_id' => 'Obra ID',
         ];
     }
 
@@ -98,6 +103,16 @@ class Exemplar extends \yii\db\ActiveRecord
     public function getEstatutoExemplar()
     {
         return $this->hasOne(Estatutoexemplar::className(), ['id' => 'EstatutoExemplar_id']);
+    }
+
+    /**
+     * Gets query for [[Obra]].
+     *
+     * @return \yii\db\ActiveQuery|ObraQuery
+     */
+    public function getObra()
+    {
+        return $this->hasOne(Obra::className(), ['id' => 'Obra_id']);
     }
 
     /**

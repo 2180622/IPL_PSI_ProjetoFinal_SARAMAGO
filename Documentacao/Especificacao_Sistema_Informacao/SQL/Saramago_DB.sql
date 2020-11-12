@@ -99,6 +99,52 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `yii2saramago`.`Colecao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `yii2saramago`.`Colecao` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
+  `tituloColecao` VARCHAR(255) NOT NULL COMMENT 'Titulo da coleção',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `yii2saramago`.`Obra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `yii2saramago`.`Obra` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
+  `imgCapa` VARCHAR(255) NULL COMMENT 'Imagem da Capa',
+  `titulo` VARCHAR(45) NOT NULL COMMENT 'Titulo da obra',
+  `resumo` MEDIUMTEXT NULL COMMENT 'Resumo da obra',
+  `editor` VARCHAR(255) NOT NULL COMMENT 'Editor',
+  `ano` YEAR(4) NOT NULL COMMENT 'Ano',
+  `tipoObra` ENUM('materialAv', 'monografia', 'pubPeriodica') NOT NULL COMMENT 'Tipo de obra',
+  `descricao` VARCHAR(255) NOT NULL COMMENT 'Descrição da Obra',
+  `local` VARCHAR(45) NULL COMMENT 'Local',
+  `edicao` VARCHAR(45) NULL COMMENT 'Edição',
+  `assuntos` VARCHAR(255) NULL COMMENT 'Assuntos',
+  `preco` FLOAT(7,2) NULL COMMENT 'Preço (€)',
+  `dataRegisto` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data registado',
+  `dataAtualizado` DATETIME NULL COMMENT 'Data atualizado',
+  `Cdu_id` INT NOT NULL COMMENT 'Chave estrangeira',
+  `Colecao_id` INT NULL COMMENT 'Chave estrangeira',
+  PRIMARY KEY (`id`),
+  INDEX `fk_Obra_Cdu1_idx` (`Cdu_id` ASC) ,
+  INDEX `fk_Obra_Colecao1_idx` (`Colecao_id` ASC) ,
+  CONSTRAINT `fk_Obra_Cdu1`
+    FOREIGN KEY (`Cdu_id`)
+    REFERENCES `yii2saramago`.`Cdu` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Obra_Colecao1`
+    FOREIGN KEY (`Colecao_id`)
+    REFERENCES `yii2saramago`.`Colecao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `yii2saramago`.`Exemplar`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
@@ -111,10 +157,13 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
   `Biblioteca_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `EstatutoExemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `TipoExemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
+  `Obra_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Exemplar_Biblioteca1_idx` (`Biblioteca_id` ASC) ,
   INDEX `fk_Exemplar_EstatutoExemplar1_idx` (`EstatutoExemplar_id` ASC) ,
   INDEX `fk_Exemplar_TipoExemplar1_idx` (`TipoExemplar_id` ASC) ,
+  INDEX `fk_Exemplar_Obra1_idx` (`Obra_id` ASC) ,
+  UNIQUE INDEX `codBarras_UNIQUE` (`codBarras` ASC) ,
   CONSTRAINT `fk_Exemplar_Biblioteca1`
     FOREIGN KEY (`Biblioteca_id`)
     REFERENCES `yii2saramago`.`Biblioteca` (`id`)
@@ -128,6 +177,11 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
   CONSTRAINT `fk_Exemplar_TipoExemplar1`
     FOREIGN KEY (`TipoExemplar_id`)
     REFERENCES `yii2saramago`.`TipoExemplar` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Exemplar_Obra1`
+    FOREIGN KEY (`Obra_id`)
+    REFERENCES `yii2saramago`.`Obra` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -208,52 +262,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `yii2saramago`.`Colecao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `yii2saramago`.`Colecao` (
-  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
-  `tituloColecao` VARCHAR(255) NOT NULL COMMENT 'Titulo da coleção',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `yii2saramago`.`Obra`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `yii2saramago`.`Obra` (
-  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
-  `imgCapa` VARCHAR(255) NULL COMMENT 'Imagem da Capa',
-  `titulo` VARCHAR(45) NOT NULL COMMENT 'Titulo da obra',
-  `resumo` MEDIUMTEXT NULL COMMENT 'Resumo da obra',
-  `editor` VARCHAR(255) NOT NULL COMMENT 'Editor',
-  `ano` YEAR(4) NOT NULL COMMENT 'Ano',
-  `tipoObra` ENUM('materialAv', 'monografia', 'pubPeriodica') NOT NULL COMMENT 'Tipo de obra',
-  `descricao` VARCHAR(255) NOT NULL COMMENT 'Descrição da Obra',
-  `local` VARCHAR(45) NULL COMMENT 'Local',
-  `edicao` VARCHAR(45) NULL COMMENT 'Edição',
-  `assuntos` VARCHAR(255) NULL COMMENT 'Assuntos',
-  `preco` FLOAT(7,2) NULL COMMENT 'Preço (€)',
-  `dataRegisto` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data registado',
-  `dataAtualizado` DATETIME NULL COMMENT 'Data atualizado',
-  `Cdu_id` INT NOT NULL COMMENT 'Chave estrangeira',
-  `Colecao_id` INT NULL COMMENT 'Chave estrangeira',
-  PRIMARY KEY (`id`),
-  INDEX `fk_Obra_Cdu1_idx` (`Cdu_id` ASC) ,
-  INDEX `fk_Obra_Colecao1_idx` (`Colecao_id` ASC) ,
-  CONSTRAINT `fk_Obra_Cdu1`
-    FOREIGN KEY (`Cdu_id`)
-    REFERENCES `yii2saramago`.`Cdu` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Obra_Colecao1`
-    FOREIGN KEY (`Colecao_id`)
-    REFERENCES `yii2saramago`.`Colecao` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `yii2saramago`.`LeituraRecomendada`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`LeituraRecomendada` (
@@ -308,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Monografia` (
   `isbn` INT NOT NULL COMMENT 'International Standard Book Number (ISBN-10/ISBN-13)',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_Monografia_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_Monografia_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_Monografia_Obra1`
     FOREIGN KEY (`Obra_id`)
     REFERENCES `yii2saramago`.`Obra` (`id`)

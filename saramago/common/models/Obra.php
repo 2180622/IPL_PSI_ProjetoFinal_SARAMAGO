@@ -26,6 +26,7 @@ use Yii;
  *
  * @property AnaliticoObra[] $analiticoObras
  * @property Analitico[] $analiticos
+ * @property Exemplar[] $exemplars
  * @property Leiturarecomendada[] $leiturarecomendadas
  * @property Materialav[] $materialavs
  * @property Monografia[] $monografias
@@ -108,6 +109,16 @@ class Obra extends \yii\db\ActiveRecord
     public function getAnaliticos()
     {
         return $this->hasMany(Analitico::className(), ['id' => 'Analitico_id'])->viaTable('analitico_obra', ['Obra_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Exemplars]].
+     *
+     * @return \yii\db\ActiveQuery|ExemplarQuery
+     */
+    public function getExemplars()
+    {
+        return $this->hasMany(Exemplar::className(), ['Obra_id' => 'id']);
     }
 
     /**
