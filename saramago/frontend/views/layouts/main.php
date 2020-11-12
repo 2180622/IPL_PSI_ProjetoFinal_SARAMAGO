@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -29,19 +30,29 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
+        //TODO Se a entidade tiver logo, aparece logo, se não tiver, aparece o nome da entidade [consulta bd]
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            /*'class' => 'navbar-inverse navbar-fixed-top',*/
+            'class' => 'navbar-light navbar-expand-lg fixed-top',
+            'style' => 'border-bottom: 1px solid black',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
+        //['label' => 'Home', 'url' => ['/site/index']],
+        //['label' => 'About', 'url' => ['/site/about']],
+        //['label' => 'Contact', 'url' => ['/site/contact']],
+
+        //TODO Pesquisa
+        ['label' => 'Pesquisa', 'url' => ['/site/contact'],
+         'items' =>[
+                 ['label' =>'Pesquisa Avançada', 'url' =>['/site/about']],
+
+         ],
+    ]];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
@@ -68,12 +79,15 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
 <footer class="footer">
     <div class="container">
+        <!-- TODO Entidade Se a entidade tiver prenchida aparece o nome dela, se não tiver [consulta bd] -->
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <!-- TODO Todo o conteudo de imagens, sejam da pasta "res" ou "img" provem do backend-->
+        <p class="pull-right"> Powered by
+            <?=Html::img('@web/res/logo-saramago.png',['height' => '20', 'alt'=>Yii::$app->name])?>
+        </p>
     </div>
 </footer>
 

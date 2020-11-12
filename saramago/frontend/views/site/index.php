@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\bootstrap\Button;
+
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
@@ -16,8 +18,151 @@ $this->title = 'My Yii Application';
 
     <div class="body-content">
 
+        <!-- SLIDESHOW -->
+        <!-- TODO SLIDESHOW
+            Se o slideshow tiver ativo na tab. config, aparece as últimas obras adquiquidas.
+            Independemente da data de registo delas só aparece as que têm exemplares.
+        -->
+        <h3>Últimas obras adquiridas</h3>
+        <hr>
+        <div id="carousel-obras" class="carousel slide" data-ride="carousel">
+            <!-- indicadores -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-obras" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-obras" data-slide-to="1"></li>
+                <li data-target="#carousel-obras" data-slide-to="2"></li>
+                <li data-target="#carousel-obras" data-slide-to="3"></li>
+                <li data-target="#carousel-obras" data-slide-to="4"></li>
+                <li data-target="#carousel-obras" data-slide-to="5"></li>
+                <li data-target="#carousel-obras" data-slide-to="6"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+
+                <!-- item #1 / active -->
+                <div class="item active">
+                    <img src="" alt="NOME DA OBRA #1 (ANO)" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3>NOME DA OBRA #1 (ANO)</h3>
+                        <p>Autor/Autores</p>
+                    </div>
+                </div>
+
+                <!-- item #2 -->
+                <div class="item">
+                    <img src="" alt="NOME DA OBRA #2 (ANO)" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3>NOME DA OBRA #2 (ANO)</h3>
+                        <p>Autor/Autores</p>
+                    </div>
+                </div>
+
+                <!-- item #3 -->
+                <div class="item">
+                    <img src="" alt="NOME DA OBRA #3 (ANO)" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3>NOME DA OBRA #3 (ANO)</h3>
+                        <p>Autor/Autores</p>
+                    </div>
+                </div>
+
+                <!-- item #4 -->
+                <div class="item">
+                    <img src="" alt="NOME DA OBRA #4 (ANO)" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3>NOME DA OBRA #4 (ANO)</h3>
+                        <p>Autor/Autores</p>
+                    </div>
+                </div>
+
+                <!-- item #5 -->
+                <div class="item">
+                    <img src="" alt="NOME DA OBRA #5 (ANO)" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3>NOME DA OBRA #5 (ANO)</h3>
+                        <p>Autor/Autores</p>
+                    </div>
+                </div>
+
+                <!-- item #6 -->
+                <div class="item">
+                    <img src="" alt="NOME DA OBRA #6 (ANO)" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3>NOME DA OBRA #6 (ANO)</h3>
+                        <p>Autor/Autores</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Controldores / esquerda e direita -->
+            <a class="left carousel-control" href="#carousel-obras" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-obras" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Próximo</span>
+            </a>
+        </div>
+
+        <!--TAGS-->
+        <h3>Tags</h3>
+        <hr>
         <div class="row">
+            <div class="panel-group col-lg-6">
+                <div class="panel panel-default">
+                    <!-- //TODO -->
+                    <div class="panel-heading">Assuntos</div>
+                    <div class="panel-body">
+                        <!-- //TODO Usar a classe HTML estatica ou (widget apropriado) do Yii2 -->
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">4</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">6</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">3</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">8</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">9</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">2</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Autores</div>
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">4</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">6</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">3</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">8</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">9</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">2</span></button>
+                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Datas de publicação</div>
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-outline-light">2020 <span class="badge badge-light">4</span></button>
+                        <button type="button" class="btn btn-outline-light">2019 <span class="badge badge-light">1</span></button>
+                        <button type="button" class="btn btn-outline-light">2018 <span class="badge badge-light">6</span></button>
+                        <button type="button" class="btn btn-outline-light">2017 <span class="badge badge-light">3</span></button>
+                        <button type="button" class="btn btn-outline-light">2016 <span class="badge badge-light">8</span></button>
+                        <button type="button" class="btn btn-outline-light">2015 <span class="badge badge-light">9</span></button>
+                        <button type="button" class="btn btn-outline-light">2014 <span class="badge badge-light">2</span></button>
+                        <button type="button" class="btn btn-outline-light">2013 <span class="badge badge-light">1</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!--
             <div class="col-lg-4">
+
                 <h2>Heading</h2>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
@@ -47,7 +192,7 @@ $this->title = 'My Yii Application';
 
                 <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
+            -->
         </div>
 
-    </div>
 </div>
