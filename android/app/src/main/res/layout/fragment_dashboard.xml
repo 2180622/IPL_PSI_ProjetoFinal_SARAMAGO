@@ -67,30 +67,69 @@
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btn_leitores"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="36dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical">
 
-            <Button
+                <ImageView
+                    android:id="@+id/imgLeitores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_undraw_leitor" />
+
+                <TextView
+                    android:id="@+id/tvleitores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Leitores"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/btn_catalogo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical"/>
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btn_renovacoes"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="36dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_undraw_newspaper" />
+
+                <TextView
+                    android:id="@+id/tvRenovacoes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Renovações"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -100,27 +139,73 @@
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btn_circulacao"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="36dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" >
 
-            <Button
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:src="@drawable/ic_undraw_road_to_knowledge" />
+
+                <TextView
+                    android:id="@+id/tvCirculacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Circulação" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/btn_arrumar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" >
 
-            <Button
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_undraw_bookshelves" />
+
+                <TextView
+                    android:id="@+id/tvArrumar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Arrumar" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/btn_reservas"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="36dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_undraw_in_no_time" />
+
+                <TextView
+                    android:id="@+id/tvReservas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reservas" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -128,27 +213,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btn_transferencias"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="36dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" />
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btn_postos"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" />
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btn_reprografia"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="36dp"
-                android:background="@drawable/bg_button" />
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:orientation="vertical" />
         </LinearLayout>
 
     </LinearLayout>
