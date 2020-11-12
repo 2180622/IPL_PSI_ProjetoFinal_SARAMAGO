@@ -18,6 +18,7 @@ use Yii;
  *
  * @property Exemplar[] $exemplars
  * @property Leitor[] $leitors
+ * @property Postotrabalho[] $postotrabalhos
  */
 class Biblioteca extends \yii\db\ActiveRecord
 {
@@ -79,6 +80,16 @@ class Biblioteca extends \yii\db\ActiveRecord
     public function getLeitors()
     {
         return $this->hasMany(Leitor::className(), ['Biblioteca_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Postotrabalhos]].
+     *
+     * @return \yii\db\ActiveQuery|PostotrabalhoQuery
+     */
+    public function getPostotrabalhos()
+    {
+        return $this->hasMany(Postotrabalho::className(), ['Biblioteca_id' => 'id']);
     }
 
     /**

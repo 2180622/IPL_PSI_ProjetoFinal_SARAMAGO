@@ -12,7 +12,9 @@ use Yii;
  * @property int $totalLugares Total de lugares
  * @property string|null $notaOpac Informação para o OPAC
  * @property string|null $notaInterna Informação interna
+ * @property int $Biblioteca_id
  *
+ * @property Biblioteca $biblioteca
  * @property Reservasposto[] $reservaspostos
  */
 class Postotrabalho extends \yii\db\ActiveRecord
@@ -31,10 +33,11 @@ class Postotrabalho extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['designacao', 'totalLugares'], 'required'],
-            [['totalLugares'], 'integer'],
+            [['designacao', 'totalLugares', 'Biblioteca_id'], 'required'],
+            [['totalLugares', 'Biblioteca_id'], 'integer'],
             [['designacao', 'notaOpac'], 'string', 'max' => 255],
             [['notaInterna'], 'string', 'max' => 2555],
+            [['Biblioteca_id'], 'exist', 'skipOnError' => true, 'targetClass' => Biblioteca::className(), 'targetAttribute' => ['Biblioteca_id' => 'id']],
         ];
     }
 
@@ -49,7 +52,18 @@ class Postotrabalho extends \yii\db\ActiveRecord
             'totalLugares' => 'Total de lugares',
             'notaOpac' => 'Informação para o OPAC',
             'notaInterna' => 'Informação interna',
+            'Biblioteca_id' => 'Biblioteca ID',
         ];
+    }
+
+    /**
+     * Gets query for [[Biblioteca]].
+     *
+     * @return \yii\db\ActiveQuery|BibliotecaQuery
+     */
+    public function getBiblioteca()
+    {
+        return $this->hasOne(Biblioteca::className(), ['id' => 'Biblioteca_id']);
     }
 
     /**

@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Autor` (
   `nacionalidade` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Nacionalidade',
   `orcid` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Open Researcher and Contributor ID',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `orcid_UNIQUE` (`orcid` ASC) )
+  UNIQUE INDEX `orcid_UNIQUE` (`orcid` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Biblioteca` (
   `codPostal` INT(7) NULL DEFAULT NULL COMMENT 'Código Postal',
   `levantamento` TINYINT NOT NULL DEFAULT 1 COMMENT 'Permissão para levantamento na biblioteca',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `codBiblioteca_UNIQUE` (`codBiblioteca` ASC) )
+  UNIQUE INDEX `codBiblioteca_UNIQUE` (`codBiblioteca` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -129,8 +129,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Obra` (
   `Cdu_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Colecao_id` INT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_Obra_Cdu1_idx` (`Cdu_id` ASC) ,
-  INDEX `fk_Obra_Colecao1_idx` (`Colecao_id` ASC) ,
+  INDEX `fk_Obra_Cdu1_idx` (`Cdu_id` ASC),
+  INDEX `fk_Obra_Colecao1_idx` (`Colecao_id` ASC),
   CONSTRAINT `fk_Obra_Cdu1`
     FOREIGN KEY (`Cdu_id`)
     REFERENCES `yii2saramago`.`Cdu` (`id`)
@@ -159,11 +159,11 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
   `TipoExemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Obra_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Exemplar_Biblioteca1_idx` (`Biblioteca_id` ASC) ,
-  INDEX `fk_Exemplar_EstatutoExemplar1_idx` (`EstatutoExemplar_id` ASC) ,
-  INDEX `fk_Exemplar_TipoExemplar1_idx` (`TipoExemplar_id` ASC) ,
-  INDEX `fk_Exemplar_Obra1_idx` (`Obra_id` ASC) ,
-  UNIQUE INDEX `codBarras_UNIQUE` (`codBarras` ASC) ,
+  INDEX `fk_Exemplar_Biblioteca1_idx` (`Biblioteca_id` ASC),
+  INDEX `fk_Exemplar_EstatutoExemplar1_idx` (`EstatutoExemplar_id` ASC),
+  INDEX `fk_Exemplar_TipoExemplar1_idx` (`TipoExemplar_id` ASC),
+  INDEX `fk_Exemplar_Obra1_idx` (`Obra_id` ASC),
+  UNIQUE INDEX `codBarras_UNIQUE` (`codBarras` ASC),
   CONSTRAINT `fk_Exemplar_Biblioteca1`
     FOREIGN KEY (`Biblioteca_id`)
     REFERENCES `yii2saramago`.`Biblioteca` (`id`)
@@ -225,11 +225,11 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Leitor` (
   `Biblioteca_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `TipoLeitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `codBarras_UNIQUE` (`codBarras` ASC) ,
-  UNIQUE INDEX `nif_UNIQUE` (`nif` ASC) ,
-  UNIQUE INDEX `docId_UNIQUE` (`docId` ASC) ,
-  INDEX `fk_Leitor_Biblioteca_idx` (`Biblioteca_id` ASC) ,
-  INDEX `fk_Leitor_TipoLeitor1_idx` (`TipoLeitor_id` ASC) ,
+  UNIQUE INDEX `codBarras_UNIQUE` (`codBarras` ASC),
+  UNIQUE INDEX `nif_UNIQUE` (`nif` ASC),
+  UNIQUE INDEX `docId_UNIQUE` (`docId` ASC),
+  INDEX `fk_Leitor_Biblioteca_idx` (`Biblioteca_id` ASC),
+  INDEX `fk_Leitor_TipoLeitor1_idx` (`TipoLeitor_id` ASC),
   CONSTRAINT `fk_Leitor_Biblioteca`
     FOREIGN KEY (`Biblioteca_id`)
     REFERENCES `yii2saramago`.`Biblioteca` (`id`)
@@ -251,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Funcionario` (
   `departamento` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Departamento do funcionário',
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_Funcionario_Leitor1_idx` (`Leitor_id` ASC) ,
+  INDEX `fk_Funcionario_Leitor1_idx` (`Leitor_id` ASC),
   CONSTRAINT `fk_Funcionario_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -271,8 +271,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`LeituraRecomendada` (
   `Funcionario_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Obra_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_LeituraRecomendada_Funcionario1_idx` (`Funcionario_id` ASC) ,
-  INDEX `fk_LeituraRecomendada_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_LeituraRecomendada_Funcionario1_idx` (`Funcionario_id` ASC),
+  INDEX `fk_LeituraRecomendada_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_LeituraRecomendada_Funcionario1`
     FOREIGN KEY (`Funcionario_id`)
     REFERENCES `yii2saramago`.`Funcionario` (`id`)
@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`MaterialAv` (
   `ean` INT(13) NOT NULL COMMENT 'Código de Barras EAN-13',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_MaterialAv_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_MaterialAv_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_MaterialAv_Obra1`
     FOREIGN KEY (`Obra_id`)
     REFERENCES `yii2saramago`.`Obra` (`id`)
@@ -350,7 +350,14 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`PostoTrabalho` (
   `totalLugares` INT NOT NULL COMMENT 'Total de lugares',
   `notaOpac` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Informação para o OPAC',
   `notaInterna` VARCHAR(2555) NULL DEFAULT NULL COMMENT 'Informação interna',
-  PRIMARY KEY (`id`))
+  `Biblioteca_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_PostoTrabalho_Biblioteca1_idx` (`Biblioteca_id` ASC),
+  CONSTRAINT `fk_PostoTrabalho_Biblioteca1`
+    FOREIGN KEY (`Biblioteca_id`)
+    REFERENCES `yii2saramago`.`Biblioteca` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -373,8 +380,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Reprografia` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_Reprografia_Leitor1_idx` (`Leitor_id` ASC) ,
-  INDEX `fk_Reprografia_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_Reprografia_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_Reprografia_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_Reprografia_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -400,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Requisicao` (
   `Renovacoes` TINYINT(1) NOT NULL DEFAULT '0' COMMENT 'Renovações realizadas',
   `Leitor_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Requisicao_Leitor1_idx` (`Leitor_id` ASC) ,
+  INDEX `fk_Requisicao_Leitor1_idx` (`Leitor_id` ASC),
   CONSTRAINT `fk_Requisicao_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -422,8 +429,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Reserva` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeiro',
   `Exemplar_id` INT NOT NULL COMMENT 'Chave estrangeiro',
   PRIMARY KEY (`id`),
-  INDEX `fk_Reserva_Leitor1_idx` (`Leitor_id` ASC) ,
-  INDEX `fk_Reserva_Exemplar1_idx` (`Exemplar_id` ASC) ,
+  INDEX `fk_Reserva_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_Reserva_Exemplar1_idx` (`Exemplar_id` ASC),
   CONSTRAINT `fk_Reserva_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -453,8 +460,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`ReservasPosto` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `PostoTrabalho_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_ReservasPosto_Leitor1_idx` (`Leitor_id` ASC) ,
-  INDEX `fk_ReservasPosto_PostoTrabalho1_idx` (`PostoTrabalho_id` ASC) ,
+  INDEX `fk_ReservasPosto_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_ReservasPosto_PostoTrabalho1_idx` (`PostoTrabalho_id` ASC),
   CONSTRAINT `fk_ReservasPosto_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -477,8 +484,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`SugestaoAquisicao` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_SugestaoAquisicao_Leitor1_idx` (`Leitor_id` ASC) ,
-  INDEX `fk_SugestaoAquisicao_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_SugestaoAquisicao_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_SugestaoAquisicao_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_SugestaoAquisicao_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -502,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`TipoIrregularidade` (
   `diasBloqueio` INT NOT NULL DEFAULT 30 COMMENT 'Duração do bloqueio (em dias)',
   `diasAtivacao` INT NOT NULL DEFAULT 7 COMMENT 'Ativação do bloqueio (em dias)',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `irregularidade_UNIQUE` (`irregularidade` ASC) )
+  UNIQUE INDEX `irregularidade_UNIQUE` (`irregularidade` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -538,8 +545,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Aluno` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Curso_id` INT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_Aluno_Curso1_idx` (`Curso_id` ASC) ,
-  INDEX `fk_Aluno_Leitor1_idx` (`Leitor_id` ASC) ,
+  INDEX `fk_Aluno_Curso1_idx` (`Curso_id` ASC),
+  INDEX `fk_Aluno_Leitor1_idx` (`Leitor_id` ASC),
   CONSTRAINT `fk_Aluno_Curso1`
     FOREIGN KEY (`Curso_id`)
     REFERENCES `yii2saramago`.`Curso` (`id`)
@@ -577,8 +584,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`ConsultaTReal` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Exemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_ConsultaTReal_Leitor1_idx` (`Leitor_id` ASC) ,
-  INDEX `fk_ConsultaTReal_Exemplar1_idx` (`Exemplar_id` ASC) ,
+  INDEX `fk_ConsultaTReal_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_ConsultaTReal_Exemplar1_idx` (`Exemplar_id` ASC),
   CONSTRAINT `fk_ConsultaTReal_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -600,7 +607,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Fundo` (
   `designacao` VARCHAR(255) NOT NULL,
   `Exemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_Fundo_Exemplar1_idx` (`Exemplar_id` ASC) ,
+  INDEX `fk_Fundo_Exemplar1_idx` (`Exemplar_id` ASC),
   CONSTRAINT `fk_Fundo_Exemplar1`
     FOREIGN KEY (`Exemplar_id`)
     REFERENCES `yii2saramago`.`Exemplar` (`id`)
@@ -619,8 +626,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Irregularidade` (
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `TipoIrregularidade_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Irregularidade_Leitor1_idx` (`Leitor_id` ASC) ,
-  INDEX `fk_Irregularidade_TipoIrregularidade1_idx` (`TipoIrregularidade_id` ASC) ,
+  INDEX `fk_Irregularidade_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_Irregularidade_TipoIrregularidade1_idx` (`TipoIrregularidade_id` ASC),
   CONSTRAINT `fk_Irregularidade_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
@@ -645,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`PubPeriodica` (
   `ISSN` INT(8) NOT NULL COMMENT 'International Standard Serial Number',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
-  INDEX `fk_PubPeriodica_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_PubPeriodica_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_PubPeriodica_Obra1`
     FOREIGN KEY (`Obra_id`)
     REFERENCES `yii2saramago`.`Obra` (`id`)
@@ -661,8 +668,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Analitico_Obra` (
   `Analitico_id` INT NOT NULL,
   `Obra_id` INT NOT NULL,
   PRIMARY KEY (`Analitico_id`, `Obra_id`),
-  INDEX `fk_Analitico_has_Obra_Obra1_idx` (`Obra_id` ASC) ,
-  INDEX `fk_Analitico_has_Obra_Analitico1_idx` (`Analitico_id` ASC) ,
+  INDEX `fk_Analitico_has_Obra_Obra1_idx` (`Obra_id` ASC),
+  INDEX `fk_Analitico_has_Obra_Analitico1_idx` (`Analitico_id` ASC),
   CONSTRAINT `fk_Analitico_has_Obra_Analitico1`
     FOREIGN KEY (`Analitico_id`)
     REFERENCES `yii2saramago`.`Analitico` (`id`)
@@ -684,8 +691,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Curso_Uc` (
   `Curso_id` INT NOT NULL,
   `Uc_id` INT NOT NULL,
   PRIMARY KEY (`Curso_id`, `Uc_id`),
-  INDEX `fk_Curso_has_Uc_Uc1_idx` (`Uc_id` ASC) ,
-  INDEX `fk_Curso_has_Uc_Curso1_idx` (`Curso_id` ASC) ,
+  INDEX `fk_Curso_has_Uc_Uc1_idx` (`Uc_id` ASC),
+  INDEX `fk_Curso_has_Uc_Curso1_idx` (`Curso_id` ASC),
   CONSTRAINT `fk_Curso_has_Uc_Curso1`
     FOREIGN KEY (`Curso_id`)
     REFERENCES `yii2saramago`.`Curso` (`id`)
@@ -706,8 +713,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Obra_Autor` (
   `Obra_id` INT NOT NULL,
   `Autor_id` INT NOT NULL,
   PRIMARY KEY (`Obra_id`, `Autor_id`),
-  INDEX `fk_Obra_has_Autor_Autor1_idx` (`Autor_id` ASC) ,
-  INDEX `fk_Obra_has_Autor_Obra1_idx` (`Obra_id` ASC) ,
+  INDEX `fk_Obra_has_Autor_Autor1_idx` (`Autor_id` ASC),
+  INDEX `fk_Obra_has_Autor_Obra1_idx` (`Obra_id` ASC),
   CONSTRAINT `fk_Obra_has_Autor_Obra1`
     FOREIGN KEY (`Obra_id`)
     REFERENCES `yii2saramago`.`Obra` (`id`)
@@ -728,8 +735,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Autor_Analitico` (
   `Autor_id` INT NOT NULL,
   `Analitico_id` INT NOT NULL,
   PRIMARY KEY (`Autor_id`, `Analitico_id`),
-  INDEX `fk_Autor_has_Analitico_Analitico1_idx` (`Analitico_id` ASC) ,
-  INDEX `fk_Autor_has_Analitico_Autor1_idx` (`Autor_id` ASC) ,
+  INDEX `fk_Autor_has_Analitico_Analitico1_idx` (`Analitico_id` ASC),
+  INDEX `fk_Autor_has_Analitico_Autor1_idx` (`Autor_id` ASC),
   CONSTRAINT `fk_Autor_has_Analitico_Autor1`
     FOREIGN KEY (`Autor_id`)
     REFERENCES `yii2saramago`.`Autor` (`id`)
@@ -751,8 +758,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Requisicao_Exemplar` (
   `Requisicao_id` INT NOT NULL,
   `Exemplar_id` INT NOT NULL,
   PRIMARY KEY (`Requisicao_id`, `Exemplar_id`),
-  INDEX `fk_Requisicao_has_Exemplar_Exemplar1_idx` (`Exemplar_id` ASC) ,
-  INDEX `fk_Requisicao_has_Exemplar_Requisicao1_idx` (`Requisicao_id` ASC) ,
+  INDEX `fk_Requisicao_has_Exemplar_Exemplar1_idx` (`Exemplar_id` ASC),
+  INDEX `fk_Requisicao_has_Exemplar_Requisicao1_idx` (`Requisicao_id` ASC),
   CONSTRAINT `fk_Requisicao_has_Exemplar_Requisicao1`
     FOREIGN KEY (`Requisicao_id`)
     REFERENCES `yii2saramago`.`Requisicao` (`id`)
@@ -774,8 +781,8 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`LeituraRecomendada_Uc` (
   `LeituraRecomendada_id` INT NOT NULL,
   `Uc_id` INT NOT NULL,
   PRIMARY KEY (`LeituraRecomendada_id`, `Uc_id`),
-  INDEX `fk_LeituraRecomendada_has_Uc_Uc1_idx` (`Uc_id` ASC) ,
-  INDEX `fk_LeituraRecomendada_has_Uc_LeituraRecomendada1_idx` (`LeituraRecomendada_id` ASC) ,
+  INDEX `fk_LeituraRecomendada_has_Uc_Uc1_idx` (`Uc_id` ASC),
+  INDEX `fk_LeituraRecomendada_has_Uc_LeituraRecomendada1_idx` (`LeituraRecomendada_id` ASC),
   CONSTRAINT `fk_LeituraRecomendada_has_Uc_LeituraRecomendada1`
     FOREIGN KEY (`LeituraRecomendada_id`)
     REFERENCES `yii2saramago`.`LeituraRecomendada` (`id`)

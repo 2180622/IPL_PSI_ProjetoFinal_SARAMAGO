@@ -37,14 +37,14 @@ class m201111_232457_saramago_adds extends Migration
         $this->insert('user', [
             'id' => '1',
             'username' => 'admin',
-            'auth_key' => 'nX0APpVUUU8bc9Lqqw6c8nhv1EBvVlOp',
-            'password_hash' => '$2y$13$DJARzGrUAm7onnm7sdeu.eV8/quc0saQ2im4BUajvMwNhcokVKpWG',
-            'password_reset_token' => 'NULL',
+            'auth_key' => '8zBomsps5mCNjOxI6d64LfgHs1bR70wW',
+            'password_hash' => '$2y$13$6Oajs8EG04CCH84AoiguE.axGBGkmd9KMOkDx5T4/Y2GIoN9kAwsi',
+            'password_reset_token' => '',
             'email' => 'admin@saramago.pt',
             'status' => '10',
             'created_at' => '1578482095',
             'updated_at' => '1578482095',
-            'verification_token' => 'NULL',
+            'verification_token' => '',
         ]);
 
 
