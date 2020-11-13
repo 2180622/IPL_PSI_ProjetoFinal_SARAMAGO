@@ -60,7 +60,6 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_dashboard:
                 //System.out.println("-->Nav Estatico");
                 fragment = new Dashboard();
-                setTitle(item.getTitle());
                 break;
             case R.id.tv_email:
                 //System.out.println("-->Nav Dinamico");
@@ -75,7 +74,6 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 }
-
 /*
 88BDBC - Azul Claro
 FFFFFF - Branco
