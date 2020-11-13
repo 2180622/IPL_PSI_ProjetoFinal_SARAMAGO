@@ -39,12 +39,12 @@ class m201111_232457_saramago_adds extends Migration
             'username' => 'admin',
             'auth_key' => '8zBomsps5mCNjOxI6d64LfgHs1bR70wW',
             'password_hash' => '$2y$13$6Oajs8EG04CCH84AoiguE.axGBGkmd9KMOkDx5T4/Y2GIoN9kAwsi',
-            'password_reset_token' => '',
+            'password_reset_token' => null,
             'email' => 'admin@saramago.pt',
             'status' => '10',
             'created_at' => '1578482095',
             'updated_at' => '1578482095',
-            'verification_token' => '',
+            'verification_token' => null,
         ]);
 
 
@@ -53,7 +53,6 @@ class m201111_232457_saramago_adds extends Migration
 
     public function down()
     {
-        echo "m201111_232457_saramago_adds cannot be reverted.\n";
 
         $this->delete('{{%user}}', ['id' => 1]);
 
@@ -61,7 +60,6 @@ class m201111_232457_saramago_adds extends Migration
 
         $this->dropColumn('{{%Leitor}}', 'user_id');
 
-        return false;
     }
     
 }
