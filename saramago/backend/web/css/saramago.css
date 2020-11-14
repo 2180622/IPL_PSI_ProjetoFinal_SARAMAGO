@@ -95,6 +95,23 @@
     color: #ffffff;
 }
 
+.layout-minor-top{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 50%;
+}
+
+@media all and (max-width: 1304px) {
+    .layout-minor-top {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+
+    }
+}
+
 /* Dashboard */
 .saramago-dashboard a{
     color: #000000;

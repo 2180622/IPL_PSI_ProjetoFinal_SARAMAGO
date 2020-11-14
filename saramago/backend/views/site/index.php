@@ -2,52 +2,123 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$this->title = 'SARAMAGO';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+    <div class="container-fluid">
+        <? //Logo ?>
+        <?=Html::img('@web/res/logo-saramago.png', ['class'=>'logo-saramago','height'=>'70‰', 'alt'=>'SARAMAGO']) ?>
+        <br>
+        <? //TODO ?>
+        <div class="rapido-saramago">
+            <div class="tabbable tabs-below">
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane active">
+                        <form class="form-inline"><input type="search" id="form-rapido" name="emprestimos" placeholder="Digite o código de barras ou o username..."><button type="submit" value="Submit">Submeter</button></form>
+                    </div>
+                    <div id="tab2" class="tab-pane">
+                        <form class="form-inline"><input type="search" id="form-rapido" name="devolucao" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
+                    </div>
+                    <div id="tab3" class="tab-pane">
+                        <form class="form-inline"><input type="search" id="form-rapido" name="renovar" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
+                    </div>
+                    <div id="tab4" class="tab-pane">
+                        <form class="form-inline"><input type="search" id="form-rapido" name="pesquisarLeitores" placeholder="Digite o código de barras, numero, alias ou nome do leitor..."><button type="submit" value="Submit">Submeter</button></form>
+                    </div>
+                    <div id="tab5" class="tab-pane">
+                        <form class="form-inline"><input type="search" id="form-rapido" name="pesquisarCatalogo" placeholder="Digite palavras para pesquisar no cátalogo..."><button type="submit" value="Submit">Submeter</button></form>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Empréstimos</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Devolução</a></li>
+                    <li><a href="#tab3" data-toggle="tab">Renovar</a></li>
+                    <li><a href="#tab4" data-toggle="tab">Pesquisar Leitores</a></li>
+                    <li><a href="#tab5" data-toggle="tab">Pesquisar no Catálogo</a></li>
+                </ul>
             </div>
         </div>
-
+    </div>
+    <br><br>
+    <div class="body-content">
+        <?php echo '
+        <div class="row saramago-dashboard">
+            <div class="col-lg-4">
+                <a href="'.Url::toRoute(['/leitor/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Leitores</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a href="'.Url::toRoute(['/cat/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Catálogo</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a href="'.Url::toRoute(['/cir/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Circulação</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4" style="margin-top: 20px">
+                <a href="'.Url::toRoute(['/sr/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Serviços Reprográficos</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4" style="margin-top: 20px">
+                <a href="'.Url::toRoute(['/pto/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Postos de Trabalho</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4" style="margin-top: 20px">
+                <a href="'.Url::toRoute(['/config/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Administração</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>    
+        </div>
+        '?>
     </div>
 </div>
