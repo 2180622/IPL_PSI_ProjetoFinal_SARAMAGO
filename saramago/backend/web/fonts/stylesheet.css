@@ -1,41 +1,41 @@
 @font-face {
     font-family: 'Geometric 415 Black BT';
-    src: url('geometric-415-black-bt') format('truetype');
+    src: url('geometric-415-black-bt.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Geometric 415 Black Italic BT';
-    src: url('geometric-415-black-italic') format('truetype');
+    src: url('geometric-415-black-italic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Geometr415 Lt BT Lite';
-    src: url('geometric-415-lt-bt-lite') format('truetype');
+    font-family: 'Geometric 415 Lt BT Lite';
+    src: url('geometric-415-lt-bt-lite.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Geometr415 Lt BT Lite';
-    src: url('geometric-415-lt-bt-lite') format('truetype');
+    font-family: 'Geometric 415 Lt BT Lite';
+    src: url('geometric-415-lt-bt-lite.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Geometric 415 Medium BT';
-    src: url('geometric-415-medium-bt') format('truetype');
+    src: url('geometric-415-medium-bt.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Geometric 415 Medium Italic BT';
-    src: url('geometric-415-medium-italic-bt') format('truetype');
+    src: url('geometric-415-medium-italic-bt.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }

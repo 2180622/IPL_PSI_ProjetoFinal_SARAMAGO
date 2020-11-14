@@ -1,0 +1,123 @@
+/* MAIN */
+.logo-saramago{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.breadcrumb,
+.breadcrumb a {
+    font-family: "Geometr415 Lt BT Lite", sans-serif;
+    background-color: #254E58;
+    color: #ffffff;
+}
+
+/* DASHBOARD*/
+
+/* Container rapido-saramago */
+.rapido-saramago .p{
+    font-family: "Geometr415 Lt BT Lite", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+.rapido-saramago .tab-content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+
+}
+
+.rapido-saramago .nav-tabs {
+    border-bottom: 0;
+    border-top: 1px solid #ddd;
+}
+
+.rapido-saramago .nav-tabs>li {
+    margin-bottom: 0;
+    margin-top: -1px;
+}
+
+.rapido-saramago .nav-tabs>li>a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 20px;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: #254E58;
+}
+
+.rapido-saramago .nav-tabs>.active>a,
+.rapido-saramago .nav-tabs>.active>a:hover,
+.rapido-saramago .nav-tabs>.active>a:focus {
+    color: #555555;
+    cursor: default;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-top-color: transparent;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.rapido-saramago form {
+    display:flex;
+}
+
+.rapido-saramago form input{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    border: 1px solid black;
+    width: 85%;
+}
+
+.rapido-saramago form button {
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+    background: #ffffff;
+    color: black;
+    font-size: 18px;
+    border: 1px solid black;
+    width: 15%;
+    margin-left: 10px;
+    transition-duration: 0.4s;
+
+}
+
+.rapido-saramago form button:hover {
+    background-color: #254E58;
+    color: #ffffff;
+}
+
+/* Dashboard */
+.saramago-dashboard a{
+    color: #000000;
+    text-decoration: none;
+}
+
+.saramago-dashboard a:hover{
+    background-color: #254E58;
+}
+
+.card-dash-saramago p{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    text-align: justify;
+
+}
+
+.card-dash-saramago h1,h2,h3,h4,h5,h6{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+}
+
+.card-dash-saramago {
+    padding: 10px;
+    border: 3px solid #254E58;
+    border-radius: 5px;
+
+}
