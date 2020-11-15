@@ -30,7 +30,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        //'brandLabel' => Yii::$app->name,
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
@@ -62,7 +62,6 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <!-- -->
     <div class="layout-minor-top fixed-top">
         <?=Html::a(Html::img('@web/res/logo-saramago.png', ['height'=>'30‰', 'alt'=>'SARAMAGO']), ''.Yii::$app->homeurl.'')?>
         <div class="rapido-saramago" id="layout-minor">
@@ -95,7 +94,6 @@ AppAsset::register($this);
         </div>
     </div>
     <br>
-    <!-- -->
     <div class="container-fluid">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

@@ -45,7 +45,7 @@ $this->title = 'SARAMAGO';
     <br><br>
     <div class="body-content">
         <?php echo '
-        <div class="row saramago-dashboard">
+        <div class="row container saramago-dashboard">
             <div class="bottom-space col-md-4">
                 <a href="'.Url::to(['/leitor/']).'">
                     <div class="card card-dash-saramago">
