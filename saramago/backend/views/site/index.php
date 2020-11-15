@@ -16,19 +16,19 @@ $this->title = 'SARAMAGO';
         <div class="rapido-saramago">
             <div class="tabbable tabs-below">
                 <div class="tab-content">
-                    <div id="tab1" class="tab-pane active">
+                    <div id="tab1" class="tab-pane fade in active">
                         <form class="form-inline"><input type="search" id="form-rapido" name="emprestimos" placeholder="Digite o código de barras ou o username..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
-                    <div id="tab2" class="tab-pane">
+                    <div id="tab2" class="tab-pane fade">
                         <form class="form-inline"><input type="search" id="form-rapido" name="devolucao" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
-                    <div id="tab3" class="tab-pane">
+                    <div id="tab3" class="tab-pane fade">
                         <form class="form-inline"><input type="search" id="form-rapido" name="renovar" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
-                    <div id="tab4" class="tab-pane">
+                    <div id="tab4" class="tab-pane fade">
                         <form class="form-inline"><input type="search" id="form-rapido" name="pesquisarLeitores" placeholder="Digite o código de barras, numero, alias ou nome do leitor..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
-                    <div id="tab5" class="tab-pane">
+                    <div id="tab5" class="tab-pane fade">
                         <form class="form-inline"><input type="search" id="form-rapido" name="pesquisarCatalogo" placeholder="Digite palavras para pesquisar no cátalogo..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ $this->title = 'SARAMAGO';
         <?php echo '
         <div class="row saramago-dashboard">
             <div class="col-lg-4">
-                <a href="'.Url::toRoute(['/leitor/']).'">
+                <a href="'.Url::to(['/leitor/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Leitores</h3>
@@ -59,7 +59,7 @@ $this->title = 'SARAMAGO';
                 </a>
             </div>
             <div class="col-lg-4">
-                <a href="'.Url::toRoute(['/cat/']).'">
+                <a href="'.Url::to(['/cat/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Catálogo</h3>
@@ -71,7 +71,7 @@ $this->title = 'SARAMAGO';
                 </a>
             </div>
             <div class="col-lg-4">
-                <a href="'.Url::toRoute(['/cir/']).'">
+                <a href="'.Url::to(['/cir/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Circulação</h3>
@@ -83,7 +83,7 @@ $this->title = 'SARAMAGO';
                 </a>
             </div>
             <div class="col-lg-4" style="margin-top: 20px">
-                <a href="'.Url::toRoute(['/sr/']).'">
+                <a href="'.Url::to(['/sr/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Serviços Reprográficos</h3>
@@ -95,7 +95,7 @@ $this->title = 'SARAMAGO';
                 </a>
             </div>
             <div class="col-lg-4" style="margin-top: 20px">
-                <a href="'.Url::toRoute(['/pto/']).'">
+                <a href="'.Url::to(['/pto/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Postos de Trabalho</h3>
@@ -107,7 +107,7 @@ $this->title = 'SARAMAGO';
                 </a>
             </div>
             <div class="col-lg-4" style="margin-top: 20px">
-                <a href="'.Url::toRoute(['/config/']).'">
+                <a href="'.Url::to(['/config/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Administração</h3>
