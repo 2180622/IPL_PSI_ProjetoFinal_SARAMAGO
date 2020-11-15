@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,6 +25,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
+
+                <?= $form->field($model, 'mail2') ?>
+
+                <?= $form->field($model, 'nome') ?>
+
+                <?= $form->field($model, 'nif') ?>
+
+                <?= $form->field($model, 'docId') ?>
+
+                <?= $form->field($model, 'dataNasc')->widget(\yii\jui\DatePicker::className(), ['options' => ['class' => 'form-control'], ])?>
+
+                <?= $form->field($model, 'morada') ?>
+
+                <?= $form->field($model, 'localidade') ?>
+
+                <?= $form->field($model, 'codPostal') ?>
+
+                <?= $form->field($model, 'telemovel') ?>
+
+                <?= $form->field($model, 'telefone') ?>
+
+                <?= $form->field($model, 'notaInterna') ?>
+
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
