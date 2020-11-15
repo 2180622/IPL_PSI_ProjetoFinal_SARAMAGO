@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
         'fonts/stylesheet.css',
     ];
     public $js = [
+        'js/saramago.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
