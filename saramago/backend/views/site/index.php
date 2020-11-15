@@ -46,7 +46,7 @@ $this->title = 'SARAMAGO';
     <div class="body-content">
         <?php echo '
         <div class="row saramago-dashboard">
-            <div class="col-lg-4">
+            <div class="bottom-space col-md-4">
                 <a href="'.Url::to(['/leitor/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
@@ -57,32 +57,7 @@ $this->title = 'SARAMAGO';
                         </div>
                     </div>
                 </a>
-            </div>
-            <div class="col-lg-4">
-                <a href="'.Url::to(['/cat/']).'">
-                    <div class="card card-dash-saramago">
-                        <div class="card-body">
-                            <h3 class="card-title">Catálogo</h3>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4">
-                <a href="'.Url::to(['/cir/']).'">
-                    <div class="card card-dash-saramago">
-                        <div class="card-body">
-                            <h3 class="card-title">Circulação</h3>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4" style="margin-top: 20px">
+                <br>
                 <a href="'.Url::to(['/sr/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
@@ -94,7 +69,18 @@ $this->title = 'SARAMAGO';
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4" style="margin-top: 20px">
+            <div class="bottom-space col-md-4">
+                <a href="'.Url::to(['/cat/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Catálogo</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <br>
                 <a href="'.Url::to(['/pto/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
@@ -106,7 +92,18 @@ $this->title = 'SARAMAGO';
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4" style="margin-top: 20px">
+            <div class="col-md-4">
+                <a href="'.Url::to(['/cir/']).'">
+                    <div class="card card-dash-saramago">
+                        <div class="card-body">
+                            <h3 class="card-title">Circulação</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <br>
                 <a href="'.Url::to(['/config/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
@@ -117,7 +114,7 @@ $this->title = 'SARAMAGO';
                         </div>
                     </div>
                 </a>
-            </div>    
+            </div>
         </div>
         '?>
     </div>
