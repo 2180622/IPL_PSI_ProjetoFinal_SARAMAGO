@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Arrumação';
+$this->title = 'Reservas de Exemplares';
 $this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

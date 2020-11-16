@@ -2,9 +2,14 @@
 namespace backend\controllers;
 
 use Yii;
+
+use common\models\Biblioteca;
+use app\models\BibliotecaSearch;
+
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -26,12 +31,12 @@ class ConfigController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index',
-                            'entidade', 'bibliotecas','postos',
+                            'entidade', 'bibliotecas','bibliotecasview','postos','logotipos','noticias',
                             'equipa',
                             'tipoexemplar', 'estexemplar','cdu',
                             'estleitor','irregularidade','cursos',
                             'recibos',
-                            'reservasopac','slidesopac',
+                            'resexemplar','slidesopac',
                             'arrumacao'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -81,6 +86,7 @@ class ConfigController extends Controller
         return $this->render('entidade');
     }
 
+    #region Bibliotecas
     /**
      * Bibliotecas da entidade homepage.
      *
@@ -88,8 +94,16 @@ class ConfigController extends Controller
      */
     public function actionBibliotecas()
     {
-        return $this->render('bibliotecas');
+
+        //$searchModel = new BibliotecaSearch();
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        //return $this->render('bibliotecas', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+        return $this->render('//config/index');
     }
+
+    #endregion
 
     /**
      * Postos de Trabalho das bibliotecas homepage.
@@ -106,9 +120,19 @@ class ConfigController extends Controller
      *
      * @return string
      */
-    public function actionlogotipos()
+    public function actionLogotipos()
     {
         return $this->render('logotipos');
+    }
+
+    /**
+     * Gestão de Noticías homepage.
+     *
+     * @return string
+     */
+    public function actionNoticias()
+    {
+        return $this->render('noticias');
     }
 
     #endregion
@@ -214,9 +238,9 @@ class ConfigController extends Controller
      *
      * @return string
      */
-    public function actionReservasopac()
+    public function actionResexemplar()
     {
-        return $this->render('reservasopac');
+        return $this->render('resexemplar');
     }
 
     /**

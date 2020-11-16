@@ -42,6 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="card-body"><h4>Logótipos</h4>Defina os logótipos da entidade</div>
                     </div>
                 </a>
+                <br>
+                <a href="' . Url::to(['config/noticias']) . '">
+                    <div class="card card-config">
+                        <div class="card-body"><h4>Notícias</h4>Disponibilize informações importantes aos leitores ou a sua staff </div>
+                    </div>
+                </a>
                 <h3>Gestão da Equipa</h3>
                 <a href="' . Url::to(['config/equipa']) . '">
                     <div class="card card-config">
@@ -96,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3>OPAC</h3>
                 <a href="' . Url::to(['config/resexemplar']) . '">
                     <div class="card card-config">
-                        <div class="card-body"><h4>Reservas de Exemplares</h4>Ative ou desative o cancelamento dastivao leitor para poder cancelar a sua reserva de exemplares no OPAC</div>
+                        <div class="card-body"><h4>Reservas de Exemplares</h4>Ative ou desative o cancelamento de reservas de exemplares pelo leitor no OPAC</div>
                     </div>
                 </a>
                 <br>
