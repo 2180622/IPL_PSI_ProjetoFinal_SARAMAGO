@@ -9,12 +9,6 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-        'formatter' => [
-            'dateFormat' => 'dd/MM/yyyy',
-            'decimalSeparator' => ',',
-            'thousandSeparator' => ' ',
-            'currencyCode' => 'EUR',
-        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'telefone') ?>
 
-                <?= $form->field($model, 'notaInterna') ?>
+                <?= $form->field($model, 'notaInterna')->textarea(['rows' => '6']) ?>
 
 
                 <div class="form-group">
