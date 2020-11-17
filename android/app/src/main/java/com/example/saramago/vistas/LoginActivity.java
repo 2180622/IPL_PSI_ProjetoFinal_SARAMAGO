@@ -1,4 +1,4 @@
-package com.example.saramago;
+package com.example.saramago.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.saramago.R;
 
 public class LoginActivity extends AppCompatActivity {
 

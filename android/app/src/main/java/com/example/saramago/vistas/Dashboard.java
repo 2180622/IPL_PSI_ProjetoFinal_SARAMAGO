@@ -1,4 +1,4 @@
-package com.example.saramago;
+package com.example.saramago.vistas;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.saramago.R;
 
 public class Dashboard extends Fragment {
 
