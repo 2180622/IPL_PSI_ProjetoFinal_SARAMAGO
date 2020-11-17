@@ -190,6 +190,9 @@
 /* endregion */
 
 /* region ADMINISTRAÇÃO */
+.site-config h1{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
 .site-config .card-config {
     padding: 10px;
     border: 3px solid #254E58;
@@ -210,6 +213,34 @@
     color: #000000;
     text-decoration: none;
 
+}
+
+.btn-create{
+    background-color: #254E58;
+    color: #ffffff;
+    transition-duration: 0.4s;
+}
+
+.btn-create:hover{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    border: 1px solid black;
+    background-color: #ffffff;
+
+}
+
+.config-bibliotecas h1,
+.config-bibliotecas h2,
+.config-bibliotecas h3,
+.config-bibliotecas h4,
+.config-bibliotecas h5,
+.config-bibliotecas h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-bibliotecas p,
+.config-bibliotecas a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
 }
 
 /* endregion */

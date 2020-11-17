@@ -31,12 +31,21 @@ class ConfigController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index',
-                            'entidade', 'bibliotecas','bibliotecasview','postos','logotipos','noticias',
+                            'entidade',
+                            'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
+                            'postos',
+                            'logotipos',
+                            'noticias',
                             'equipa',
-                            'tipoexemplar', 'estexemplar','cdu',
-                            'estleitor','irregularidade','cursos',
+                            'tipoexemplar',
+                            'estexemplar',
+                            'cdu',
+                            'estleitor',
+                            'irregularidade',
+                            'cursos',
                             'recibos',
-                            'resexemplar','slidesopac',
+                            'resexemplar',
+                            'slidesopac',
                             'arrumacao'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -47,6 +56,7 @@ class ConfigController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'bibliotecasview'=>['GET'],
                 ],
             ],
         ];
@@ -94,13 +104,60 @@ class ConfigController extends Controller
      */
     public function actionBibliotecas()
     {
+        $searchModel = new BibliotecaSearch();
+        $bibliotecasModel = Biblioteca::find()->all();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        //$searchModel = new BibliotecaSearch();
-        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('bibliotecas', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+            'bibliotecasModels' => $bibliotecasModel]);
+    }
 
+    public function actionBibliotecasView($id)
+    {
+        if (($model = Biblioteca::findOne($id)) !== null) {
+            return $this->renderAjax('bibliotecas-view', ['model' => $model]);
+        }
 
-        //return $this->render('bibliotecas', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
-        return $this->render('//config/index');
+        throw new NotFoundHttpException();
+    }
+
+    public function actionBibliotecasCreate()
+    {
+        $model = new Biblioteca();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
+            return $this->redirect($this->actionBibliotecas());
+        }
+
+        return $this->renderAjax('bibliotecas-create', ['model'=>$model]);
+    }
+
+    public function actionBibliotecasUpdate($id)
+    {
+        $model = $this->findModelBibliotecas($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
+            //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
+        }
+        return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
+    }
+
+    public function actionBibliotecasDelete($id)
+    {
+        $this->findModelBibliotecas($id)->delete();
+
+        return $this->redirect(['bibliotecas']);
+    }
+
+    protected function findModelBibliotecas($id)
+    {
+        if (($model = Biblioteca::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     #endregion
