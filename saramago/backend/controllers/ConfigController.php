@@ -1,11 +1,12 @@
 <?php
 namespace backend\controllers;
 
+use app\models\PostotrabalhoSearch;
+use common\models\Postotrabalho;
 use Yii;
 
 use common\models\Biblioteca;
 use app\models\BibliotecaSearch;
-
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -169,7 +170,31 @@ class ConfigController extends Controller
      */
     public function actionPostos()
     {
-        return $this->render('postos');
+        $searchModel = new PostotrabalhoSearch();
+        $postoTrabalhoModel = Postotrabalho::find()->all();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('postos',
+            ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+            'postoTrabalhoModels' => $postoTrabalhoModel]);
+    }
+
+    public function actionPostosView($id){
+        if (($model = Postotrabalho::findOne($id)) !== null) {
+            return $this->renderAjax('pto-view', ['model' => $model]);
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    public function actionPostosCreate(){
+        $model = new Postotrabalho();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect($this->actionPostos());
+        }
+
+        return $this->renderAjax('pto-create', ['model'=>$model]);
     }
 
     /**

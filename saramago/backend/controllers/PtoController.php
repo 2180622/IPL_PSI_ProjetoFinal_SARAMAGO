@@ -60,6 +60,7 @@ class PtoController extends Controller
     public function actionIndex()
     {
         $this->layout="minor";
+
         return $this->render('index');
     }
 }
