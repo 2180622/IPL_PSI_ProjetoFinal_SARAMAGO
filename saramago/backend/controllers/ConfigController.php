@@ -42,7 +42,7 @@ class ConfigController extends Controller
                         'actions' => ['logout', 'index',
                             'entidade', 'entidade-view', 'entidade', 'entidade-create', 'entidade-update', 'entidade-delete',
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
-                            'postos',
+                            'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
                             'logotipos',
                             'noticias',
                             'equipa',
@@ -244,7 +244,7 @@ class ConfigController extends Controller
 
     public function actionPostosView($id){
         if (($model = Postotrabalho::findOne($id)) !== null) {
-            return $this->renderAjax('pto-view', ['model' => $model]);
+            return $this->renderAjax('postos-view', ['model' => $model]);
         }
 
         throw new NotFoundHttpException();
@@ -252,12 +252,40 @@ class ConfigController extends Controller
 
     public function actionPostosCreate(){
         $model = new Postotrabalho();
+        new Biblioteca();
+        $listaBibliotecas = Biblioteca::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect($this->actionPostos());
         }
 
-        return $this->renderAjax('pto-create', ['model'=>$model]);
+        return $this->renderAjax('postos-create', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
+    }
+    public function actionPostosUpdate($id)
+    {
+        $model = $this->findModelBibliotecas($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
+            //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
+        }
+        return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
+    }
+
+    public function actionPostosDelete($id)
+    {
+        $this->findModelPostostrabalho($id)->delete();
+
+        return $this->redirect(['bibliotecas']);
+    }
+
+    protected function findModelPostostrabalho($id)
+    {
+        if (($model = Biblioteca::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     /**
