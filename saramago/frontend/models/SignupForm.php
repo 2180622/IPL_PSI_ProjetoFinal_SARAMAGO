@@ -115,7 +115,7 @@ class SignupForm extends Model
             $leitor->nome = $this->nome;
             $leitor->nif = $this->nif;
             $leitor->docId = $this->docId;
-            $leitor->codBarras = $generateRandomString();
+            $leitor->codBarras = rand();
             $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
             $newDateString = $myDateTime->format('Y/m/d');
             $leitor->dataNasc = $newDateString;
@@ -178,7 +178,7 @@ class SignupForm extends Model
             ->send();
     }
 
-    protected function generateRandomString($length = 10) {
+    function generateRandomString($length = 10) {
     $characters = '0123456789';
     $charactersLength = strlen($characters);
     $randomString = '';

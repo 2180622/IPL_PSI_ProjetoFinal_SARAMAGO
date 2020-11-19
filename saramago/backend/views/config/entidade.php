@@ -1,15 +1,41 @@
 <?php
 
-
-/* @var $this yii\web\View */
-
 use yii\helpers\Html;
-use yii\helpers\Url;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ConfigSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Entidade';
-$this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-config">
+<div class="entidade-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Criar entidade', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?php Pjax::begin(); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'info',
+            'key',
+            'value',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
+    <?php Pjax::end(); ?>
 
 </div>

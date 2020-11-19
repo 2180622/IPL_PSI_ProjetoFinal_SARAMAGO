@@ -1,12 +1,20 @@
 <?php
 namespace backend\controllers;
 
-use app\models\PostotrabalhoSearch;
-use common\models\Postotrabalho;
 use Yii;
 
+// Entidades
+use common\models\Config;
+use app\models\EntidadeSearch;
+
+// Bibliotecas
 use common\models\Biblioteca;
 use app\models\BibliotecaSearch;
+
+// Postos de trabalho
+use app\models\PostotrabalhoSearch;
+use common\models\Postotrabalho;
+
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -32,7 +40,7 @@ class ConfigController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index',
-                            'entidade',
+                            'entidade', 'entidade-view', 'entidade', 'entidade-create', 'entidade-update', 'entidade-delete',
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos',
                             'logotipos',
@@ -94,8 +102,63 @@ class ConfigController extends Controller
      */
     public function actionEntidade()
     {
-        return $this->render('entidade');
+        $searchModel = new EntidadeSearch();
+        $entidadeModel = Config::find()->all();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('entidade', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+            'entidadeModels' => $entidadeModel]);
     }
+
+    public function actionEntidadeView($id)
+    {
+        if (($model = Config::findOne($id)) !== null) {
+            return $this->renderAjax('entidade-view', ['model' => $model]);
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    public function actionEntidadeCreate()
+    {
+        $model = new Config();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['entidade-view', 'id' => $model->id]);
+            return $this->redirect($this->actionEntidade());
+        }
+
+        return $this->renderAjax('entidade-create', ['model'=>$model]);
+    }
+
+    public function actionEntidadeUpdate($id)
+    {
+        $model = $this->findModelEntidade($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['entidade-view', 'id' => $model->id]);
+            //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
+        }
+        return $this->renderAjax('entidade-update', ['model' => $model]);
+    }
+
+    public function actionEntidadeDelete($id)
+    {
+        $this->findModelEntidade($id)->delete();
+
+        return $this->redirect(['entidade']);
+    }
+
+    protected function findModelEntidade($id)
+    {
+        if (($model = Config::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    #endregion
 
     #region Bibliotecas
     /**
