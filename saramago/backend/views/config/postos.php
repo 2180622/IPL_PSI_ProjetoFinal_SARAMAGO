@@ -8,9 +8,6 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PostotrabalhoSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $postoTrabalhoModels common\models\Postotrabalho */
 
 $this->title = 'Postos de Trabalho';
 $this->params['breadcrumbs'][] = $this->title;
@@ -59,13 +56,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['value'=>Url::to(['postos-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
                     },
                     'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                        ['value'=>Url::to(['postos-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
+                            ['value'=>Url::to(['postos-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
                     },
                     'delete' => function ($url,$model,$id){return Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                        ['value'=>Url::to(['postos-delete','id'=>$id]), 'class' => 'btn btn-danger btn-sm','id'=>'modalButtonDelete'.$id,
-                            'data' => [
-                                'confirm' => 'Tem a certeza de que pretende apagar a '.$model->designacao.'?',
-                                'method' => 'post']]);
+                            ['value'=>Url::to(['postos-delete','id'=>$id]), 'class' => 'btn btn-danger btn-sm','id'=>'modalButtonDelete'.$id,
+                                'data' => [
+                                    'confirm' => 'Tem a certeza de que pretende apagar a '.$model->designacao.'?',
+                                    'method' => 'post']]);
                     },
                 ],
             ],

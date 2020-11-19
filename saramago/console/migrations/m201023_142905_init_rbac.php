@@ -553,7 +553,7 @@ class m201023_142905_init_rbac extends Migration
         // as well as the permissions of the "author" role
         $leitorAluno = $auth->createRole('leitorAluno');
         $auth->add($leitorAluno);
-        //$auth->addChild($leitorAluno, $createPost);
+        $auth->addChild($leitorAluno, $verHorario);
 
         // add "leitorExterno" role and give this role permissions
         // as well as the permissions of the "author" role

@@ -1,11 +1,9 @@
 <?php
-
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Postotrabalho */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -14,7 +12,7 @@ use yii\widgets\ActiveForm;
     <?php
     $lista = ArrayHelper::map($listaBibliotecas,'id','codBiblioteca',['enctype' => 'multipart/form-data']);
 
-    <?php $form = ActiveForm::begin(); ?>
+    $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'designacao')->textInput(['maxlength' => true]) ?>
 

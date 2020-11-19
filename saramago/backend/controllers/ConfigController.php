@@ -237,9 +237,7 @@ class ConfigController extends Controller
         $postoTrabalhoModel = Postotrabalho::find()->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('postos',
-            ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-            'postoTrabalhoModels' => $postoTrabalhoModel]);
+        return $this->render('postos',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,'postoTrabalhoModels' => $postoTrabalhoModel]);
     }
 
     public function actionPostosView($id){
@@ -247,7 +245,7 @@ class ConfigController extends Controller
             return $this->renderAjax('postos-view', ['model' => $model]);
         }
 
-        throw new NotFoundHttpException();
+        return 1;
     }
 
     public function actionPostosCreate(){
@@ -267,7 +265,6 @@ class ConfigController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
-            //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
         }
         return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
     }
@@ -286,6 +283,7 @@ class ConfigController extends Controller
         }
 
         throw new NotFoundHttpException();
+
     }
 
     /**
