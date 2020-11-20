@@ -203,7 +203,6 @@ class ConfigController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
-            //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
         }
         return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
     }
@@ -237,7 +236,10 @@ class ConfigController extends Controller
         $postoTrabalhoModel = Postotrabalho::find()->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('postos',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,'postoTrabalhoModels' => $postoTrabalhoModel]);
+        return $this->render('postos',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'postoTrabalhoModels' => $postoTrabalhoModel]);
     }
 
     public function actionPostosView($id){
@@ -261,24 +263,29 @@ class ConfigController extends Controller
     }
     public function actionPostosUpdate($id)
     {
-        $model = $this->findModelBibliotecas($id);
+        $model = $this->findModelPostostrabalho($id);
+        new Biblioteca();
+        $listaBibliotecas = Biblioteca::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
+            return $this->redirect(['postos', 'id' => $model->id]);
         }
-        return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
+        return $this->renderAjax('postos-update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
     }
 
     public function actionPostosDelete($id)
     {
-        $this->findModelPostostrabalho($id)->delete();
+        //$this->findModelPostostrabalho($id)->delete();
 
-        return $this->redirect(['bibliotecas']);
+        $posto = Postotrabalho::findOne($id);
+        $posto->delete();
+
+        return $this->redirect(['postos']);
     }
 
     protected function findModelPostostrabalho($id)
     {
-        if (($model = Biblioteca::findOne($id)) !== null) {
+        if (($model = Postotrabalho::findOne($id)) !== null) {
             return $model;
         }
 
