@@ -104,6 +104,7 @@ class ConfigController extends Controller
     {
         $searchModel = new EntidadeSearch();
         $entidadeModel = Config::find()->all();
+        //$entidadeModel = Config::find()->where(['value' => 2])->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('entidade', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
