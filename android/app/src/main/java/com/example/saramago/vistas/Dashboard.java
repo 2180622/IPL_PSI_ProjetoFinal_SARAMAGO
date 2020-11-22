@@ -2,6 +2,7 @@ package com.example.saramago.vistas;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,16 @@ public class Dashboard extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        TextView tvOperador = getActivity().findViewById(R.id.tv_operador);
+        //TextView tvOperador = getActivity().findViewById(R.id.tv_operador);
+
+
+        btn_leitores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListaLeitoresActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -48,12 +58,6 @@ public class Dashboard extends Fragment {
         LinearLayout btn_reprografia = getActivity().findViewById(R.id.btn_reprografia);
 
         TextView tvOperador = getActivity().findViewById(R.id.tv_operador);
-
-        btn_leitores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvOperador.setText("TESTE TESTE");
-            }
-        });
     }
+
 }

@@ -3,4 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="ndClose">Fechar</string>
     <string name="ndOpen">Abrir</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="pedidos">Pedidos</string>
+    <string name="terminar_sess_o">Terminar Sessão</string>
+    <string name="logoff">LogOff</string>
 </resources>

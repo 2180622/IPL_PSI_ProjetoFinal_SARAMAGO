@@ -9,19 +9,21 @@
         <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="Dashboard" />
+            android:title="@string/dashboard" />
         <item
             android:id="@+id/nav_pedidos"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="Pedidos" />
+            android:title="@string/pedidos" />
     </group>
 
-    <item android:id="@+id/menu_logoff">
+    <item
+        android:id="@+id/menu_logoff"
+        android:title="@string/logoff">
         <menu>
             <item
                 android:id="@+id/nav_logOff"
                 android:icon="@drawable/ic_launcher_foreground"
-                android:title="Terminar Sessão" />
+                android:title="@string/terminar_sess_o" />
         </menu>
     </item>
 </menu>
