@@ -1,5 +1,5 @@
 <?php
-namespace api\controllers;
+namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -9,7 +9,7 @@ use yii\filters\AccessControl;
 /**
  * Site controller
  */
-class ConfigController extends Controller
+class PtoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class ConfigController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

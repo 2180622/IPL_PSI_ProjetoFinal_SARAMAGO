@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\assets;
+namespace api\assets;
 
 use yii\web\AssetBundle;
 
 /**
- * Main backend application asset bundle.
+ * Main api application asset bundle.
  */
 class AppAsset extends AssetBundle
 {
@@ -13,11 +13,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        'css/saramago.css',
-        'fonts/stylesheet.css',
     ];
     public $js = [
-        'js/saramago.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -1,5 +1,5 @@
 <?php
-namespace api\controllers;
+namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -7,9 +7,9 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * Site controller
+ * Leitor controller
  */
-class PtoController extends Controller
+class LeitorController extends Controller
 {
     /**
      * {@inheritdoc}

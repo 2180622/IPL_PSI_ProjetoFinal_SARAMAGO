@@ -1,5 +1,5 @@
 <?php
-namespace api\controllers;
+namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -9,7 +9,7 @@ use yii\filters\AccessControl;
 /**
  * Site controller
  */
-class CatController extends Controller
+class CirController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -51,4 +51,5 @@ class CatController extends Controller
             ],
         ];
     }
+
 }
