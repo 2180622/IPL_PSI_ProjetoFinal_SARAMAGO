@@ -10,6 +10,7 @@ use common\models\Biblioteca;
 use common\models\Postotrabalho;
 use common\models\Config;
 
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -47,7 +48,7 @@ class ConfigController extends Controller
                             'estleitor',
                             'irregularidade',
                             'cursos',
-                            'recibos',
+                            'recibos','recibos-update',
                             'resexemplar',
                             'slidesopac',
                             'arrumacao'],
@@ -373,7 +374,31 @@ class ConfigController extends Controller
      */
     public function actionRecibos()
     {
-        return $this->render('recibos');
+        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "recibo_"])]);
+        $recibosModel = Config::find()->all();
+
+        return $this->render('recibos', ['dataProvider' => $dataProvider, 'recibosModel'=> $recibosModel]);
+
+    }
+
+    public function actionRecibosUpdate($id)
+    {
+        $model = $this->findModelRecibos($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect('recibos');
+        }
+
+        return $this->renderAjax('recibos-update', ['model' => $model,]);
+    }
+
+    protected function findModelRecibos($id)
+    {
+        if (($model = Config::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     #endregion
