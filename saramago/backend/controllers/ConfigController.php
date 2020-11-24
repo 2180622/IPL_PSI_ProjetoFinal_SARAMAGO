@@ -106,43 +106,15 @@ class ConfigController extends Controller
             'entidadeModels' => $entidadeModel]);
     }
 
-    public function actionEntidadeView($id)
-    {
-        if (($model = Config::findOne($id)) !== null) {
-            return $this->renderAjax('entidade-view', ['model' => $model]);
-        }
-
-        throw new NotFoundHttpException();
-    }
-
-    public function actionEntidadeCreate()
-    {
-        $model = new Config();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['entidade-view', 'id' => $model->id]);
-            return $this->redirect($this->actionEntidade());
-        }
-
-        return $this->renderAjax('entidade-create', ['model'=>$model]);
-    }
-
     public function actionEntidadeUpdate($id)
     {
         $model = $this->findModelEntidade($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['entidade-view', 'id' => $model->id]);
+            return $this->redirect(['entidade']);
             //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
         }
         return $this->renderAjax('entidade-update', ['model' => $model]);
-    }
-
-    public function actionEntidadeDelete($id)
-    {
-        $this->findModelEntidade($id)->delete();
-
-        return $this->redirect(['entidade']);
     }
 
     protected function findModelEntidade($id)

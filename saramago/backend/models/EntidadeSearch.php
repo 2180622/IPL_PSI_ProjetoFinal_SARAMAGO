@@ -16,8 +16,7 @@ class EntidadeSearch extends Config
      */
     public function rules()
     {
-        return [
-            [['id'], 'integer'],
+        return [    
             [['info', 'key', 'value'], 'safe'],
         ];
     }
@@ -40,7 +39,7 @@ class EntidadeSearch extends Config
      */
     public function search($params)
     {
-        $query = Config::find();
+        $query = Config::find()->where(['like', 'key', 'entidade_']);
 
         // add conditions that should always apply here
 
