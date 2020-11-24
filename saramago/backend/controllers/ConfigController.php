@@ -3,17 +3,12 @@ namespace backend\controllers;
 
 use Yii;
 
-// Entidades
-use common\models\Config;
 use app\models\EntidadeSearch;
-
-// Bibliotecas
-use common\models\Biblioteca;
 use app\models\BibliotecaSearch;
-
-// Postos de trabalho
 use app\models\PostotrabalhoSearch;
+use common\models\Biblioteca;
 use common\models\Postotrabalho;
+use common\models\Config;
 
 use yii\web\Controller;
 use yii\filters\VerbFilter;
