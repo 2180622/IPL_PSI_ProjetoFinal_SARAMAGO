@@ -3,14 +3,13 @@
 
 /* @var $this yii\web\View */
 
-use common\models\Config;
+
 use rmrevin\yii\fontawesome\FAS;
+
 use yii\bootstrap\Modal;
-use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 /* @var $model common\models\Config */
@@ -19,12 +18,14 @@ $this->title = 'Recibos';
 $this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="config-index config-recibos">
+<div class="site-config config-recibos">
 
     <h1>
         <?= Html::encode($this->title) ?>
     </h1>
     <hr>
+
+    <?php Yii::$app->session->getFlash('success');?>
 
     <?php Pjax::begin(); ?>
 

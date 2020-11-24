@@ -2,7 +2,7 @@
 
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Biblioteca */
@@ -11,7 +11,9 @@ use yii\widgets\ActiveForm;
 
 <div class="biblioteca-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+            //['enableClientValidation' => true, 'enableAjaxValidation' => true, 'validateOnChange' => true]
+    ); ?>
 
     <?= $form->field($model, 'codBiblioteca')->textInput(['maxlength' => true,
         'style' => 'text-transform:uppercase'])->label('Código') ?>

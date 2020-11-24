@@ -228,6 +228,21 @@
 
 }
 
+.config-entidade h1,
+.config-entidade h2,
+.config-entidade h3,
+.config-entidade h4,
+.config-entidade h5,
+.config-entidade h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-entidade p,
+.config-entidade a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-bibliotecas h1,
 .config-bibliotecas h2,
 .config-bibliotecas h3,
@@ -239,6 +254,35 @@
 
 .config-bibliotecas p,
 .config-bibliotecas a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+.config-postos h1,
+.config-postos h2,
+.config-postos h3,
+.config-postos h4,
+.config-postos h5,
+.config-postos h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-postos p,
+.config-postos a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
+.config-recibos h1,
+.config-recibos h2,
+.config-recibos h3,
+.config-recibos h4,
+.config-recibos h5,
+.config-recibos h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-recibos p,
+.config-recibos a{
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     color: #000000;
 }

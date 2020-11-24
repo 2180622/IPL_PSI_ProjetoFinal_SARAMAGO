@@ -14,12 +14,10 @@ $this->title = 'Entidade';
 $this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="entidade-index">
+<div class="site-config config-entidade">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Configuração dos valores das entidades </p>
-
+    <hr>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -34,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'value',
             'label' => 'Valor',
             'format' => 'text'],
-
 
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Editar',

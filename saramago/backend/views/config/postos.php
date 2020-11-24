@@ -13,14 +13,14 @@ $this->title = 'Postos de Trabalho';
 $this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="postotrabalho-index">
+<div class="site-config config-postos">
 
     <h1><?= Html::encode($this->title) ?>
         <p class="pull-right">
             <?= Html::button(FAS::icon('plus').' Adicionar', ['value'=>'postos-create', 'class' => 'btn btn-create','id'=>'modalButtonCreate']) ?>
         </p>
     </h1>
-
+    <hr>
     <?php
     if($dataProvider->totalCount == 0)
     {

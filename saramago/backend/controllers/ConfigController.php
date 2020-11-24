@@ -112,6 +112,7 @@ class ConfigController extends Controller
         $model = $this->findModelEntidade($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Foram efetuadas alterações.");
             return $this->redirect(['entidade']);
             //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
         }
@@ -159,8 +160,8 @@ class ConfigController extends Controller
         $model = new Biblioteca();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
-            return $this->redirect($this->actionBibliotecas());
+            Yii::$app->session->setFlash('success', "Foi adicionada uma nova biblioteca.");
+            return $this->redirect('bibliotecas');
         }
 
         return $this->renderAjax('bibliotecas-create', ['model'=>$model]);
@@ -171,7 +172,8 @@ class ConfigController extends Controller
         $model = $this->findModelBibliotecas($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['bibliotecas-view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', "A biblioteca foi atualizada.");
+            return $this->redirect('bibliotecas');
         }
         return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
     }
@@ -179,7 +181,7 @@ class ConfigController extends Controller
     public function actionBibliotecasDelete($id)
     {
         $this->findModelBibliotecas($id)->delete();
-
+        Yii::$app->session->setFlash('success', "A biblioteca foi eliminada.");
         return $this->redirect(['bibliotecas']);
     }
 
@@ -225,6 +227,7 @@ class ConfigController extends Controller
         $listaBibliotecas = Biblioteca::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "O posto de trabalho foi adicionado.");
             return $this->redirect($this->actionPostos());
         }
 
@@ -237,6 +240,7 @@ class ConfigController extends Controller
         $listaBibliotecas = Biblioteca::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "O posto de trabalho foi atualizado.");
             return $this->redirect(['postos', 'id' => $model->id]);
         }
         return $this->renderAjax('postos-update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
@@ -248,6 +252,9 @@ class ConfigController extends Controller
 
         $posto = Postotrabalho::findOne($id);
         $posto->delete();
+
+        //FIXME
+        Yii::$app->session->setFlash('success', "O posto de trabalho foi eliminado.");
 
         return $this->redirect(['postos']);
     }
@@ -386,6 +393,7 @@ class ConfigController extends Controller
         $model = $this->findModelRecibos($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
             return $this->redirect('recibos');
         }
 

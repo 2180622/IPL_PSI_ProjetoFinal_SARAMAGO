@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::button(FAS::icon('plus').' Adicionar', ['value'=>'bibliotecas-create', 'class' => 'btn btn-create','id'=>'modalButtonCreate']) ?>
         </p>
     </h1>
+    <hr>
 
     <?php
     if($dataProvider->totalCount == 0)
@@ -97,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
 
     ?>
+    <?php Pjax::end(); ?>
     <?php
     $this->registerJs("
         $(function () {
@@ -140,7 +142,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ?>
 
-    <?php Pjax::end(); ?>
     <?php
     Modal::begin([
 
@@ -157,6 +158,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         Modal::begin([
             'header' => '<h3>Biblioteca</h3>',
+            'toggleButton' => ['label' => 'click me'],
             'id' => 'modalView'.$bibliotecasModel->id,
             //'options' => ['class'=>'fade modal modalButtonView modal-v-'.$bibliotecasModel->id],
             'size' => 'modal-lg',
