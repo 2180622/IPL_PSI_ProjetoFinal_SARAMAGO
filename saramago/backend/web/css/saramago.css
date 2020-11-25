@@ -287,4 +287,19 @@
     color: #000000;
 }
 
+.config-slidesopac h1,
+.config-slidesopac h2,
+.config-slidesopac h3,
+.config-slidesopac h4,
+.config-slidesopac h5,
+.config-slidesopac h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-slidesopac p,
+.config-slidesopac a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 /* endregion */
