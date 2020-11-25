@@ -33,10 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'summary'=>'',
         'columns' => [
-            [   'label'=>'Definição',
-                'attribute' => 'info',
-                'headerOptions' => ['width' => '500']
-            ],
             [
                 'label' => 'Estado',
                 'attribute' => 'value',
@@ -75,10 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($slidesopacModels as $slidesopacModel){
 
         Modal::begin([
-            'headerOptions' => ['teste' => 'modalHeader'],
-            'header' => 'Definição',
+            'header' => '<h4>'.$slidesopacModel->info.'</h4>',
             'id' => 'modalUpdate'.$slidesopacModel->id,
-            'size' => 'modal-lg',
+            'size' => 'modal-md',
             'clientOptions' => ['backdrop' => 'static']
         ]);
         echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
