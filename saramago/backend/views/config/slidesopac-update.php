@@ -10,11 +10,11 @@ use yii\widgets\ActiveForm;
 
 <div class="config-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['enableClientValidation' => true, 'enableAjaxValidation' => true, 'validateOnChange' => true]); ?>
 
     <?= $form->field($model, 'info')->label('Definição')->textInput(['readonly' => true])?>
 
-    <?= $form->field($model, 'value')->textInput(['maxlength' => true])->label('Valor') ?>
+    <?= $form->field($model, 'value')->label('Estado')->dropdownList([1 => 'Sim', 0 =>'Não']); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

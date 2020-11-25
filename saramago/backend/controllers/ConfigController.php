@@ -36,7 +36,7 @@ class ConfigController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index',
-                            'entidade', 'entidade-view', 'entidade', 'entidade-create', 'entidade-update', 'entidade-delete',
+                            'entidade', 'entidade-update',
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
                             'logotipos',
@@ -50,7 +50,7 @@ class ConfigController extends Controller
                             'cursos',
                             'recibos','recibos-update',
                             'resexemplar',
-                            'slidesopac',
+                            'slidesopac','slidesopac-update',
                             'arrumacao'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -112,7 +112,7 @@ class ConfigController extends Controller
         $model = $this->findModelEntidade($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Foram efetuadas alterações.");
+            Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
             return $this->redirect(['entidade']);
             //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
         }
@@ -429,7 +429,32 @@ class ConfigController extends Controller
      */
     public function actionSlidesopac()
     {
-        return $this->render('slidesopac');
+        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "opac_obrasAdquiridas"])]);
+        $slidesopacModel = Config::find()->all();
+
+        return $this->render('slidesopac', ['dataProvider' => $dataProvider, 'slidesopacModels'=> $slidesopacModel]);
+
+    }
+
+    public function actionSlidesopacUpdate($id)
+    {
+        $model = $this->findModelSlidesopac($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
+            return $this->redirect('slidesopac');
+        }
+
+        return $this->renderAjax('slidesopac-update', ['model' => $model,]);
+    }
+
+    protected function findModelSlidesopac($id)
+    {
+        if (($model = Config::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     #endregion
