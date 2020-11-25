@@ -21,7 +21,7 @@ class Tipoirregularidade extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tipoirregularidade';
+        return 'TipoIrregularidade';
     }
 
     /**
@@ -31,9 +31,8 @@ class Tipoirregularidade extends \yii\db\ActiveRecord
     {
         return [
             [['irregularidade'], 'required'],
-            [['irregularidade'], 'string'],
             [['diasBloqueio', 'diasAtivacao'], 'integer'],
-            [['irregularidade'], 'unique'],
+            [['irregularidade'], 'string', 'max' => 255],
         ];
     }
 
@@ -62,10 +61,10 @@ class Tipoirregularidade extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return TipoirregularidadeQuery the active query used by this AR class.
+     * @return TipoIrregularidadeQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new TipoirregularidadeQuery(get_called_class());
+        return new TipoIrregularidadeQuery(get_called_class());
     }
 }
