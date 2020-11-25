@@ -257,6 +257,7 @@
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     color: #000000;
 }
+
 .config-postos h1,
 .config-postos h2,
 .config-postos h3,
@@ -268,6 +269,21 @@
 
 .config-postos p,
 .config-postos a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
+.config-irregularidades h1,
+.config-irregularidades h2,
+.config-irregularidades h3,
+.config-irregularidades h4,
+.config-irregularidades h5,
+.config-irregularidades h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-irregularidades p,
+.config-irregularidades a{
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     color: #000000;
 }

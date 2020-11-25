@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </a>
                 <br>
-                <a href="' . Url::to(['config/irregularidade']) . '">
+                <a href="' . Url::to(['config/irregularidades']) . '">
                     <div class="card card-config">
                         <div class="card-body"><h4>Irregularidades</h4>Faça a edição de diferentes irregularidades</div>
                     </div>

@@ -7,8 +7,9 @@ use app\models\EntidadeSearch;
 use app\models\BibliotecaSearch;
 use app\models\PostotrabalhoSearch;
 use common\models\Biblioteca;
-use common\models\Postotrabalho;
 use common\models\Config;
+use common\models\Postotrabalho;
+use common\models\Tipoirregularidade;
 
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -46,7 +47,7 @@ class ConfigController extends Controller
                             'estexemplar',
                             'cdu',
                             'estleitor',
-                            'irregularidade',
+                            'irregularidades','irregularidades-update',
                             'cursos',
                             'recibos','recibos-update',
                             'resexemplar',
@@ -196,6 +197,7 @@ class ConfigController extends Controller
 
     #endregion
 
+    #region Postos de Trabalho
     /**
      * Postos de Trabalho das bibliotecas homepage.
      *
@@ -269,6 +271,7 @@ class ConfigController extends Controller
 
     }
 
+    #endregion
     /**
      * Gestão dos logótipos homepage.
      *
@@ -351,15 +354,42 @@ class ConfigController extends Controller
         return $this->render('estleitor');
     }
 
+    #region Irregularidades
     /**
      * Gestão de Irregularidades dos Leitores homepage.
      *
      * @return string
      */
-    public function actionIrregularidade()
+    public function actionIrregularidades()
     {
-        return $this->render('irregularidade');
+        $dataProvider = new ActiveDataProvider(['query' => Tipoirregularidade::find()]);
+        $irregularidadesModels = Tipoirregularidade::find()->all();
+
+        return $this->render('irregularidades', ['dataProvider' => $dataProvider, 'irregularidadesModels'=>$irregularidadesModels]);
     }
+
+    public function actionIrregularidadesUpdate($id)
+    {
+        $model = $this->findModelIrregularidades($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "A irregularidade para o tipo de obra foi atualizada.");
+            return $this->redirect('irregularidades');
+        }
+
+        return $this->renderAjax('irregularidades-update', ['model' => $model,]);
+    }
+
+    protected function findModelIrregularidades($id)
+    {
+        if (($model = Tipoirregularidade::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    #endregion
 
     /**
      * Gestão dos Cursos dos Leitores homepage.
