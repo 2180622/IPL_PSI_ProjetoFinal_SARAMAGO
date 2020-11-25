@@ -505,11 +505,10 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`TipoIrregularidade` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
-  `irregularidade` ENUM('materialAv', 'monografia', 'pubPeriodica') NOT NULL COMMENT 'Tipo de obra entregue',
+  `irregularidade` VARCHAR(255) NOT NULL COMMENT 'Tipo de obra entregue',
   `diasBloqueio` INT NOT NULL DEFAULT 30 COMMENT 'Duração do bloqueio (em dias)',
   `diasAtivacao` INT NOT NULL DEFAULT 7 COMMENT 'Ativação do bloqueio (em dias)',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `irregularidade_UNIQUE` (`irregularidade` ASC))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -958,9 +957,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `yii2saramago`;
-INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'materialAv', 30, 7);
-INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'monografia', 30, 7);
-INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'pubPeriodica', 30, 7);
+INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Material Audio-Visual', 30, 7);
+INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Monografia', 30, 7);
+INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Publicacao Periodica', 30, 7);
 
 COMMIT;
 
