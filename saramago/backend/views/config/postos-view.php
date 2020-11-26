@@ -10,16 +10,20 @@ use yii\widgets\DetailView;
 
 $this->title = $model->designacao;
 ?>
-<h1><?= Html::encode($this->title) ?></h1>
-<br>
 
 <?= DetailView::widget([
     'model' => $model,
     'attributes' => [
         'designacao',
         'totalLugares',
-        'notaOpac',
+        'notaOpac:html',
         'notaInterna',
-        'Biblioteca_id',
+        [
+            'attribute' => 'Biblioteca_id',
+            'label' => 'Biblioteca',
+            'value'=>function ($model){
+                return $model->biblioteca->codBiblioteca.' - '.$model->biblioteca->nome;},
+            'filter' => ['0' => 'Não', '1' => 'Sim'],
+        ],
     ],
 ]) ?>

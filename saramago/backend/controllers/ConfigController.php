@@ -209,9 +209,7 @@ class ConfigController extends Controller
         $postoTrabalhoModel = Postotrabalho::find()->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('postos',[
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        return $this->render('postos',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
             'postoTrabalhoModels' => $postoTrabalhoModel]);
     }
 
@@ -230,7 +228,7 @@ class ConfigController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "O posto de trabalho foi adicionado.");
-            return $this->redirect($this->actionPostos());
+            return $this->redirect('postos');
         }
 
         return $this->renderAjax('postos-create', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
@@ -243,19 +241,15 @@ class ConfigController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "O posto de trabalho foi atualizado.");
-            return $this->redirect(['postos', 'id' => $model->id]);
+            return $this->redirect('postos');
         }
         return $this->renderAjax('postos-update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
     }
 
     public function actionPostosDelete($id)
     {
-        //$this->findModelPostostrabalho($id)->delete();
+        $this->findModelPostostrabalho($id)->delete();
 
-        $posto = Postotrabalho::findOne($id);
-        $posto->delete();
-
-        //FIXME
         Yii::$app->session->setFlash('success', "O posto de trabalho foi eliminado.");
 
         return $this->redirect(['postos']);

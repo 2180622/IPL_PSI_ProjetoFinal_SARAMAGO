@@ -9,10 +9,6 @@ $this->title = 'Update Postotrabalho: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Posto de Trabalho', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 ?>
-<div class="postotrabalho-update">
-
-    <!--<h1><?= Html::encode($this->title) ?></h1> -->
-
+<div class="postos-update">
     <?= $this->render('postos/_form', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]) ?>
-
 </div>
