@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Estado',
                 'attribute' => 'value',
-                'format'=>['boolean',['0' => 'Não', '1' => 'Sim']],
+                'format'=>['boolean'],
             ],
             ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Ações',
+                'header'=>'Ação',
                 'headerOptions' => ['width' => '100',],
                 'template' => '{update}',
                 'buttons' => [
@@ -75,10 +75,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($recibosModel as $reciboModel){
 
         Modal::begin([
-            'headerOptions' => ['teste' => 'modalHeader'],
-            'header' => 'Definição',
+            'header' => '<h4>'.$reciboModel->info.'</h4>',
             'id' => 'modalUpdate'.$reciboModel->id,
-            'size' => 'modal-lg',
+            'size' => 'modal-md',
             'clientOptions' => ['backdrop' => 'static']
         ]);
         echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
