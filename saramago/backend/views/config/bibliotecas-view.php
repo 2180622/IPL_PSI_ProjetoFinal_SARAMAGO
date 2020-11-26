@@ -11,8 +11,6 @@ use yii\widgets\DetailView;
 
 $this->title = $model->nome;
 ?>
-<h1><?= Html::encode($this->title) ?></h1>
-<br>
 
 <?= DetailView::widget([
     'model' => $model,
@@ -24,8 +22,8 @@ $this->title = $model->nome;
         'localidade',
         [
             'attribute' => 'codPostal',
-            //FIXME descobrir como aplicar o pattern
-            //'contentOptions'=>[,['^\d{4}(-\d{4})?$']],
+            'value'=>function ($model){
+                return ''.$cp1 = substr($model->codPostal, 0, 4).'-'.$cp2 = substr($model->codPostal, 4, 6).'';},
         ],
         [
             'attribute' => 'levantamento',

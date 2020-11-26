@@ -9,8 +9,6 @@ $this->params['breadcrumbs'][] = ['label' => $model->nome, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="biblioteca-update">
-
     <?= $this->render('bibliotecas/_form', ['model' => $model,]) ?>
-
 </div>
 

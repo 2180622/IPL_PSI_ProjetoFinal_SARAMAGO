@@ -11,12 +11,9 @@ use yii\bootstrap\ActiveForm;
 
 <div class="biblioteca-form">
 
-    <?php $form = ActiveForm::begin(
-            //['enableClientValidation' => true, 'enableAjaxValidation' => true, 'validateOnChange' => true]
-    ); ?>
+    <?php $form = ActiveForm::begin(['id' => 'biblioteca-form']); ?>
 
-    <?= $form->field($model, 'codBiblioteca')->textInput(['maxlength' => true,
-        'style' => 'text-transform:uppercase'])->label('Código') ?>
+    <?= $form->field($model, 'codBiblioteca')->textInput(['maxlength' => true, 'style' => 'text-transform:uppercase'])->label('Código') ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true, 'style' => 'text-transform:capitalize'])->label('Nome') ?>
 

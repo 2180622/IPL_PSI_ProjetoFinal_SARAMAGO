@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     {
         echo '
             <div class="alert alert-info alert-dismissible config" role="alert">
-                <strong>Informação:</strong> Comece por registar as bibliotecas da sua entidade.
+                <strong>Informação:</strong> Comece por registar as suas bibliotecas
             </div>
         ';
 
@@ -58,12 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [   'label' => 'Morada',
                     'attribute' =>'morada',
-
                 ],
                 [
                     'label' => 'Cód. Postal',
                     'attribute' => 'codPostal',
-                    //'format'=>'number',
+                    'value'=>function ($model){
+                        return ''.$cp1 = substr($model->codPostal, 0, 4).'-'.$cp2 = substr($model->codPostal, 4, 6).'';},
                     'headerOptions' => ['width' => '100']
                 ],
                 [
@@ -77,20 +77,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions' => ['width' => '100'],
                     'template' => '{view} {update} {delete}',
                     'buttons' => [
-                        'view' => function ($url,$model,$id){
-                        //$btn_id='modalButtonView'.$id; return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                          //      ['value'=>Url::to(['bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm modal-view-btn','id'=>$btn_id]);
-                            return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
+                        'view' => function ($url,$model,$id){return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
                                 ['value'=>Url::to(['bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
                         },
                         'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
                             ['value'=>Url::to(['bibliotecas-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
                         },
-                        'delete' => function ($url,$model,$id){return Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                            ['value'=>Url::to(['bibliotecas-delete','id'=>$id]), 'class' => 'btn btn-danger btn-sm','id'=>'modalButtonDelete'.$id,
-                                'data' => [
-                                'confirm' => 'Tem a certeza de que pretende apagar a '.$model->nome.'?',
-                                'method' => 'post']]);
+                        'delete' => function ($url,$model,$id){return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
+                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['bibliotecas-delete','id'=>$id]),
+                            ['data' => ['confirm' => 'Tem a certeza de que pretende apagar a '.$model->nome.'?', 'method'=>'post']
+                            ]);
                         },
                     ],
                 ],
@@ -121,7 +117,6 @@ $this->params['breadcrumbs'][] = $this->title;
             })
         });
         
-        
         $(function () {
             $('#modalButtonUpdate".$bibliotecasModel->id."').click(function (){
                 $('#modalUpdate".$bibliotecasModel->id."').modal('show')
@@ -130,13 +125,6 @@ $this->params['breadcrumbs'][] = $this->title;
             })
         });
         
-        $(function () {
-            $('#modalButtonDelete".$bibliotecasModel->id."').click(function (){
-                $('#modalDelete".$bibliotecasModel->id."').modal('show')
-                    .find('#modalContent')
-                    .load($(this).attr('value'))
-            })
-        });
     ");
     }
 
@@ -145,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     Modal::begin([
 
-        'header' => '<h3>Nova Biblioteca</h3>',
+        'header' => '<h4>Nova Biblioteca</h4>',
         'id' => 'modalCreate',
         'size' => 'modal-lg',
         'clientOptions' => ['backdrop' => 'static']
@@ -157,8 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($bibliotecasModels as $bibliotecasModel){
 
         Modal::begin([
-            'header' => '<h3>Biblioteca</h3>',
-            'toggleButton' => ['label' => 'click me'],
+            'header' => '<h4>'.$bibliotecasModel->nome.'</h4>',
             'id' => 'modalView'.$bibliotecasModel->id,
             //'options' => ['class'=>'fade modal modalButtonView modal-v-'.$bibliotecasModel->id],
             'size' => 'modal-lg',
@@ -168,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
         Modal::end();
 
         Modal::begin([
-            'headerOptions' => ['id' => 'modalHeader'],
+            'header' => '<h4>'.$bibliotecasModel->nome.'</h4>',
             'id' => 'modalUpdate'.$bibliotecasModel->id,
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']
