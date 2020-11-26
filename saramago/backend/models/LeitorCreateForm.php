@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
@@ -11,7 +11,7 @@ use DateTime;
 /**
  * Signup form
  */
-class SignupForm extends Model
+class LeitorCreateForm extends Model
 {
     public $username;
     public $email;
@@ -116,14 +116,15 @@ class SignupForm extends Model
             $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            $user->save(false);
+            $user->status = 10;
+            $user->save();
 
             $leitor = new Leitor();
             $leitor->mail2= $this->mail2;
             $leitor->nome = $this->nome;
             $leitor->nif = $this->nif;
             $leitor->docId = $this->docId;
-            $leitor->codBarras = rand();
+            $leitor->codBarras = "Codigasdmkmf5";
             $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
             $newDateString = $myDateTime->format('Y/m/d');
             $leitor->dataNasc = $newDateString;
@@ -135,20 +136,19 @@ class SignupForm extends Model
             $leitor->notaInterna = $this->notaInterna;
             $leitor->Biblioteca_id = 1;
             $leitor->TipoLeitor_id = 1;
-            
-            $leitor->save(false);
 
             $leitor->user_id = $user->getId();
-            
 
+            $leitor->save();
 
+            var_dump($leitor);
             // the following three lines were added:
             $auth = \Yii::$app->authManager;
             // temporary fix
-            $leitorAlunoRole = $auth->getRole('leitorAluno');
-            $auth->assign($leitorAlunoRole, $user->getId());
+            //$leitorAlunoRole = $auth->getRole('leitorAluno');
+            //$auth->assign($leitorAlunoRole, $user->getId());
 
-            return $user;
+            return $leitor;
         }
 
         return null;
