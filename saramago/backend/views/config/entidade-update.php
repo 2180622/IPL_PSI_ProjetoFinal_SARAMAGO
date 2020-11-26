@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Config */
@@ -12,7 +13,13 @@ $this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="entidade-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-	<?= $this->render('entidade/_form', ['model' => $model]) ?>
+    <?php $form = ActiveForm::begin(['id'=>'entidade-form']); ?>
 
+    <?= $form->field($model, 'value')->textInput(['maxlength' => true])->label('Valor') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 </div>

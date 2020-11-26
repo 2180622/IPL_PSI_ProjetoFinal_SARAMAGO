@@ -7,7 +7,6 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ConfigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Entidade';
@@ -19,22 +18,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <hr>
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'summary' => '',
         'columns' => [
-
-            ['attribute' => 'info',
-            'label' => 'Entidade',
-            'format' => 'text'],
-            ['attribute' => 'value',
-            'label' => 'Valor',
-            'format' => 'text'],
-
+            [
+                'attribute' => 'info',
+                'label' => 'Entidade',
+            ],
+            [
+                'attribute' => 'value',
+                'label' => 'Valor',
+            ],
             ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Editar',
+                'header'=>'Ação',
                 'headerOptions' => ['width' => '50'],
                 'template' => '{update}',
                 'buttons' => [
@@ -46,12 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); 
     ?>
+
+    <?php Pjax::end(); ?>
     <?php
 
     foreach ($entidadeModels as $entidadeModel){
     $this->registerJs("
-    
-        
         $(function () {
             $('#modalButtonUpdate".$entidadeModel->id."').click(function (){
                 $('#modalUpdate".$entidadeModel->id."').modal('show')
@@ -65,12 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ?>
 
-    <?php Pjax::end(); ?>
-
     <?php foreach ($entidadeModels as $entidadeModel){
 
         Modal::begin([
-            'headerOptions' => ['id' => 'modalHeader'],
+            'header' => '<h4>'.$entidadeModel->info.'</h4>',
             'id' => 'modalUpdate'.$entidadeModel->id,
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']

@@ -101,7 +101,6 @@ class ConfigController extends Controller
     {
         $searchModel = new EntidadeSearch();
         $entidadeModel = Config::find()->all();
-        //$entidadeModel = Config::find()->where(['value' => 2])->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('entidade', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
@@ -115,7 +114,6 @@ class ConfigController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
             return $this->redirect(['entidade']);
-            //return $this->redirect($this->actionBibliotecas())->content('modalView'.$model->id));
         }
         return $this->renderAjax('entidade-update', ['model' => $model]);
     }
