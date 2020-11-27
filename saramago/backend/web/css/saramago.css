@@ -258,6 +258,21 @@
     color: #000000;
 }
 
+.config-estexemplar h1,
+.config-estexemplar h2,
+.config-estexemplar h3,
+.config-estexemplar h4,
+.config-estexemplar h5,
+.config-estexemplar h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-estexemplar p,
+.config-estexemplar a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-postos h1,
 .config-postos h2,
 .config-postos h3,

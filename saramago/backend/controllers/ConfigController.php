@@ -8,6 +8,7 @@ use app\models\BibliotecaSearch;
 use app\models\PostotrabalhoSearch;
 use common\models\Biblioteca;
 use common\models\Config;
+use common\models\Estatutoexemplar;
 use common\models\Postotrabalho;
 use common\models\Tipoirregularidade;
 
@@ -44,7 +45,7 @@ class ConfigController extends Controller
                             'noticias',
                             'equipa',
                             'tipoexemplar',
-                            'estexemplar',
+                            'estexemplar','estexemplar-update',
                             'cdu',
                             'estleitor',
                             'irregularidades','irregularidades-update',
@@ -319,7 +320,30 @@ class ConfigController extends Controller
      */
     public function actionEstexemplar()
     {
-        return $this->render('estexemplar');
+        $estExemplarModels = Estatutoexemplar::find()->all();
+        $dataProvider = new ActiveDataProvider(['query' => EstatutoExemplar::find()]);
+
+        return $this->render('estexemplar', ['dataProvider' => $dataProvider, 'estExemplarModels' => $estExemplarModels]);
+    }
+
+    public function actionEstexemplarUpdate($id)
+    {
+        $model = $this->findModelEstexemplar($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect('estexemplar');
+        }
+
+        return $this->renderAjax('estexemplar-update', ['model' => $model,]);
+    }
+
+    protected function findModelEstexemplar($id)
+    {
+        if (($model = EstatutoExemplar::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**

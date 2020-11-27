@@ -29,9 +29,10 @@ class Estatutoexemplar extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estatuto', 'prazo'], 'required'],
+            [['estatuto'], 'required'],
             [['prazo'], 'integer'],
             [['estatuto'], 'string', 'max' => 255],
+            [['prazo'], 'unique'],
         ];
     }
 

@@ -81,8 +81,9 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`EstatutoExemplar` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
   `estatuto` VARCHAR(255) NOT NULL COMMENT 'Designação do estatuto do exemplar',
-  `prazo` INT NOT NULL COMMENT 'Dias do prazo de empréstimo',
-  PRIMARY KEY (`id`))
+  `prazo` INT NULL COMMENT 'Dias do prazo de empréstimo',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `prazo_UNIQUE` (`prazo` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -925,10 +926,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `yii2saramago`;
-INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'normal', 0);
-INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'curto', 3);
-INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'diario', 1);
-INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'nreq', 0);
+INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'Normal', NULL);
+INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'Curto', 3);
+INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'Diário', 1);
+INSERT INTO `yii2saramago`.`EstatutoExemplar` (`id`, `estatuto`, `prazo`) VALUES (DEFAULT, 'Não Requisitável', 0);
 
 COMMIT;
 
@@ -959,7 +960,7 @@ START TRANSACTION;
 USE `yii2saramago`;
 INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Material Audio-Visual', 30, 7);
 INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Monografia', 30, 7);
-INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Publicacao Periodica', 30, 7);
+INSERT INTO `yii2saramago`.`TipoIrregularidade` (`id`, `irregularidade`, `diasBloqueio`, `diasAtivacao`) VALUES (DEFAULT, 'Publicação Periodica', 30, 7);
 
 COMMIT;
 
