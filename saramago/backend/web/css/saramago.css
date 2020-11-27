@@ -303,6 +303,21 @@
     color: #000000;
 }
 
+.config-cursos h1,
+.config-cursos h2,
+.config-cursos h3,
+.config-cursos h4,
+.config-cursos h5,
+.config-cursos h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-cursos p,
+.config-cursos a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-recibos h1,
 .config-recibos h2,
 .config-recibos h3,

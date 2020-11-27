@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <br>
                 <a href="' . Url::to(['config/cursos']) . '">
                     <div class="card card-config">
-                        <div class="card-body"><h4>Cursos</h4>Faça a edição dos cursos leitores, tipo aluno</div>
+                        <div class="card-body"><h4>Cursos</h4>Faça a edição dos cursos dos leitores, do tipo Aluno</div>
                     </div>
                 </a>
                 <h3>Recibos</h3>

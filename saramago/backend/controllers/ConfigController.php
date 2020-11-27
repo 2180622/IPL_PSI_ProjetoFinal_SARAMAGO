@@ -3,11 +3,13 @@ namespace backend\controllers;
 
 use Yii;
 
+use app\models\CursoSearch;
 use app\models\EntidadeSearch;
 use app\models\BibliotecaSearch;
 use app\models\PostotrabalhoSearch;
 use common\models\Biblioteca;
 use common\models\Config;
+use common\models\Curso;
 use common\models\Estatutoexemplar;
 use common\models\Postotrabalho;
 use common\models\Tipoirregularidade;
@@ -49,7 +51,7 @@ class ConfigController extends Controller
                             'cdu',
                             'estleitor',
                             'irregularidades','irregularidades-update',
-                            'cursos',
+                            'cursos','cursos-view','cursos-create','cursos-update','cursos-delete',
                             'recibos','recibos-update',
                             'resexemplar',
                             'slidesopac','slidesopac-update',
@@ -407,6 +409,7 @@ class ConfigController extends Controller
 
     #endregion
 
+    #region Cursos
     /**
      * Gestão dos Cursos dos Leitores homepage.
      *
@@ -414,8 +417,67 @@ class ConfigController extends Controller
      */
     public function actionCursos()
     {
-        return $this->render('cursos');
+        $cursosModels = Curso::find()->all();
+
+        $searchModel = new CursoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('cursos/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'cursosModels'=>$cursosModels]);
     }
+
+    public function actionCursosView($id)
+    {
+        return $this->renderAjax('cursos/view', ['model' => $this->findModelCursos($id)]);
+    }
+
+    public function actionCursosCreate()
+    {
+        $model = new Curso();
+        $searchModel = new CursoSearch();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$model->nome." foi adicionado com sucesso.");
+
+            $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+
+            return $this->redirect(['cursos', 'page'=>$endPage]);
+        }
+
+        return $this->renderAjax('cursos/create', ['model' => $model,]);
+    }
+
+    public function actionCursosUpdate($id){
+
+        $model = $this->findModelCursos($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$model->nome." foi atualizado com sucesso.");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        return $this->renderAjax('cursos/update', ['model' => $model,]);
+    }
+
+    public function actionCursosDelete($id)
+    {
+        $oldCurso=$this->findModelCursos($id)->nome;
+
+        $this->findModelCursos($id)->delete();
+        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$oldCurso." foi apagado.");
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    protected function findModelCursos($id)
+    {
+        if (($model = curso::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
+    }
+    #endregion
+
     #endregion
 
     #region Recibos
