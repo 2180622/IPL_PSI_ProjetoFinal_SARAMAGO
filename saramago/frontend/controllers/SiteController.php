@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Obra;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -74,6 +75,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+    	$ultimasObras = Obra::findAll()->orderBy('dataRegisto');
+
         return $this->render('index');
     }
 
