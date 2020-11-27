@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`EstatutoExemplar` (
   `estatuto` VARCHAR(255) NOT NULL COMMENT 'Designação do estatuto do exemplar',
   `prazo` INT NULL COMMENT 'Dias do prazo de empréstimo',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `prazo_UNIQUE` (`prazo` ASC) VISIBLE)
+  UNIQUE INDEX `prazo_UNIQUE` (`prazo` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
