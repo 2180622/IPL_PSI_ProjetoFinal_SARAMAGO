@@ -28,18 +28,47 @@ $this->title = 'My Yii Application';
         <div id="carousel-obras" class="carousel slide" data-ride="carousel">
             <!-- indicadores -->
             <ol class="carousel-indicators">
-                <li data-target="#carousel-obras" data-slide-to="0" class="active"></li>
+            	<?php $counter = 0;
+            	if (isset($obrasRecentementeAdquiridas)) {
+            		foreach($obrasRecentementeAdquiridas as $obraRecenteAdquirida) { 
+            			echo '<li data-target="#carousel-obras" data-slide-to=' + $counter + '></li>';
+            			$counter++;
+            		}
+            	}
+            	?>
+                <!-- <li data-target="#carousel-obras" data-slide-to="0" class="active"></li>
                 <li data-target="#carousel-obras" data-slide-to="1"></li>
                 <li data-target="#carousel-obras" data-slide-to="2"></li>
                 <li data-target="#carousel-obras" data-slide-to="3"></li>
                 <li data-target="#carousel-obras" data-slide-to="4"></li>
                 <li data-target="#carousel-obras" data-slide-to="5"></li>
-                <li data-target="#carousel-obras" data-slide-to="6"></li>
+                <li data-target="#carousel-obras" data-slide-to="6"></li> -->
             </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
 
+            	<?php
+            	if (isset($obrasRecentementeAdquiridas)) {
+            		foreach($obrasRecentementeAdquiridas as $obraRecenteAdquirida) { 
+            			foreach($obraRecenteAdquirida->autors as $autorDaObra) {
+            				var_dump($autorDaObra->primeiroNome); 
+            				echo '<p>'+ $autorDaObra->primeiroNome +'</p>';
+            			}
+            			//var_dump($obraRecenteAdquirida->obraAutors); die();
+            			/*echo ' <div class="item active">
+                			<img src="' +  + '" alt="' + $obraRecenteAdquirida->titulo + '(' + $obraRecenteAdquirida->ano + ')" style="width:100%;">
+                			<div class="carousel-caption">
+                    			<h3>' + $obraRecenteAdquirida->titulo + '(' + $obraRecenteAdquirida->ano + ')</h3>
+                    			<p>' + $obraRecenteAdquirida->autors->primeiroNome +
+                    			 ' ' + $obraRecenteAdquirida->autors->segundoNome + 
+                    			 ' ' + $obraRecenteAdquirida->autors->apelido+ '</p>
+                    		</div>
+                		 </div>
+                		 '; */
+            		}
+            	}
+            	?>
                 <!-- item #1 / active -->
                 <div class="item active">
                     <img src="" alt="NOME DA OBRA #1 (ANO)" style="width:100%;">

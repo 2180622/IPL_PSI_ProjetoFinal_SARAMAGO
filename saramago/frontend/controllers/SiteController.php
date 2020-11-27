@@ -75,9 +75,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-    	$ultimasObras = Obra::findAll()->orderBy('dataRegisto');
+    	$obrasRecentementeAdquiridas = Obra::find()->orderBy(['dataRegisto' => SORT_DESC])->all();
 
-        return $this->render('index');
+        return $this->render('index', ['obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas]);
     }
 
     /**
