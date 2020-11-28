@@ -298,9 +298,29 @@ class ConfigController extends Controller
      */
     public function actionEquipa()
     {
+
         return $this->render('equipa');
     }
 
+    public function actionEquipaView($id){
+
+    }
+
+    public function actionEquipaCreate(){
+
+    }
+
+    public function actionEquipaUpdate(){
+
+    }
+
+    public function actionEquipaDelete(){
+
+    }
+
+    public function findModelEquipa($id){
+
+    }
     #endregion
 
     #region Catálogo

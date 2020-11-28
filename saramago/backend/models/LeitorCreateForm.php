@@ -13,6 +13,7 @@ use DateTime;
  */
 class LeitorCreateForm extends Model
 {
+    public $id;
     public $username;
     public $email;
     public $password;
@@ -124,7 +125,7 @@ class LeitorCreateForm extends Model
             $leitor->nome = $this->nome;
             $leitor->nif = $this->nif;
             $leitor->docId = $this->docId;
-            $leitor->codBarras = "Codigasdmkmf5";
+            $leitor->codBarras = "Barras".srand(0,564611);
             $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
             $newDateString = $myDateTime->format('Y/m/d');
             $leitor->dataNasc = $newDateString;
@@ -141,7 +142,6 @@ class LeitorCreateForm extends Model
 
             $leitor->save();
 
-            var_dump($leitor);
             // the following three lines were added:
             $auth = \Yii::$app->authManager;
             // temporary fix
@@ -169,6 +169,18 @@ class LeitorCreateForm extends Model
         */
     }
 
+    /*public function findLeitor($id){
+        $leitor = Leitor::findOne($id);
+
+        return $leitor;
+    }
+
+    public function findUser($id){
+        $leitor = $this->findLeitor($id);
+        $user = User::findOne($leitor->user_id);
+
+        return $user;
+    }*/
     /**
      * Sends confirmation email to user
      * @param User $user user model to with email should be send
