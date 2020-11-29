@@ -288,6 +288,21 @@
     color: #000000;
 }
 
+.config-logotipos h1,
+.config-logotipos h2,
+.config-logotipos h3,
+.config-logotipos h4,
+.config-logotipos h5,
+.config-logotipos h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-logotipos p,
+.config-logotipos a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-irregularidades h1,
 .config-irregularidades h2,
 .config-irregularidades h3,

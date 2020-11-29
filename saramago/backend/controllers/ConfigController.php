@@ -6,6 +6,7 @@ use Yii;
 use app\models\CursoSearch;
 use app\models\EntidadeSearch;
 use app\models\BibliotecaSearch;
+use app\models\LogotiposForm;
 use app\models\PostotrabalhoSearch;
 use common\models\Biblioteca;
 use common\models\Config;
@@ -19,6 +20,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -44,6 +46,7 @@ class ConfigController extends Controller
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
                             'logotipos',
+                            'logotipos','logotipos-view','logotipos-update','logotipos-reset',
                             'noticias',
                             'equipa',
                             'tipoexemplar',
@@ -267,6 +270,8 @@ class ConfigController extends Controller
     }
 
     #endregion
+
+    #region Logotipos
     /**
      * Gestão dos logótipos homepage.
      *
@@ -274,8 +279,57 @@ class ConfigController extends Controller
      */
     public function actionLogotipos()
     {
-        return $this->render('logotipos');
+        $logotiposModels = Config::find()->where(['like', 'key', 'logotipo'])->orWhere(['like', 'key', 'favicon'])->all();
+        $dataProvider = new ActiveDataProvider(
+            ['query' => Config::find()->where(['like', 'key', 'logotipo'])->orWhere(['like', 'key', 'favicon'])]
+        );
+
+        return $this->render('logotipos/index', ['dataProvider' => $dataProvider, 'logotiposModels'=>$logotiposModels]);
+
     }
+    public function actionLogotiposView($id)
+    {
+
+        return $this->renderAjax('logotipos/view', ['model' => $this->findModelLogotipos($id)]);
+
+    }
+
+    public function actionLogotiposUpdate($id)
+    {
+        $model = $this->findModelLogotipos($id);
+
+        if(Yii::$app->request->isPost)
+        {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            if ($model->upload($id)) {
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->info. " foi adicionado.");
+                return $this->redirect('logotipos');;
+            }
+        }
+        return $this->renderAjax('logotipos/update', ['model' => $model,]);
+    }
+
+    public function actionLogotiposReset($id)
+    {
+        $model = $this->findModelLogotipos($id);
+        $model->reset($id);
+        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->info. " foi reposto.");
+
+        return $this->redirect(['config/logotipos']);
+    }
+
+
+    protected function findModelLogotipos($id)
+    {
+        if (($model = LogotiposForm::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    #endregion
 
     /**
      * Gestão de Noticías homepage.
