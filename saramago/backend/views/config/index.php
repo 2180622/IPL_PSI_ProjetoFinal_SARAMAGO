@@ -2,7 +2,8 @@
 
 /* @var $this yii\web\View */
 
-use yii\helpers\Html;use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Administração';
 $this->params['breadcrumbs'][] = $this->title;
@@ -10,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-config">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <hr>
     <div class="alert alert-info alert-dismissible config" role="alert" id="alert-config">
         <strong>Sugestão:</strong> Personalize as definições pela ordem listada.
     </div>
@@ -18,6 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo '
         <div class="row container saramago-config">
             <div class="col-md-6">
+                <h3>Conta</h3>
+                <a href="' . Url::to(['config/conta']) . '">
+                    <div class="card card-config">
+                        <div class="card-body"><h4>' . $identity . '</h4>Defina o seu username ou a sua password aqui</div>
+                    </div>
+                </a>
+                <hr>
                 <h3>Entidade</h3>
                 <a href="' . Url::to(['config/entidade']) . '">
                     <div class="card card-config">

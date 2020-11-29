@@ -12,6 +12,7 @@ use common\models\Biblioteca;
 use common\models\Config;
 use common\models\Curso;
 use common\models\Estatutoexemplar;
+use common\models\Leitor;
 use common\models\Postotrabalho;
 use common\models\Tipoirregularidade;
 
@@ -41,11 +42,10 @@ class ConfigController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index',
+                        'actions' => ['logout', 'index','conta',
                             'entidade', 'entidade-update',
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
-                            'logotipos',
                             'logotipos','logotipos-view','logotipos-update','logotipos-reset',
                             'noticias',
                             'equipa',
@@ -68,7 +68,6 @@ class ConfigController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
-                    'bibliotecasview'=>['GET'],
                 ],
             ],
         ];
@@ -93,8 +92,24 @@ class ConfigController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $user = Yii::$app->user;
+        $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
+
+        if($leitor!=null)
+        {
+            $identity = $leitor->nome;
+        }else{
+            $identity = '@' . $user->identity->username . '';
+        }
+        return $this->render('index', ['identity'=>$identity]);
     }
+
+    #region Conta
+    public function actionConta()
+    {
+        return $this->render('conta/index');
+    }
+    #endregion
 
     #region Entidade
 
