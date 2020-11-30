@@ -34,10 +34,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ação',
                 'headerOptions' => ['width' => '50'],
-                'template' => '{update}',
+                'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
                             ['value'=>Url::to(['entidade-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
+                    },
+                    'delete' => function ($url,$model,$id){
+                        if ($model->value == null) {
+                            return Html::button(FAS::icon('trash-restore')->size(FAS::SIZE_LG),
+                                ['class' => 'btn btn-danger btn-sm inline', 'disabled' => 'disabled']);
+                        }else{
+                            return Html::a(Html::button(FAS::icon('trash-restore')->size(FAS::SIZE_LG),
+                                ['class' => 'btn btn-danger btn-sm inline']), Url::to(['entidade-reset','id'=>$id]),
+                                ['data' => ['confirm' => 'Tem a certeza de que pretende repor '.$model->info.'?', 'method'=>'post']
+                                ]);
+                        }
                     },
                 ],
             ],

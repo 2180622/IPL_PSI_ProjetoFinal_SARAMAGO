@@ -53,4 +53,13 @@ class Config extends \yii\db\ActiveRecord
     {
         return new ConfigQuery(get_called_class());
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function reset($id)
+    {
+        Yii::$app->db->createCommand()->update(self::tableName(), ['value' => null], 'id = '. $id)->execute();
+        return true;
+    }
 }

@@ -3,6 +3,8 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\Entidade;
+use app\models\Logotipos;
 use backend\assets\AppAsset;
 use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
@@ -29,14 +31,39 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
-            'style' => 'border-bottom: 1px solid black',
-        ],
-    ]);
+    /* (1) Se tiver logotipo
+     * (2) Se não tiver logotipo e tiver a designacao da entidade definida
+     * (3) Se não tiver ambas
+    */
+    if(Logotipos::logotipo() != null){
+        NavBar::begin([
+            'brandLabel'=> Html::img('@web/img/logotipo.png',['height' => '100%', 'alt'=> Entidade::designacao()]),
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
+                'style' => 'border-bottom: 1px solid black',
+            ],
+        ]);
+    }
+    elseif(Logotipos::logotipo() == null && Entidade::designacao()!= null){
+        NavBar::begin([
+            'brandLabel'=> Entidade::designacao(),
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
+                'style' => 'border-bottom: 1px solid black',
+            ],
+        ]);
+    }else{
+        NavBar::begin([
+            'brandLabel'=> Yii::$app->name,
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
+                'style' => 'border-bottom: 1px solid black',
+            ],
+        ]);
+    }
     /*
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/error']],
@@ -45,14 +72,30 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
+        $menuItems[] = [
+            'label' => '@' . Yii::$app->user->identity->username,
+            'items' => [
+                [
+                    'label'=>'Logout',
+                    'url'=>['/site/logout'],
+                    'linkOptions' => ['data-method' => 'post'],
+                ],
+                '<li class="divider"></li>',
+                '<li class="dropdown-header">Ações Rápidas</li>',
+                [
+                    'label' => 'Conta',
+                    'url' => ['/config/conta'],
+                ]
+            ]
+        ];
+        /*$menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
-            . '</li>';
+            . '</li>';*/
         $menuItems[] = '<li>'.Html::a((FAS::icon('question-circle')->size(FAS::SIZE_LARGE)),'').'</li>';
     }
     echo Nav::widget([
@@ -105,8 +148,11 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
+        <p class="pull-left">&copy; <?php
+            if(Entidade::designacao()!= null){ echo Entidade::designacao();}
+            else{echo Html::encode(Yii::$app->name);}?>
+            <?= date('Y') ?>
+        </p>
         <p class="pull-right">Powered by <?=Html::img('@web/res/logo-saramago.png',['height' => '20', 'alt'=>Yii::$app->name])?></p>
     </div>
 </footer>

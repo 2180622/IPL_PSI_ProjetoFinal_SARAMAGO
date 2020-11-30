@@ -2,14 +2,16 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Config;
+use yii\helpers\Url;
 
 /**
  * ConfigSearch represents the model behind the search form of `common\models\Config`.
  */
-class EntidadeSearch extends Config
+class Entidade extends Config
 {
     /**
      * {@inheritdoc}
@@ -66,4 +68,68 @@ class EntidadeSearch extends Config
 
         return $dataProvider;
     }
+
+    #region Entidade
+
+    /**
+     * @return string|null
+     */
+    public static function codPostal()
+    {
+        $codPostal = Config::find()->where(['like', 'key', 'entidade_codPostal'])->one();
+
+        return $codPostal->value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function designacao()
+    {
+        $designacao = Config::find()->where(['like', 'key', 'entidade_designacao'])->one();
+
+        return $designacao->value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function localidade()
+    {
+        $localidade = Config::find()->where(['like', 'key', 'entidade_localidade'])->one();
+
+        return $localidade->value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function morada()
+    {
+        $morada = Config::find()->where(['like', 'key', 'entidade_morada'])->one();
+
+        return $morada->value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function nipc()
+    {
+        $nipc = Config::find()->where(['like', 'key', 'entidade_nipc'])->one();
+
+        return $nipc->value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function sigla()
+    {
+        $sigla = Config::find()->where(['like', 'key', 'entidade_sigla'])->one();
+
+        return $sigla->value;
+    }
+
+    #endregion
 }

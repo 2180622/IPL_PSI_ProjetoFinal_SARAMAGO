@@ -3,9 +3,9 @@ namespace backend\controllers;
 
 use Yii;
 
-use app\models\CursoSearch;
-use app\models\EntidadeSearch;
 use app\models\BibliotecaSearch;
+use app\models\CursoSearch;
+use app\models\Entidade;
 use app\models\LogotiposForm;
 use app\models\PostotrabalhoSearch;
 use common\models\Biblioteca;
@@ -43,7 +43,7 @@ class ConfigController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index','conta',
-                            'entidade', 'entidade-update',
+                            'entidade', 'entidade-update','entidade-reset',
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
                             'logotipos','logotipos-view','logotipos-update','logotipos-reset',
@@ -120,11 +120,11 @@ class ConfigController extends Controller
      */
     public function actionEntidade()
     {
-        $searchModel = new EntidadeSearch();
+        $searchModel = new Entidade();
         $entidadeModel = Config::find()->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('entidade', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+        return $this->render('entidade/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
             'entidadeModels' => $entidadeModel]);
     }
 
@@ -133,10 +133,19 @@ class ConfigController extends Controller
         $model = $this->findModelEntidade($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
-            return $this->redirect(['entidade']);
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi alterado.");
+            return $this->redirect(['entidade/updade']);
         }
-        return $this->renderAjax('entidade-update', ['model' => $model]);
+        return $this->renderAjax('entidade/update', ['model' => $model]);
+    }
+
+    public function actionEntidadeReset($id)
+    {
+        $model = $this->findModelEntidade($id);
+        $model->reset($id);
+        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi reposto.");
+
+        return $this->redirect(['entidade/index']);
     }
 
     protected function findModelEntidade($id)
@@ -233,6 +242,8 @@ class ConfigController extends Controller
     }
 
     public function actionPostosView($id){
+
+        //FIXME
         if (($model = Postotrabalho::findOne($id)) !== null) {
             return $this->renderAjax('postos-view', ['model' => $model]);
         }
@@ -422,6 +433,7 @@ class ConfigController extends Controller
         $model = $this->findModelEstexemplar($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "O estatuto do exemplares foi atualizado.");
             return $this->redirect('estexemplar');
         }
 
@@ -451,6 +463,8 @@ class ConfigController extends Controller
 
     #region Leitores
 
+    #region Estatuto dos Leitores
+
     /**
      * Gestão dos Estatutos dos Leitores homepage.
      *
@@ -460,6 +474,8 @@ class ConfigController extends Controller
     {
         return $this->render('estleitor');
     }
+
+    #endregion
 
     #region Irregularidades
     /**
