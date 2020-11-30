@@ -50,7 +50,7 @@ class ConfigController extends Controller
                             'noticias',
                             'equipa',
                             'tipoexemplar',
-                            'estexemplar','estexemplar-update',
+                            'estexemplar','estexemplar-update','estexemplar-reset',
                             'cdu',
                             'estleitor',
                             'irregularidades','irregularidades-update',
@@ -171,14 +171,14 @@ class ConfigController extends Controller
         $bibliotecasModel = Biblioteca::find()->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('bibliotecas', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+        return $this->render('bibliotecas/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
             'bibliotecasModels' => $bibliotecasModel]);
     }
 
     public function actionBibliotecasView($id)
     {
         if (($model = Biblioteca::findOne($id)) !== null) {
-            return $this->renderAjax('bibliotecas-view', ['model' => $model]);
+            return $this->renderAjax('bibliotecas/view', ['model' => $model]);
         }
 
         throw new NotFoundHttpException();
@@ -193,7 +193,7 @@ class ConfigController extends Controller
             return $this->redirect('bibliotecas');
         }
 
-        return $this->renderAjax('bibliotecas-create', ['model'=>$model]);
+        return $this->renderAjax('bibliotecas/create', ['model'=>$model]);
     }
 
     public function actionBibliotecasUpdate($id)
@@ -204,7 +204,7 @@ class ConfigController extends Controller
             Yii::$app->session->setFlash('success', "A biblioteca foi atualizada.");
             return $this->redirect('bibliotecas');
         }
-        return $this->renderAjax('bibliotecas-update', ['model' => $model,]);
+        return $this->renderAjax('bibliotecas/update', ['model' => $model,]);
     }
 
     public function actionBibliotecasDelete($id)
@@ -237,7 +237,7 @@ class ConfigController extends Controller
         $postoTrabalhoModel = Postotrabalho::find()->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('postos',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+        return $this->render('postos/index',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
             'postoTrabalhoModels' => $postoTrabalhoModel]);
     }
 
@@ -245,7 +245,7 @@ class ConfigController extends Controller
 
         //FIXME
         if (($model = Postotrabalho::findOne($id)) !== null) {
-            return $this->renderAjax('postos-view', ['model' => $model]);
+            return $this->renderAjax('postos/view', ['model' => $model]);
         }
 
         return 1;
@@ -261,7 +261,7 @@ class ConfigController extends Controller
             return $this->redirect('postos');
         }
 
-        return $this->renderAjax('postos-create', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
+        return $this->renderAjax('postos/create', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
     }
     public function actionPostosUpdate($id)
     {
@@ -273,7 +273,7 @@ class ConfigController extends Controller
             Yii::$app->session->setFlash('success', "O posto de trabalho foi atualizado.");
             return $this->redirect('postos');
         }
-        return $this->renderAjax('postos-update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
+        return $this->renderAjax('postos/update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
     }
 
     public function actionPostosDelete($id)
@@ -415,6 +415,8 @@ class ConfigController extends Controller
         return $this->render('tipoexemplar');
     }
 
+    #region Estatutos dos Exemplares
+
     /**
      * Gestão dos estatutos de empréstimo de cada tipo obra homepage.
      *
@@ -425,7 +427,7 @@ class ConfigController extends Controller
         $estExemplarModels = Estatutoexemplar::find()->all();
         $dataProvider = new ActiveDataProvider(['query' => EstatutoExemplar::find()]);
 
-        return $this->render('estexemplar', ['dataProvider' => $dataProvider, 'estExemplarModels' => $estExemplarModels]);
+        return $this->render('estexemplar/index', ['dataProvider' => $dataProvider, 'estExemplarModels' => $estExemplarModels]);
     }
 
     public function actionEstexemplarUpdate($id)
@@ -433,11 +435,20 @@ class ConfigController extends Controller
         $model = $this->findModelEstexemplar($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "O estatuto do exemplares foi atualizado.");
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "' . $model->estatuto . '" foi atualizado.');
             return $this->redirect('estexemplar');
         }
 
-        return $this->renderAjax('estexemplar-update', ['model' => $model,]);
+        return $this->renderAjax('estexemplar/update', ['model' => $model,]);
+    }
+
+    public function actionEstexemplarReset($id)
+    {
+        $model = $this->findModelEstexemplar($id);
+        $model->reset($id);
+        Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "' . $model->estatuto. '" foi reposto.');
+
+        return $this->redirect(['estexemplar']);
     }
 
     protected function findModelEstexemplar($id)
@@ -448,7 +459,9 @@ class ConfigController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    #endregion
 
+    #region CDU
     /**
      * Gestão da Código Decimal Universal homepage.
      *
@@ -456,8 +469,9 @@ class ConfigController extends Controller
      */
     public function actionCdu()
     {
-        return $this->render('cdu');
+        return $this->render('cdu/index');
     }
+    #endregion
 
     #endregion
 
@@ -488,7 +502,7 @@ class ConfigController extends Controller
         $dataProvider = new ActiveDataProvider(['query' => Tipoirregularidade::find()]);
         $irregularidadesModels = Tipoirregularidade::find()->all();
 
-        return $this->render('irregularidades', ['dataProvider' => $dataProvider, 'irregularidadesModels'=>$irregularidadesModels]);
+        return $this->render('irregularidades/index', ['dataProvider' => $dataProvider, 'irregularidadesModels'=>$irregularidadesModels]);
     }
 
     public function actionIrregularidadesUpdate($id)
@@ -496,11 +510,11 @@ class ConfigController extends Controller
         $model = $this->findModelIrregularidades($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "A irregularidade para o tipo de obra foi atualizada.");
+            Yii::$app->session->setFlash('success', 'A irregularidade para o tipo de obra "'. $model->irregularidade .'" foi atualizada.');
             return $this->redirect('irregularidades');
         }
 
-        return $this->renderAjax('irregularidades-update', ['model' => $model,]);
+        return $this->renderAjax('irregularidades/update', ['model' => $model,]);
     }
 
     protected function findModelIrregularidades($id)
@@ -597,7 +611,7 @@ class ConfigController extends Controller
         $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "recibo_"])]);
         $recibosModel = Config::find()->all();
 
-        return $this->render('recibos', ['dataProvider' => $dataProvider, 'recibosModel'=> $recibosModel]);
+        return $this->render('recibos/index', ['dataProvider' => $dataProvider, 'recibosModel'=> $recibosModel]);
 
     }
 
@@ -606,11 +620,12 @@ class ConfigController extends Controller
         $model = $this->findModelRecibos($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
             return $this->redirect('recibos');
         }
 
-        return $this->renderAjax('recibos-update', ['model' => $model,]);
+        return $this->renderAjax('recibos/update', ['model' => $model,]);
     }
 
     protected function findModelRecibos($id)
@@ -645,7 +660,7 @@ class ConfigController extends Controller
         $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "opac_obrasAdquiridas"])]);
         $slidesopacModel = Config::find()->all();
 
-        return $this->render('slidesopac', ['dataProvider' => $dataProvider, 'slidesopacModels'=> $slidesopacModel]);
+        return $this->render('slidesopac/index', ['dataProvider' => $dataProvider, 'slidesopacModels'=> $slidesopacModel]);
 
     }
 
@@ -654,11 +669,12 @@ class ConfigController extends Controller
         $model = $this->findModelSlidesopac($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "O estado para definição selecionada foi alterada.");
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
             return $this->redirect('slidesopac');
         }
 
-        return $this->renderAjax('slidesopac-update', ['model' => $model,]);
+        return $this->renderAjax('slidesopac/update', ['model' => $model,]);
     }
 
     protected function findModelSlidesopac($id)
@@ -673,6 +689,8 @@ class ConfigController extends Controller
     #endregion
 
     #region Aplicação Móvel
+
+    #region Arrumação
     /**
      * Gestão da funcionalidade "arrumar" homepage.
      *
@@ -680,8 +698,10 @@ class ConfigController extends Controller
      */
     public function actionArrumacao()
     {
-        return $this->render('arrumacao');
+        return $this->render('arrumacao/index');
     }
+    #endregion
+
     #endregion
 
 }

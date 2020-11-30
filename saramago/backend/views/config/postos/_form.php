@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'totalLugares')->textInput() ?>
 
-    <?= $form->field($model, 'notaOpac')->widget(CKEditor::className(), ['options' => ['rows' => 2], 'preset' => 'basic']) ?>
+    <?= $form->field($model, 'notaOpac')->widget(CKEditor::className(), ['options' => ['rows' => 2, 'id' => $model->id], 'preset' => 'basic']) ?>
 
     <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true]) ?>
 

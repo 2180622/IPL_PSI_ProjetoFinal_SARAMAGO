@@ -33,14 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'summary'=>'',
         'columns' => [
+            [   'label'=>'Definição',
+                'attribute' => 'info',
+                'headerOptions' => ['width' => '500']
+            ],
             [
                 'label' => 'Estado',
                 'attribute' => 'value',
                 'format'=>['boolean',['0' => 'Não', '1' => 'Sim']],
             ],
             ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Ações',
-                'headerOptions' => ['width' => '100',],
+                'header'=>'Ação',
+                'headerOptions' => ['width' => '50px'],
                 'template' => '{update}',
                 'buttons' => [
                     'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),

@@ -47,24 +47,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ],
-    ]); ?>
+    ]);
+    ?>
+
+    <?php
+        foreach ($irregularidadesModels as $irregularidadeModel){
+            $this->registerJs("
+                
+            $(function () {
+                $('#modalButtonUpdate".$irregularidadeModel->id."').click(function (){
+                    $('#modalUpdate".$irregularidadeModel->id."').modal('show')
+                        .find('#modalContent')
+                        .load($(this).attr('value'))
+                })
+            });
+        ");
+        }
+    ?>
 
     <?php Pjax::end(); ?>
 
     <?php
-    foreach ($irregularidadesModels as $irregularidadeModel){
-        $this->registerJs("
-            
-        $(function () {
-            $('#modalButtonUpdate".$irregularidadeModel->id."').click(function (){
-                $('#modalUpdate".$irregularidadeModel->id."').modal('show')
-                    .find('#modalContent')
-                    .load($(this).attr('value'))
-            })
-        });
-    ");
-    }
-
     foreach ($irregularidadesModels as $irregularidadeModel){
 
         Modal::begin([

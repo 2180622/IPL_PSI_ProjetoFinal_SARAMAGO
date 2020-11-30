@@ -9,5 +9,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Bibliotecas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="biblioteca-create">
-    <?= $this->render('bibliotecas/_form', ['model' => $model,]) ?>
+    <?= $this->render('_form', ['model' => $model,]) ?>
 </div>

@@ -15,6 +15,17 @@ use Yii;
  */
 class Estatutoexemplar extends \yii\db\ActiveRecord
 {
+
+    const ID_NORMAL = 1;
+    const ID_CURTO = 2;
+    const ID_DIARIO = 3;
+    const ID_NREQ = 4;
+
+    const PRAZO_NORMAL = null;
+    const PRAZO_CURTO = 3;
+    const PRAZO_DIARIO = 1;
+    const PRAZO_NREQ = 0;
+
     /**
      * {@inheritdoc}
      */
@@ -66,4 +77,33 @@ class Estatutoexemplar extends \yii\db\ActiveRecord
     {
         return new EstatutoexemplarQuery(get_called_class());
     }
+
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws \yii\db\Exception
+     */
+    public static function reset($id)
+    {
+        if($id == self::ID_NORMAL)
+        {
+            Yii::$app->db->createCommand()->update(self::tableName(), ['prazo' => self::PRAZO_NORMAL], 'id = '. $id)->execute();
+        }
+        elseif($id == self::ID_CURTO)
+        {
+            Yii::$app->db->createCommand()->update(self::tableName(), ['prazo' => self::PRAZO_CURTO], 'id = ' . $id)->execute();
+        }
+        elseif($id == self::ID_DIARIO)
+        {
+            Yii::$app->db->createCommand()->update(self::tableName(), ['prazo' => self::PRAZO_DIARIO], 'id = ' . $id)->execute();
+        }
+        elseif($id == self::ID_NREQ)
+        {
+            Yii::$app->db->createCommand()->update(self::tableName(), ['prazo' => self::PRAZO_NREQ], 'id = ' . $id)->execute();
+        }
+        return true;
+    }
+
+
 }

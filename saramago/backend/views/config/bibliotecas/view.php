@@ -23,7 +23,10 @@ $this->title = $model->nome;
         [
             'attribute' => 'codPostal',
             'value'=>function ($model){
-                return ''.$cp1 = substr($model->codPostal, 0, 4).'-'.$cp2 = substr($model->codPostal, 4, 6).'';},
+                if(strlen($model->codPostal) == 7 ){
+                    return $cp1 = substr($model->codPostal, 0, 4).'-'.$cp2 = substr($model->codPostal, 4, 6);}
+                else{return $model->codPostal;}
+            }
         ],
         [
             'attribute' => 'levantamento',

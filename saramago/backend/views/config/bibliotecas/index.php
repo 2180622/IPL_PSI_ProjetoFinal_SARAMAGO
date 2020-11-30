@@ -63,7 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Cód. Postal',
                     'attribute' => 'codPostal',
                     'value'=>function ($model){
-                        return ''.$cp1 = substr($model->codPostal, 0, 4).'-'.$cp2 = substr($model->codPostal, 4, 6).'';},
+                        if(strlen($model->codPostal) == 7 ){
+                            return $cp1 = substr($model->codPostal, 0, 4).'-'.$cp2 = substr($model->codPostal, 4, 6);}
+                        else{return $model->codPostal;}
+                        },
                     'headerOptions' => ['width' => '100']
                 ],
                 [
@@ -78,13 +81,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{view} {update} {delete}',
                     'buttons' => [
                         'view' => function ($url,$model,$id){return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                                ['value'=>Url::to(['bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
+                                ['value'=>Url::to(['config/bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
                         },
                         'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                            ['value'=>Url::to(['bibliotecas-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
+                            ['value'=>Url::to(['config/bibliotecas-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
                         },
                         'delete' => function ($url,$model,$id){return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['bibliotecas-delete','id'=>$id]),
+                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['config/bibliotecas-delete','id'=>$id]),
                             ['data' => ['confirm' => 'Tem a certeza de que pretende apagar a '.$model->nome.'?', 'method'=>'post']
                             ]);
                         },

@@ -10,5 +10,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Posto de Trabalho', 'url' => ['ind
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 ?>
 <div class="postos-update">
-    <?= $this->render('postos/_form', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]) ?>
+    <?= $this->render('_form', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]) ?>
 </div>

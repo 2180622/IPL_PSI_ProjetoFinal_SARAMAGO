@@ -3,77 +3,80 @@
 
 /* @var $this yii\web\View */
 
+
 use rmrevin\yii\fontawesome\FAS;
+
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-$this->title = 'Estatutos dos Exemplares';
+/* @var $model common\models\Config */
+
+$this->title = 'Recibos';
 $this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-config config-estexemplar">
+<div class="site-config config-recibos">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>
+        <?= Html::encode($this->title) ?>
+    </h1>
     <hr>
+
+    <?php Yii::$app->session->getFlash('success');?>
 
     <?php Pjax::begin(); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'summary' => '',
+        'summary'=>'',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute' => 'estatuto',
-                'label' => 'Designação do Estatuto',
+            [   'label'=>'Definição',
+                'attribute' => 'info',
+                'headerOptions' => ['width' => '500']
             ],
             [
-                'attribute' => 'prazo',
-                'label' => 'Prazo de Empréstimo (em dias)'
+                'label' => 'Estado',
+                'attribute' => 'value',
+                'format'=>['boolean'],
             ],
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ação',
-                'headerOptions' => ['width' => '100'],
+                'headerOptions' => ['width' => '10'],
                 'template' => '{update}',
                 'buttons' => [
                     'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                        ['value'=>Url::to(['estexemplar-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
+                        ['value'=>Url::to(['recibos-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
                     },
                 ],
             ],
         ],
-    ]);
-
-    ?>
+    ]); ?>
 
     <?php Pjax::end(); ?>
 
     <?php
-
-    foreach ($estExemplarModels as $estExemplarModel)
-    {
+    foreach ($recibosModel as $reciboModel){
         $this->registerJs("
+      
         $(function () {
-            $('#modalButtonUpdate".$estExemplarModel->id."').click(function (){
-                $('#modalUpdate".$estExemplarModel->id."').modal('show')
+            $('#modalButtonUpdate".$reciboModel->id."').click(function (){
+                $('#modalUpdate".$reciboModel->id."').modal('show')
                     .find('#modalContent')
                     .load($(this).attr('value'))
             })
         });
-      
-    ");
+        ");
     }
-
     ?>
 
-    <?php foreach ($estExemplarModels as $estExemplarModels){
+    <?php foreach ($recibosModel as $reciboModel){
 
         Modal::begin([
-            'header' => '<h4>'.$estExemplarModel->estatuto.'</h4>',
-            'id' => 'modalUpdate'.$estExemplarModels->id,
+            'header' => '<h4>'.$reciboModel->info.'</h4>',
+            'id' => 'modalUpdate'.$reciboModel->id,
             'size' => 'modal-md',
             'clientOptions' => ['backdrop' => 'static']
         ]);
@@ -82,5 +85,6 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     ?>
+
 
 </div>

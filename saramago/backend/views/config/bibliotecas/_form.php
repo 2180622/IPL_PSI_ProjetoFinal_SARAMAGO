@@ -21,11 +21,11 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'localidade')->textInput(['maxlength' => true, 'style' => 'text-transform:capitalize'])->label('Localidade') ?>
 
-    <?= $form->field($model, 'codPostal')->textInput(['type'=>'number'])->label("Código Postal")?>
+    <?= $form->field($model, 'codPostal')->textInput(['maxlength' => 7, 'pattern'=>'[0-9]{4}|[0-9]{7}'])->label("Código Postal")->hint('Formato: "1234" ou "1234567')?>
 
-    <?= $form->field($model, 'levantamento')->dropdownList([1 => 'Sim', 2 =>'Não'], ['prompt'=>'Selecione a opção']);?>
+    <?= $form->field($model, 'levantamento')->dropdownList([1 => 'Sim', 2 =>'Não']);?>
 
-    <?= $form->field($model, 'notasOpac')->widget(CKEditor::className(), ['options' => ['rows' => 6], 'preset' => 'basic']) ?>
+    <?= $form->field($model, 'notasOpac')->widget(CKEditor::className(), ['options' => ['rows' => 6, 'id' => $model->id], 'preset' => 'basic']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

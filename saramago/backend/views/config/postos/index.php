@@ -49,15 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [   'label'=>'Biblioteca',
                 'attribute'=>'Biblioteca_id',
-                'filter' => ['value'=>function ($model){return ''.$model->biblioteca->nome.'';}],
+                // TODO Adicionar filtro de bibliotecas
                 'value'=>function ($model){return ''.$model->biblioteca->nome.'';},
             ],
-            [
-                'label'=> 'Informação Interna',
-                'attribute'=>'notaInterna',
-                'filter' => false,
-            ],
-
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ações',
                 'headerOptions' => ['width' => '100'],
@@ -71,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'delete' => function ($url,$model,$id){return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
                         ['class' => 'btn btn-danger btn-sm inline']), Url::to(['postos-delete','id'=>$id]),
-                        ['data' => ['confirm' => 'Tem a certeza de que pretende apagar a '.$model->designacao.'?', 'method'=>'post']
+                        ['data' => ['confirm' => 'Tem a certeza de que pretende apagar os postos de trabalho "'.$model->designacao.'"?', 'method'=>'post']
                         ]);
                     },
                 ],
