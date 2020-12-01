@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\bootstrap\Button;
+use yii\helpers\Html;
 
 $this->title = 'My Yii Application';
 ?>
@@ -29,10 +30,10 @@ $this->title = 'My Yii Application';
             <!-- indicadores -->
             <ol class="carousel-indicators">
             	<?php $counter = 0;
-            	if (isset($obrasRecentementeAdquiridas)) {
-            		foreach($obrasRecentementeAdquiridas as $obraRecenteAdquirida) { 
-            			echo '<li data-target="#carousel-obras" data-slide-to=' + $counter + '></li>';
-            			$counter++;
+            	if (isset($obrasRecentementeAdquiridas)) { 
+            		foreach($obrasRecentementeAdquiridas as $obraRecenteAdquirida) { ?> 
+            			<li data-target="#carousel-obras" data-slide-to=' + $counter + '></li>
+            			<?= $counter++; 
             		}
             	}
             	?>
@@ -48,37 +49,32 @@ $this->title = 'My Yii Application';
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
 
-            	<?php
-            	if (isset($obrasRecentementeAdquiridas)) {
-            		foreach($obrasRecentementeAdquiridas as $obraRecenteAdquirida) { 
-            			foreach($obraRecenteAdquirida->autors as $autorDaObra) {
-            				var_dump($autorDaObra->primeiroNome); 
-            				echo '<p>'+ $autorDaObra->primeiroNome +'</p>';
-            			}
-            			//var_dump($obraRecenteAdquirida->obraAutors); die();
-            			/*echo ' <div class="item active">
-                			<img src="' +  + '" alt="' + $obraRecenteAdquirida->titulo + '(' + $obraRecenteAdquirida->ano + ')" style="width:100%;">
-                			<div class="carousel-caption">
-                    			<h3>' + $obraRecenteAdquirida->titulo + '(' + $obraRecenteAdquirida->ano + ')</h3>
-                    			<p>' + $obraRecenteAdquirida->autors->primeiroNome +
-                    			 ' ' + $obraRecenteAdquirida->autors->segundoNome + 
-                    			 ' ' + $obraRecenteAdquirida->autors->apelido+ '</p>
-                    		</div>
+            	<?php if (isset($obrasRecentementeAdquiridas)) { ?>
+            		<?php foreach($obrasRecentementeAdquiridas as $obraRecenteAdquirida) { ?> 
+            			 <div class="item">
+            			 		<?=Html::img('@web/batata01.jpg',['height' => '20', 'alt'=>Yii::$app->name])?>
+                				
+            					<div class="carousel-caption">
+                					<h3>Titulo: <?php $obraRecenteAdquirida->titulo ?> (<?php $obraRecenteAdquirida->ano ?>)</h3> 
+                							<?php foreach($obraRecenteAdquirida->autors as $autorDaObra) { ?>          			
+        										<p>Autor: <?= $autorDaObra->primeiroNome ?> <?= $autorDaObra->segundoNome ?> <?= $autorDaObra->apelido ?> </p>
+			          							<?php } ?> 			                  			
+                				</div>
                 		 </div>
-                		 '; */
-            		}
-            	}
-            	?>
-                <!-- item #1 / active -->
+                		 
+            		<?php } ?>
+            	<?php } ?>
+            	
+
                 <div class="item active">
-                    <img src="" alt="NOME DA OBRA #1 (ANO)" style="width:100%;">
+                    <?=Html::img('@web/batata01.jpg',['height' => '20', 'alt'=>Yii::$app->name])?>
                     <div class="carousel-caption">
                         <h3>NOME DA OBRA #1 (ANO)</h3>
                         <p>Autor/Autores</p>
                     </div>
                 </div>
 
-                <!-- item #2 -->
+ 				<!--
                 <div class="item">
                     <img src="" alt="NOME DA OBRA #2 (ANO)" style="width:100%;">
                     <div class="carousel-caption">
@@ -87,7 +83,6 @@ $this->title = 'My Yii Application';
                     </div>
                 </div>
 
-                <!-- item #3 -->
                 <div class="item">
                     <img src="" alt="NOME DA OBRA #3 (ANO)" style="width:100%;">
                     <div class="carousel-caption">
@@ -96,8 +91,7 @@ $this->title = 'My Yii Application';
                     </div>
                 </div>
 
-                <!-- item #4 -->
-                <div class="item">
+            <div class="item">
                     <img src="" alt="NOME DA OBRA #4 (ANO)" style="width:100%;">
                     <div class="carousel-caption">
                         <h3>NOME DA OBRA #4 (ANO)</h3>
@@ -105,7 +99,6 @@ $this->title = 'My Yii Application';
                     </div>
                 </div>
 
-                <!-- item #5 -->
                 <div class="item">
                     <img src="" alt="NOME DA OBRA #5 (ANO)" style="width:100%;">
                     <div class="carousel-caption">
@@ -113,8 +106,7 @@ $this->title = 'My Yii Application';
                         <p>Autor/Autores</p>
                     </div>
                 </div>
-
-                <!-- item #6 -->
+ 
                 <div class="item">
                     <img src="" alt="NOME DA OBRA #6 (ANO)" style="width:100%;">
                     <div class="carousel-caption">
@@ -123,7 +115,7 @@ $this->title = 'My Yii Application';
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
             <!-- Controldores / esquerda e direita -->
             <a class="left carousel-control" href="#carousel-obras" data-slide="prev">
