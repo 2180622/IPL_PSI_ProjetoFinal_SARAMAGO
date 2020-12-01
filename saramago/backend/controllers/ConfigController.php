@@ -5,12 +5,12 @@ use Yii;
 
 use app\models\BibliotecaSearch;
 use app\models\CursoSearch;
-use app\models\Entidade;
 use app\models\LogotiposForm;
 use app\models\PostotrabalhoSearch;
 use common\models\Biblioteca;
 use common\models\Config;
 use common\models\Curso;
+use common\models\Entidade;
 use common\models\Estatutoexemplar;
 use common\models\Leitor;
 use common\models\Postotrabalho;
@@ -134,7 +134,7 @@ class ConfigController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi alterado.");
-            return $this->redirect(['entidade/updade']);
+            return $this->redirect(['entidade']);
         }
         return $this->renderAjax('entidade/update', ['model' => $model]);
     }

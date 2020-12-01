@@ -5,7 +5,7 @@
 use yii\bootstrap\Button;
 use yii\helpers\Html;
 
-$this->title = 'My Yii Application';
+$this->title = 'SARAMAGO';
 ?>
 <div class="site-index">
 

@@ -3,8 +3,8 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use app\models\Entidade;
-use app\models\Logotipos;
+use common\models\Entidade;
+use common\models\Logotipos;
 use backend\assets\AppAsset;
 use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
