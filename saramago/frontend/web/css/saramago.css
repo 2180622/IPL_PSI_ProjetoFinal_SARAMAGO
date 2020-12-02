@@ -6,29 +6,35 @@
     background-color: #254E58;
     color: #ffffff;
 }
+
+.main-login {
+    background-image: url("../res/undraw-login.svg");
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
 /* endregion MAIN */
 
 /* region LOGIN */
-.saramago-login h2,p{
+.container .saramago-login .col-lg-5{
+    background-color: #ffffff;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: 3px solid #254E58;
+    border-radius: 5px;
+}
+
+.saramago-login h1,h2,h3,h4,h5,h6,p,a{
     font-family: "Geometr415 Lt BT Lite", sans-serif;
     font-style: normal;
     font-weight: normal;
     line-height: 1;
-
-}.saramago-login h1,h2,h3,h4,h5,h6{
-    font-family: "Geometric 415 Black BT", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-
-}
-.saramago-login image{
-    float: start;
-    vertical-align:text-bottom;
-    padding-left: -10px;
 }
 
-.site-login form button{
+.site-login form button,
+.site-request-password-reset form button,
+.site-resend-verification-email form button {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     border-radius: 5px;
     background: #ffffff;
@@ -36,12 +42,28 @@
     font-size: 20px;
     border: 1px solid black;
     width: 100%;
-    transition-duration: 0.2s;
+    transition-duration: 0.4s;
 }
 
-.site-login form button:hover {
+.site-login form button:hover,
+.site-request-password-reset form button:hover,
+.site-resend-verification-email form button:hover {
     background-color: #254E58;
     color: #ffffff;
+}
+
+.container .site-request-password-reset .col-lg-5{
+    background-color: #ffffff;
+    padding: 10px;
+    border: 3px solid #254E58;
+    border-radius: 5px;
+}
+
+.container .site-resend-verification-email .col-lg-5{
+    background-color: #ffffff;
+    padding: 10px;
+    border: 3px solid #254E58;
+    border-radius: 5px;
 }
 
 /* endregion */
