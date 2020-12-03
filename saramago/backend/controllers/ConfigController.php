@@ -1,6 +1,11 @@
 <?php
 namespace backend\controllers;
 
+use app\models\FuncionarioSearch;
+use backend\models\FuncionarioCreateForm;
+use common\models\Funcionario;
+use common\models\Tipoleitor;
+use common\models\User;
 use Yii;
 
 use app\models\BibliotecaSearch;
@@ -48,7 +53,7 @@ class ConfigController extends Controller
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
                             'logotipos','logotipos-view','logotipos-update','logotipos-reset',
                             'noticias',
-                            'equipa',
+                            'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
                             'tipoexemplar',
                             'estexemplar','estexemplar-update','estexemplar-reset',
                             'cdu',
@@ -56,7 +61,7 @@ class ConfigController extends Controller
                             'irregularidades','irregularidades-update',
                             'cursos','cursos-view','cursos-create','cursos-update','cursos-delete',
                             'recibos','recibos-update',
-                            'resexemplar',
+                            'resexemplar', 'resexemplar-update',
                             'slidesopac','slidesopac-update',
                             'arrumacao'],
                         'allow' => true,
@@ -292,7 +297,6 @@ class ConfigController extends Controller
         }
 
         throw new NotFoundHttpException();
-
     }
 
     #endregion
@@ -378,28 +382,116 @@ class ConfigController extends Controller
      */
     public function actionEquipa()
     {
+        $searchModel = new FuncionarioSearch();
+        $funcionarios = Funcionario::find()->all();
+        $users = User::find()->all();
 
-        return $this->render('equipa');
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('equipa/index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'funcionarios' => $funcionarios,
+            'users' => $users]);
     }
 
     public function actionEquipaView($id){
 
+        if (($model = Funcionario::findOne($id)) !== null) {
+            $leitor = Leitor::findOne($model->Leitor_id);
+            $user = User::findOne($model->leitor->user_id);
+
+            return $this->renderAjax('equipa/view', [
+                'model' => $model,
+                'leitor'=>$leitor,
+                'user'=>$user]);
+        }
+
+        throw new NotFoundHttpException();
     }
 
     public function actionEquipaCreate(){
 
+        $model = new FuncionarioCreateForm();
+        $listaBibliotecas = Biblioteca::find()->all();
+        $listaTiposLeitors = Tipoleitor::find()->all();
+
+        if ($model->load(Yii::$app->request->post()) && $model->createFuncionario()) {
+            Yii::$app->session->setFlash('success', "O Funcionário foi criado com sucesso");
+            return $this->redirect('equipa');
+        }
+
+        return $this->renderAjax('equipa/create', [
+            'model'=>$model,
+            'listaBibliotecas'=>$listaBibliotecas,
+            'listaTiposLeitors'=>$listaTiposLeitors]);
     }
 
-    public function actionEquipaUpdate(){
+    public function actionEquipaAssociate()
+    {
+        $model = new FuncionarioCreateForm();
+        $leitores = Leitor::find()->all();
+        $funcionarios = Funcionario::find()->all();
 
+
+        if($leitores == null){
+            Yii::$app->session->setFlash('error', "Não existem Leitores possíveis para associar");
+            return $this->redirect('equipa');
+        }else if($model->associateFuncionario() == false) {
+            Yii::$app->session->setFlash('error', "Houve um erro.");
+            return $this->redirect('equipa');
+        }else if($model->load(Yii::$app->request->post()) && $model->associateFuncionario()) {
+            Yii::$app->session->setFlash('success', "O Funcionário foi adicionado.");
+            return $this->redirect('equipa');
+        }
+
+        return $this->renderAjax('equipa/associate', [
+            'model'=>$model,
+            'leitores'=>$leitores]);
     }
 
-    public function actionEquipaDelete(){
+    public function actionEquipaUpdate($id){
+        $model = new FuncionarioCreateForm();
+        $funcionario = Funcionario::findOne($id);
+        $leitor = Leitor::findOne($funcionario->Leitor_id);
+        $user = User::findOne($leitor->user_id);
+        $listaBibliotecas = Biblioteca::find()->all();
+        $listaTiposLeitors = Tipoleitor::find()->all();
 
+        if ($model->load(Yii::$app->request->post()) && $model->updateFuncionario($id)) {
+
+            Yii::$app->session->setFlash('success', "O Funcionário foi atualizado.");
+            return $this->redirect('equipa');
+        }
+
+        return $this->renderAjax('equipa/update', [
+            'model' => $model,
+            'funcionario'=>$funcionario,
+            'leitor'=>$leitor,
+            'user'=>$user,
+            'listaBibliotecas' => $listaBibliotecas,
+            'listaTiposLeitors' => $listaTiposLeitors]);
+    }
+
+    public function actionEquipaDelete($id){
+        $funcionario = $this->findModelEquipa($id);
+        $leitor = Leitor::findOne($funcionario->Leitor_id);
+        $user = User::findOne($leitor->user_id);
+        $user->status = 9;
+
+        $user->save();
+        $funcionario->delete();
+        $leitor->delete();
+
+        return $this->redirect('equipa');
     }
 
     public function findModelEquipa($id){
+        if (($model = Funcionario::findOne($id)) !== null) {
+            return $model;
+        }
 
+        throw new NotFoundHttpException();
     }
     #endregion
 
@@ -647,7 +739,32 @@ class ConfigController extends Controller
      */
     public function actionResexemplar()
     {
-        return $this->render('resexemplar');
+        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', 'opac_reservaExemplares'])]);
+        $resexemplares = Config::find()->all();
+
+        return $this->render('resexemplar/index',[
+            'resexemplares'=>$resexemplares,
+            'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionResexemplarUpdate($id){
+
+        $model = $this->findModelResexemplar($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success','A '. $model->info .' foi alterada com sucesso.');
+            return $this->redirect('slidesopac');
+        }
+
+        return $this->renderAjax('slidesopac/update', ['model' => $model,]);
+    }
+
+    public function findModelResexemplar($id){
+        if (($model = Config::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     /**
