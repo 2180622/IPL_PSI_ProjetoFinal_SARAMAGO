@@ -35,7 +35,8 @@ class Postotrabalho extends \yii\db\ActiveRecord
         return [
             [['designacao', 'totalLugares', 'Biblioteca_id'], 'required'],
             [['totalLugares', 'Biblioteca_id'], 'integer'],
-            [['designacao', 'notaOpac'], 'string', 'max' => 255],
+            [['notaOpac'], 'string'],
+            [['designacao'], 'string', 'max' => 255],
             [['notaInterna'], 'string', 'max' => 2555],
             [['Biblioteca_id'], 'exist', 'skipOnError' => true, 'targetClass' => Biblioteca::className(), 'targetAttribute' => ['Biblioteca_id' => 'id']],
         ];
