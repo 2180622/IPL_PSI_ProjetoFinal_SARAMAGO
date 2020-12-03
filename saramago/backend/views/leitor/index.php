@@ -38,12 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [   'label' => 'Doc Id',
                             'attribute' =>'docId',
-
                         ],
                         [
                             'label' => 'Data de Nascimento',
                             'attribute' => 'dataNasc',
-                            'headerOptions' => ['width' => '100']
+                            'headerOptions' => ['width' => '100'],
                         ],
                         [
                             'label' => 'Tipo de Leitor',
@@ -76,11 +75,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
                                     ['value'=>Url::to(['update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
                                 },
-                                'delete' => function ($url,$model,$id){return Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                                    ['value'=>Url::to(['delete','id'=>$id]), 'class' => 'btn btn-danger btn-sm','id'=>'modalButtonDelete'.$id,
-                                        'data' => [
-                                            'confirm' => 'Tem a certeza de que pretende apagar a '.$model->nome.'?',
-                                            'method' => 'post']]);
+                                'delete' => function ($url,$model,$id) {
+                                    return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
+                                        ['class' => 'btn btn-danger btn-sm inline']), Url::to(['delete', 'id' => $id]),
+                                        ['data' =>
+                                            ['confirm' => 'Tem a certeza de que pretende apagar o leitor ' . $model->nome . '?', 'method' => 'post']
+                                        ]);
                                 },
                             ],
                         ],

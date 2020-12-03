@@ -49,6 +49,11 @@ class Funcionario extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
     /**
      * Gets query for [[Leitor]].
      *

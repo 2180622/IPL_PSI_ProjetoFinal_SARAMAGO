@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Leitores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="leitor-create">
-    <?= $this->render('_form', [   'modelSignUp'=>$modelSignUp,
+    <?= $this->render('_form', [   'model'=>$model,
                                         'listaBibliotecas'=>$listaBibliotecas,
                                         'listaTiposLeitors'=>$listaTiposLeitors,
                                     ]) ?>

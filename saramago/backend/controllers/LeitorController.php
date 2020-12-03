@@ -103,17 +103,18 @@ class LeitorController extends Controller
      */
     public function actionCreate()
     {
-        $modelSignUp = new LeitorCreateForm();
+        $model = new LeitorCreateForm();
 
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
 
-        if ($modelSignUp->load(Yii::$app->request->post()) && $modelSignUp->signup()) {
-            return $this->goHome();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', "O leitor foi adicionado.");
+            return $this->redirect('index');
         }
 
         return $this->renderAjax('create', [
-            'modelSignUp'=>$modelSignUp,
+            'model'=>$model,
             'listaBibliotecas'=>$listaBibliotecas,
             'listaTiposLeitors'=>$listaTiposLeitors,
         ]);
@@ -128,14 +129,25 @@ class LeitorController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = new LeitorCreateForm();
+        $leitor = Leitor::findOne($id);
+        $user = User::findOne($leitor->user_id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $listaBibliotecas = Biblioteca::find()->all();
+        $listaTiposLeitors = Tipoleitor::find()->all();
+
+        if ($model->load(Yii::$app->request->post()) && $model->updateLeitor($id)) {
+            Yii::$app->session->setFlash('success', "O Leitor foi atualizado com sucesso.");
+            return $this->goBack();
         }
 
-        return $this->render('update', [
+
+        return $this->renderAjax('update', [
             'model' => $model,
+            'leitor'=>$leitor,
+            'user'=>$user,
+            'listaBibliotecas'=>$listaBibliotecas,
+            'listaTiposLeitors'=>$listaTiposLeitors,
         ]);
     }
 
@@ -148,7 +160,12 @@ class LeitorController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $leitor = $this->findModel($id);
+        $user = User::findOne($leitor->user_id);
+        $user->status = 9;
+
+        $user->save();
+        $leitor->delete();
 
         return $this->redirect(['index']);
     }

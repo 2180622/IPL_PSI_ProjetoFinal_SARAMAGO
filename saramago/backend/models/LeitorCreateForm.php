@@ -125,7 +125,7 @@ class LeitorCreateForm extends Model
             $leitor->nome = $this->nome;
             $leitor->nif = $this->nif;
             $leitor->docId = $this->docId;
-            $leitor->codBarras = "Barras".srand(0,564611);
+            $leitor->codBarras = $this->generateRandomString(9);
             $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
             $newDateString = $myDateTime->format('Y/m/d');
             $leitor->dataNasc = $newDateString;
@@ -135,8 +135,8 @@ class LeitorCreateForm extends Model
             $leitor->telemovel = $this->telemovel;
             $leitor->telefone = $this->telefone;
             $leitor->notaInterna = $this->notaInterna;
-            $leitor->Biblioteca_id = 1;
-            $leitor->TipoLeitor_id = 1;
+            $leitor->Biblioteca_id = $this->Biblioteca_id;
+            $leitor->TipoLeitor_id = $this->TipoLeitor_id;
 
             $leitor->user_id = $user->getId();
 
@@ -167,6 +167,48 @@ class LeitorCreateForm extends Model
         $user->generateEmailVerificationToken();
         return $user->save() && $this->sendEmail($user);
         */
+    }
+
+    public function updateLeitor($id){
+        if ($this->validate()) {
+            $leitor = Leitor::findOne($id);
+            $user = User::findOne($leitor->user_id);
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->status = 10;
+            $user->save();
+
+            $leitor->mail2 = $this->mail2;
+            $leitor->nome = $this->nome;
+            $leitor->nif = $this->nif;
+            $leitor->docId = $this->docId;
+            $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
+            $newDateString = $myDateTime->format('Y/m/d');
+            $leitor->dataNasc = $newDateString;
+            $leitor->morada = $this->morada;
+            $leitor->localidade = $this->localidade;
+            $leitor->codPostal = $this->codPostal;
+            $leitor->telemovel = $this->telemovel;
+            $leitor->telefone = $this->telefone;
+            $leitor->notaInterna = $this->notaInterna;
+            $leitor->Biblioteca_id = $this->Biblioteca_id;
+            $leitor->TipoLeitor_id = $this->TipoLeitor_id;
+
+            $leitor->user_id = $user->getId();
+
+            $leitor->save();
+
+            // the following three lines were added:
+            $auth = \Yii::$app->authManager;
+            // temporary fix
+            //$leitorAlunoRole = $auth->getRole('leitorAluno');
+            //$auth->assign($leitorAlunoRole, $user->getId());
+
+            return $leitor;
+        }
+
+        return null;
     }
 
     /*public function findLeitor($id){

@@ -19,37 +19,37 @@ use yii\widgets\ActiveForm;
 
     $form = ActiveForm::begin(['id'=>'_form']); ?>
 
-    <?= $form->field($modelSignUp, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'username')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'password')->passwordInput() ?>
 
-    <?= $form->field($modelSignUp, 'nif')->textInput() ?>
+    <?= $form->field($model, 'nif')->textInput() ?>
 
-    <?= $form->field($modelSignUp, 'docId')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'docId')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
+    <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
 
-    <?= $form->field($modelSignUp, 'morada')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'morada')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'localidade')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'codPostal')->textInput() ?>
+    <?= $form->field($model, 'codPostal')->textInput() ?>
 
-    <?= $form->field($modelSignUp, 'telemovel')->textInput() ?>
+    <?= $form->field($model, 'telemovel')->textInput() ?>
 
-    <?= $form->field($modelSignUp, 'telefone')->textInput() ?>
+    <?= $form->field($model, 'telefone')->textInput() ?>
 
-    <?= $form->field($modelSignUp, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'mail2')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'mail2')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'notaInterna')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($modelSignUp, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
+    <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
 
-    <?= $form->field($modelSignUp, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
+    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
