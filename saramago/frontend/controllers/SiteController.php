@@ -75,9 +75,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $model = Obra::find()->all();
+        $tagsDasObras = Obra::getAssuntosDasObrasTodas();
+        $quantidadeDeLivrosNaMesmaTag = Obra::getLivrosComMesmoAssunto();
     	$obrasRecentementeAdquiridas = Obra::find()->orderBy(['dataRegisto' => SORT_DESC])->all();
 
-        return $this->render('index', ['obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas]);
+        return $this->render('index', ['tagsDasObras' => $tagsDasObras, 'quantidadeDeLivrosNaMesmaTag' => $quantidadeDeLivrosNaMesmaTag, 'obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas]);
     }
 
     /**
@@ -270,4 +273,6 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+    
 }

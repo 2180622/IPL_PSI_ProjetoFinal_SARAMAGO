@@ -55,7 +55,8 @@ $this->title = 'SARAMAGO';
             			 		<?=Html::img('@web/batata01.jpg',['height' => '20', 'alt'=>Yii::$app->name])?>
                 				
             					<div class="carousel-caption">
-                					<h3>Titulo: <?php $obraRecenteAdquirida->titulo ?> (<?php $obraRecenteAdquirida->ano ?>)</h3> 
+
+                					<h3>Titulo: <?= $obraRecenteAdquirida->titulo ?> (<?= $obraRecenteAdquirida->ano ?>)</h3> 
                 							<?php foreach($obraRecenteAdquirida->autors as $autorDaObra) { ?>          			
         										<p>Autor: <?= $autorDaObra->primeiroNome ?> <?= $autorDaObra->segundoNome ?> <?= $autorDaObra->apelido ?> </p>
 			          							<?php } ?> 			                  			
@@ -137,6 +138,15 @@ $this->title = 'SARAMAGO';
                     <!-- //TODO -->
                     <div class="panel-heading">Assuntos</div>
                     <div class="panel-body">
+                        <?php if (isset($tagsDasObras)) { ?>
+                            <?php foreach($tagsDasObras as $tag) { ?> 
+                                <button type="button" class="btn btn-outline-light"> <?= $tag ?>  <span class="badge badge-light"> <?= $quantidadeDeLivrosNaMesmaTag[$tag] ?> </span></button>
+
+
+
+
+                            <?php } ?>
+                        <?php } ?>
                         <!-- //TODO Usar a classe HTML estatica ou (widget apropriado) do Yii2 -->
                         <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">4</span></button>
                         <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>

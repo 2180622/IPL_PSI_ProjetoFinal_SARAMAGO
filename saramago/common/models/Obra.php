@@ -229,4 +229,53 @@ class Obra extends \yii\db\ActiveRecord
     {
         return new ObraQuery(get_called_class());
     }
+
+    public static function getAssuntosDasObrasTodas() {
+        $obrasTodas = Obra::find()->all();
+        $tagsTodas = null;
+        foreach ($obrasTodas as $obra) {
+            $tagsTodas .= $obra->assuntos . ', ';
+        }
+        $tagsTodas = implode(', ',array_unique(explode(', ', $tagsTodas)));
+        $tags = explode(', ', $tagsTodas);
+        array_pop($tags);
+
+        return $tags;
+    }
+
+    public static function getLivrosComMesmoAssunto() {
+        $obrasTodas = Obra::find()->all();
+        $primeiro = true;
+        foreach ($obrasTodas as $obra) {
+            if ($primeiro) {
+                $tagsTodas = $obra->assuntos;
+                $primeiro = false;
+            }
+            else {
+                $tagsTodas .= ', ' . $obra->assuntos;
+            }
+
+        }
+        $contagemTotal = Obra::NumeroDePalavrasIguais($tagsTodas);
+
+        return $contagemTotal;
+    }
+
+
+    public static function NumeroDePalavrasIguais($frase) {
+        $contagem = array();
+        
+        $palavras = explode(', ', $frase);
+        foreach ($palavras as $palavra) {
+            $palavra = preg_replace("#[^a-zA-Z\-]#", "", $palavra);
+            if (isset($contagem[$palavra])) {
+                $contagem[$palavra] += 1;
+            }
+            else {
+                $contagem[$palavra] = 1;
+            }
+        }
+        
+        return $contagem;
+    }
 }
