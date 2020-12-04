@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Estatutos dos Leitores';
+$this->title = 'Tipos de Leitor';
 $this->params['breadcrumbs'][] = ['label' => 'Administração', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

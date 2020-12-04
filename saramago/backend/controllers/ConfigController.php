@@ -60,7 +60,7 @@ class ConfigController extends Controller
                             'tipoexemplar',
                             'estexemplar','estexemplar-update','estexemplar-reset',
                             'cdu',
-                            'estleitor',
+                            'tipoleitor',
                             'irregularidades','irregularidades-update',
                             'cursos','cursos-view','cursos-create','cursos-update','cursos-delete',
                             'recibos','recibos-update',
@@ -609,13 +609,13 @@ class ConfigController extends Controller
     #region Estatuto dos Leitores
 
     /**
-     * Gestão dos Estatutos dos Leitores homepage.
+     * Gestão dos Tipos de Leitores homepage.
      *
      * @return string
      */
-    public function actionEstleitor()
+    public function actionTipoleitor()
     {
-        return $this->render('estleitor');
+        return $this->render('tipoleitor/index');
     }
 
     #endregion
