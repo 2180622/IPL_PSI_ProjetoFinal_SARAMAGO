@@ -19,29 +19,29 @@ use yii\widgets\ActiveForm;
 
     $form = ActiveForm::begin(['id'=>'updateform']); ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true])->hint($leitor->nome) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'nif')->textInput()->hint($leitor->nif) ?>
+    <?= $form->field($model, 'nif')->textInput() ?>
 
-    <?= $form->field($model, 'docId')->textInput(['maxlength' => true])->hint($leitor->docId) ?>
+    <?= $form->field($model, 'docId')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control'],])->hint($leitor->dataNasc)?>
+    <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control'],])?>
 
-    <?= $form->field($model, 'morada')->textInput(['maxlength' => true])->hint($leitor->morada) ?>
+    <?= $form->field($model, 'morada')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true])->hint($leitor->localidade) ?>
+    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'codPostal')->textInput()->hint($leitor->codPostal) ?>
+    <?= $form->field($model, 'codPostal')->textInput() ?>
 
-    <?= $form->field($model, 'telemovel')->textInput()->hint($leitor->telemovel) ?>
+    <?= $form->field($model, 'telemovel')->textInput() ?>
 
-    <?= $form->field($model, 'telefone')->textInput()->hint($leitor->telefone) ?>
+    <?= $form->field($model, 'telefone')->textInput() ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true])->hint($user->email) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'mail2')->textInput(['maxlength' => true])->hint($leitor->mail2) ?>
+    <?= $form->field($model, 'mail2')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true])->hint($leitor->notaInterna) ?>
+    <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
 

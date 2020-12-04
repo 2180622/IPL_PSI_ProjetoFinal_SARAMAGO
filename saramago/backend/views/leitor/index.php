@@ -93,11 +93,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-md-12">
                             <p>Filtros</p>
                             <div>
-                                <p>CENAS AQUI DENTRO</p>
-                                <p>CENAS AQUI DENTRO</p>
-                                <p>CENAS AQUI DENTRO</p>
-                                <p>CENAS AQUI DENTRO</p>
-                                <p>CENAS AQUI DENTRO</p>
+                                <p>FILTER GOES IN HERE</p>
+                                <p>FILTER GOES IN HERE</p>
+                                <p>FILTER GOES IN HERE</p>
+                                <p>FILTER GOES IN HERE</p>
+                                <p>FILTER GOES IN HERE</p>
                             </div>
                         </div>
                     </div> <?php

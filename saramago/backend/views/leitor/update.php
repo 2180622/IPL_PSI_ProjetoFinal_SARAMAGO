@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Leitor */
 
-$this->title = 'Editar Leitor Nº' . $leitor->id;
+$this->title = 'Editar Leitor Nº' . $model->nome;
 ?>
 <div class="leitor-update">
 
@@ -13,8 +13,6 @@ $this->title = 'Editar Leitor Nº' . $leitor->id;
 
     <?= $this->render('updateform', [
         'model' => $model,
-        'leitor'=>$leitor,
-        'user'=>$user,
         'listaBibliotecas'=>$listaBibliotecas,
         'listaTiposLeitors'=>$listaTiposLeitors,
     ]) ?>

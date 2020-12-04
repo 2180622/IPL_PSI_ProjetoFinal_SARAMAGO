@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use app\models\LeitorSearch;
+use app\models\LeitorUpdate;
 use common\models\Biblioteca;
 use common\models\Tipoleitor;
 use common\models\User;
@@ -109,7 +110,7 @@ class LeitorController extends Controller
         $listaTiposLeitors = Tipoleitor::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', "O leitor foi adicionado.");
+            Yii::$app->session->setFlash('success', "O Leitor foi adicionado com sucesso.");
             return $this->redirect('index');
         }
 
@@ -129,23 +130,23 @@ class LeitorController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = new LeitorCreateForm();
-        $leitor = Leitor::findOne($id);
-        $user = User::findOne($leitor->user_id);
+        $model = new LeitorUpdate($id);
+        //$model = $model->findModel($id);
+        /*$leitor = Leitor::findOne($id);
+        $user = User::findOne($leitor->user_id);*/
+
 
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->updateLeitor($id)) {
-            Yii::$app->session->setFlash('success', "O Leitor foi atualizado com sucesso.");
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post()) && $model->updateLeitor()) {
+            Yii::$app->session->setFlash('success', "O Leitor foi editado com sucesso.");
+            return $this->redirect('index');
         }
 
 
         return $this->renderAjax('update', [
             'model' => $model,
-            'leitor'=>$leitor,
-            'user'=>$user,
             'listaBibliotecas'=>$listaBibliotecas,
             'listaTiposLeitors'=>$listaTiposLeitors,
         ]);
@@ -167,6 +168,7 @@ class LeitorController extends Controller
         $user->save();
         $leitor->delete();
 
+        Yii::$app->session->setFlash('success', "O Leitor foi eliminado com sucesso.");
         return $this->redirect(['index']);
     }
 

@@ -7,6 +7,7 @@ use common\models\User;
 use common\models\Leitor;
 use common\models\Tipoleitor;
 use DateTime;
+use yii\web\NotFoundHttpException;
 
 /**
  * Signup form
@@ -251,4 +252,13 @@ class LeitorCreateForm extends Model
     }
     return $randomString;
 }
+
+    public function findModel($id)
+    {
+        if (($model = Leitor::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 }
