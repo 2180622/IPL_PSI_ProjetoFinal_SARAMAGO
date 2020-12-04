@@ -83,9 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-6">
                 <h3>Leitores</h3>
-                <a href="' . Url::to(['config/tipoleitor']) . '">
+                <a href="' . Url::to(['config/estleitor']) . '">
                     <div class="card card-config">
-                        <div class="card-body"><h4>Tipo de Leitores</h4>Faça a edição dos estatutos dos leitores</div>
+                        <div class="card-body"><h4>Estatuto do Leitor</h4>Faça a edição dos estatutos dos leitores</div>
                     </div>
                 </a>
                 <br>

@@ -9,6 +9,7 @@ use app\models\CursoSearch;
 use app\models\LogotiposForm;
 use app\models\FuncionarioSearch;
 use app\models\PostotrabalhoSearch;
+use app\models\TipoLeitorSearch;
 use common\models\Funcionario;
 use common\models\Tipoleitor;
 use common\models\User;
@@ -60,7 +61,7 @@ class ConfigController extends Controller
                             'tipoexemplar',
                             'estexemplar','estexemplar-update','estexemplar-reset',
                             'cdu',
-                            'tipoleitor',
+                            'estleitor','estleitor-view','estleitor-create','estleitor-update','estleitor-delete',
                             'irregularidades','irregularidades-update',
                             'cursos','cursos-view','cursos-create','cursos-update','cursos-delete',
                             'recibos','recibos-update',
@@ -606,16 +607,70 @@ class ConfigController extends Controller
 
     #region Leitores
 
-    #region Estatuto dos Leitores
+    #region Estatuto do Leitor
 
     /**
-     * Gestão dos Tipos de Leitores homepage.
+     * Gestão dos Estatutos dos Leitores homepage.
      *
      * @return string
      */
-    public function actionTipoleitor()
+    public function actionEstleitor()
     {
-        return $this->render('tipoleitor/index');
+        $searchModel = new TipoLeitorSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $tipoleitorModel = Tipoleitor::find()->all();
+
+        return $this->render('estleitor/index', ['searchModel' => $searchModel,
+            'dataProvider' => $dataProvider, 'tipoleitorModel'=>$tipoleitorModel]);
+    }
+
+    public function actionEstleitorView($id)
+    {
+        return $this->renderAjax('estleitor/view', ['model' => $this->findModelEstleitor($id),]);
+    }
+
+    public function actionEstleitorCreate()
+    {
+        $model = new TipoLeitor();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "'.$model->estatuto.'" foi adicionado.');
+            return $this->redirect('estleitor');
+        }
+
+        return $this->renderAjax('estleitor/create', ['model' => $model,]);
+    }
+
+    public function actionEstleitorUpdate($id)
+    {
+        $model = $this->findModelEstleitor($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong>O estatuto "'.$model->estatuto.'" foi atualizado.');
+            return $this->redirect('estleitor');
+        }
+
+        return $this->renderAjax('estleitor/update', ['model' => $model,]);
+    }
+
+    public function actionEstleitorDelete($id)
+    {
+
+        $oldEstatuto=$this->findModelCursos($id)->nome;
+        $this->findModelEstleitor($id)->delete();
+        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O estatuto ".$oldEstatuto." foi apagado.");
+
+        return $this->redirect(['estleitor']);
+    }
+
+    protected function findModelEstleitor($id)
+    {
+        if (($model = TipoLeitor::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     #endregion

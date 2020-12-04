@@ -34,6 +34,7 @@ class Tipoleitor extends \yii\db\ActiveRecord
     {
         return [
             [['estatuto', 'tipo'], 'required'],
+            [['nItens', 'prazoDias'],'required'],
             [['tipo'], 'string'],
             [['nItens', 'prazoDias', 'registoOpac'], 'integer'],
             [['estatuto', 'notas'], 'string', 'max' => 255],
