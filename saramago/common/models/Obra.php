@@ -246,6 +246,7 @@ class Obra extends \yii\db\ActiveRecord
     public static function getLivrosComMesmoAssunto() {
         $obrasTodas = Obra::find()->all();
         $primeiro = true;
+        $tagsTodas = null;
         foreach ($obrasTodas as $obra) {
             if ($primeiro) {
                 $tagsTodas = $obra->assuntos;
