@@ -153,7 +153,7 @@ AppAsset::register($this);
             else{echo Html::encode(Yii::$app->name);}?>
             <?= date('Y') ?>
         </p>
-        <p class="pull-right">Powered by <?=Html::img('@web/res/logo-saramago.png',['height' => '20', 'alt'=>Yii::$app->name])?></p>
+        <p class="pull-right" >Powered by <?=Html::a(Html::img('@web/res/logo-saramago.png',['height' => '20', 'alt'=>Yii::$app->name]), ['site/about'])?></p>
     </div>
 </footer>
 

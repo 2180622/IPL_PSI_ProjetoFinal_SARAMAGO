@@ -31,6 +31,24 @@
 }
 /* endregion */
 
+/* region ABOUT */
+.site-about h1,
+.site-about h2,
+.site-about h3,
+.site-about h4,
+.site-about h5,
+.site-about h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.site-about p,
+.site-about a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
+/* endregion */
+
 /* region LOGIN */
 .saramago-login h2,p{
     font-family: "Geometr415 Lt BT Lite", sans-serif;
@@ -43,8 +61,8 @@
     font-style: normal;
     font-weight: normal;
     line-height: 1;
-
 }
+
 .saramago-login image{
     float: start;
     vertical-align:text-bottom;
@@ -228,6 +246,20 @@
 
 }
 
+.btn-alt{
+    border: 1px solid black;
+    background-color: #ffffff;
+    color: #000000;
+    transition-duration: 0.4s;
+}
+
+.btn-alt:hover{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    border: 1px solid black;
+    background-color: #dddddd;
+
+}
+
 .config-entidade h1,
 .config-entidade h2,
 .config-entidade h3,
@@ -364,3 +396,55 @@
 }
 
 /* endregion */
+
+/* region Leitores */
+.site-leitor h1,
+.site-leitor h2,
+.site-leitor h3,
+.site-leitor h4,
+.site-leitor h5,
+.site-leitor h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.site-leitor p,
+.site-leitor a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+.menu-search-saramgo { grid-area: search; }
+.manu-nav-saramago { grid-area: nav; }
+.manu-table-saramago { grid-area: table; }
+
+.site-leitor .grid-container{
+    display: grid;
+    grid-template-areas:
+    'search nav'
+    'search table'
+    'search table';
+    grid-gap: 10px;
+
+}
+
+.site-leitor .menu-search-saramgo{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.site-leitor .manu-nav-saramago{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding:5px;
+    background: #254E58;
+}
+
+.site-leitor .menu-table-saramago{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+/* endregion Leitores */
+

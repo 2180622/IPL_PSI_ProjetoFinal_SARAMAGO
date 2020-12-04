@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <hr>
-    <div class="alert alert-info alert-dismissible config" role="alert" id="alert-config">
+    <div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
         <strong>Sugestão:</strong> Personalize as definições pela ordem listada.
     </div>
 
@@ -83,9 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-6">
                 <h3>Leitores</h3>
-                <a href="' . Url::to(['config/estleitor']) . '">
+                <a href="' . Url::to(['config/tipoleitor']) . '">
                     <div class="card card-config">
-                        <div class="card-body"><h4>Estatutos dos Leitores</h4>Faça a edição dos estatutos dos leitores</div>
+                        <div class="card-body"><h4>Tipo de Leitores</h4>Faça a edição dos estatutos dos leitores</div>
                     </div>
                 </a>
                 <br>
