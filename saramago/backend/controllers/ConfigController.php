@@ -1,17 +1,17 @@
 <?php
 namespace backend\controllers;
 
-use app\models\FuncionarioSearch;
-use backend\models\FuncionarioCreateForm;
-use common\models\Funcionario;
-use common\models\Tipoleitor;
-use common\models\User;
 use Yii;
 
+use backend\models\FuncionarioCreateForm;
 use app\models\BibliotecaSearch;
 use app\models\CursoSearch;
 use app\models\LogotiposForm;
+use app\models\FuncionarioSearch;
 use app\models\PostotrabalhoSearch;
+use common\models\Funcionario;
+use common\models\Tipoleitor;
+use common\models\User;
 use common\models\Biblioteca;
 use common\models\Config;
 use common\models\Curso;
@@ -55,7 +55,7 @@ class ConfigController extends Controller
                             'logotipos','logotipos-view','logotipos-update','logotipos-reset',
                             'noticias',
                             'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
-                            'tipoexemplar', 'tipoexemplar-view', 'tipoexemplar-create', 'tipoexemplar-update', 'tipoexemplar-delete,'
+                            'tipoexemplar', 'tipoexemplar-view', 'tipoexemplar-create', 'tipoexemplar-update', 'tipoexemplar-delete',
                             'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
                             'tipoexemplar',
                             'estexemplar','estexemplar-update','estexemplar-reset',
@@ -428,60 +428,6 @@ class ConfigController extends Controller
             'model'=>$model,
             'listaBibliotecas'=>$listaBibliotecas,
             'listaTiposLeitors'=>$listaTiposLeitors]);
-    }
-
-    public function actionEquipaAssociate()
-    {
-        $model = new FuncionarioCreateForm();
-        $leitores = Leitor::find()->all();
-        $funcionarios = Funcionario::find()->all();
-
-
-        if($leitores == null){
-            Yii::$app->session->setFlash('error', "Não existem Leitores possíveis para associar");
-            return $this->redirect('equipa');
-        }else if($model->associateFuncionario() == false) {
-            Yii::$app->session->setFlash('error', "Houve um erro.");
-            return $this->redirect('equipa');
-        }else if($model->load(Yii::$app->request->post()) && $model->associateFuncionario()) {
-            Yii::$app->session->setFlash('success', "O Funcionário foi adicionado.");
-            return $this->redirect('equipa');
-        }
-
-        return $this->renderAjax('equipa/associate', [
-            'model'=>$model,
-            'leitores'=>$leitores]);
-    }
-
-    public function actionEquipaUpdate($id){
-        $model = new FuncionarioCreateForm();
-        $funcionario = Funcionario::findOne($id);
-        $leitor = Leitor::findOne($funcionario->Leitor_id);
-        $user = User::findOne($leitor->user_id);
-        $listaBibliotecas = Biblioteca::find()->all();
-        $listaTiposLeitors = Tipoleitor::find()->all();
-
-        if ($model->load(Yii::$app->request->post()) && $model->updateFuncionario($id)) {
-
-            Yii::$app->session->setFlash('success', "O Funcionário foi atualizado.");
-            return $this->redirect('equipa');
-        }
-
-        return $this->renderAjax('equipa/update', [
-            'model' => $model,
-            'funcionario'=>$funcionario,
-            'leitor'=>$leitor,
-            'user'=>$user,
-            'listaBibliotecas' => $listaBibliotecas,
-            'listaTiposLeitors' => $listaTiposLeitors]);
-    }
-
-    public function actionEquipaDelete($id){
-        $funcionario = $this->findModelEquipa($id);
-        $leitor = Leitor::findOne($funcionario->Leitor_id);
-        $user = User::findOne($leitor->user_id);
-        $user->status = 9;
-
     }
 
     public function actionEquipaAssociate()
