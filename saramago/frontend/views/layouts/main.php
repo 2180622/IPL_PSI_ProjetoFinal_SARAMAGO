@@ -81,7 +81,11 @@ AppAsset::register($this);
                  ['label' =>'Pesquisa Avançada', 'url' =>['/site/about']],
 
          ],
-    ]];
+        ],
+        [
+            'label' => 'Reserva', 'url'=>['/reserva/index'],
+        ]
+    ];
     if (Yii::$app->user->isGuest) {
         //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
