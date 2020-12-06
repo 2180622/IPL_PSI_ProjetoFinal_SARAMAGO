@@ -1,38 +1,22 @@
 <?php
 
+/* @var $this yii\web\View */
+
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Tipoexemplar */
+/* @var $model common\models\Biblioteca */
+/* @var $searchModel app\models\BibliotecaSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tipoexemplars', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+$this->title = $model->designacao;
 ?>
-<div class="tipoexemplar-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'designacao',
-            'tipo',
-        ],
-    ]) ?>
-
-</div>
+<?= DetailView::widget([
+    'model' => $model,
+    'attributes' => [
+        'id',
+        'designacao',
+        'tipo',
+    ],
+]) ?>

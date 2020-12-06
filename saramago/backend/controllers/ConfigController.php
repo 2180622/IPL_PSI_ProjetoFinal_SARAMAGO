@@ -515,6 +515,27 @@ class ConfigController extends Controller
         return $this->render('tipoexemplar/index', ['dataProvider' => $dataProvider, 'tipoexemplarModels' => $tipoexemplarModels]);
     }
 
+    public function actionTipoexemplarView($id)
+    {
+        if (($model = Tipoexemplar::findOne($id)) !== null) {
+            return $this->renderAjax('tipoexemplar/view', ['model' => $model]);
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    public function actionTipoexemplarCreate()
+    {
+        $model = new Tipoexemplar();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Foi adicionada um novo tipo de exemplar.");
+            return $this->redirect('tipoexemplar');
+        }
+
+        return $this->renderAjax('tipoexemplar/create', ['model' => $model]);
+    }
+
     public function actionTipoexemplarUpdate($id)
     {
         $model = $this->findModelTipoexemplar($id);
@@ -526,6 +547,8 @@ class ConfigController extends Controller
 
         return $this->renderAjax('tipoexemplar/update', ['model' => $model,]);
     }
+
+    
 
     public function actionTipoexemplarReset($id)
     {

@@ -1,21 +1,24 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Tipoexemplar */
+/* @var $model common\models\EstatutoExemplar */
 
-$this->title = 'Update Tipoexemplar: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tipoexemplars', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="tipoexemplar-update">
+<div class="estatuto-exemplar-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php $form = ActiveForm::begin(['id' => 'tipoexemplar-update']); ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?= $form->field($model, 'designacao')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'tipo')->textInput()->dropdownList(['materialAv' => 'Material audiovisual', 'monografia' =>'Monografia', 'pubPeriodica' => 'Publicação periódica']) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
 </div>

@@ -141,21 +141,8 @@ $this->title = 'SARAMAGO';
                         <?php if (isset($tagsDasObras)) { ?>
                             <?php foreach($tagsDasObras as $tag) { ?> 
                                 <button type="button" class="btn btn-outline-light"> <?= $tag ?>  <span class="badge badge-light"> <?= $quantidadeDeLivrosNaMesmaTag[$tag] ?> </span></button>
-
-
-
-
                             <?php } ?>
                         <?php } ?>
-                        <!-- //TODO Usar a classe HTML estatica ou (widget apropriado) do Yii2 -->
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">4</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">6</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">3</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">8</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">9</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">2</span></button>
-                        <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
                     </div>
                 </div>
             </div>
