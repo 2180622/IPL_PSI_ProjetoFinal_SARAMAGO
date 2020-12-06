@@ -395,6 +395,21 @@
     color: #000000;
 }
 
+.config-resexemplar h1,
+.config-resexemplar h2,
+.config-resexemplar h3,
+.config-resexemplar h4,
+.config-resexemplar h5,
+.config-resexemplar h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-resexemplar p,
+.config-resexemplar a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-slidesopac h1,
 .config-slidesopac h2,
 .config-slidesopac h3,

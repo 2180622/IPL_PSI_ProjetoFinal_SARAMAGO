@@ -10,6 +10,7 @@ use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
@@ -22,6 +23,8 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to('@web/img/favicon.png')]);?>
+
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -43,6 +46,7 @@ AppAsset::register($this);
                 'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
                 'style' => 'border-bottom: 1px solid black',
             ],
+            'innerContainerOptions' => ['class' => 'container-fluid'],
         ]);
     }
     elseif(Logotipos::logotipo() == null && Entidade::designacao()!= null){
@@ -62,13 +66,10 @@ AppAsset::register($this);
                 'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
                 'style' => 'border-bottom: 1px solid black',
             ],
+            'innerContainerOptions' => ['class' => 'container-fluid'],
         ]);
     }
-    /*
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/error']],
-    ];
-    */
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
@@ -147,7 +148,7 @@ AppAsset::register($this);
 </div>
 
 <footer class="footer">
-    <div class="container">
+    <div class="container-fluid">
         <p class="pull-left">&copy; <?php
             if(Entidade::designacao()!= null){ echo Entidade::designacao();}
             else{echo Html::encode(Yii::$app->name);}?>

@@ -57,8 +57,6 @@ class ConfigController extends Controller
                             'noticias',
                             'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
                             'tipoexemplar', 'tipoexemplar-view', 'tipoexemplar-create', 'tipoexemplar-update', 'tipoexemplar-delete',
-                            'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
-                            'tipoexemplar',
                             'estexemplar','estexemplar-update','estexemplar-reset',
                             'cdu',
                             'estleitor','estleitor-view','estleitor-create','estleitor-update','estleitor-delete',
