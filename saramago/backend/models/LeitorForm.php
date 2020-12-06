@@ -10,9 +10,9 @@ use DateTime;
 use yii\web\NotFoundHttpException;
 
 /**
- * Signup form
+ * LeitorCreate form
  */
-class LeitorCreateForm extends Model
+class LeitorForm extends Model
 {
     public $id;
     public $username;
@@ -68,7 +68,7 @@ class LeitorCreateForm extends Model
             ['docId', 'trim'],
             ['docId', 'required'],
             ['docId', 'unique', 'targetClass' => '\common\models\Leitor', 'message' => 'Número de documento em uso.'],
-            ['docId', 'string', 'min' => 9, 'max' => 9],
+            ['docId', 'string', 'min' => 9, 'max' => 45],
 
             ['dataNasc', 'trim'],
             ['dataNasc', 'required'],
@@ -106,6 +106,32 @@ class LeitorCreateForm extends Model
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'codBarras' => 'Código de barras do leitor',
+            'nome' => 'Nome do Leitor',
+            'nif' => 'NIF',
+            'docId' => 'Documento de Identificação',
+            'dataNasc' => 'Data de Nascimento',
+            'morada' => 'Morada',
+            'localidade' => 'Localidade',
+            'codPostal' => 'Código Postal',
+            'telemovel' => 'Telemóvel',
+            'telefone' => 'Telefone',
+            'mail2' => 'E-mail (2)',
+            'notaInterna' => 'Nota interna referente ao leitor',
+            'dataRegisto' => 'Data Registado',
+            'dataAtualizado' => 'Data Atualizado',
+            'Biblioteca_id' => 'Chave estrangeira',
+            'TipoLeitor_id' => 'Chave estrangeira',
+            'user_id' => 'User ID',
+        ];
+    }
+
+    /**
      * Signs user up.
      *
      * @return bool whether the creating new account was successful and email was sent
@@ -114,9 +140,9 @@ class LeitorCreateForm extends Model
     {
         if ($this->validate()) {
             $user = new User();
-            $user->username = $this->username;
+            $user->username = $this->username; //FIXME
             $user->email = $this->email;
-            $user->setPassword($this->password);
+            $user->setPassword($this->nif);
             $user->generateAuthKey();
             $user->status = 10;
             $user->save();
@@ -186,6 +212,7 @@ class LeitorCreateForm extends Model
             $leitor->docId = $this->docId;
             $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
             $newDateString = $myDateTime->format('Y/m/d');
+            $leitor->dataAtualizado = Yii::$app->formatter->asDatetime('now', 'php:Y/m/d');
             $leitor->dataNasc = $newDateString;
             $leitor->morada = $this->morada;
             $leitor->localidade = $this->localidade;
@@ -243,7 +270,7 @@ class LeitorCreateForm extends Model
             ->send();
     }
 
-    function generateRandomString($length = 10) {
+    private function generateRandomString($length = 13) {
     $characters = '0123456789';
     $charactersLength = strlen($characters);
     $randomString = '';

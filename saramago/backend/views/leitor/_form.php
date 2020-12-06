@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <?php
 
     $listasBiblioteca = ArrayHelper::map($listaBibliotecas,'id','nome',['enctype' => 'multipart/form-data']);
-    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id','tipo',['enctype' => 'multipart/form-data']);
+    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id','estatuto',['enctype' => 'multipart/form-data']);
 
     $form = ActiveForm::begin(['id'=>'_form']); ?>
 
@@ -52,7 +52,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -440,29 +440,41 @@
 .site-leitor p,
 .site-leitor a{
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
+}
+
+.site-leitor a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
     color: #000000;
 }
-.menu-search-saramgo { grid-area: search; }
-.manu-nav-saramago { grid-area: nav; }
-.manu-table-saramago { grid-area: table; }
+
+.menu-search-saramago { grid-area: search; }
+.menu-info-saramago { grid-area: search; }
+.menu-nav-saramago { grid-area: nav; }
 
 .site-leitor .grid-container{
     display: grid;
+    grid-template-columns: 350px;
     grid-template-areas:
     'search nav'
     'search table'
     'search table';
     grid-gap: 10px;
-
 }
 
-.site-leitor .menu-search-saramgo{
+.site-leitor .menu-search-saramago{
     border: 1px solid #254E58;
+    height: min-content;
+    border-radius: 5px;
+    padding: 10px;
+}
+.site-leitor .menu-info-saramago{
+    border: 1px solid #254E58;
+    height: min-content;
     border-radius: 5px;
     padding: 10px;
 }
 
-.site-leitor .manu-nav-saramago{
+.site-leitor .menu-nav-saramago{
     border: 1px solid #254E58;
     border-radius: 5px;
     padding:5px;

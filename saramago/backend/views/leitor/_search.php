@@ -10,7 +10,9 @@ use yii\widgets\ActiveForm;
 
 <div class="leitor-search">
 
-    <?php $form = ActiveForm::begin([
+    <h4>Filtros:</h4>
+
+    <?php $form = ActiveForm::begin(['id'=>'leitor-search',
         'action' => ['index'],
         'method' => 'get',
         'options' => [
@@ -55,8 +57,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'user_id') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-create']) ?>
+        <?= Html::resetButton('Repor', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

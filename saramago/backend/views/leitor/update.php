@@ -8,9 +8,6 @@ use yii\helpers\Html;
 $this->title = 'Editar Leitor Nº' . $model->nome;
 ?>
 <div class="leitor-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('updateform', [
         'model' => $model,
         'listaBibliotecas'=>$listaBibliotecas,

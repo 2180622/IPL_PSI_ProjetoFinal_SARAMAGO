@@ -7,7 +7,7 @@ use app\models\LeitorUpdate;
 use common\models\Biblioteca;
 use common\models\Tipoleitor;
 use common\models\User;
-use backend\models\LeitorCreateForm;
+use backend\models\LeitorForm;
 use Yii;
 use common\models\Leitor;
 use yii\data\ActiveDataProvider;
@@ -36,7 +36,7 @@ class LeitorController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index',
-                            'view', 'create', 'update', 'delete'],
+                            'view','view-full', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,7 +46,6 @@ class LeitorController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
-                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -74,10 +73,7 @@ class LeitorController extends Controller
         $this->layout = 'minor';
 
         return $this->render('index', [
-            'searchLeitor'=>$searchLeitor,
-            'leitores' => $leitores,
-            'dataProvider'=>$dataProvider
-        ]);
+            'searchLeitor'=>$searchLeitor, 'leitores' => $leitores, 'dataProvider'=>$dataProvider]);
     }
 
     /**
@@ -94,7 +90,21 @@ class LeitorController extends Controller
             return $this->renderAjax('view', ['model' => $model, 'leitores'=>$leitores]);
         }
 
-        return 1;
+        return '<h5>Lamentamos! Ocorreu um erro com o seu pedido.</h5>';
+    }
+
+    /**
+     * Displays a single Leitor full model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionViewFull($id)
+    {
+        $this->layout = 'minor';
+
+        return $this->render('view-full', ['model' => $this->findModel($id)]);
+
     }
 
     /**
@@ -104,14 +114,14 @@ class LeitorController extends Controller
      */
     public function actionCreate()
     {
-        $model = new LeitorCreateForm();
+        $model = new LeitorForm();
 
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', "O Leitor foi adicionado com sucesso.");
-            return $this->redirect('index');
+            return $this->redirect('view-full', $model->id);
         }
 
         return $this->renderAjax('create', [
@@ -185,6 +195,6 @@ class LeitorController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Leitor não encontrado.');
     }
 }

@@ -229,4 +229,18 @@ class Leitor extends \yii\db\ActiveRecord
     {
         return new LeitorQuery(get_called_class());
     }
+
+    #region Leitor
+    public static function codPostal($id)
+    {
+        $leitor = Leitor::find($id)->one();
+
+        if(strlen($leitor->codPostal) == 7 ){
+            return $cp1 = substr($leitor->codPostal, 0, 4).'-'.$cp2 = substr($leitor->codPostal, 4, 6);
+        }else{
+            return $leitor->codPostal;
+        }
+    }
+
+    #endregion
 }
