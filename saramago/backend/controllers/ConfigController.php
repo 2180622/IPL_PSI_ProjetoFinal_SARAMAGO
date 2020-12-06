@@ -1,13 +1,14 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\EquipaSearch;
+use common\models\AuthAssignment;
 use Yii;
 
 use backend\models\FuncionarioCreateForm;
 use app\models\BibliotecaSearch;
 use app\models\CursoSearch;
 use app\models\LogotiposForm;
-use app\models\FuncionarioSearch;
 use app\models\PostotrabalhoSearch;
 use app\models\TipoLeitorSearch;
 use common\models\Funcionario;
@@ -384,21 +385,19 @@ class ConfigController extends Controller
      */
     public function actionEquipa()
     {
-        $searchModel = new FuncionarioSearch();
-        $funcionarios = Funcionario::find()->all();
-        $users = User::find()->all();
-
+        $operadores = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->all();
+        $operadorCount = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->count();
+        $searchModel = new EquipaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('equipa/index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'funcionarios' => $funcionarios,
-            'users' => $users]);
+        return $this->render('equipa/index',
+            ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                'operadores' => $operadores, 'operadorCount' => $operadorCount]);
     }
 
     public function actionEquipaView($id){
 
+        //TODO APAGAR
         if (($model = Funcionario::findOne($id)) !== null) {
             $leitor = Leitor::findOne($model->Leitor_id);
             $user = User::findOne($model->leitor->user_id);
@@ -413,6 +412,8 @@ class ConfigController extends Controller
     }
 
     public function actionEquipaCreate(){
+
+        //TODO APAGAR
 
         $model = new FuncionarioCreateForm();
         $listaBibliotecas = Biblioteca::find()->all();
@@ -431,6 +432,7 @@ class ConfigController extends Controller
 
     public function actionEquipaAssociate()
     {
+        //FIXME
         $model = new FuncionarioCreateForm();
         $leitores = Leitor::find()->all();
         $funcionarios = Funcionario::find()->all();
@@ -453,6 +455,7 @@ class ConfigController extends Controller
     }
 
     public function actionEquipaUpdate($id){
+        //FIXME
         $model = new FuncionarioCreateForm();
         $funcionario = Funcionario::findOne($id);
         $leitor = Leitor::findOne($funcionario->Leitor_id);

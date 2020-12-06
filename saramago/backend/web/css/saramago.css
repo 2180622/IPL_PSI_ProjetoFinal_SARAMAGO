@@ -350,6 +350,21 @@
     color: #000000;
 }
 
+.config-equipa h1,
+.config-equipa h2,
+.config-equipa h3,
+.config-equipa h4,
+.config-equipa h5,
+.config-equipa h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-equipa p,
+.config-equipa a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-irregularidades h1,
 .config-irregularidades h2,
 .config-irregularidades h3,
