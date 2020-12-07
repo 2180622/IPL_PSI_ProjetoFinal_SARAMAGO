@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'local')->textInput(['placeholder'=>'Local'])->label(false) ?>
 
-    <?php echo $form->field($model, 'ano')->textInput(['placeholder'=>'Ano'])->label(false)  ?>
+    <?php echo $form->field($model, 'ano')->textInput(['maxlength' => 4,'placeholder'=>'Ano'])->label(false)  ?>
 
     <?php echo $form->field($model, 'tipoObra')
         ->dropDownList(['materialAv'=>'Material Audio-Visual','monografia'=> 'Monografia', 'pubPeriodica'=>'Publicação Periódica'],
@@ -52,9 +52,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'dataAtualizado') ?>
 
-    <?= $form->field($model, 'Cdu_id')->dropDownList($cduAll,['prompt'=>'Selecione...'])->label(false) ?>
+    <?= $form->field($model, 'Cdu_id')->dropDownList($cduAll,['prompt'=>'Código Decimal Universal...'])->label(false) ?>
 
-    <?php // echo $form->field($model, 'Colecao_id') ?>
+    <?= $form->field($model, 'Colecao_id')->dropDownList($colecaoAll,['prompt'=>'Coleção...'])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Procurar', ['class' => 'btn btn-create']) ?>

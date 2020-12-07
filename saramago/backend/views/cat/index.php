@@ -4,7 +4,10 @@
 
 use common\models\Exemplar;
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap\ButtonDropdown;
+use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\Modal;
+use yii\bootstrap\Tabs;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -24,97 +27,128 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="grid-container">
         <div class="menu-search-saramago">
             <?php Pjax::begin(); ?>
-            <?= $this->render('_search', ['model' => $searchModel, 'cduAll'=>$cduAll]) ?>
+            <?= $this->render('_search', ['model' => $searchModel, 'cduAll'=>$cduAll, 'colecaoAll'=>$colecaoAll]) ?>
             <?php Pjax::end(); ?>
         </div>
         <div class="menu-nav-saramago">
             <?= Html::button(FAS::icon('plus') . ' Adicionar Obra',
                 ['value' => 'cat/create',  'class' => 'btn btn-alt','id' => 'modalButtonCreate']) ?>
-
+            <?= ButtonDropdown::widget([
+                'label' => FAS::icon('users') . ' Autores',
+                'encodeLabel' => false,
+                'options' => ['class' => 'btn btn-alt dropdown-toggle'],
+                'dropdown' => [
+                    'encodeLabels' => false,
+                    'options' => ['class' => 'dropdown-menu-right'],
+                    'items' => [
+                        [
+                            'label' => FAS::icon('plus') . ' Adicionar Autor',
+                            'options' => ['value' => 'autor-create', 'class' => 'btn btn-secondary',
+                                'id' => 'modalButtonAutorCreate']
+                        ],
+                    ],
+                ],
+            ]);
+            ?>
         </div>
         <div class="menu-table-saramago">
             <?php Pjax::begin(); ?>
             <?php
-            echo GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    //'id',
-                    //'imgCapa',
+            echo Tabs::widget([
+                'items' => [
                     [
-                        'label' => 'Título',
-                        'attribute' => 'titulo',
-                        'format' => 'html',
-                        'value' => function ($model) { return Html::a($model->titulo, ['view-full', 'id' => $model->id]);}
-                    ],
-                    'editor',
-                    'edicao',
-                    [
-                        'label' => 'Autor',
-                        'attribute' => 'autor',
-                        'format' => 'html',
-                        //FIXME - listar todos os autores
-                        // 'value' => function ($model) { return Html::a($model->autor, ['view-full', 'id' => $model->id]);}
-                    ],
-                    [
-                        'label' => 'Ano',
-                        'attribute' => 'ano',
-                        'headerOptions' => ['width' => '80'],
-                    ],
-                    [
-                        'attribute' => 'tipoObra',
-                        'label' => 'Tipo',
-                        'filter' => ['Grupo'=> [
-                            'materialAv'=>'Material Audio-Visual',
-                            'monografia'=> 'Monografia',
-                            'pubPeriodica'=>'Publicação Periódica',
-                            'Tipo'=> $tiposExemplarAll],
-                        ],
-                        'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
-                        'value' => function ($model) {
-                            if($model->tipoObra == 'materialAv'){ return 'Material Audio-Visual';}
-                            elseif ($model->tipoObra == 'monografia'){return 'Monografia';}
-                            elseif ($model->tipoObra == 'pubPeriodica'){return 'Publicação Periódica';}
+                        'label' => 'Obras',
+                        'content' => '<br>'.
+                            GridView::widget([
+                            'dataProvider' => $dataProvider,
+                            'filterModel' => $searchModel,
+                            'columns' => [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                //'id',
+                                //'imgCapa',
+                                [
+                                    'label' => 'Título',
+                                    'attribute' => 'titulo',
+                                    'format' => 'html',
+                                    'value' => function ($model) { return Html::a($model->titulo, ['view-full', 'id' => $model->id]);}
+                                ],
+                                'editor',
+                                'edicao',
+                                [
+                                    'label' => 'Autor',
+                                    'attribute' => 'autor',
+                                    'format' => 'html',
+                                    //FIXME - listar todos os autores
+                                    // 'value' => function ($model) { return Html::a($model->autor, ['view-full', 'id' => $model->id]);}
+                                ],
+                                [
+                                    'label' => 'Ano',
+                                    'attribute' => 'ano',
+                                    'headerOptions' => ['width' => '80'],
+                                ],
+                                [
+                                    'attribute' => 'tipoObra',
+                                    'label' => 'Tipo',
+                                    'filter' => ['Grupo'=> [
+                                        'materialAv'=>'Material Audio-Visual',
+                                        'monografia'=> 'Monografia',
+                                        'pubPeriodica'=>'Publicação Periódica',
+                                        'Tipo'=> $tiposExemplarAll],
+                                    ],
+                                    'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
+                                    'value' => function ($model) {
+                                        if($model->tipoObra == 'materialAv'){ return 'Material Audio-Visual';}
+                                        elseif ($model->tipoObra == 'monografia'){return 'Monografia';}
+                                        elseif ($model->tipoObra == 'pubPeriodica'){return 'Publicação Periódica';}
 
-                            //TODO Ex: "Material Audio-Visual - CD"
-                        }
+                                        //TODO Ex: "Material Audio-Visual - CD"
+                                    }
+                                ],
+                                [
+                                    'label'=>'Exemplares',
+                                    'value' => function ($model) {
+                                        $exemplar = Exemplar::find()->where('Obra_id=id')->count();
+                                        return $exemplar;}
+                                ],
+                                //'assuntos',
+                                //'preco',
+                                //'dataRegisto',
+                                //'dataAtualizado',
+                                //'Cdu_id',
+                                //'Colecao_id',
+                                ['class' => 'yii\grid\ActionColumn',
+                                    'header' => 'Ações',
+                                    'template' => '{view} {update} {delete}',
+                                    'buttons' => [
+                                        'view' => function ($url, $model, $id) {
+                                            return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
+                                                ['value' => Url::to(['view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonView' . $id]);
+                                        },
+                                        'update' => function ($url, $model, $id) {
+                                            return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
+                                                ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
+                                        },
+                                        'delete' => function ($url, $model, $id) {
+                                            return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
+                                                ['class' => 'btn btn-danger btn-sm inline']), Url::to(['delete', 'id' => $id]),
+                                                ['data' =>
+                                                    ['confirm' => 'Tem a certeza de que pretende apagar o leitor ' . $model->titulo . '?', 'method' => 'post']
+                                                ]);
+                                        },
+                                    ],
+                                ],
+                            ]]),
+                        //'options' => ['id' => 'myveryownID'],
                     ],
                     [
-                        'label'=>'Exemplares',
-                        'value' => function ($model) {
-                                $exemplar = Exemplar::find()->where('Obra_id=id')->count();
-                                return $exemplar;}
-                    ],
-                    //'assuntos',
-                    //'preco',
-                    //'dataRegisto',
-                    //'dataAtualizado',
-                    //'Cdu_id',
-                    //'Colecao_id',
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Ações',
-                        'template' => '{view} {update} {delete}',
-                        'buttons' => [
-                            'view' => function ($url, $model, $id) {
-                                return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                                    ['value' => Url::to(['view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonView' . $id]);
-                            },
-                            'update' => function ($url, $model, $id) {
-                                return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                                    ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
-                            },
-                            'delete' => function ($url, $model, $id) {
-                                return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                                    ['class' => 'btn btn-danger btn-sm inline']), Url::to(['delete', 'id' => $id]),
-                                    ['data' =>
-                                        ['confirm' => 'Tem a certeza de que pretende apagar o leitor ' . $model->titulo . '?', 'method' => 'post']
-                                    ]);
-                            },
-                        ],
+                        'label' => 'Autores',
+                        'options' => ['id' => 'tabAutores'],
+                        'content'=> false,
                     ],
                 ],
-            ]); ?>
+                'options' => ['class' =>'nav nav-tabs', 'role'=>'tablist'],
+            ]);
+            ?>
 
             <?php
             foreach ($obrasModel as $obra) {
@@ -153,6 +187,7 @@ $this->params['breadcrumbs'][] = $this->title;
             })
         });
     ");
+
     ?>
 
     <?php

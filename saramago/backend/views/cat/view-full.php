@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'method' => 'post']
                 ]); ?>
 
-            <?= Html::button(FAS::icon('pencil-alt') . ' Adicionar Exemplar',
+            <?= Html::button(FAS::icon('plus') . ' Adicionar Exemplar',
                 ['value' => 'exemplar/create', 'class' => 'btn btn-alt pull-right','id' => 'modalButtonCreate']) ?>
         </div>
         <div class="menu-table-saramago">

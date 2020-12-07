@@ -6,6 +6,7 @@ use app\models\ObraSearch;
 use common\models\Cdu;
 use common\models\Colecao;
 use common\models\Exemplar;
+use common\models\Fundo;
 use common\models\Obra;
 use common\models\Tipoexemplar;
 use Yii;
@@ -76,6 +77,7 @@ class CatController extends Controller
         $obrasModel = Obra::find()->all();
         $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
         $tiposExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
+        $colecaoAll = ArrayHelper::map(Colecao::find()->all(), 'id','tituloColecao',['enctype' => 'multipart/form-data']);
 
         $searchModel = new ObraSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -83,7 +85,7 @@ class CatController extends Controller
         return $this->render('index',
             ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
                 'obrasModel' => $obrasModel, 'cduAll'=>$cduAll,
-                'tiposExemplarAll'=>$tiposExemplarAll]);
+                'tiposExemplarAll'=>$tiposExemplarAll, 'colecaoAll'=>$colecaoAll]);
     }
 
     /**
