@@ -529,7 +529,7 @@ class ConfigController extends Controller
         $model = new Tipoexemplar();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Foi adicionada um novo tipo de exemplar.");
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O tipo de exemplar " . $model->designacao . " foi adicionado.");
             return $this->redirect('tipoexemplar');
         }
 
