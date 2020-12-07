@@ -1,6 +1,9 @@
 package com.example.saramago.modelos;
 
 import android.content.Context;
+
+import com.example.saramago.R;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,8 +27,8 @@ public class SingletonGestorBiblioteca {
     private void gerarLeitores(){
         // instanciar o array de livros
         leitores = new ArrayList<>();
-        // Instanciar a classe Livro
-        leitores.add(new Leitor(1,"1236885", 269745017, "123", currentTime, "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", currentTime, currentTime, 1, 1));
+        leitores.add(new Leitor("Alfredo", R.drawable.ic_undraw_male_avatar, "696969", 269745017, "069", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", currentTime, currentTime, 1, 1));
+        leitores.add(new Leitor("Joaquim", R.drawable.ic_undraw_male_avatar, "690420", 123456789, "420", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", currentTime, currentTime, 2, 2));
     }
     public ArrayList<Leitor> getLeitores(){
         return new ArrayList<>(leitores);

@@ -11,7 +11,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.saramago.R;
 import com.google.android.material.navigation.NavigationView;
@@ -45,12 +47,12 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void carregarCabecalho() {
-        /*
+        String email = "";
+
         email = getIntent().getStringExtra(EMAIL);
         View hview = navigationView.getHeaderView(0);
         TextView tv_email = hview.findViewById(R.id.tv_email);
         tv_email.setText(email);
-        */
     }
 
     @Override

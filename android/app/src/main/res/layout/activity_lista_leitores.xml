@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#112D32"
-    tools:context=".vistas.ListaLeitoresActivity" >
+    tools:context=".vistas.ListaLeitoresActivity">
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/lvListaLeitores"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/backdropmenu_drawable"
-        android:orientation="vertical">
+        android:layout_height="match_parent" />
 
-        <ListView
-            android:id="@+id/lvListaLeitores"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_action_adicionar"
+        android:backgroundTint="@color/DarkBlue"/>
 </FrameLayout>
