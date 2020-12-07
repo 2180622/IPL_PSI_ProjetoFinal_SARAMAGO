@@ -37,7 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'tipo',
-                'label' => 'Grupo'
+                'label' => 'Grupo',
+
+                'value' => function ($model) {
+                            if($model->tipo == 'materialAv'){ return 'Material Audio-Visual';}
+                            elseif ($model->tipo == 'monografia'){return 'Monografia';}
+                            elseif ($model->tipo == 'pubPeriodica'){return 'Publicação Periódica';}
+                }
             ],
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ação',

@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function ($model) {
                             if($model->tipoObra == 'materialAv'){ return 'Material Audio-Visual';}
                             elseif ($model->tipoObra == 'monografia'){return 'Monografia';}
-                            elseif ($model->tipoObra == 'pubPeriodica'){return 'pubPeriodica';}
+                            elseif ($model->tipoObra == 'pubPeriodica'){return 'Publicação Periódica';}
 
                             //TODO Ex: "Material Audio-Visual - CD"
                         }

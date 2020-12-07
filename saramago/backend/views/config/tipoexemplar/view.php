@@ -17,6 +17,16 @@ $this->title = $model->designacao;
     'attributes' => [
         'id',
         'designacao',
-        'tipo',
+        [
+            'attribute' => 'tipo',
+            'label' => 'Grupo',
+            'value' => function ($model) {
+                if($model->tipo == 'materialAv'){ return 'Material Audio-Visual';}
+                elseif ($model->tipo == 'monografia'){return 'Monografia';}
+                elseif ($model->tipo == 'pubPeriodica'){return 'Publicação Periódica';}
+
+                //TODO Ex: "Material Audio-Visual - CD"
+            }
+        ],
     ],
 ]) ?>

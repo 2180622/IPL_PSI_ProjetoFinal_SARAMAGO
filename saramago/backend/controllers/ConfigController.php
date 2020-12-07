@@ -548,8 +548,6 @@ class ConfigController extends Controller
         return $this->renderAjax('tipoexemplar/update', ['model' => $model,]);
     }
 
-    
-
     public function actionTipoexemplarReset($id)
     {
         $model = $this->findModelTipoexemplar($id);
