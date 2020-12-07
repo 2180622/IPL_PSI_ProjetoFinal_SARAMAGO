@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'designacao')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tipo')->textInput()->dropdownList(['materialAv' => 'Material audiovisual', 'monografia' =>'Monografia', 'pubPeriodica' => 'Publicação periódica']) ?>
+    <?= $form->field($model, 'tipo')->textInput()->dropdownList(['materialAv' => 'Material Audio-Visual', 'monografia' =>'Monografia', 'pubPeriodica' => 'Publicação Periódica']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

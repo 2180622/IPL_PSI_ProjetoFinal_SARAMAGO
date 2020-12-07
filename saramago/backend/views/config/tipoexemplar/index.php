@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?>
     	<p class="pull-right">
-            <?= Html::button(FAS::icon('plus').' Adicionar', ['value'=>'bibliotecas-create', 'class' => 'btn btn-create','id'=>'modalButtonCreate']) ?>
+            <?= Html::button(FAS::icon('plus').' Adicionar', ['value'=>'tipoexemplar-create', 'class' => 'btn btn-create','id'=>'modalButtonCreate']) ?>
         </p>
     </h1>
 
@@ -33,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'designacao',
-                'label' => 'Designação do tipo de exemplar',
+                'label' => 'Designação',
             ],
             [
                 'attribute' => 'tipo',
-                'label' => 'Grupo característico do tipo de exemplar'
+                'label' => 'Grupo'
             ],
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ação',

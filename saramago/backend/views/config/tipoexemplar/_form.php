@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="tipoexemplar-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'tipoexemplar-form']); ?>
 
     <?= $form->field($model, 'designacao')->textInput(['maxlength' => true]) ?>
 
