@@ -1,7 +1,7 @@
 <?php
 
 use rmrevin\yii\fontawesome\FAS;
-use yii\bootstrap\Nav;
+use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -40,12 +40,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
         <div class="menu-nav-saramago">
-            <?= Html::button(FAS::icon('plus') . ' Editar', ['value' => 'leitor/update', 'class' => 'btn btn-alt', 'id' => 'modalButtonCreate']) ?>
-            <?= Html::button(FAS::icon('key') . ' Repor Password', ['value' => 'leitor/repor', 'class' => 'btn btn-alt', 'id' => 'modalButtonCreate']) ?>
+            <?= Html::button(FAS::icon('pencil-alt') . ' Editar', ['value' => 'leitor/update', 'class' => 'btn btn-alt', 'id' => 'modalButtonUpdate']) ?>
             <?= Html::a(Html::button(FAS::icon('trash-alt').' Eliminar', ['class' => 'btn btn-alt ']), Url::to(['delete', 'id' => $model->id]),
                 ['data' =>
                     ['confirm' => 'Tem a certeza de que pretende apagar o leitor ' . $model->nome . '?', 'method' => 'post']
                 ]); ?>
+
+            <?= ButtonDropdown::widget([
+                'label' => FAS::icon('user-cog') . ' Opções',
+                'encodeLabel' => false,
+                'options' => ['class' => 'btn btn-alt dropdown-toggle'],
+                'dropdown' => [
+                    'encodeLabels' => false,
+                    'options' => ['class' => 'dropdown-menu-right'],
+                    'items' => [
+                        [
+                            'label' => FAS::icon('key') . ' Repor Password',
+                            'options' => ['value' => 'leitor/repor', 'class' => 'btn btn-secondary',
+                                'id' => 'modalButtonPswReset']
+                        ],
+                        [
+                            //FIXME 
+                            'label' => FAS::icon('trash-alt') . ' Eliminar Autor',
+                            'options' => ['value' => 'leitor/repor',
+                                'class' => 'btn btn-secondary',
+
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+            ?>
         </div>
         <div class="menu-table-saramago">
             <?php
@@ -123,7 +148,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'encode'=> false,
                         'content' => '',
                     ],
-
+                    [
+                        'label' => 'Posto de Trabalho '. Html::tag('span','0',['class'=>'badge badge-light']),
+                        'encode'=> false,
+                        'content' =>
+                         '',
+                    ],
                 ],
                 'options' => ['class' =>'nav nav-tabs', 'role'=>'tablist'],
             ]);

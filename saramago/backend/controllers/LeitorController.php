@@ -121,7 +121,7 @@ class LeitorController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', "O Leitor foi adicionado com sucesso.");
-            return $this->redirect('view-full', $model->id);
+            return $this->redirect(['view-full', 'id'=> $model->id]);
         }
 
         return $this->renderAjax('create', [
