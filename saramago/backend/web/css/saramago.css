@@ -12,6 +12,10 @@
     color: #ffffff;
 }
 
+.menu-search-saramago { grid-area: search; }
+.menu-info-saramago { grid-area: search; }
+.menu-nav-saramago { grid-area: nav; }
+
 /* Minor */
 .layout-minor-top{
     padding-top: 10px;
@@ -29,6 +33,7 @@
 
     }
 }
+
 /* endregion */
 
 /* region ABOUT */
@@ -477,9 +482,7 @@
     color: #000000;
 }
 
-.menu-search-saramago { grid-area: search; }
-.menu-info-saramago { grid-area: search; }
-.menu-nav-saramago { grid-area: nav; }
+
 
 .site-leitor .grid-container{
     display: grid;
@@ -520,3 +523,63 @@
 
 /* endregion Leitores */
 
+/* region Catalogação */
+
+.site-cat h1,
+.site-cat h2,
+.site-cat h3,
+.site-cat h4,
+.site-cat h5,
+.site-cat h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.site-cat p,
+.site-cat a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+}
+
+.site-cat a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
+.site-cat .grid-container{
+    display: grid;
+    grid-template-columns: 350px;
+    grid-template-areas:
+    'search nav'
+    'search table'
+    'search table';
+    grid-gap: 10px;
+}
+
+.site-cat .menu-search-saramago{
+    border: 1px solid #254E58;
+    height: min-content;
+    border-radius: 5px;
+    padding: 10px;
+}
+.site-cat .menu-info-saramago{
+    border: 1px solid #254E58;
+    height: min-content;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.site-cat .menu-nav-saramago{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding:5px;
+    background: #254E58;
+}
+
+.site-cat .menu-table-saramago{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+
+/* endregion */

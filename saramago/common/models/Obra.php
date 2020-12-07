@@ -230,6 +230,8 @@ class Obra extends \yii\db\ActiveRecord
         return new ObraQuery(get_called_class());
     }
 
+    #region Obra
+
     public static function getAssuntosDasObrasTodas() {
         $obrasTodas = Obra::find()->all();
         $tagsTodas = null;
@@ -279,4 +281,8 @@ class Obra extends \yii\db\ActiveRecord
         
         return $contagem;
     }
+
+
+
+    #endRegion
 }
