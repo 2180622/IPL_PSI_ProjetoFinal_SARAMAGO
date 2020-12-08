@@ -27,8 +27,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nif')->textInput() ?>
 
-    <?= $form->field($model, 'docId')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
 
     <?= $form->field($model, 'morada')->textInput(['maxlength' => true]) ?>

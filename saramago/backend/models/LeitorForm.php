@@ -14,6 +14,10 @@ use yii\web\NotFoundHttpException;
  */
 class LeitorForm extends Model
 {
+    const ALUNO = 'aluno';
+    const DOCENTE = "docente";
+
+
     public $id;
     public $username;
     public $email;
@@ -138,6 +142,7 @@ class LeitorForm extends Model
      */
     public function signup()
     {
+        $auth = Yii::$app->authManager;
         if ($this->validate()) {
             $user = new User();
             $user->username = $this->username; //FIXME
@@ -167,13 +172,31 @@ class LeitorForm extends Model
 
             $leitor->user_id = $user->getId();
 
-            $leitor->save();
-
+            /*if($leitor->tipoLeitor->tipo == "aluno"){
+                $leitorAlunoRole = $auth->getRole('leitorAluno');
+                $auth->assign($leitorAlunoRole, $leitor->user_id);
+                $leitor->save();
+            }elseif($leitor->tipoLeitor->tipo == "docente"){
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionarioRole');
+                $auth->assign($leitorFuncionarioRole, $leitor->user_id);
+                $leitor->save();
+            }elseif($leitor->tipoLeitor->tipo == "funcionario") {
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionarioRole');
+                $auth->assign($leitorFuncionarioRole, $leitor->user_id);
+                $leitor->save();
+            }elseif($leitor->tipoLeitor->tipo == "externo") {
+                $leitorExternoRole = $auth->getRole('leitorExterno');
+                $auth->assign($leitorExternoRole, $leitor->user_id);
+                $leitor->save();
+            }*/
+            var_dump($leitor);
+            die();
+            /*
             // the following three lines were added:
             $auth = \Yii::$app->authManager;
-            // temporary fix
-            //$leitorAlunoRole = $auth->getRole('leitorAluno');
-            //$auth->assign($leitorAlunoRole, $user->getId());
+             //temporary fix
+            $leitorAlunoRole = $auth->getRole('leitorAluno');
+            $auth->assign($leitorAlunoRole, $user->getId());*/
 
             return $leitor;
         }
@@ -195,6 +218,9 @@ class LeitorForm extends Model
         return $user->save() && $this->sendEmail($user);
         */
     }
+
+    public function getRoles(){
+}
 
     public function updateLeitor($id){
         if ($this->validate()) {
