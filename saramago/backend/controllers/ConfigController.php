@@ -11,6 +11,7 @@ use app\models\CursoSearch;
 use app\models\LogotiposForm;
 use app\models\PostotrabalhoSearch;
 use app\models\TipoLeitorSearch;
+use app\models\TipoexemplarSearch;
 use common\models\Funcionario;
 use common\models\Tipoleitor;
 use common\models\User;
@@ -509,10 +510,11 @@ class ConfigController extends Controller
      */
     public function actionTipoexemplar()
     {
+        $searchModel = new TipoexemplarSearch();
         $tipoexemplarModels = Tipoexemplar::find()->all();
-        $dataProvider = new ActiveDataProvider(['query' => Tipoexemplar::find()]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('tipoexemplar/index', ['dataProvider' => $dataProvider, 'tipoexemplarModels' => $tipoexemplarModels]);
+        return $this->render('tipoexemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'tipoexemplarModels' => $tipoexemplarModels]);
     }
 
     public function actionTipoexemplarView($id)
@@ -529,7 +531,7 @@ class ConfigController extends Controller
         $model = new Tipoexemplar();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O tipo de exemplar " . $model->designacao . " foi adicionado.");
+            Yii::$app->session->setFlash('success', "Foi adicionada um novo tipo de exemplar.");
             return $this->redirect('tipoexemplar');
         }
 
@@ -546,15 +548,6 @@ class ConfigController extends Controller
         }
 
         return $this->renderAjax('tipoexemplar/update', ['model' => $model,]);
-    }
-
-    public function actionTipoexemplarReset($id)
-    {
-        $model = $this->findModelTipoexemplar($id);
-        $model->reset($id);
-        Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O tipo de exemplar "' . $model->designacao . '" foi reposto.');
-
-        return $this->redirect(['tipoexemplar']);
     }
 
     protected function findModelTipoexemplar($id)

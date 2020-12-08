@@ -28,16 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'summary' => '',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
+            	'label' => 'Designação',
                 'attribute' => 'designacao',
-                'label' => 'Designação',
             ],
             [
+            	'label' => 'Grupo',
                 'attribute' => 'tipo',
-                'label' => 'Grupo',
 
                 'value' => function ($model) {
                             if($model->tipo == 'materialAv'){ return 'Material Audio-Visual';}
