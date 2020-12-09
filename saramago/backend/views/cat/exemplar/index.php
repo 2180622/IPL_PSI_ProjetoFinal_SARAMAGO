@@ -66,15 +66,15 @@ use yii\widgets\Pjax;
                 'buttons' => [
                     'view' => function ($url, $model, $id) {
                         return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                            ['value' => Url::to(['view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonView' . $id]);
+                            ['value' => Url::to(['exemplar-view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonView' . $id]);
                     },
                     'update' => function ($url, $model, $id) {
                         return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                            ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
+                            ['value' => Url::to(['exemplar-update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
                     },
                     'delete' => function ($url, $model, $id) {
                         return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['delete', 'id' => $id]),
+                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['exemplar-delete', 'id' => $id]),
                             ['data' =>
                                 ['confirm' => 'Tem a certeza de que pretende apagar o exemplar' . $model->cota . '?', 'method' => 'post']
                             ]);

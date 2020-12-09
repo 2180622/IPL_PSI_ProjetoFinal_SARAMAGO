@@ -2,6 +2,7 @@
 
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\Tabs;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -41,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="menu-nav-saramago">
             <?= Html::button(FAS::icon('pencil-alt') . ' Editar Obra',
-                ['value' => 'update', 'class' => 'btn btn-alt','id' => 'modalButtonCreate']) ?>
+                ['value' => 'update', 'class' => 'btn btn-alt','id' => 'modalButtonUpdate']) ?>
             <?= Html::a(Html::button(FAS::icon('trash-alt').' Apagar obra', ['class' => 'btn btn-alt ']), Url::to(['delete', 'id' => $model->id]),
                 ['data' =>
                     ['confirm' => 'Tem a certeza de que pretende apagar a obra ' . $model->titulo .' ('.$model->ano.')' . '?',
@@ -49,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]); ?>
 
             <?= Html::button(FAS::icon('plus') . ' Adicionar Exemplar',
-                ['value' => 'exemplar/create', 'class' => 'btn btn-alt pull-right','id' => 'modalButtonCreate']) ?>
+                ['value' => 'exemplar-create', 'class' => 'btn btn-alt pull-right','id' => 'modalButtonCreate']) ?>
         </div>
         <div class="menu-table-saramago">
 
@@ -100,3 +101,27 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?php
+    $this->registerJs("
+        $(function () {
+            $('#modalButtonCreate').click(function (){
+                $('#modalCreate').modal('show')
+                    .find('#modalContent')
+                    .load($(this).attr('value'))
+            })
+        });
+    ");
+
+?>
+
+<?php
+    Modal::begin([
+        'header' => '<h3>Adicionar exemplar</h3>',
+        'id' => 'modalCreate',
+        'size' => 'modal-lg',
+        'clientOptions' => ['backdrop' => 'static']
+    ]);
+    echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+    Modal::end();
+?>

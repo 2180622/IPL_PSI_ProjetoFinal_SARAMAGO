@@ -254,7 +254,13 @@ class CatController extends Controller
      */
     public function actionExemplarDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = Exemplar::findOne($id);
+        if ($model->estado == 'nd' || $model->estado == 'estante') {
+            $this->findModel($id)->delete();
+        }
+        else {
+            Yii::$app->session->setFlash('error', "Erro ao remover o exemplar: Só é possível remover exemplares no estado 'Não disponível' ou 'Na estante' ");
+        }
 
         return $this->redirect(['view-full']);
     }
