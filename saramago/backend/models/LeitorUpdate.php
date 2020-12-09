@@ -30,6 +30,7 @@ class LeitorUpdate extends Model
     public $notaInterna;
     public $Biblioteca_id;
     public $TipoLeitor_id;
+    public $user_id;
 
     /**
      * {@inheritdoc}
@@ -101,12 +102,15 @@ class LeitorUpdate extends Model
 
             ['TipoLeitor_id', 'trim'],
             ['TipoLeitor_id', 'integer'],
+
+            ['user_id', 'trim'],
+            ['user_id', 'integer'],
         ];
     }
 
     public function __construct($id)
     {
-        $leitor = Leitor::findOne($id);
+        $leitor = $this->findModel($id);
         $user = User::findOne($leitor->user_id);
         $this->id = $leitor->id;
         $this->username = $user->username;

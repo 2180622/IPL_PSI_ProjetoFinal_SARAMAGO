@@ -7,6 +7,7 @@ use common\models\User;
 use common\models\Leitor;
 use common\models\Tipoleitor;
 use DateTime;
+use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -134,7 +135,6 @@ class LeitorForm extends Model
             'user_id' => 'User ID',
         ];
     }
-
     /**
      * Signs user up.
      *
@@ -142,18 +142,18 @@ class LeitorForm extends Model
      */
     public function signup()
     {
-        $auth = Yii::$app->authManager;
-        if ($this->validate()) {
+        if($this->validate()) {
+            $auth = Yii::$app->authManager;
             $user = new User();
             $user->username = $this->username; //FIXME
             $user->email = $this->email;
             $user->setPassword($this->nif);
             $user->generateAuthKey();
             $user->status = 10;
-            $user->save();
+
 
             $leitor = new Leitor();
-            $leitor->mail2= $this->mail2;
+            $leitor->mail2 = $this->mail2;
             $leitor->nome = $this->nome;
             $leitor->nif = $this->nif;
             $leitor->docId = $this->docId;
@@ -169,114 +169,43 @@ class LeitorForm extends Model
             $leitor->notaInterna = $this->notaInterna;
             $leitor->Biblioteca_id = $this->Biblioteca_id;
             $leitor->TipoLeitor_id = $this->TipoLeitor_id;
+            $user->save();
 
             $leitor->user_id = $user->getId();
 
-            /*if($leitor->tipoLeitor->tipo == "aluno"){
+            if ($leitor->tipoLeitor->tipo == "aluno") {
                 $leitorAlunoRole = $auth->getRole('leitorAluno');
                 $auth->assign($leitorAlunoRole, $leitor->user_id);
                 $leitor->save();
-            }elseif($leitor->tipoLeitor->tipo == "docente"){
+            } elseif ($leitor->tipoLeitor->tipo == "docente") {
                 $leitorFuncionarioRole = $auth->getRole('leitorFuncionarioRole');
                 $auth->assign($leitorFuncionarioRole, $leitor->user_id);
                 $leitor->save();
-            }elseif($leitor->tipoLeitor->tipo == "funcionario") {
+            } elseif ($leitor->tipoLeitor->tipo == "funcionario") {
                 $leitorFuncionarioRole = $auth->getRole('leitorFuncionarioRole');
                 $auth->assign($leitorFuncionarioRole, $leitor->user_id);
                 $leitor->save();
-            }elseif($leitor->tipoLeitor->tipo == "externo") {
+            } elseif ($leitor->tipoLeitor->tipo == "externo") {
                 $leitorExternoRole = $auth->getRole('leitorExterno');
                 $auth->assign($leitorExternoRole, $leitor->user_id);
                 $leitor->save();
-            }*/
-            var_dump($leitor);
-            die();
-            /*
-            // the following three lines were added:
-            $auth = \Yii::$app->authManager;
-             //temporary fix
-            $leitorAlunoRole = $auth->getRole('leitorAluno');
-            $auth->assign($leitorAlunoRole, $user->getId());*/
+            }
 
             return $leitor;
         }
 
-        return null;
-
         /*   Yii2 generated code
-
-        if (!$this->validate()) {
-            return null;
-        }
-        
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
-        */
+        return $user->save() && $this->sendEmail($user); */
     }
 
     public function getRoles(){
-}
-
-    public function updateLeitor($id){
-        if ($this->validate()) {
-            $leitor = Leitor::findOne($id);
-            $user = User::findOne($leitor->user_id);
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->setPassword($this->password);
-            $user->status = 10;
-            $user->save();
-
-            $leitor->mail2 = $this->mail2;
-            $leitor->nome = $this->nome;
-            $leitor->nif = $this->nif;
-            $leitor->docId = $this->docId;
-            $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
-            $newDateString = $myDateTime->format('Y/m/d');
-            $leitor->dataAtualizado = Yii::$app->formatter->asDatetime('now', 'php:Y/m/d');
-            $leitor->dataNasc = $newDateString;
-            $leitor->morada = $this->morada;
-            $leitor->localidade = $this->localidade;
-            $leitor->codPostal = $this->codPostal;
-            $leitor->telemovel = $this->telemovel;
-            $leitor->telefone = $this->telefone;
-            $leitor->notaInterna = $this->notaInterna;
-            $leitor->Biblioteca_id = $this->Biblioteca_id;
-            $leitor->TipoLeitor_id = $this->TipoLeitor_id;
-
-            $leitor->user_id = $user->getId();
-
-            $leitor->save();
-
-            // the following three lines were added:
-            $auth = \Yii::$app->authManager;
-            // temporary fix
-            //$leitorAlunoRole = $auth->getRole('leitorAluno');
-            //$auth->assign($leitorAlunoRole, $user->getId());
-
-            return $leitor;
-        }
-
-        return null;
     }
-
-    /*public function findLeitor($id){
-        $leitor = Leitor::findOne($id);
-
-        return $leitor;
-    }
-
-    public function findUser($id){
-        $leitor = $this->findLeitor($id);
-        $user = User::findOne($leitor->user_id);
-
-        return $user;
-    }*/
     /**
      * Sends confirmation email to user
      * @param User $user user model to with email should be send

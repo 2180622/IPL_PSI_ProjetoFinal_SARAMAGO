@@ -30,6 +30,7 @@ class FuncionarioCreateForm extends Funcionario
     public $Leitor_id;
     public $Biblioteca_id;
     public $TipoLeitor_id;
+    public $user_id;
 
     /**
      * {@inheritdoc}
@@ -229,22 +230,23 @@ class FuncionarioCreateForm extends Funcionario
     }
 
     public function associateFuncionario(){
-            $i = 1;
-            $funcionario = new Funcionario();
-            $funcionarios = Funcionario::find()->all();
-            $funcionario->departamento = $this->departamento;
+        $auth = Yii::$app->authManager;
+        $funcionarios = Funcionario::find()->all();
 
-            foreach ($funcionarios as $funcionario){
-                if($funcionario->Leitor_id == $i){
-                    return false;
-                }else{
-                    $funcionario->Leitor_id = $this->Leitor_id;
-                }
+        $funcionario = new Funcionario();
+        $funcionario->departamento = $this->departamento;
+
+        foreach ($funcionarios as $funcionario){
+            if($funcionario->Leitor_id != null){
+                return false;
+            }else{
+                $funcionario->Leitor_id = $this->Leitor_id;
             }
+        }
 
-            $funcionario->save();
+        $funcionario->save();
 
-            return $funcionario;
+        return $funcionario;
     }
 
     /**

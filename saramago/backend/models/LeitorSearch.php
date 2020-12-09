@@ -60,6 +60,7 @@ class LeitorSearch extends Leitor
         $query->andFilterWhere([
             'id' => $this->id,
             'nif' => $this->nif,
+            'codBarras' => $this->codBarras,
             'dataNasc' => $this->dataNasc,
             'codPostal' => $this->codPostal,
             'telemovel' => $this->telemovel,

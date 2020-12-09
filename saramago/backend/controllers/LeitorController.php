@@ -141,17 +141,13 @@ class LeitorController extends Controller
     public function actionUpdate($id)
     {
         $model = new LeitorUpdate($id);
-        //$model = $model->findModel($id);
-        /*$leitor = Leitor::findOne($id);
-        $user = User::findOne($leitor->user_id);*/
-
 
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->updateLeitor()) {
             Yii::$app->session->setFlash('success', "O Leitor foi editado com sucesso.");
-            return $this->redirect('index');
+            return $this->redirect('..');
         }
 
 

@@ -26,6 +26,7 @@ use common\models\Tipoirregularidade;
 use common\models\Tipoexemplar;
 
 use yii\data\ActiveDataProvider;
+use yii\rbac\Role;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;

@@ -20,15 +20,15 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id')->textInput() ?>
 
-    <?= $form->field($model, 'codBarras') ?>
+    <?= $form->field($model, 'codBarras')->textInput() ?>
 
-    <?= $form->field($model, 'nome') ?>
+    <?= $form->field($model, 'nome')->textInput() ?>
 
-    <?= $form->field($model, 'nif') ?>
+    <?= $form->field($model, 'nif')->textInput() ?>
 
-    <?= $form->field($model, 'docId') ?>
+    <?= $form->field($model, 'docId')->textInput() ?>
 
     <?php // echo $form->field($model, 'dataNasc') ?>
 
@@ -58,9 +58,17 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Procurar', ['class' => 'btn btn-create']) ?>
-        <?= Html::resetButton('Repor', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::resetButton('Repor', ['class' => 'btn btn-outline-secondary', 'id' => 'Refresh']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
+    <?php
+        $this->registerJs("
+            $(refreshPage() {
+                $('#Refresh).click(function (){
+                    location.reload(true);',5000)
+            }
+        ");
+    ?>
 </div>

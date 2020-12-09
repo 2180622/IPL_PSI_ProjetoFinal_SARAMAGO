@@ -12,7 +12,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
 
     $listaleitores = ArrayHelper::map($leitores,'id','nome',['enctype' => 'multipart/form-data']);
-    //$listaRoles = ArrayHelper::map()
+    $listaRoles = array(
+                    'ADMIN' => 'admin',
+                    'Operador Chefe' => 'operadorChefe',
+                    'Operador Catalogação' => 'operadorCatalogacao',
+                    'Operador Circulação' => 'operadorCirculacao',
+                    'Leitor Funcionário' => 'leitorFuncionario',
+                    'Leitor Aluno' => 'leitorAluno',
+                    'Leitor Externo' => 'leitorExterno',
+                );
 
     $form = ActiveForm::begin(['id'=>'_formassociate']); ?>
 
@@ -28,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'leitorAluno'=>'Leitor Aluno',
     'leitorExterno'=>'Leitor Externo'
     -->
-    <?= $form->field($model, 'user_id')->dropDownList($listaleitores)->label('Role')->hint('TESTE') ?>
+    <?= $form->field($model, 'user_id')->dropDownList($listaRoles)->label('Role')->hint('TESTE') ?>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
