@@ -63,12 +63,5 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-    <?php
-        $this->registerJs("
-            $(refreshPage() {
-                $('#Refresh).click(function (){
-                    location.reload(true);',5000)
-            }
-        ");
-    ?>
+
 </div>

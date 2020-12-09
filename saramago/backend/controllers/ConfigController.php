@@ -5,7 +5,7 @@ use backend\models\EquipaSearch;
 use common\models\AuthAssignment;
 use Yii;
 
-use backend\models\FuncionarioCreateForm;
+use backend\models\EquipaCreateForm;
 use app\models\BibliotecaSearch;
 use app\models\CursoSearch;
 use app\models\LogotiposForm;
@@ -390,6 +390,7 @@ class ConfigController extends Controller
         $operadores = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->all();
         $operadorCount = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->count();
         $searchModel = new EquipaSearch();
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('equipa/index',
@@ -413,69 +414,50 @@ class ConfigController extends Controller
         throw new NotFoundHttpException();
     }
 
-    public function actionEquipaCreate(){
-
-        //TODO APAGAR
-
-        $model = new FuncionarioCreateForm();
-        $listaBibliotecas = Biblioteca::find()->all();
-        $listaTiposLeitors = Tipoleitor::find()->all();
-
-        if ($model->load(Yii::$app->request->post()) && $model->createFuncionario()) {
-            Yii::$app->session->setFlash('success', "O Funcionário foi criado com sucesso");
-            return $this->redirect('equipa');
-        }
-
-        return $this->renderAjax('equipa/create', [
-            'model'=>$model,
-            'listaBibliotecas'=>$listaBibliotecas,
-            'listaTiposLeitors'=>$listaTiposLeitors]);
-    }
-
     public function actionEquipaAssociate()
     {
         //FIXME
-        $model = new FuncionarioCreateForm();
+        $model = new EquipaCreateForm();
         $leitores = Leitor::find()->all();
-        $funcionarios = Funcionario::find()->all();
+        $users = Leitor::find()->all();
 
 
         if($leitores == null){
             Yii::$app->session->setFlash('error', "Não existem Leitores possíveis para associar");
             return $this->redirect('equipa');
-        }else if($model->associateFuncionario() == false) {
+        }else if($model->associateOperador() == false) {
             Yii::$app->session->setFlash('error', "Houve um erro.");
             return $this->redirect('equipa');
-        }else if($model->load(Yii::$app->request->post()) && $model->associateFuncionario()) {
-            Yii::$app->session->setFlash('success', "O Funcionário foi adicionado.");
+        }else if($model->load(Yii::$app->request->post()) && $model->associateOperador()) {
+            Yii::$app->session->setFlash('success', "O Operador foi modificado.");
             return $this->redirect('equipa');
         }
 
         return $this->renderAjax('equipa/associate', [
             'model'=>$model,
-            'leitores'=>$leitores]);
+            'leitores'=>$leitores,
+            'users' => $users]);
     }
 
     public function actionEquipaUpdate($id){
-        //FIXME
-        $model = new FuncionarioCreateForm();
-        $funcionario = Funcionario::findOne($id);
-        $leitor = Leitor::findOne($funcionario->Leitor_id);
-        $user = User::findOne($leitor->user_id);
+        $model = new EquipaCreateForm();
+        $leitores = Leitor::find()->all();
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
+        $leitores = Leitor::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->updateFuncionario($id)) {
-
-            Yii::$app->session->setFlash('success', "O Funcionário foi atualizado.");
+        if ($model->load(Yii::$app->request->post()) && $model->updateRole($id)) {
+            Yii::$app->session->setFlash('success', "O Operador foi atualizado.");
+            return $this->redirect('equipa');
+        }elseif($model->load(Yii::$app->request->post()) && !($model->updateRole($id))){
+            Yii::$app->session->setFlash('danger', "Lamentamos!");  // TODO
             return $this->redirect('equipa');
         }
 
         return $this->renderAjax('equipa/update', [
             'model' => $model,
-            'funcionario'=>$funcionario,
-            'leitor'=>$leitor,
-            'user'=>$user,
+            'leitores'=>$leitores,
+            'leitores' > $leitores,
             'listaBibliotecas' => $listaBibliotecas,
             'listaTiposLeitors' => $listaTiposLeitors]);
     }

@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="grid-container">
         <div class="menu-search-saramago">
             <?php Pjax::begin(); ?>
-            <?= $this->render('_search', ['model' => $searchLeitor]) ?>
+            <?= $this->render('_search', ['model' => $searchLeitor, 'id' => 'Refresh']) ?>
             <?php Pjax::end(); ?>
         </div>
         <div class="menu-nav-saramago">
@@ -102,6 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]); ?>
+
 
             <?php
             foreach ($leitores as $leitor) {

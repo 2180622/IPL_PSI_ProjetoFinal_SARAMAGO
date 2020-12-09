@@ -178,11 +178,11 @@ class LeitorForm extends Model
                 $auth->assign($leitorAlunoRole, $leitor->user_id);
                 $leitor->save();
             } elseif ($leitor->tipoLeitor->tipo == "docente") {
-                $leitorFuncionarioRole = $auth->getRole('leitorFuncionarioRole');
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
                 $auth->assign($leitorFuncionarioRole, $leitor->user_id);
                 $leitor->save();
             } elseif ($leitor->tipoLeitor->tipo == "funcionario") {
-                $leitorFuncionarioRole = $auth->getRole('leitorFuncionarioRole');
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
                 $auth->assign($leitorFuncionarioRole, $leitor->user_id);
                 $leitor->save();
             } elseif ($leitor->tipoLeitor->tipo == "externo") {
