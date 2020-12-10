@@ -103,7 +103,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]); ?>
 
-
             <?php
             foreach ($leitores as $leitor) {
                 $this->registerJs("
@@ -138,6 +137,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     .find('#modalContent')
                     .load($(this).attr('value'))
             })
+        });
+        
+        $(function () {
+            if(location.hash == '#create'){
+                 $('#modalCreate').modal('show')
+                    .find('#modalContent')
+                    .load('leitor/create')
+            }
         });
     ");
     ?>

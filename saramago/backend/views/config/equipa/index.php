@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'items' => [
                                             [
                                                 'label' => FAS::icon('plus').' Adicionar',
-                                                'url'=>Url::toRoute(['leitor/']),
+                                                'url'=>Url::toRoute(['leitor/', '#'=>'create']),
 
                                                 /* //TODO Antigo
                                                 'label' => FAS::icon('plus').' Adicionar',
