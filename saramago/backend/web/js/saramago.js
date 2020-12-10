@@ -1,6 +1,10 @@
-$("#alert-saramago").fadeTo(5500, 500).slideUp(500, function() {
+$("#alert-saramago").fadeTo(5500, 1).slideUp(500, function() {
 });
 
-$("[data-toggle='tooltip']").tooltip();
+$(function () {
+    $("[data-toggle='tooltip']").tooltip();
+});
 
-$("[data-toggle='popover']").popover();
+$(function () {
+    $("[data-toggle='popover']").popover();
+});
