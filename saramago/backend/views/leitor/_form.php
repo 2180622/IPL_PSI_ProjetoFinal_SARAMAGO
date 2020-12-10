@@ -50,12 +50,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
 
     <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
+    <div class="departamento" id="field-departamento">
+    <?=  $form->field($model, 'departamento')->textInput()->label('Departamento') ?>
+    </div>
 
-    <?php
-        if($model->tipoLeitor->tipo == "funcionario"){
-            echo $form->field($model, 'departamento')->textInput()->label('Departamento');
-        }
-    ?>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
@@ -65,12 +63,15 @@ use yii\widgets\ActiveForm;
     <?php
         $this->registerJs("
             $(document).ready(function () {
-                $(document.body).on('change', '#your-id', function () {
-                    var val = $('#your-id').val();
-                    if(val > 0 ) {
-                      $('.class').hide();
+                $(document).on('change', '#leitorform-tipoleitor_id', function () {
+                    var val = $('#leitorform-tipoleitor_id').val();
+                    console.log(val);
+                    if( val == 1 ) {
+                      $('#leitorform-departamento').hide();
+                      $('#field-departamento').hide();
                     } else {
-                      $('.class').show();
+                      $('#leitorform-departamento').show();
+                      $('#field-departamento').show();
                     }
                 });
             });

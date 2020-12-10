@@ -128,7 +128,24 @@ $this->title = 'SARAMAGO';
                 <span class="sr-only">Próximo</span>
             </a>
         </div>
-
+        <br>
+        <!-- NOTICIAS -->
+        <div>
+            <h3>Noticias</h3>
+            <table style="width:100%;">
+                <tr>
+                    <th style="width: 10%;">Autor</th>
+                    <th>Conteúdo</th>
+                </tr>
+                <tr>
+                    <?php
+                    foreach ($noticias as $noticia) {?>
+                    <td><?php echo $noticia->autor .'</td>
+                    <td>'; echo $noticia->conteudo .'</td>';
+                    }?>
+                </tr>
+            </table>
+        </div>
         <!--TAGS-->
         <h3>Tags</h3>
         <hr>

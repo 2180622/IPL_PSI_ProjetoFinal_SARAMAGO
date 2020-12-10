@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Noticias;
 use common\models\Obra;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -76,11 +77,16 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = Obra::find()->all();
+        $noticias = Noticias::find()->all();
         $tagsDasObras = Obra::getAssuntosDasObrasTodas();
         $quantidadeDeLivrosNaMesmaTag = Obra::getLivrosComMesmoAssunto();
     	$obrasRecentementeAdquiridas = Obra::find()->orderBy(['dataRegisto' => SORT_DESC])->all();
 
-        return $this->render('index', ['tagsDasObras' => $tagsDasObras, 'quantidadeDeLivrosNaMesmaTag' => $quantidadeDeLivrosNaMesmaTag, 'obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas]);
+        return $this->render('index', [
+            'tagsDasObras' => $tagsDasObras,
+            'quantidadeDeLivrosNaMesmaTag' => $quantidadeDeLivrosNaMesmaTag,
+            'obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas,
+            'noticias' => $noticias]);
     }
 
     /**
@@ -273,6 +279,4 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
-
-    
 }
