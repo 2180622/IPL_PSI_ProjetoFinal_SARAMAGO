@@ -21,9 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username',['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'password',['enableAjaxValidation' => true])->passwordInput() ?>
 
     <?= $form->field($model, 'nif')->textInput() ?>
 
@@ -41,9 +41,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'telefone')->textInput() ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email',['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'mail2')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'mail2',['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true]) ?>
 
@@ -51,10 +51,30 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
 
+    <?php
+        if($model->tipoLeitor->tipo == "funcionario"){
+            echo $form->field($model, 'departamento')->textInput()->label('Departamento');
+        }
+    ?>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?php
+        $this->registerJs("
+            $(document).ready(function () {
+                $(document.body).on('change', '#your-id', function () {
+                    var val = $('#your-id').val();
+                    if(val > 0 ) {
+                      $('.class').hide();
+                    } else {
+                      $('.class').show();
+                    }
+                });
+            });
+        ");
+    ?>
 
 </div>

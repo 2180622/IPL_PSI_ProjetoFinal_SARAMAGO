@@ -15,6 +15,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * LeitorController implements the CRUD actions for Leitor model.
@@ -104,7 +106,6 @@ class LeitorController extends Controller
         $this->layout = 'minor';
 
         return $this->render('view-full', ['model' => $this->findModel($id)]);
-
     }
 
     /**
@@ -119,9 +120,13 @@ class LeitorController extends Controller
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }elseif ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', "O Leitor foi adicionado com sucesso.");
-            return $this->redirect(['view-full', 'id'=> $model->id]);
+            return $this->redirect("'eitor/'.$model->id.'");
         }
 
         return $this->renderAjax('create', [

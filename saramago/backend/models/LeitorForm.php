@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use common\models\Funcionario;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -13,7 +14,7 @@ use yii\web\NotFoundHttpException;
 /**
  * LeitorCreate form
  */
-class LeitorForm extends Model
+class LeitorForm extends Leitor
 {
     const ALUNO = 'aluno';
     const DOCENTE = "docente";
@@ -25,6 +26,7 @@ class LeitorForm extends Model
     public $password;
     public $mail2;
     public $nome;
+    public $departamento;
     public $nif;
     public $docId;
     public $dataNasc;
@@ -66,9 +68,13 @@ class LeitorForm extends Model
             ['nome', 'required'],
             ['nome', 'string', 'min' => 2, 'max' => 255],
 
+            ['departamento', 'trim'],
+            ['departamento', 'string'],
+
             ['nif', 'trim'],
             ['nif', 'required'],
             ['nif', 'string', 'min' => 9, 'max' => 9],
+            ['nif', 'unique', 'targetClass' => '\common\models\Leitor', 'message' => 'NIF já se encontra em uso.'],
 
             ['docId', 'trim'],
             ['docId', 'required'],
@@ -182,9 +188,12 @@ class LeitorForm extends Model
                 $auth->assign($leitorFuncionarioRole, $leitor->user_id);
                 $leitor->save();
             } elseif ($leitor->tipoLeitor->tipo == "funcionario") {
+                $funcionario = New Funcionario();
                 $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
                 $auth->assign($leitorFuncionarioRole, $leitor->user_id);
+                $funcionario->departamento = $this->departamento;
                 $leitor->save();
+                $funcionario->save();
             } elseif ($leitor->tipoLeitor->tipo == "externo") {
                 $leitorExternoRole = $auth->getRole('leitorExterno');
                 $auth->assign($leitorExternoRole, $leitor->user_id);

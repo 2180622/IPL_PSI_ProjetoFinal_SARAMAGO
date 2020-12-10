@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Aluno;
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\Tabs;
@@ -22,12 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
             echo'<h3>'.$model->nome.' <small class="text-muted"> ('.$model->user->username.')</small></h3>';
             echo'<p class="text-muted" style="line-height: normal">'.$model->morada.'<br>';
             echo $model->codPostal($model->id).' '.$model->localidade.'</p>';
-            echo'<p>Estatuto: '.$model->tipoLeitor->estatuto.' ('.$model->tipoLeitor->tipo.')</p>';
-            if($model->tipoLeitor->tipo == 'Aluno')
+            echo'<p>Estatuto: '.$model->tipoEstatuto($model->id).'</p>';
+            if($model->tipoLeitor->tipo == 'aluno')
             {
-                // FIXME
-                //echo'<p>Número: '.$model->alunos->numero.'</p>';
-                //echo'<p>Curso: '.$model->alunos->curso_id.'</p>';
+                $aluno = Aluno::find()->where('Leitor_id = '. $model->id)->one();
+                echo'<p>Número: '.$aluno->numero.'</p>';
+                //echo'<p>Curso: '.$aluno->curso->nome.'</p>';
             }
             elseif ($model->tipoLeitor->tipo == 'Docente' || $model->tipoLeitor->tipo == 'Funcionário')
             {

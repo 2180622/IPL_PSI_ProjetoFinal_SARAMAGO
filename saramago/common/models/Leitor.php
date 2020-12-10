@@ -242,5 +242,23 @@ class Leitor extends \yii\db\ActiveRecord
         }
     }
 
+    public static function tipoEstatuto($id)
+    {
+        $leitor = Leitor::findOne($id);
+
+        if ($leitor->tipoLeitor->tipo == 'aluno') {
+            return $leitor->tipoLeitor->estatuto . ' (' . $leitor->tipoLeitor->tipo . ')';
+        } elseif ($leitor->tipoLeitor->tipo == 'docente') {
+            return $leitor->tipoLeitor->estatuto . ' (' . $leitor->tipoLeitor->tipo . ')';
+        } elseif ($leitor->tipoLeitor->tipo == 'funcionario') {
+            return $leitor->tipoLeitor->estatuto . ' (' . $leitor->tipoLeitor->tipo . ')';
+        } elseif ($leitor->tipoLeitor->tipo == 'externo') {
+            return $leitor->tipoLeitor->estatuto . ' (' . $leitor->tipoLeitor->tipo . ')';
+        }
+
+        return 0;
+
+    }
+
     #endregion
 }
