@@ -341,7 +341,7 @@ class ConfigController extends Controller
 
             if ($model->upload($id)) {
                 Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->info. " foi adicionado.");
-                return $this->redirect('logotipos');;
+                return $this->redirect('logotipos');
             }
         }
         return $this->renderAjax('logotipos/update', ['model' => $model,]);
@@ -351,7 +351,8 @@ class ConfigController extends Controller
     {
         $model = $this->findModelLogotipos($id);
         $model->reset($id);
-        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->info. " foi reposto.");
+        Yii::$app->session->setFlash('success',
+            '<strong>Informação:</strong> O ' . $model->info. ' foi reposto para <span class="label label-danger">Não Definido</span>');
 
         return $this->redirect(['config/logotipos']);
     }

@@ -15,8 +15,9 @@
 .menu-search-saramago { grid-area: search; }
 .menu-info-saramago { grid-area: search; }
 .menu-nav-saramago { grid-area: nav; }
+/* endregion */
 
-/* Minor */
+/* region MINOR */
 .layout-minor-top{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -94,7 +95,7 @@
 
 /* region DASHBOARD */
 
-/* region Container rapido-saramago */
+/* region CONTAINER rapido-saramago */
 .rapido-saramago .p{
     font-family: "Geometr415 Lt BT Lite", sans-serif;
     font-style: normal;
@@ -212,31 +213,7 @@
 
 /* endregion */
 
-/* region ADMINISTRAÇÃO */
-.site-config h1{
-    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
-}
-.site-config .card-config {
-    padding: 10px;
-    border: 3px solid #254E58;
-    border-radius: 5px;
-    transition-duration: 0.4s;
-    color: #000000;
-
-}
-
-.site-config .card-config:hover {
-    background: #dddddd;
-    color: #000000;
-
-}
-
-.site-config .saramago-config a:hover {
-    background: #dddddd;
-    color: #000000;
-    text-decoration: none;
-
-}
+/* region BUTTONS */
 
 .btn-create{
     background-color: #254E58;
@@ -264,6 +241,38 @@
     background-color: #dddddd;
 
 }
+
+/* endregion */
+
+/* region ADMINISTRAÇÃO */
+
+.site-config h1{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.site-config .card-config {
+    padding: 10px;
+    border: 3px solid #254E58;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    color: #000000;
+
+}
+
+.site-config .card-config:hover {
+    background: #dddddd;
+    color: #000000;
+
+}
+
+.site-config .saramago-config a:hover {
+    background: #dddddd;
+    color: #000000;
+    text-decoration: none;
+
+}
+
+/* region CONFIG */
 
 .config-entidade h1,
 .config-entidade h2,
@@ -479,7 +488,9 @@
 
 /* endregion */
 
-/* region Leitores */
+/* endregion */
+
+/* region LEITORES */
 .site-leitor h1,
 .site-leitor h2,
 .site-leitor h3,
@@ -498,8 +509,6 @@
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     color: #000000;
 }
-
-
 
 .site-leitor .grid-container{
     display: grid;
@@ -540,7 +549,7 @@
 
 /* endregion Leitores */
 
-/* region Catalogação */
+/* region CATALOGAÇÃO */
 
 .site-cat h1,
 .site-cat h2,
@@ -597,6 +606,10 @@
     padding: 10px;
 
 }
+
+/* endregion */
+
+/* region CIRCULAÇÃO */
 
 
 /* endregion */

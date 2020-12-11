@@ -3,6 +3,7 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $logotiposModels \common\models\Logotipos */
 
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\Modal;

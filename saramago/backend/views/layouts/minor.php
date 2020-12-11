@@ -23,8 +23,9 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to('@web/img/favicon.png')]);?>
-
+    <?php if(Logotipos::favicon() != null){
+        $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to('@web/img/'.Logotipos::favicon())]);
+    }?>
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -40,7 +41,7 @@ AppAsset::register($this);
     */
     if(Logotipos::logotipo() != null){
         NavBar::begin([
-            'brandLabel'=> Html::img('@web/img/logotipo.png',['height' => '100%', 'alt'=> Entidade::designacao()]),
+            'brandLabel'=> Html::img('@web/img/'.Logotipos::logotipo(),['height' => '100%', 'alt'=> Entidade::designacao()]),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-default navbar-expand-lg fixed-top',
@@ -108,7 +109,7 @@ AppAsset::register($this);
 
     <div class="layout-minor-top fixed-top">
         <?=Html::a(Html::img('@web/res/logo-saramago.png', ['height'=>'30‰', 'alt'=>'SARAMAGO']), ''.Yii::$app->homeurl.'')?>
-        <div class="rapido-saramago" id="layout-minor">
+        <div class="rapido-saramago" id="rapido-saramago">
             <div class="tabbable tabs-below">
                 <div class="tab-content">
                     <div id="tab1" class="tab-pane active">
@@ -132,7 +133,7 @@ AppAsset::register($this);
                     <li><a href="#tab2" data-toggle="tab">Devolução</a></li>
                     <li><a href="#tab3" data-toggle="tab">Renovar</a></li>
                     <li><a href="#tab4" data-toggle="tab">Pesquisar Leitores</a></li>
-                    <li><a href="#tab5" data-toggle="tab">Pesquisar no Catálogo</a></li>
+                    <li><a href="#tab5" data-toggle="tab">Pesquisar Catálogo</a></li>
                 </ul>
             </div>
         </div>
@@ -143,6 +144,7 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+
         <?= $content ?>
     </div>
 </div>
