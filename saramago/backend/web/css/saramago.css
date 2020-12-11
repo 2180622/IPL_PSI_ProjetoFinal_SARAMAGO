@@ -325,6 +325,23 @@
     color: #000000;
 }
 
+.config-cdu h1,
+.config-cdu h2,
+.config-cdu h3,
+.config-cdu h4,
+.config-cdu h5,
+.config-cdu h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-cdu p,
+.config-cdu a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
+
+
 .config-esteitor h1,
 .config-esteitor h2,
 .config-esteitor h3,

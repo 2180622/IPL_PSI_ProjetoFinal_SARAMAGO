@@ -1,17 +1,19 @@
 <?php
 namespace backend\controllers;
 
-use backend\models\EquipaSearch;
-use common\models\AuthAssignment;
 use Yii;
 
+use backend\models\CduSearch;
 use backend\models\EquipaCreateForm;
+use backend\models\EquipaSearch;
 use app\models\BibliotecaSearch;
 use app\models\CursoSearch;
 use app\models\LogotiposForm;
 use app\models\PostotrabalhoSearch;
 use app\models\TipoLeitorSearch;
 use app\models\TipoexemplarSearch;
+use common\models\AuthAssignment;
+use common\models\Cdu;
 use common\models\Funcionario;
 use common\models\Tipoleitor;
 use common\models\User;
@@ -61,7 +63,7 @@ class ConfigController extends Controller
                             'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
                             'tipoexemplar', 'tipoexemplar-view', 'tipoexemplar-create', 'tipoexemplar-update', 'tipoexemplar-delete',
                             'estexemplar','estexemplar-update','estexemplar-reset',
-                            'cdu',
+                            'cdu','cdu-view','cdu-create','cdu-update','cdu-delete',
                             'estleitor','estleitor-view','estleitor-create','estleitor-update','estleitor-delete',
                             'irregularidades','irregularidades-update',
                             'cursos','cursos-view','cursos-create','cursos-update','cursos-delete',
@@ -597,7 +599,101 @@ class ConfigController extends Controller
      */
     public function actionCdu()
     {
-        return $this->render('cdu/index');
+        $searchModel = new CduSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $cduModel = Cdu::find()->all();
+
+        return $this->render('cdu/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                'cduModel'=>$cduModel]);
+    }
+
+    /**
+     * Displays a single Cdu model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionCduView($id)
+    {
+        return $this->renderAjax('cdu/view', ['model' => $this->findModelCdu($id),]);
+    }
+
+    /**
+     * Creates a new Cdu model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCduCreate()
+    {
+        $model = new Cdu();
+        $searchModel = new CduSearch();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+
+            return $this->redirect(['cdu', 'page'=> $endPage, '#'=> $model->id]);
+        }
+
+        return $this->renderAjax('cdu/create', ['model' => $model,]);
+    }
+
+    /**
+     * Updates an existing Cdu model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionCduUpdate($id)
+    {
+        $oldCdu = $this->findModelCdu($id);
+        $model = $this->findModelCdu($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi alterado para '.$model->codCdu.' - "'.$model->designacao.'".');
+            return $this->redirect(['cdu', '#' => $model->id]);
+        }
+
+        return $this->renderAjax('cdu/update', ['model' => $model]);
+    }
+
+    /**
+     * Deletes an existing Cdu model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionCduDelete($id)
+    {
+        $oldCdu = $this->findModelCdu($id);
+        $this->findModelCdu($id)->delete();
+
+        $searchModel = new CduSearch();
+        $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+
+        Yii::$app->session->setFlash('success',
+            '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi apagado.');
+
+        return $this->redirect(['cdu', 'page'=> $endPage]);
+    }
+
+    /**
+     * Finds the Cdu model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Cdu the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelCdu($id)
+    {
+        if (($model = Cdu::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('Código Decimal Universal não encontrado.');
     }
     #endregion
 
