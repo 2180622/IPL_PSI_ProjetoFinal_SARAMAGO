@@ -138,7 +138,7 @@ $this->title = 'SARAMAGO';
                     <th>Conteúdo</th>
                 </tr>
                 <tr>
-                    <?php
+                    <?php //TODO FIX NA DISPOSIÇÃO DA TABELA
                     foreach ($noticias as $noticia) {?>
                     <td><?php echo $noticia->autor .'</td>
                     <td>'; echo $noticia->conteudo .'</td>';

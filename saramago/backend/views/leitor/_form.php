@@ -15,7 +15,13 @@ use yii\widgets\ActiveForm;
     <?php
 
     $listasBiblioteca = ArrayHelper::map($listaBibliotecas,'id','nome',['enctype' => 'multipart/form-data']);
-    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id','estatuto',['enctype' => 'multipart/form-data']);
+    /*$listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id',
+        function($model) {
+            return $model->estatuto . ' ('.ucfirst($model->tipo).')';
+        }, ['enctype' => 'multipart/form-data']);*/
+
+    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id',
+        'estatuto','tipo', ['enctype' => 'multipart/form-data']);
 
     $form = ActiveForm::begin(['id'=>'_form']); ?>
 
@@ -37,9 +43,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'codPostal')->textInput() ?>
 
-    <?= $form->field($model, 'telemovel')->textInput() ?>
+    <?= $form->field($model, 'telemovel')->textInput(['maxlength' => 15]) ?>
 
-    <?= $form->field($model, 'telefone')->textInput() ?>
+    <?= $form->field($model, 'telefone')->textInput(['maxlength' => 15]) ?>
 
     <?= $form->field($model, 'email',['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
@@ -49,9 +55,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
 
-    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
-    <div class="departamento" id="field-departamento">
-    <?=  $form->field($model, 'departamento')->textInput()->label('Departamento') ?>
+    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor, ['prompt' => 'Selecione...'])->label('Tipo de Leitor') ?>
+
+    <div id="departamento" hidden>
+    <?= $form->field($model, 'departamento')->textInput(['maxlength' => true])->label('Departamento'); ?>
+    </div>
+    <div id="numero" hidden>
+    <?= $form->field($model, 'numero')->textInput(['maxlength' => 11])->label('Número de Aluno'); ?>
     </div>
 
     <div class="form-group">
@@ -61,17 +71,23 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
     <?php
-        $this->registerJs("
+        $this->registerJs(/** @lang JavaScript */"
             $(document).ready(function () {
+            
                 $(document).on('change', '#leitorform-tipoleitor_id', function () {
-                    var val = $('#leitorform-tipoleitor_id').val();
-                    console.log(val);
-                    if( val == 1 ) {
-                      $('#leitorform-departamento').hide();
-                      $('#field-departamento').hide();
-                    } else {
-                      $('#leitorform-departamento').show();
-                      $('#field-departamento').show();
+                    var label = $('option:selected', this).closest('optgroup').attr('label');
+                    if( label == 'aluno' ) {
+                        $('#numero').show();
+                        $('#departamento').hide();
+                    }else if(label == 'docente' || label == 'funcionario') {
+                        $('#departamento').show();
+                        $('#numero').hide();
+                    }else if(label == 'externo'){
+                        $('#departamento').hide();
+                        $('#numero').hide();
+                    }else{
+                        $('#departamento').hide();
+                        $('#numero').hide();                        
                     }
                 });
             });

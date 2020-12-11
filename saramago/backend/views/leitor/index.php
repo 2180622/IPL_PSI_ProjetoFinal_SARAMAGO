@@ -61,6 +61,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => 'Tipo de Leitor',
                         'attribute' => 'TipoLeitor_id',
                         'headerOptions' => ['width' => '150'],
+                        'filter' => ['Grupo'=> [
+                            'aluno'=>'Aluno',
+                            'docente'=> 'Docente',
+                            'funcionario'=>'Funcionário',
+                            'externo'=>'Externo',
+                           // 'Tipo'=> $tiposExemplarAll
+                        ],
+                                    ],
+                        'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
                         'value' => function ($leitores) { return '' . $leitores->tipoLeitor->tipo;},
                     ],
                     [

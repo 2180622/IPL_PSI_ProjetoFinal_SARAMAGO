@@ -12,6 +12,7 @@ use Yii;
 use common\models\Leitor;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,6 +71,7 @@ class LeitorController extends Controller
     {
         $searchLeitor = new LeitorSearch();
         $leitores = Leitor::find()->all();
+        $tiposLeitorAll = ArrayHelper::map(Tipoleitor::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
         $dataProvider = $searchLeitor->search(Yii::$app->request->queryParams);
 
         $this->layout = 'minor';

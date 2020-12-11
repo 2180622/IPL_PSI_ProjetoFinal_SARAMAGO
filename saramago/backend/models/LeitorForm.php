@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use common\models\Aluno;
 use common\models\Funcionario;
 use Yii;
 use yii\base\Model;
@@ -27,6 +28,7 @@ class LeitorForm extends Leitor
     public $mail2;
     public $nome;
     public $departamento;
+    public $numero;
     public $nif;
     public $docId;
     public $dataNasc;
@@ -69,7 +71,10 @@ class LeitorForm extends Leitor
             ['nome', 'string', 'min' => 2, 'max' => 255],
 
             ['departamento', 'trim'],
-            ['departamento', 'string'],
+            ['departamento', 'string', 'max' => 255],
+
+            ['numero', 'trim'],
+            ['numero', 'integer'],
 
             ['nif', 'trim'],
             ['nif', 'required'],
@@ -100,10 +105,10 @@ class LeitorForm extends Leitor
 
             ['telemovel', 'trim'],
             ['telemovel', 'required'],
-            ['telemovel', 'string', 'min' => 9, 'max' => 9],
+            ['telemovel', 'integer'],
 
             ['telefone', 'trim'],
-            ['telefone', 'string', 'min' => 9, 'max' => 9],
+            ['telefone', 'integer'],
 
             ['notaInterna', 'trim'],
             ['notaInterna', 'string', 'min' => 1, 'max' => 45],
@@ -180,24 +185,40 @@ class LeitorForm extends Leitor
             $leitor->user_id = $user->getId();
 
             if ($leitor->tipoLeitor->tipo == "aluno") {
+                $aluno = new Aluno();
+                $aluno->numero = $this->numero;
+                $leitor->save();
+                $aluno->Leitor_id = $leitor->id;
+                $aluno->save();
+
                 $leitorAlunoRole = $auth->getRole('leitorAluno');
                 $auth->assign($leitorAlunoRole, $leitor->user_id);
-                $leitor->save();
+
             } elseif ($leitor->tipoLeitor->tipo == "docente") {
-                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
-                $auth->assign($leitorFuncionarioRole, $leitor->user_id);
-                $leitor->save();
-            } elseif ($leitor->tipoLeitor->tipo == "funcionario") {
                 $funcionario = New Funcionario();
-                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
-                $auth->assign($leitorFuncionarioRole, $leitor->user_id);
                 $funcionario->departamento = $this->departamento;
                 $leitor->save();
+                $funcionario->Leitor_id = $leitor->id;
                 $funcionario->save();
+
+                $leitorDocenteRole = $auth->getRole('leitorDocente');
+                $auth->assign($leitorDocenteRole, $leitor->user_id);
+
+            } elseif ($leitor->tipoLeitor->tipo == "funcionario") {
+                $funcionario = New Funcionario();
+                $funcionario->departamento = $this->departamento;
+                $leitor->save();
+                $funcionario->Leitor_id = $leitor->id;
+                $funcionario->save();
+
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
+                $auth->assign($leitorFuncionarioRole, $leitor->user_id);
+
             } elseif ($leitor->tipoLeitor->tipo == "externo") {
+                $leitor->save();
+
                 $leitorExternoRole = $auth->getRole('leitorExterno');
                 $auth->assign($leitorExternoRole, $leitor->user_id);
-                $leitor->save();
             }
 
             return $leitor;

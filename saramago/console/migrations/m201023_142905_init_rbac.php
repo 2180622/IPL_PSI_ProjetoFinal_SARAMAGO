@@ -567,6 +567,12 @@ class m201023_142905_init_rbac extends Migration
         $auth->add($leitorFuncionario);
         //$auth->addChild($leitorFuncionario, $createPost);
 
+        // add "leitorDocente" role and give this role permissions
+        // as well as the permissions of the "author" role
+        $leitorDocente = $auth->createRole('leitorDocente');
+        $auth->add($leitorDocente);
+        //$auth->addChild($leitorDocente, $createPost);
+
         // add "operadorCirculacao" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorCirculacao = $auth->createRole('operadorCirculacao');
