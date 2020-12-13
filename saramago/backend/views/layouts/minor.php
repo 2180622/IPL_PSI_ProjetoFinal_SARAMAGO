@@ -6,6 +6,7 @@
 use common\models\Entidade;
 use common\models\Logotipos;
 use backend\assets\AppAsset;
+use common\models\Noticias;
 use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -74,31 +75,77 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+
+        $noticias = Noticias::find()->where("interface='todas'")->orWhere("interface='Interna'");
+        if($noticias->count() == 0){
+            $menuItems[] =
+                [
+                    'label' => FAS::icon('newspaper')->size(FAS::SIZE_LARGE),
+                    'encode'=> false,
+                    'options' =>[
+                        'data-toggle' => 'popover',
+                        'data-container'=>'body',
+                        'data-placement'=>'bottom',
+                        'data-html'=> 1,
+                        'data-title'=>'Noticias',
+                        //FIXME Text-align (ver no 'saramago.css')
+                        'data-content'=>'
+                                <div class="container-fluid">'
+                            .Html::tag('h3', FAS::stack()->icon('newspaper')->on(FAS::icon('ban')->addCssClass('text-danger')))
+                            .Html::tag('p', 'Não existem notícias!').
+                            '</div>',
+                    ],
+                ];
+        }else{
+            $menuItems[] =
+                [
+                    'label' => FAS::icon('newspaper')->size(FAS::SIZE_LARGE),
+                    'encode'=> false,
+                    'options' =>[
+                        'data-toggle' => 'popover',
+                        'data-container'=>'body',
+                        'data-placement'=>'bottom',
+                        'data-html'=> 1,
+                        'data-title'=>'Noticias',
+                        'data-content'=>'
+                        <div class="container-fluid">'.$this->render('_noticias',['noticias' => $noticias]).'</div>',
+                    ],
+                ];
+        }
+
         $menuItems[] = [
-            'label' => '@' . Yii::$app->user->identity->username,
+            'label' => FAS::icon('user-circle') .' '. Yii::$app->user->identity->username,
+            'encode'=> false,
             'items' => [
                 [
-                    'label'=>'Logout',
+                    'label'=> FAS::icon('sign-out-alt').' Logout',
                     'url'=>['/site/logout'],
                     'linkOptions' => ['data-method' => 'post'],
+                    'encode'=> false,
+
                 ],
                 '<li class="divider"></li>',
-                '<li class="dropdown-header">Ações Rápidas</li>',
+                '<li class="dropdown-header">Conta</li>',
                 [
-                    'label' => 'Conta',
+                    'label' => FAS::icon('user-cog').' Conta',
                     'url' => ['/config/conta'],
-                ]
+                    'encode'=> false,
+                ],
+                '<li class="divider"></li>',
+                '<li class="dropdown-header">Ajuda</li>',
+                [
+                    'label' => FAS::icon('question-circle').' Ajuda',
+                    'url' => ['#'],
+                    'encode'=> false,
+                ],
+                [
+                    'label' => FAS::icon('info-circle').' Sobre',
+                    'url' => ['about'],
+                    'encode'=> false,
+                ],
             ]
         ];
-        /*$menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';*/
-        $menuItems[] = '<li>'.Html::a((FAS::icon('question-circle')->size(FAS::SIZE_LARGE)),'').'</li>';
+
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

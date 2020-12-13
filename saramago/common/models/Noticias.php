@@ -12,7 +12,9 @@ use Yii;
  * @property string $dataVisivel Data visível
  * @property string|null $dataExpiracao Data da expiração
  * @property string $autor Autor
+ * @property string $assunto Assunto
  * @property string $conteudo Conteúdo
+ * @property string $dataRegisto Data registo da notícia
  */
 class Noticias extends \yii\db\ActiveRecord
 {
@@ -30,10 +32,13 @@ class Noticias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['interface', 'autor', 'conteudo'], 'required'],
-            [['interface', 'conteudo'], 'string'],
-            [['dataVisivel', 'dataExpiracao'], 'safe'],
+            [['interface', 'autor', 'assunto', 'conteudo', 'dataVisivel'], 'required'],
+            [['interface', 'assunto', 'conteudo'], 'string'],
+            [['dataRegisto'], 'safe'],
             [['autor'], 'string', 'max' => 255],
+
+            ['dataExpiracao', 'default', 'value' => null],
+            ['dataExpiracao', 'compare', 'compareAttribute' => 'dataVisivel', 'operator' => '>=', 'enableClientValidation' => true],
         ];
     }
 
@@ -48,7 +53,9 @@ class Noticias extends \yii\db\ActiveRecord
             'dataVisivel' => 'Data visível',
             'dataExpiracao' => 'Data da expiração',
             'autor' => 'Autor',
+            'assunto' => 'Assunto',
             'conteudo' => 'Conteúdo',
+            'dataRegisto' => 'Data registo da notícia',
         ];
     }
 

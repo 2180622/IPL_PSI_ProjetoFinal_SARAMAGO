@@ -9,6 +9,7 @@ use backend\models\EquipaSearch;
 use app\models\BibliotecaSearch;
 use app\models\CursoSearch;
 use app\models\LogotiposForm;
+use app\models\NoticiasSearch;
 use app\models\PostotrabalhoSearch;
 use app\models\TipoLeitorSearch;
 use app\models\TipoexemplarSearch;
@@ -23,6 +24,7 @@ use common\models\Curso;
 use common\models\Entidade;
 use common\models\Estatutoexemplar;
 use common\models\Leitor;
+use common\models\Noticias;
 use common\models\Postotrabalho;
 use common\models\Tipoirregularidade;
 use common\models\Tipoexemplar;
@@ -59,7 +61,7 @@ class ConfigController extends Controller
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
                             'logotipos','logotipos-view','logotipos-update','logotipos-reset',
-                            'noticias',
+                            'noticias','noticias-view','noticias-create','noticias-update','noticias-delete',
                             'equipa', 'equipa-view', 'equipa-associate', 'equipa-create', 'equipa-update', 'equipa-delete',
                             'tipoexemplar', 'tipoexemplar-view', 'tipoexemplar-create', 'tipoexemplar-update', 'tipoexemplar-delete',
                             'estexemplar','estexemplar-update','estexemplar-reset',
@@ -376,7 +378,113 @@ class ConfigController extends Controller
      */
     public function actionNoticias()
     {
-        return $this->render('noticias');
+        $searchModel = new NoticiasSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $noticiasModel = Noticias::find()->all();
+
+        return $this->render('noticias/index',
+            ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'noticiasModel'=> $noticiasModel]);
+    }
+
+    /**
+     * Displays a single Noticias model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionNoticiasView($id)
+    {
+        return $this->renderAjax('noticias/view', [
+            'model' => $this->findModelNoticias($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Noticias model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionNoticiasCreate()
+    {
+        $model = new Noticias();
+
+        $user = Yii::$app->user;
+        $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
+
+        if($leitor!=null)
+        {
+            $identity = $leitor->nome;
+        }else{
+            $identity = '@' . $user->identity->username . '';
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $model->assunto. '" foi adicionada.');
+
+            return $this->redirect(['noticias', '#' => $model->id]);
+        }
+
+        return $this->renderAjax('noticias/create', ['model' => $model,'identity'=> $identity]);
+    }
+
+    /**
+     * Updates an existing Noticias model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionNoticiasUpdate($id)
+    {
+        $oldNoticia = $this->findModelNoticias($id);
+        $model = $this->findModelNoticias($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            if($oldNoticia->assunto == $model->assunto){
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $model->assunto. '" foi atualizada.');
+            }else{
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto. '" foi atualizada para "' . $model->assunto . '"');
+            }
+
+            return $this->redirect(['view', '#' => $model->id]);
+        }
+
+        return $this->renderAjax('noticias/update', ['model' => $model,]);
+    }
+
+    /**
+     * Deletes an existing Noticias model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionNoticiasDelete($id)
+    {
+        $oldNoticia = $this->findModelNoticias($id);
+        $this->findModelNoticias($id)->delete();
+
+        Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto . '" foi apagada.');
+
+        return $this->redirect(['noticias']);
+    }
+
+    /**
+     * Finds the Noticias model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Noticias the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelNoticias($id)
+    {
+        if (($model = Noticias::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('A página requisitada não existe.');
     }
 
     #endregion

@@ -15,6 +15,31 @@
 .menu-search-saramago { grid-area: search; }
 .menu-info-saramago { grid-area: search; }
 .menu-nav-saramago { grid-area: nav; }
+
+/* region POPOVER */
+.popover {
+    border: 2px solid #254E58;
+
+}
+
+.popover-title {
+    background-color: #254E58;
+    color: #FFFFFF;
+    text-align:center;
+}
+
+.popover-content {
+    //padding: 25px;
+    text-align: center;
+    height: 120px;
+    width: 200px;
+    overflow: auto;
+}
+
+.arrow {
+    border-bottom-color: #254E58 !important;
+}
+
 /* endregion */
 
 /* region MINOR */
@@ -392,6 +417,21 @@
 
 .config-logotipos p,
 .config-logotipos a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
+.config-noticias h1,
+.config-noticias h2,
+.config-noticias h3,
+.config-noticias h4,
+.config-noticias h5,
+.config-noticias h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-noticias p,
+.config-noticias a{
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     color: #000000;
 }
