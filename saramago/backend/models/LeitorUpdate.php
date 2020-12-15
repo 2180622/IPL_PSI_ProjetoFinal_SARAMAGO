@@ -4,9 +4,12 @@
 namespace app\models;
 
 
+use common\models\Aluno;
+use common\models\Funcionario;
 use common\models\Leitor;
 use common\models\User;
 use DateTime;
+use DeepCopy\f001\A;
 use Yii;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
@@ -19,6 +22,8 @@ class LeitorUpdate extends Model
     public $password;
     public $mail2;
     public $nome;
+    public $departamento;
+    public $numero;
     public $nif;
     public $docId;
     public $dataNasc;
@@ -60,6 +65,12 @@ class LeitorUpdate extends Model
             ['nome', 'trim'],
             ['nome', 'required'],
             ['nome', 'string', 'min' => 2, 'max' => 255],
+
+            ['departamento', 'trim'],
+            ['departamento', 'string', 'max' => 255],
+
+            ['numero', 'trim'],
+            ['numero', 'integer'],
 
             ['nif', 'trim'],
             ['nif', 'required'],
@@ -112,6 +123,9 @@ class LeitorUpdate extends Model
     {
         $leitor = $this->findModel($id);
         $user = User::findOne($leitor->user_id);
+        $funcionario = $this->findFuncionario($id);
+        $aluno = $this->findAluno($id);
+
         $this->id = $leitor->id;
         $this->username = $user->username;
         $this->email = $user->email;
@@ -132,22 +146,270 @@ class LeitorUpdate extends Model
 
         // the following three lines were added:
         $auth = \Yii::$app->authManager;
-        // temporary fix
-        //$leitorAlunoRole = $auth->getRole('leitorAluno');
-        //$auth->assign($leitorAlunoRole, $user->getId());
     }
 
-    public function updateLeitor()
+    public function update()
     {
+        $auth = Yii::$app->authManager;
+        //Encontra os objetos ja criados na base de dados
         $leitor = Leitor::findOne($this->id);
         $user = User::findOne($leitor->user_id);
+        $funcionario = $this->findFuncionario($leitor->id);
+        $aluno = $this->findAluno($leitor->id);
 
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->status = 10;
-        $user->save();
 
+        // SE O LEITOR FOR ALUNO
+        if ($leitor->tipoLeitor->tipo == "aluno") {
+
+            // após verificar qual o seu tipo de leitor, são introduzidos os novos parametros de acordo com o update
+            $userUpdated = $this->getUserFormFields($user);
+            $leitorUpdated = $this->getLeitorFormFields($leitor);
+
+            // caso nao haja alteração no tipo e ele continue ALUNO
+            if ($leitorUpdated->tipoLeitor->tipo == "aluno") {
+                // atualiza o aluno
+                $aluno->numero = $this->numero;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $aluno->Leitor_id = $leitor->id;
+                $aluno->save();
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "docente") {
+
+                // cria novo funcionario e elimina o aluno
+                $funcionario = New Funcionario();
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+                $aluno->delete();
+
+                $leitorDocenteRole = $auth->getRole('leitorDocente');
+                $auth->assign($leitorDocenteRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "funcionario") {
+
+                // cria novo funcionario e elimina o aluno
+                $funcionario = New Funcionario();
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+                $aluno->delete();
+
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
+                $auth->assign($leitorFuncionarioRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "externo") {
+
+                // passa a leitor externo e elimina o aluno
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $aluno->delete();
+
+                $leitorExternoRole = $auth->getRole('leitorExterno');
+                $auth->assign($leitorExternoRole, $leitorUpdated->user_id);
+            }
+        }
+
+
+        // SE O LEITOR FOR DOCENTE
+        if ($leitor->tipoLeitor->tipo == "docente") {
+
+            // após verificar qual o seu tipo de leitor, são introduzidos os novos parametros de acordo com o update
+            $userUpdated = $this->getUserFormFields($user);
+            $leitorUpdated = $this->getLeitorFormFields($leitor);
+
+            // caso nao haja alteração no tipo e ele continue DOCENTE
+            if ($leitorUpdated->tipoLeitor->tipo == "aluno") {
+
+                // cria novo aluno e elimina o funcionario
+                $aluno = new Aluno();
+
+                $aluno->numero = $this->numero;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $aluno->Leitor_id = $leitorUpdated->id;
+                $aluno->save();
+                $funcionario->delete();
+
+                $leitorAlunoRole = $auth->getRole('leitorAluno');
+                $auth->assign($leitorAlunoRole, $leitorUpdated->user_id);
+
+            }elseif($leitorUpdated->tipoLeitor->tipo == "docente") {
+
+                // atualiza o docente
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "funcionario") {
+
+                // atualiza o funcionario e atribui-lhe a nova role
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
+                $auth->assign($leitorFuncionarioRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "externo") {
+
+                //elimina o funcionario e atualiza a role para externo
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->delete();
+
+                $leitorExternoRole = $auth->getRole('leitorExterno');
+                $auth->assign($leitorExternoRole, $leitorUpdated->user_id);
+            }
+
+        }
+
+
+        // SE O LEITOR FOR FUNCIONÁRIO
+        if($leitor->tipoLeitor->tipo == "funcionario") {
+
+            // após verificar qual o seu tipo de leitor, são introduzidos os novos parametros de acordo com o update
+            $userUpdated = $this->getUserFormFields($user);
+            $leitorUpdated = $this->getLeitorFormFields($leitor);
+
+            if ($leitorUpdated->tipoLeitor->tipo == "aluno") {
+
+                // cria novo aluno e elimina o funcionario
+                $aluno = new Aluno();
+                $aluno->numero = $this->numero;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $aluno->Leitor_id = $leitorUpdated->id;
+                $aluno->save();
+                $funcionario->delete();
+
+                $leitorAlunoRole = $auth->getRole('leitorAluno');
+                $auth->assign($leitorAlunoRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "docente") {
+
+                // atualiza o funcionario e atualiza a role
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+
+                $leitorDocenteRole = $auth->getRole('leitorDocente');
+                $auth->assign($leitorDocenteRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "funcionario") {
+
+                // atualiza o funcionario
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "externo") {
+
+                // elimina o funcionario e altera a role para externo
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->delete();
+
+                $leitorExternoRole = $auth->getRole('leitorExterno');
+                $auth->assign($leitorExternoRole, $leitorUpdated->user_id);
+            }
+        }
+
+        // SE O LEITOR FOR EXTERNO
+        if($leitor->tipoLeitor->tipo == "externo"){
+
+            // após verificar qual o seu tipo de leitor, são introduzidos os novos parametros de acordo com o update
+            $userUpdated = $this->getUserFormFields($user);
+            $leitorUpdated = $this->getLeitorFormFields($leitor);
+
+            if($leitorUpdated->tipoLeitor->tipo == "aluno") {
+
+                // cria novo aluno
+                $aluno = new Aluno();
+                $aluno->numero = $this->numero;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $aluno->Leitor_id = $leitorUpdated->id;
+                $aluno->save();
+
+                $leitorAlunoRole = $auth->getRole('leitorAluno');
+                $auth->assign($leitorAlunoRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "docente") {
+
+                // cria novo funcionario e atribui a role
+                $funcionario = New Funcionario();
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+
+                $leitorDocenteRole = $auth->getRole('leitorDocente');
+                $auth->assign($leitorDocenteRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "funcionario") {
+
+                // cria novo funcionario e atribui a role
+                $funcionario = New Funcionario();
+                $funcionario->departamento = $this->departamento;
+                $userUpdated->save();
+                $leitorUpdated->save();
+                $funcionario->Leitor_id = $leitorUpdated->id;
+                $funcionario->save();
+
+                $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
+                $auth->assign($leitorFuncionarioRole, $leitorUpdated->user_id);
+
+            } elseif ($leitorUpdated->tipoLeitor->tipo == "externo") {
+                // atualiza o leitor externo
+                $userUpdated->save();
+                $leitorUpdated->save();
+            }
+        }
+
+        return $leitor && $user;
+    }
+
+    public function findFuncionario($id){
+        $funcionarios = Funcionario::find()->all();
+        $leitor = Leitor::findOne($id);
+
+        foreach ($funcionarios as $funcionario) {
+            if ($funcionario->Leitor_id == $leitor->id) {
+                return $funcionario;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function findAluno($id){
+        $alunos = Aluno::find()->all();
+        $leitor = Leitor::findOne($id);
+
+        foreach ($alunos as $aluno) {
+            if ($aluno->Leitor_id == $leitor->id) {
+                return $aluno;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function getLeitorFormFields($leitor){
         $leitor->mail2 = $this->mail2;
         $leitor->nome = $this->nome;
         $leitor->nif = $this->nif;
@@ -164,11 +426,15 @@ class LeitorUpdate extends Model
         $leitor->Biblioteca_id = $this->Biblioteca_id;
         $leitor->TipoLeitor_id = $this->TipoLeitor_id;
 
-        $user->save();
+        return $leitor;
+    }
+    public function getUserFormFields($user){
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->setPassword($this->password);
+        $user->status = 10;
 
-        $leitor->save();
-
-        return $leitor && $user;
+        return $user;
     }
 
     protected function sendEmail($user)

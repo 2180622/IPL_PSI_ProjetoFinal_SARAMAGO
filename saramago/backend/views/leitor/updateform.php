@@ -15,7 +15,9 @@ use yii\widgets\ActiveForm;
     <?php
 
     $listasBiblioteca = ArrayHelper::map($listaBibliotecas,'id','nome',['enctype' => 'multipart/form-data']);
-    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id','estatuto',['enctype' => 'multipart/form-data']);
+
+    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id',
+        'estatuto','tipo', ['enctype' => 'multipart/form-data']);
 
     $form = ActiveForm::begin(['id'=>'updateform']); ?>
 
@@ -47,10 +49,40 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
 
+    <div id="departamento" hidden>
+        <?= $form->field($model, 'departamento')->textInput(['maxlength' => true])->label('Departamento'); ?>
+    </div>
+    <div id="numero" hidden>
+        <?= $form->field($model, 'numero')->textInput(['maxlength' => 11])->label('Número de Aluno'); ?>
+    </div>
+
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
+    <?php
+    $this->registerJs(/** @lang JavaScript */"
+            $(document).ready(function () {
+            
+                $(document).on('change', '#leitorupdate-tipoleitor_id', function () {
+                    var label = $('option:selected', this).closest('optgroup').attr('label');
+                    if( label == 'aluno' ) {
+                        $('#numero').show();
+                        $('#departamento').hide();
+                    }else if(label == 'docente' || label == 'funcionario') {
+                        $('#departamento').show();
+                        $('#numero').hide();
+                    }else if(label == 'externo'){
+                        $('#departamento').hide();
+                        $('#numero').hide();
+                    }else{
+                        $('#departamento').hide();
+                        $('#numero').hide();                        
+                    }
+                });
+            });
+        ");
+    ?>
 </div>

@@ -128,7 +128,7 @@ class LeitorController extends Controller
             return ActiveForm::validate($model);
         }elseif ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', "O Leitor foi adicionado com sucesso.");
-            return $this->redirect("'eitor/'.$model->id.'");
+            return $this->redirect(['view-full', 'id' => $model->id]);
         }
 
         return $this->renderAjax('create', [
@@ -152,7 +152,7 @@ class LeitorController extends Controller
         $listaBibliotecas = Biblioteca::find()->all();
         $listaTiposLeitors = Tipoleitor::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->updateLeitor()) {
+        if ($model->load(Yii::$app->request->post()) && $model->update()) {
             Yii::$app->session->setFlash('success', "O Leitor foi editado com sucesso.");
             return $this->redirect('..');
         }

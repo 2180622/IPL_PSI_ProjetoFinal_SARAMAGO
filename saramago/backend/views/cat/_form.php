@@ -67,8 +67,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'preco')->textInput() ?>
 
-    <?= $form->field($model, 'dataAtualizado')->textInput() //TODO PASSAR PARA AUTOMATICO ?>
-
 
 
     <?= $form->field($model, 'Cdu_id')->dropDownList($cduAll,['prompt'=>'Selecione...'])->label('Código Decimal Universal') ?>

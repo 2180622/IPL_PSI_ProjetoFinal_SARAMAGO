@@ -15,10 +15,6 @@ use yii\widgets\ActiveForm;
     <?php
 
     $listasBiblioteca = ArrayHelper::map($listaBibliotecas,'id','nome',['enctype' => 'multipart/form-data']);
-    /*$listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id',
-        function($model) {
-            return $model->estatuto . ' ('.ucfirst($model->tipo).')';
-        }, ['enctype' => 'multipart/form-data']);*/
 
     $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id',
         'estatuto','tipo', ['enctype' => 'multipart/form-data']);
