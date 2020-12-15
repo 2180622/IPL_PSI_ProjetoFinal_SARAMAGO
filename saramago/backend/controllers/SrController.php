@@ -1,6 +1,9 @@
 <?php
 namespace backend\controllers;
 
+use app\models\ReprografiaSearch;
+use common\models\Reprografia;
+use common\models\ReprografiaQuery;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -60,6 +63,14 @@ class SrController extends Controller
     public function actionIndex()
     {
         $this->layout="minor";
-        return $this->render('index');
+
+        $searchServicosReprograficos = new ReprografiaSearch();
+        $servicosReprograficos = Reprografia::find()->all();
+        $dataProvider = $searchServicosReprograficos->search(Yii::$app->request->queryParams);
+
+        return $this->render('index',[
+            'servicosReprograficos' => $servicosReprograficos,
+            'searchServicosReprograficos' => $searchServicosReprograficos,
+            'dataProvider' => $dataProvider]);
     }
 }

@@ -17,10 +17,6 @@ use yii\web\NotFoundHttpException;
  */
 class LeitorForm extends Leitor
 {
-    const ALUNO = 'aluno';
-    const DOCENTE = "docente";
-
-
     public $id;
     public $username;
     public $email;
