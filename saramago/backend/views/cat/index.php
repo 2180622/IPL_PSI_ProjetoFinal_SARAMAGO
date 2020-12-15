@@ -78,12 +78,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'label' => 'Autor/Autores',
                                     'attribute' => 'autor',
                                     'format' => 'html',
-                                    'value' => function ($model) { 
+                                    'value' =>  function ($model) { 
+                                        $autores = null;
                                         foreach ($model->autors as $autor) {
-                                            return Html::a($autor->apelido . ', ' . substr($autor->primeiroNome, - strlen($autor->primeiroNome), 1), ['view-full', 'id' => $model->id]);
-                                        }
+                                            $autores .= $autor->apelido . ', ' . substr($autor->primeiroNome, - strlen($autor->primeiroNome), 1);
+                                        
+                                        }   
+                                        return Html::a($autores, ['view-full', 'id' => $model->id]);
                                     }
-                                ],
                                 [
                                     'label' => 'Ano',
                                     'attribute' => 'ano',
