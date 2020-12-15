@@ -8,9 +8,12 @@ use yii\helpers\Html;
 
     if ($noticias->count() == 1)
     {
-        echo Html::tag('h4','Assunto: '.$noticia->assunto, ['style'=>'bold'])
-            .Html::tag('p ',$noticia->conteudo)
-            .Html::tag('p ','Autor: '. $noticia->autor, ['class'=>'text-muted']);
+        foreach ($noticias->all() as $noticia) {
+        echo Html::tag('h4', 'Assunto: ' . $noticia->assunto, ['style' => 'bold'])
+            . Html::tag('p ', $noticia->conteudo)
+            . Html::tag('p ', 'Autor: ' . $noticia->autor, ['class' => 'text-muted']);
+        }
+
     }else{
         foreach ($noticias->all() as $noticia) {
             //FIXME Remover sempre o ultimo <hr> que manda
