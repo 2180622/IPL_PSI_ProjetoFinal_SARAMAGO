@@ -75,11 +75,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'editor',
                                 'edicao',
                                 [
-                                    'label' => 'Autor',
+                                    'label' => 'Autor/Autores',
                                     'attribute' => 'autor',
                                     'format' => 'html',
-                                    //FIXME - listar todos os autores
-                                    // 'value' => function ($model) { return Html::a($model->autor, ['view-full', 'id' => $model->id]);}
+                                    'value' => function ($model) { 
+                                        foreach ($model->autors as $autor) {
+                                            return Html::a($autor->apelido . ', ' . substr($autor->primeiroNome, - strlen($autor->primeiroNome), 1), ['view-full', 'id' => $model->id]);
+                                        }
+                                    }
                                 ],
                                 [
                                     'label' => 'Ano',

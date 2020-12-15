@@ -208,7 +208,7 @@ class CatController extends Controller
      */
     public function actionExemplarView($id)
     {
-        return $this->render('exemplar/view', ['model' => $this->findModel($id),]);
+        return $this->render('exemplar/view', ['model' => $this->findModelExemplar($id),]);
     }
 
     /**
@@ -221,10 +221,10 @@ class CatController extends Controller
         $model = new Exemplar();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view-full', 'id' => $model->obra_id]);
         }
 
-        return $this->render('exemplar/create', ['model' => $model,]);
+        return $this->renderAjax('exemplar/create', ['model' => $model,]);
     }
 
     /**
@@ -236,13 +236,13 @@ class CatController extends Controller
      */
     public function actionExemplarUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelExemplar($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view-full', 'id' => $model->obra_id]);
         }
 
-        return $this->render('exemplar/update', ['model' => $model]);
+        return $this->renderAjax('exemplar/update', ['model' => $model]);
     }
 
     /**
@@ -256,13 +256,13 @@ class CatController extends Controller
     {
         $model = Exemplar::findOne($id);
         if ($model->estado == 'nd' || $model->estado == 'estante') {
-            $this->findModel($id)->delete();
+            $this->findModelExemplar($id)->delete();
         }
         else {
             Yii::$app->session->setFlash('error', "Erro ao remover o exemplar: Só é possível remover exemplares no estado 'Não disponível' ou 'Na estante' ");
         }
 
-        return $this->redirect(['view-full']);
+        return $this->redirect(['view-full', 'id' => $model->obra_id]);
     }
 
     /**

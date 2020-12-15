@@ -10,13 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="exemplar-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'exemplar-form']); ?>
 
     <?= $form->field($model, 'cota')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'codBarras')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'suplemento')->textInput() ?>
+    <?= $form->field($model, 'suplemento')->dropDownList([ '0' => 'Não', '1' => 'Sim' ])?>
 
     <?= $form->field($model, 'estado')->dropDownList([ 'arrumacao' => 'Arrumacao', 'estante' => 'Estante', 'quarentena' => 'Quarentena', 'perdido' => 'Perdido', 'reservado' => 'Reservado', 'nd' => 'Nd', ], ['prompt' => '']) ?>
 
