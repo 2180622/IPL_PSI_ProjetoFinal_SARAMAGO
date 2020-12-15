@@ -219,9 +219,8 @@ class CatController extends Controller
     public function actionExemplarCreate()
     {
         $model = new Exemplar();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view-full', 'id' => $model->obra_id]);
+            return $this->redirect(['view-full', 'id' => $model->obra->id]);
         }
 
         return $this->renderAjax('exemplar/create', ['model' => $model,]);
@@ -239,7 +238,7 @@ class CatController extends Controller
         $model = $this->findModelExemplar($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view-full', 'id' => $model->obra_id]);
+            return $this->redirect(['view-full', 'id' => $model->obra->id]);
         }
 
         return $this->renderAjax('exemplar/update', ['model' => $model]);
@@ -262,7 +261,7 @@ class CatController extends Controller
             Yii::$app->session->setFlash('error', "Erro ao remover o exemplar: Só é possível remover exemplares no estado 'Não disponível' ou 'Na estante' ");
         }
 
-        return $this->redirect(['view-full', 'id' => $model->obra_id]);
+        return $this->redirect(['view-full', 'id' => $model->obra->id]);
     }
 
     /**
