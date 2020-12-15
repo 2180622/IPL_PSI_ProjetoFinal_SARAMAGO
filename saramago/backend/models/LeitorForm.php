@@ -162,7 +162,7 @@ class LeitorForm extends Leitor
             $user->setPassword($this->nif);
             $user->generateAuthKey();
             $user->status = 10;
-            
+
             $leitor = new Leitor();
             $leitor->mail2 = $this->mail2;
             $leitor->nome = $this->nome;

@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'leitorFuncionario' => 'Leitor Funcionário',
         'leitorAluno' => 'leitorAluno',
         'leitorExterno' => 'leitorExterno',
-        'leitorDocent' => ' Leitor Docente'
+        'leitorDocente' => ' Leitor Docente'
     );
     ?>
 

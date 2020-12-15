@@ -72,6 +72,7 @@ use yii\widgets\ActiveForm;
             
                 $(document).on('change', '#leitorform-tipoleitor_id', function () {
                     var label = $('option:selected', this).closest('optgroup').attr('label');
+                    console.log(label);
                     if( label == 'aluno' ) {
                         $('#numero').show();
                         $('#departamento').hide();

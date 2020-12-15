@@ -1,27 +1,13 @@
 <?php
 namespace backend\models;
 
+use common\models\Cdu;
+use common\models\Colecao;
 use yii\base\Model;
 
 class ObraForm extends Model
 {
-    public function rules()
-    {
-        return [
-            ['codBarras', 'trim'],
-        ];
-    }
-}
 
-<?php
-
-namespace backend\models;
-
-use yii\base\Model;
-
-class ObraForm extends Model
-{
-    
     public function rules()
     {
         return [
@@ -61,3 +47,4 @@ class ObraForm extends Model
             'Colecao_id' => 'Chave estrangeira',
         ];
     }
+}

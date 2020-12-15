@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
 
-    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
+    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor, ['prompt' => 'Selecione...'])->label('Tipo de Leitor') ?>
 
     <div id="departamento" hidden>
         <?= $form->field($model, 'departamento')->textInput(['maxlength' => true])->label('Departamento'); ?>
@@ -65,9 +65,9 @@ use yii\widgets\ActiveForm;
     <?php
     $this->registerJs(/** @lang JavaScript */"
             $(document).ready(function () {
-            
                 $(document).on('change', '#leitorupdate-tipoleitor_id', function () {
                     var label = $('option:selected', this).closest('optgroup').attr('label');
+                    console.log(label);
                     if( label == 'aluno' ) {
                         $('#numero').show();
                         $('#departamento').hide();

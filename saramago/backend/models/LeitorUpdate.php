@@ -157,7 +157,6 @@ class LeitorUpdate extends Model
         $funcionario = $this->findFuncionario($leitor->id);
         $aluno = $this->findAluno($leitor->id);
 
-
         // SE O LEITOR FOR ALUNO
         if ($leitor->tipoLeitor->tipo == "aluno") {
 
@@ -185,6 +184,7 @@ class LeitorUpdate extends Model
                 $funcionario->save();
                 $aluno->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorDocenteRole = $auth->getRole('leitorDocente');
                 $auth->assign($leitorDocenteRole, $leitorUpdated->user_id);
 
@@ -199,6 +199,7 @@ class LeitorUpdate extends Model
                 $funcionario->save();
                 $aluno->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
                 $auth->assign($leitorFuncionarioRole, $leitorUpdated->user_id);
 
@@ -209,6 +210,7 @@ class LeitorUpdate extends Model
                 $leitorUpdated->save();
                 $aluno->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorExternoRole = $auth->getRole('leitorExterno');
                 $auth->assign($leitorExternoRole, $leitorUpdated->user_id);
             }
@@ -235,6 +237,7 @@ class LeitorUpdate extends Model
                 $aluno->save();
                 $funcionario->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorAlunoRole = $auth->getRole('leitorAluno');
                 $auth->assign($leitorAlunoRole, $leitorUpdated->user_id);
 
@@ -256,6 +259,7 @@ class LeitorUpdate extends Model
                 $funcionario->Leitor_id = $leitorUpdated->id;
                 $funcionario->save();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
                 $auth->assign($leitorFuncionarioRole, $leitorUpdated->user_id);
 
@@ -266,6 +270,7 @@ class LeitorUpdate extends Model
                 $leitorUpdated->save();
                 $funcionario->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorExternoRole = $auth->getRole('leitorExterno');
                 $auth->assign($leitorExternoRole, $leitorUpdated->user_id);
             }
@@ -291,6 +296,7 @@ class LeitorUpdate extends Model
                 $aluno->save();
                 $funcionario->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorAlunoRole = $auth->getRole('leitorAluno');
                 $auth->assign($leitorAlunoRole, $leitorUpdated->user_id);
 
@@ -303,6 +309,7 @@ class LeitorUpdate extends Model
                 $funcionario->Leitor_id = $leitorUpdated->id;
                 $funcionario->save();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorDocenteRole = $auth->getRole('leitorDocente');
                 $auth->assign($leitorDocenteRole, $leitorUpdated->user_id);
 
@@ -322,6 +329,7 @@ class LeitorUpdate extends Model
                 $leitorUpdated->save();
                 $funcionario->delete();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorExternoRole = $auth->getRole('leitorExterno');
                 $auth->assign($leitorExternoRole, $leitorUpdated->user_id);
             }
@@ -344,6 +352,7 @@ class LeitorUpdate extends Model
                 $aluno->Leitor_id = $leitorUpdated->id;
                 $aluno->save();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorAlunoRole = $auth->getRole('leitorAluno');
                 $auth->assign($leitorAlunoRole, $leitorUpdated->user_id);
 
@@ -357,6 +366,7 @@ class LeitorUpdate extends Model
                 $funcionario->Leitor_id = $leitorUpdated->id;
                 $funcionario->save();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorDocenteRole = $auth->getRole('leitorDocente');
                 $auth->assign($leitorDocenteRole, $leitorUpdated->user_id);
 
@@ -370,6 +380,7 @@ class LeitorUpdate extends Model
                 $funcionario->Leitor_id = $leitorUpdated->id;
                 $funcionario->save();
 
+                $auth->revokeAll($leitorUpdated->user_id);
                 $leitorFuncionarioRole = $auth->getRole('leitorFuncionario');
                 $auth->assign($leitorFuncionarioRole, $leitorUpdated->user_id);
 
@@ -390,10 +401,9 @@ class LeitorUpdate extends Model
         foreach ($funcionarios as $funcionario) {
             if ($funcionario->Leitor_id == $leitor->id) {
                 return $funcionario;
-            }else{
-                return false;
             }
         }
+        return false;
     }
 
     public function findAluno($id){
@@ -403,10 +413,9 @@ class LeitorUpdate extends Model
         foreach ($alunos as $aluno) {
             if ($aluno->Leitor_id == $leitor->id) {
                 return $aluno;
-            }else{
-                return false;
             }
         }
+        return false;
     }
 
     public function getLeitorFormFields($leitor){

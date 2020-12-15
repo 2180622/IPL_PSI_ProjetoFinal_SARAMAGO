@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'operadorChefe' =>'Operador Chefe',
                         'operadorCatalogacao' => 'Operador Catalogação',
                         'operadorCirculacao' => 'Operador Circulação',
+                        'leitorDocente' => 'Leitor Docente',
                         'leitorFuncionario' => 'Leitor Funcionário',
                         'leitorAluno' => 'Leitor Aluno',
                         'leitorExterno' => 'Leitor Externo',
