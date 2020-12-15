@@ -85,7 +85,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         
                                         }   
                                         return Html::a($autores, ['view-full', 'id' => $model->id]);
-                                    }
+                                    },
+                                ],
                                 [
                                     'label' => 'Ano',
                                     'attribute' => 'ano',
