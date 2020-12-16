@@ -3,6 +3,7 @@
 use common\models\Aluno;
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\ButtonDropdown;
+use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -57,8 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'items' => [
                         [
                             'label' => FAS::icon('key') . ' Repor Password',
-                            'options' => ['value' => 'leitor/repor', 'class' => 'btn btn-secondary',
-                                'id' => 'modalButtonPswReset']
+                            'options' => ['class' => 'btn btn-secondary', 'id' => 'modalButtonPswReset'],
                         ],
                         [
                             //FIXME 
@@ -161,4 +161,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
     </div>
+    <?php
+    $this->registerJs(/** @lang JavaScript */"
+        $(function () {
+            $('#modalButtonPswReset').click(function (){
+                $('#modalReset').modal('show')
+                    .find('#modalContent')
+                    .load($(this).attr('value'))
+            });
+        })
+    ");
+    ?>
+    <?php
+        Modal::begin([
+            'header' => '<h4>'.$model->nome.'</h4>',
+            'id' => 'modalReset',
+            'size' => 'modal-lg',
+            'clientOptions' => ['backdrop' => 'static']
+        ]);
+        echo    '<div id="modalContent">
+                    Tem a certeza que pretende repôr a sua password?
+                    <div style="text-align:left">'.
+                        Html::a(Html::button('Sim', ['class' => 'btn btn-alt']), Url::to(['repor-password', 'id' => $model->id])).
+                    '</div>
+                    <div style="text-align:left">
+                        
+                    </div>
+                </div>';
+
+        Modal::end();
+    ?>
 </div>

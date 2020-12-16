@@ -39,7 +39,7 @@ class LeitorController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index',
-                            'view','view-full', 'create', 'update', 'delete'],
+                            'view','view-full', 'create', 'update', 'delete', 'repor-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -106,8 +106,13 @@ class LeitorController extends Controller
     public function actionViewFull($id)
     {
         $this->layout = 'minor';
+        $leitor = $this->findModel($id);
+        $user = User::findOne($leitor->id);
 
-        return $this->render('view-full', ['model' => $this->findModel($id)]);
+        return $this->render('view-full', [
+            'model' => $this->findModel($id),
+            'user' => $user,
+            ]);
     }
 
     /**
@@ -163,6 +168,21 @@ class LeitorController extends Controller
             'listaBibliotecas'=>$listaBibliotecas,
             'listaTiposLeitors'=>$listaTiposLeitors,
         ]);
+    }
+
+    public function actionReporPassword($id){
+        $leitor = $this->findModel($id);
+        $user = User::findOne($leitor->user_id);
+
+        $user->setPassword($leitor->nif);
+
+        if($user->save()){
+            Yii::$app->session->setFlash('success', 'A palavra passe foi reposta com sucesso');
+            return $this->redirect(['view-full', 'id' => $leitor->id]);
+        }else{
+            Yii::$app->session->setFlash('danger', 'Não foi possível repôr a palavra passe');
+            return $this->redirect(['view-full', 'id' => $leitor->id]);
+        }
     }
 
     /**
