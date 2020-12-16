@@ -10,6 +10,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Obras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="obra-create">
-
     <?= $this->render('_form', ['model' => $model, 'cduAll' => $cduAll, 'colecaoAll' => $colecaoAll]) ?>
 </div>

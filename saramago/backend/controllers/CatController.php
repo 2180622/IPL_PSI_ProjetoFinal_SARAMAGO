@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use app\models\ExemplarSearch;
 use app\models\ObraSearch;
+use backend\models\ObraForm;
 use common\models\Cdu;
 use common\models\Colecao;
 use common\models\Exemplar;
@@ -15,6 +16,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -77,7 +79,7 @@ class CatController extends Controller
         $obrasModel = Obra::find()->all();
         $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
         $tiposExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
-        $colecaoAll = ArrayHelper::map(Colecao::find()->all(), 'id','tituloColecao',['enctype' => 'multipart/form-data']);
+        $colecaoAll = ArrayHelper::map(Colecao::find()->all(), 'id', 'tituloColecao', ['enctype' => 'multipart/form-data']);
 
         $searchModel = new ObraSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -85,7 +87,7 @@ class CatController extends Controller
         return $this->render('index',
             ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
                 'obrasModel' => $obrasModel, 'cduAll'=>$cduAll,
-                'tiposExemplarAll'=>$tiposExemplarAll, 'colecaoAll'=>$colecaoAll]);
+                'tiposExemplarAll'=>$tiposExemplarAll, 'colecaoAll' => $colecaoAll]);
     }
 
     /**
@@ -125,13 +127,16 @@ class CatController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Obra();
+        $model = new ObraForm();
 
         $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
-        $colecaoAll = ArrayHelper::map(Colecao::find()->all(),'id','titulo',['enctype' => 'multipart/form-data']);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view-full', 'id' => $model->id]);
+        $colecaoAll = ArrayHelper::map(Colecao::find()->all(),'id','tituloColecao',['enctype' => 'multipart/form-data']);
+        if(Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->createObra()) {
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->titulo . " foi adicionado.");
+                return $this->redirect(['view-full', 'id' => $model->id]);
+            }
         }
 
         return $this->renderAjax('create', ['model' => $model, 'cduAll'=> $cduAll, 'colecaoAll' => $colecaoAll]);

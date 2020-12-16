@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
     <?php
 
     if($model->imgCapa != null) {
-        echo $form->field($model, 'imgCapa')->label(false)->widget(FileInput::classname(), [
+        echo $form->field($model, 'imageFile')->label(false)->widget(FileInput::classname(), [
                 'options' => ['accept' => 'image/*'],
                 'pluginOptions' => [
                     'initialPreview' => [Url::toRoute('/img/' . $model->imgCapa)],
@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
             ]
         )->hint('Capa');
     }else{
-        echo $form->field($model, 'imgCapa')->label(false)->widget(FileInput::classname(), [
+        echo $form->field($model, 'imageFile')->label(false)->widget(FileInput::classname(), [
                 'options' => ['accept' => 'image/*'],
                 'pluginOptions' => [
                     'browseLabel' => '',
@@ -71,7 +71,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Cdu_id')->dropDownList($cduAll,['prompt'=>'Selecione...'])->label('Código Decimal Universal') ?>
 
-    <?= $form->field($model, 'Colecao_id')->dropDownList($colecaoAll, ['prompt'=>'Selecione...'])->label('Coleção') ?>
+    <?= $form->field($model, 'Colecao_id')->dropDownList($colecaoAll,['prompt'=>'Selecione...'])->label('Coleção') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

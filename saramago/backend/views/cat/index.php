@@ -22,8 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         echo '<div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
                 <strong>Informação:</strong> Comece por registar as suas obras.
               </div>';
-    }
-    ?>
+    }?>
     <div class="grid-container">
         <div class="menu-search-saramago">
             <?php Pjax::begin(); ?>

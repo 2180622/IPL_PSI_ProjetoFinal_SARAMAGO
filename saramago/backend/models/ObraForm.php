@@ -2,12 +2,15 @@
 namespace backend\models;
 
 use common\models\Obra;
+use Yii;
 use yii\base\Model;
+use yii\helpers\Url;
 
-class ObraForm extends Model
+class ObraForm extends \yii\db\ActiveRecord
 {
     public $id;
     public $imgCapa;
+    public $imageFile;
     public $titulo;
     public $resumo;
     public $editor;
@@ -24,6 +27,12 @@ class ObraForm extends Model
     public function rules()
     {
         return [
+            [['imageFile'], 'image', 'skipOnEmpty' => false,
+                'mimeTypes' => 'image/gif, image/jpeg, image/png, image/x-icon',
+                'checkExtensionByMimeType'=>true,
+                'maxSize' => 1024 * 1024 * 2,
+            ],
+
             ['imgCapa' => 'trim'],
             ['imgCapa' => 'string', 'max' => 255],
 
@@ -75,6 +84,7 @@ class ObraForm extends Model
             'tipoObra' => 'Tipo de Obra',
             'descricao' => 'Descrição da Obra',
             'local' => 'Local',
+            'edicao' => 'edicao',
             'assuntos' => 'Assuntos',
             'preco' => 'Preço',
             'dataRegisto' => 'Data Registado',
@@ -88,20 +98,34 @@ class ObraForm extends Model
         if($this->validate()) {
             $obra = new Obra();
 
-            $obra->imgCapa = $this->imgCapa;
             $obra->titulo = $this->titulo;
+            $obra->imgCapa = $this->upload();
+
             $obra->resumo = $this->resumo;
             $obra->editor = $this->editor;
+
             $obra->ano = $this->ano;
             $obra->tipoObra = $this->tipoObra;
             $obra->descricao = $this->descricao;
+
             $obra->local = $this->local;
+            $obra->edicao = $this->edicao;
             $obra->assuntos = $this->assuntos;
             $obra->preco = $this->preco;
+
             $obra->Cdu_id = $this->Cdu_id;
             $obra->Colecao_id = $this->Colecao_id;
 
             $obra->save();
         }
+    }
+
+    public function upload()
+    {
+        $this->imgCapa = 'obra-'.$this->id;
+        $this->imageFile->saveAs(Url::to('img/' . $this->imgCapa . '.' . $this->imageFile->extension));
+        $this->imgCapa = $this->imgCapa . '.' . $this->imageFile->extension;
+
+        return $this->imgCapa;
     }
 }
