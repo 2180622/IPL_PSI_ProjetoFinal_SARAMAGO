@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.saramago.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,12 +17,26 @@ public class FichaLeitorFragment extends Fragment {
         // Required empty public constructor
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        //FloatingActionButton fabEdit = FloatingActionButton
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ficha_leitor, container, false);
+        View view = inflater.inflate(R.layout.fragment_ficha_leitor, container, false);
+
+        TextView nome = view.findViewById(R.id.tv_fl_nome);
+        TextView codBarras = view.findViewById(R.id.tv_fl_codBarras);
+        TextView nif = view.findViewById(R.id.tv_fl_nif);
+        TextView docId = view.findViewById(R.id.tv_fl_docId);
+        TextView dataNasc = view.findViewById(R.id.tv_fl_dataNasc);
+        TextView morada = view.findViewById(R.id.tv_fl_morada);
+        TextView localidade = view.findViewById(R.id.tv_fl_localidade);
+        TextView codPostal = view.findViewById(R.id.tv_fl_codPostal);
+        TextView telemovel = view.findViewById(R.id.tv_fl_telemovel);
+        TextView telefone = view.findViewById(R.id.tv_fl_telefone);
+        TextView email = view.findViewById(R.id.tv_fl_mail);
+        TextView email2 = view.findViewById(R.id.tv_fl_mail2);
+        TextView dataRegisto = view.findViewById(R.id.tv_fl_dtaRegisto);
+        TextView dataAtualizado = view.findViewById(R.id.tv_fl_dtaAtualizado);
+        TextView irregularidade = view.findViewById(R.id.tv_fl_irregularidade);
+
+        return view;
     }
 }

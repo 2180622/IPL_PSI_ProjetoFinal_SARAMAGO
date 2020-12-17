@@ -23,7 +23,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
 
     private EditText nome, codBarras, nif, docId, dtaNascimento, morada, localidade, codPostal, telemovel, telefone, email, email2;
     private Leitor leitor;
-    private Date date = Calendar.getInstance().getTime();
+    private final Date date = Calendar.getInstance().getTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
         localidade = findViewById(R.id.et_fl_localidade);
         codPostal = findViewById(R.id.et_fl_codPostal);
         telemovel = findViewById(R.id.et_fl_telemovel);
-        telefone = findViewById(R.id.et_fl_telefone);
+        telefone = findViewById(R.id.tv_fl_telefone);
         email = findViewById(R.id.et_fl_email);
         email2 = findViewById(R.id.et_fl_email2);
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
@@ -58,7 +58,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
                 leitor = new Leitor(nome.getText().toString(), R.drawable.ic_undraw_male_avatar, codBarras.getText().toString(),
                         Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.toString(), morada.getText().toString(), localidade.getText().toString(),
                         Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email.getText().toString(),
-                        email2.getText().toString(), getDate(), getDate(), 1, 1);
+                        email2.getText().toString(), date, date, 1, 1);
 
                 SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitor(leitor);
                 setResult(RESULT_OK);
