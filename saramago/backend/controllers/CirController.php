@@ -25,7 +25,13 @@ class CirController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => [
+                            'logout', 'index',
+                            'emprestimo',
+                            'devolucao',
+                            'renovacao',
+                            'presencial',
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,4 +68,37 @@ class CirController extends Controller
         $this->layout="minor";
         return $this->render('index');
     }
+
+    #region Circulação
+
+    public function actionEmprestimo()
+    {
+        $this->layout="minor";
+
+        return $this->render('emprestimo/index');
+    }
+
+    public function actionDevolucao()
+    {
+        $this->layout="minor";
+
+        return $this->render('devolucao/index');
+    }
+
+    public function actionRenovacao()
+    {
+        $this->layout="minor";
+
+        return $this->render('renovar/index');
+    }
+
+    public function actionPresencial()
+    {
+        $this->layout="minor";
+
+        return $this->render('presencial/index');
+    }
+
+    #endregion
+
 }
