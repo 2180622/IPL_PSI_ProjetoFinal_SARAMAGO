@@ -22,13 +22,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Biblioteca_id')->textInput() ?>
+    <?= $form->field($model, 'Biblioteca_id')->dropDownList([$bibliotecaAll]) ?>
 
-    <?= $form->field($model, 'EstatutoExemplar_id')->textInput() ?>
+    <?= $form->field($model, 'EstatutoExemplar_id')->dropDownList([$estatutoexemplarAll]) ?>
 
-    <?= $form->field($model, 'TipoExemplar_id')->textInput() ?>
+    <?= $form->field($model, 'TipoExemplar_id')->dropDownList([$tipoexemplarAll]) ?>
 
-    <?= $form->field($model, 'Obra_id')->textInput() ?>
+    <?= $form->field($model, 'Obra_id')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

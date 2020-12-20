@@ -5,17 +5,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Exemplar */
 
-$this->title = 'Update Exemplar: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Exemplars', 'url' => ['index']];
+$this->title = 'Modificar Exemplar: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Exemplares', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Modificar';
 ?>
 <div class="exemplar-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $model, 'bibliotecaAll' => $bibliotecaAll, 'tipoexemplarAll' => $tipoexemplarAll, 'estatutoexemplarAll' => $estatutoexemplarAll 
     ]) ?>
 
 </div>

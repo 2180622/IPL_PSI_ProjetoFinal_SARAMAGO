@@ -1,6 +1,8 @@
 <?php
 
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap\Tabs;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -86,4 +88,57 @@ use yii\widgets\Pjax;
 
     <?php Pjax::end(); ?>
 
+<?php
+
+    foreach ($exemplarModels as $exemplarModel){
+        $this->registerJs("
+        
+            $(function () {
+                $('#modalButtonView".$exemplarModel->id."').click(function (){
+                    $('#modalView".$exemplarModel->id."').modal('show')
+                        .find('#modalContent')
+                        .load($(this).attr('value'))
+                })
+            });
+            
+            $(function () {
+                $('#modalButtonUpdate".$exemplarModel->id."').click(function (){
+                    $('#modalUpdate".$exemplarModel->id."').modal('show')
+                        .find('#modalContent')
+                        .load($(this).attr('value'))
+                })
+            });
+            
+        ");
+    }
+
+?>
+
+<?php foreach ($exemplarModels as $exemplarModel){
+
+        Modal::begin([
+            'header' => '<h4>'.$exemplarModel->cota.'</h4>',
+            'id' => 'modalView'.$exemplarModel->id,
+            //'options' => ['class'=>'fade modal modalButtonView modal-v-'.$bibliotecasModel->id],
+            'size' => 'modal-lg',
+            'clientOptions' => ['backdrop' => 'static']
+        ]);
+        echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+        Modal::end();
+
+        Modal::begin([
+            'header' => '<h4>'.$exemplarModel->cota.'</h4>',
+            'id' => 'modalUpdate'.$exemplarModel->id,
+            'size' => 'modal-lg',
+            'clientOptions' => ['backdrop' => 'static']
+        ]);
+        echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+        Modal::end();
+    }
+
+?>
+
+
+
 </div>
+

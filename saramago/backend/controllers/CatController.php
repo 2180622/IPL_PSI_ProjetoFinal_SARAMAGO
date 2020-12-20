@@ -4,12 +4,15 @@ namespace backend\controllers;
 use app\models\ExemplarSearch;
 use app\models\ObraSearch;
 use backend\models\ObraForm;
+use backend\models\ExemplarForm;
 use common\models\Cdu;
 use common\models\Colecao;
 use common\models\Exemplar;
 use common\models\Fundo;
 use common\models\Obra;
 use common\models\Tipoexemplar;
+use common\models\Biblioteca;
+use common\models\Estatutoexemplar;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -39,7 +42,7 @@ class CatController extends Controller
                     [
                         'actions' => ['logout', 'index',
                             'view','view-full', 'create', 'update', 'delete',
-                            'exemplar-index','exemplar-view','exemplar-view','exemplar-create','exemplar-delete',
+                            'exemplar-index','exemplar-update','exemplar-view','exemplar-create','exemplar-delete',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -77,6 +80,7 @@ class CatController extends Controller
         $this->layout="minor";
 
         $obrasModel = Obra::find()->all();
+        $exemplarModels = Exemplar::find()->all();
         $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
         $tiposExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
         $colecaoAll = ArrayHelper::map(Colecao::find()->all(), 'id', 'tituloColecao', ['enctype' => 'multipart/form-data']);
@@ -111,13 +115,16 @@ class CatController extends Controller
     {
         $this->layout = 'minor';
 
+        $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->all(),'id','nome',['enctype' => 'multipart/form-data']);
         //for ->actionExemplarView
+        $totalExemplaresDaObra = Exemplar::find()->where('Obra_id='.$id)->count();
+        $exemplarModels = Exemplar::find()->all();
         $searchModel = new ExemplarSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        return $this->render('view-full', ['model' => $this->findModel($id),
-            'searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+        return $this->render('view-full', ['model' => $this->findModel($id), 'totalExemplaresDaObra' => $totalExemplaresDaObra,
+            'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'exemplarModels' => $exemplarModels, 'bibliotecaAll' => $bibliotecaAll]);
     }
 
     /**
@@ -200,9 +207,10 @@ class CatController extends Controller
     public function actionExemplarIndex()
     {
         $searchModel = new ExemplarSearch();
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('exemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+        return $this->render('exemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
     /**
@@ -213,7 +221,7 @@ class CatController extends Controller
      */
     public function actionExemplarView($id)
     {
-        return $this->render('exemplar/view', ['model' => $this->findModelExemplar($id),]);
+        return $this->renderAjax('exemplar/view', ['model' => $this->findModelExemplar($id),]);
     }
 
     /**
@@ -223,12 +231,17 @@ class CatController extends Controller
      */
     public function actionExemplarCreate()
     {
-        $model = new Exemplar();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = new ExemplarForm();
+
+        $estatutoexemplarAll = ArrayHelper::map(Estatutoexemplar::find()->all(),'id','estatuto',['enctype' => 'multipart/form-data']);
+        $tipoexemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
+        $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->all(),'id','nome',['enctype' => 'multipart/form-data']);
+
+        if ($model->load(Yii::$app->request->post()) && $model->createExemplar()) {
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> Um novo exemplar foi adicionado.");
             return $this->redirect(['view-full', 'id' => $model->obra->id]);
         }
-
-        return $this->renderAjax('exemplar/create', ['model' => $model,]);
+        return $this->renderAjax('exemplar/create', ['model' => $model, 'bibliotecaAll' => $bibliotecaAll, 'tipoexemplarAll' => $tipoexemplarAll, 'estatutoexemplarAll' => $estatutoexemplarAll]);
     }
 
     /**
@@ -242,11 +255,15 @@ class CatController extends Controller
     {
         $model = $this->findModelExemplar($id);
 
+        $estatutoexemplarAll = ArrayHelper::map(Estatutoexemplar::find()->all(),'id','estatuto',['enctype' => 'multipart/form-data']);
+        $tipoexemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
+        $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->all(),'id','nome',['enctype' => 'multipart/form-data']);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view-full', 'id' => $model->obra->id]);
         }
 
-        return $this->renderAjax('exemplar/update', ['model' => $model]);
+        return $this->renderAjax('exemplar/update', ['model' => $model, 'bibliotecaAll' => $bibliotecaAll, 'tipoexemplarAll' => $tipoexemplarAll, 'estatutoexemplarAll' => $estatutoexemplarAll]);
     }
 
     /**

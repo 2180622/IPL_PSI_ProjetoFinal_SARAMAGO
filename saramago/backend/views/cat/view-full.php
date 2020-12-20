@@ -88,9 +88,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         //'options' => ['id' => 'myveryownID'],
                     ],
                     [
-                        'label' => 'Exemplares '. Html::tag('span','0',['class'=>'badge badge-light']),
+                        'label' => 'Exemplares '. Html::tag('span', $totalExemplaresDaObra, ['class'=>'badge badge-light']),
                         'encode'=> false,
-                        'content'=> $this->renderAjax('exemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]),
+                        'content'=> $this->renderAjax('exemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'exemplarModels' => $exemplarModels]),
                     ],
 
                 ],
