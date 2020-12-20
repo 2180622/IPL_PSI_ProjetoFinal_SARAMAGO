@@ -78,9 +78,9 @@ AppAsset::register($this);
         //['label' => 'Contact', 'url' => ['/site/contact']],
 
         //TODO Pesquisa
-        ['label' => 'Pesquisa', 'url' => ['/site/contact'],
+        ['label' => 'Pesquisa', 'url' => ['\index'],
          'items' =>[
-                 ['label' =>'Pesquisa Avançada', 'url' =>['/site/about']],
+                 ['label' =>'Pesquisa Avançada', 'url' =>['/pesquisa']],
 
          ],
         ],
