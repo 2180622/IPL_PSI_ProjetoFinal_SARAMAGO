@@ -251,7 +251,7 @@ class LeitorForm extends Leitor
             ->send();
     }
 
-    private function generateRandomString($length = 13) {
+    public function generateRandomString($length = 13) {
     $characters = '0123456789';
     $charactersLength = strlen($characters);
     $randomString = '';
