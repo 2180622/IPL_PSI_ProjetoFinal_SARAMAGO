@@ -1,16 +1,18 @@
 <?php
-namespace api\modules\v1\controllers;
+namespace api\controllers;
 
 use Yii;
-use yii\rest\ActiveController;
+
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\rest\Controller;
 
 /**
  * Site controller
  */
-class ConfigController extends ActiveController
+class SiteController extends Controller
 {
+    public $layout = 'blank';
     /**
      * {@inheritdoc}
      */
@@ -21,11 +23,11 @@ class ConfigController extends ActiveController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['error', 'index'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['error', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,4 +53,15 @@ class ConfigController extends ActiveController
             ],
         ];
     }
+
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionIndex()
+    {
+        return $this->render('index');
+    }
+
 }

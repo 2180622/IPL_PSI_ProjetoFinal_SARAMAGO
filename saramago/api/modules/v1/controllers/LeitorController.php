@@ -2,6 +2,7 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
+use yii\rest\ActiveController;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -9,7 +10,7 @@ use yii\filters\AccessControl;
 /**
  * Leitor controller
  */
-class LeitorController extends Controller
+class LeitorController extends ActiveController
 {
     /**
      * {@inheritdoc}

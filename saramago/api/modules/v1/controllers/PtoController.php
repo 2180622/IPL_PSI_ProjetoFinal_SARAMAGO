@@ -2,14 +2,14 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use yii\web\Controller;
+use yii\rest\ActiveController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
  * Site controller
  */
-class PtoController extends Controller
+class PtoController extends ActiveController
 {
     /**
      * {@inheritdoc}
