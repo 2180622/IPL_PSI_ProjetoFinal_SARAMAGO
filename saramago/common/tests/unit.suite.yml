@@ -3,5 +3,9 @@ actor: UnitTester
 bootstrap: false
 modules:
     enabled:
-        - Yii2:
-            part: fixtures
+        - Yii2
+        - Asserts
+        - Db:
+              dsn: 'mysql:host=localhost;dbname=yii2saramago_test'
+              user: 'root'
+              password: ''

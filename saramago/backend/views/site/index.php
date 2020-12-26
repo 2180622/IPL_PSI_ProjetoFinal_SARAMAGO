@@ -48,7 +48,7 @@ $this->title = 'SARAMAGO';
         <div class="row container saramago-dashboard">
             <div class="bottom-space col-md-4">
                 <a href="'.Url::to(['/leitor/']).'">
-                    <div class="card card-dash-saramago">
+                    <div class="card card-dash-saramago" id="leitores">
                         <div class="card-body">
                             <h3 class="card-title">Leitores</h3>
                             <p class="card-text">
