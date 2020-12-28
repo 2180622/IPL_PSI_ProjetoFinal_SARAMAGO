@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
                 <h3>Gestão da Equipa</h3>
                 <a href="' . Url::to(['config/equipa']) . '">
-                    <div class="card card-config">
+                    <div class="card card-config" id="equipa">
                         <div class="card-body"><h4>Gestão da Equipa</h4>Defina os operadores do SARAMAGO</div>
                     </div>
                 </a>

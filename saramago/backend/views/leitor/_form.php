@@ -25,8 +25,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username',['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password',['enableAjaxValidation' => true])->passwordInput() ?>
-
     <?= $form->field($model, 'nif')->textInput() ?>
 
     <?= $form->field($model, 'docId')->textInput() ?>

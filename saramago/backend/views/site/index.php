@@ -105,7 +105,7 @@ $this->title = 'SARAMAGO';
                 </a>
                 <br>
                 <a href="'.Url::to(['/config/']).'">
-                    <div class="card card-dash-saramago">
+                    <div class="card card-dash-saramago" id="config">
                         <div class="card-body">
                             <h3 class="card-title">Administração</h3>
                             <p class="card-text">

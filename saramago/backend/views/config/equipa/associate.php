@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'roleNova')->dropDownList($listaRoles)->label('Nova Função') ?>
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success', 'id'=>'guardar']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

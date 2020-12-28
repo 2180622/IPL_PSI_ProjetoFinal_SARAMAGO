@@ -5,11 +5,6 @@ class LeitorCreateCest
 {
     public function _before(FunctionalTester $I)
     {
-    }
-
-    // tests
-    public function tryToTest(FunctionalTester $I)
-    {
         $I->amOnPage('/');
         $I->fillField('Username', 'admin');
         $I->fillField('Password', 'adminsaramago');
@@ -19,12 +14,15 @@ class LeitorCreateCest
         $I->amOnPage('/leitor');
 
         $I->click('#modalButtonCreate');
+    }
 
+    // tests
+    public function tryToTest(FunctionalTester $I)
+    {
         $I->amOnPage('/leitor/create/_form');
 
         $I->fillField('#leitorform-nome', 'André Filipe Andrade Machado');
         $I->fillField('#leitorform-username', 'andremach');
-        $I->fillField('#leitorform-password', 'andremach');
         $I->fillField('#leitorform-nif', 269745017);
         $I->fillField('#leitorform-docid', '303159952');
         $I->fillField('#leitorform-datanasc', 2000-10-11);
