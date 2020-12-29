@@ -24,7 +24,7 @@ class LeitorAssociateCest
         $I->amOnPage('/config/equipa');
         $I->click('#modalButtonAssociate');
 
-        $I->amOnPage('/config/equipa/associate');
+        $I->see('', '.modal-content');
 
         $I->selectOption('#equipacreateform-leitor_id', 'André Machado');
         $I->selectOption('#equipacreateform-rolenova', 'Operador Chefe');

@@ -44,17 +44,9 @@ class LoginTestCest
         $I->amOnPage('site/login');
         $I->seeElement('#login-form');
         $I->submitForm('#login-form', $this->formParams('admin','adminsaramago'));
-        $I->click('login-button');
 
-        //ver o dropdown
-        $I->seeElement('#dropdown-toggle');
         //ver a conta que está iniciada
-        $I->see('admin', '#dropdown-toggle');
-
-        //$I->click('login-button');
-        //$I->dontSeeLink('Login');
-        //$I->dontSeeLink('Signup');
-
+        $I->see('admin', '.dropdown-toggle');
     }
 
 }

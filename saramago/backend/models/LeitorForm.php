@@ -54,9 +54,6 @@ class LeitorForm extends Leitor
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Endereço de email em uso.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
-
             ['mail2', 'trim'],
             ['mail2', 'email'],
             ['mail2', 'string', 'max' => 255],
@@ -155,7 +152,6 @@ class LeitorForm extends Leitor
             $user = new User();
             $user->username = $this->username; //FIXME
             $user->email = $this->email;
-            $user->setPassword($this->nif);
             $user->generateAuthKey();
             $user->status = 10;
 
@@ -163,6 +159,7 @@ class LeitorForm extends Leitor
             $leitor->mail2 = $this->mail2;
             $leitor->nome = $this->nome;
             $leitor->nif = $this->nif;
+            $user->setPassword($leitor->nif);
             $leitor->docId = $this->docId;
             $leitor->codBarras = $this->generateRandomString(9);
             $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
@@ -217,17 +214,10 @@ class LeitorForm extends Leitor
                 $auth->assign($leitorExternoRole, $leitor->user_id);
             }
 
+
             return $leitor;
         }
-
-        /*   Yii2 generated code
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user); */
+        return false;
     }
 
     public function getRoles(){
