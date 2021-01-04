@@ -1,4 +1,4 @@
-package com.example.saramago.adaptadores;
+package com.example.saramago.adaptadores.leitores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.saramago.R;
 import com.example.saramago.modelos.Leitor;
-import com.example.saramago.vistas.ListaLeitoresActivity;
 
 import java.util.ArrayList;
 

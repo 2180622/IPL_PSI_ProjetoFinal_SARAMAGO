@@ -1,14 +1,14 @@
-package com.example.saramago.adaptadores;
+package com.example.saramago.adaptadores.leitores;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.saramago.vistas.tabs.EmprestimosLeitorFragment;
-import com.example.saramago.vistas.tabs.FichaLeitorFragment;
-import com.example.saramago.vistas.tabs.ReprografiaLeitoresFragment;
-import com.example.saramago.vistas.tabs.ReservasLeitorFragment;
+import com.example.saramago.vistas.leitores.tabs.EmprestimosLeitorFragment;
+import com.example.saramago.vistas.leitores.tabs.FichaLeitorFragment;
+import com.example.saramago.vistas.leitores.tabs.ReprografiaLeitorFragment;
+import com.example.saramago.vistas.leitores.tabs.ReservasLeitorFragment;
 
 // RETIRADO DE: https://www.youtube.com/watch?v=ajVVjuOSlV4&ab_channel=ChiragKachhadiya
 public class TabsLeitorAdaptador extends FragmentStateAdapter {
@@ -28,7 +28,7 @@ public class TabsLeitorAdaptador extends FragmentStateAdapter {
             case 2:
                 return new ReservasLeitorFragment();
             default:
-                return new ReprografiaLeitoresFragment();
+                return new ReprografiaLeitorFragment();
         }
     }
 

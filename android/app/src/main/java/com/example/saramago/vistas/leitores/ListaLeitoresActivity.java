@@ -1,4 +1,4 @@
-package com.example.saramago.vistas;
+package com.example.saramago.vistas.leitores;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.saramago.R;
-import com.example.saramago.adaptadores.ListaLeitoresAdaptador;
+import com.example.saramago.adaptadores.leitores.ListaLeitoresAdaptador;
 import com.example.saramago.modelos.Leitor;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

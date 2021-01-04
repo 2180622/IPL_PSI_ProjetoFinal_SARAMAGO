@@ -44,6 +44,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         fragmentManager = getSupportFragmentManager();
 
         carregarCabecalho();
+        carregarFragmentoInicial();
     }
 
     private void carregarCabecalho() {
@@ -53,6 +54,12 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         View hview = navigationView.getHeaderView(0);
         TextView tv_email = hview.findViewById(R.id.tv_email);
         tv_email.setText(email);
+    }
+
+    private void carregarFragmentoInicial(){
+        navigationView.setCheckedItem(R.id.nav_dashboard);
+        Fragment fragment = new Dashboard();
+        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
     @Override
@@ -77,6 +84,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 }
+
 /*
 88BDBC - Azul Claro
 FFFFFF - Branco

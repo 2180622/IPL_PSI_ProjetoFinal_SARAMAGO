@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -52,4 +53,17 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    //FIXME
+    /*private void guardarInfoSharedPref(String token, String email)
+    {
+        SharedPreferences sharedPrefeUser = getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefeUser.edit();
+
+        editor.putString(MenuMainActivity.EMAIL, email);
+        editor.putString(MenuMainActivity.TOKEN, token);
+        editor.apply();
+
+    }*/
+
 }

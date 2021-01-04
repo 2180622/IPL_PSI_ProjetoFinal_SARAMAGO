@@ -1,4 +1,4 @@
-package com.example.saramago.vistas.tabs;
+package com.example.saramago.vistas.leitores.tabs;
 
 import android.os.Bundle;
 

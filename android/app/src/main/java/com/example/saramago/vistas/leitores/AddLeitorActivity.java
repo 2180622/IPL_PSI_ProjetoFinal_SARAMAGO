@@ -1,4 +1,4 @@
-package com.example.saramago.vistas;
+package com.example.saramago.vistas.leitores;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,4 +1,4 @@
-package com.example.saramago.vistas.tabs;
+package com.example.saramago.vistas.leitores.tabs;
 
 import android.os.Bundle;
 
@@ -12,18 +12,17 @@ import com.example.saramago.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EmprestimosLeitorFragment#newInstance} factory method to
+ * Use the {@link ReservasLeitorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmprestimosLeitorFragment extends Fragment {
-    public EmprestimosLeitorFragment() {
+public class ReservasLeitorFragment extends Fragment {
+    public ReservasLeitorFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_emprestimos_leitor, container, false);
+        return inflater.inflate(R.layout.fragment_reservas_leitor, container, false);
     }
 }

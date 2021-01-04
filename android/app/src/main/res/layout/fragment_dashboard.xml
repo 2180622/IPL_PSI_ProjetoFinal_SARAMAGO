@@ -15,23 +15,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="2dp"
         android:text="Está ligado a..."
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/tv_operador_biblioteca"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_operador_biblioteca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="2dp"
-        android:text="Biblioteca Lobo Antunes"
+        android:layout_marginTop="32dp"
+        android:text="Biblioteca"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -40,25 +40,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_entidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Instituto Técnologico de Leiria"
+        android:layout_marginTop="16dp"
+        android:text="Entidade"
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_operador"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_operador_biblioteca" />
 
     <TextView
         android:id="@+id/tv_operador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="OPERADOR YYYY-YYY"
+        android:layout_marginTop="32dp"
+        android:text="Operador @username"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -67,12 +69,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_entidade" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_Buttons"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="1dp"
         android:background="@drawable/backdropmenu_drawable"
         android:orientation="vertical"

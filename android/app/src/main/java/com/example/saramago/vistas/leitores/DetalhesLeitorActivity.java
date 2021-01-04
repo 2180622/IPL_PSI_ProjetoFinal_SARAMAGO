@@ -1,14 +1,13 @@
-package com.example.saramago.vistas;
+package com.example.saramago.vistas.leitores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.saramago.R;
-import com.example.saramago.adaptadores.TabsLeitorAdaptador;
+import com.example.saramago.adaptadores.leitores.TabsLeitorAdaptador;
 import com.example.saramago.modelos.Leitor;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
