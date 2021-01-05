@@ -72,7 +72,7 @@ class ConfigController extends Controller
                             'recibos','recibos-update',
                             'resexemplar', 'resexemplar-update',
                             'slidesopac','slidesopac-update',
-                            'arrumacao'],
+                            'arrumacao', 'arrumacao-update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -1110,8 +1110,34 @@ class ConfigController extends Controller
      */
     public function actionArrumacao()
     {
-        return $this->render('arrumacao/index');
+        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "modulo_arrumacao"])]);
+        $ArrumacaoModel = Config::find()->all();
+
+        return $this->render('arrumacao/index', ['dataProvider' => $dataProvider, 'ArrumacaoModel' => $ArrumacaoModel]);
     }
+
+    public function actionArrumacaoUpdate($id)
+    {
+        $model = $this->findModelArrumacao($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
+            return $this->redirect('arrumacao');
+        }
+
+        return $this->renderAjax('arrumacao/update', ['model' => $model,]);
+    }
+
+    protected function findModelArrumacao($id)
+    {
+        if (($model = Config::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
+    }
+
     #endregion
 
     #endregion

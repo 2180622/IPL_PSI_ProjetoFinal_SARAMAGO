@@ -526,6 +526,21 @@
     color: #000000;
 }
 
+.config-arrumacao h1,
+.config-arrumacao h2,
+.config-arrumacao h3,
+.config-arrumacao h4,
+.config-arrumacao h5,
+.config-arrumacao h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-arrumacao p,
+.config-arrumacao a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 /* endregion */
 
 /* endregion */

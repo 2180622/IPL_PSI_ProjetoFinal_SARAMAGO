@@ -1058,7 +1058,7 @@ INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAU
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Morada', 'entidade_morada', NULL);
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'NIPC', 'entidade_nipc', NULL);
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Sigla', 'entidade_sigla', NULL);
-INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Módulo Arrumação', 'modulo_arrumacao', NULL);
+INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Módulo Arrumação', 'modulo_arrumacao', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Mostrar as últimas obras adquiridas', 'opac_obrasAdquiridas', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Opção de cancelamento de reservas no OPAC', 'opac_reservaExemplares', '1');
 INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAULT, 'Envio de recibo de devoluções', 'recibo_devolucao', '1');
