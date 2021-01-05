@@ -1,15 +1,14 @@
 package com.example.saramago.modelos;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 
 public class Autor {
     private int id, orcid;
     private String primeiroNome, segundoNome, apelido, bibliografia, nacionalidade;
-    private Array[] tipo;
+    private String[] tipo = {"individual","coletivo"};
     private Date dataNasc;
 
-    public Autor(int id, int orcid, String primeiroNome, String segundoNome, String apelido, String bibliografia, String nacionalidade, Array[] tipo, Date dataNasc) {
+    public Autor(int id, int orcid, String primeiroNome, String segundoNome, String apelido, String bibliografia, String nacionalidade, String[] tipo, Date dataNasc) {
         this.id = id;
         this.orcid = orcid;
         this.primeiroNome = primeiroNome;
@@ -49,9 +48,9 @@ public class Autor {
 
     public void setNacionalidade(String nacionalidade) { this.nacionalidade = nacionalidade; }
 
-    public Array[] getTipo() { return tipo; }
+    public String[] getTipo() { return tipo; }
 
-    public void setTipo(Array[] tipo) { this.tipo = tipo; }
+    public void setTipo(String[] tipo) { this.tipo = tipo; }
 
     public Date getDataNasc() { return dataNasc; }
 

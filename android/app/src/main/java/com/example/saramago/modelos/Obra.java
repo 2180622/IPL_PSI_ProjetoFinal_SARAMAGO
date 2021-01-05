@@ -4,14 +4,15 @@ import java.lang.reflect.Array;
 import java.util.Date;
 
 public class Obra {
-    private int id, imgCapa, ano, preco;
-    private String titulo, resumo, editor, tipoObra, descricao, idioma, local, edicao, assuntos;
+    private int id, imgCapa, ano, preco, Cdu_id;
+    private String[] tipoObra = {"arruamacao", "estante", "quarentena", "perdido", "reservado", "nd"};
+    private String titulo, resumo, editor, descricao, idioma, local, edicao, assuntos;
     private Date dataRegisto, dataAtualizado;
 
     private static int autoIncrement = 1;
 
-    public Obra(int id, int imgCapa, int ano, int preco, String titulo, String resumo, String editor,
-                String tipoObra, String descricao, String idioma, String local, String edicao,
+    public Obra(int id, int imgCapa, int ano, int preco, int Cdu_id, String titulo, String resumo, String editor,
+                String[] tipoObra, String descricao, String idioma, String local, String edicao,
                 String assuntos, Date dataRegisto, Date dataAtualizado) {
         this.id = autoIncrement++;
         this.imgCapa = imgCapa;
@@ -28,6 +29,7 @@ public class Obra {
         this.assuntos = assuntos;
         this.dataRegisto = dataRegisto;
         this.dataAtualizado = dataAtualizado;
+        this.Cdu_id = Cdu_id;
     }
 
     public int getId() { return id; }
@@ -58,9 +60,9 @@ public class Obra {
 
     public void setEditor(String editor) { this.editor = editor; }
 
-    public String getTipoObra() { return tipoObra; }
+    public String[] getTipoObra() { return tipoObra; }
 
-    public void setTipoObra(String tipoObra) { this.tipoObra = tipoObra; }
+    public void setTipoObra(String[] tipoObra) { this.tipoObra = tipoObra; }
 
     public String getDescricao() { return descricao; }
 
@@ -90,21 +92,21 @@ public class Obra {
 
     public void setDataAtualizado(Date dataAtualizado) { this.dataAtualizado = dataAtualizado; }
 
+    public int getCdu_id() { return Cdu_id; }
+
+    public void setCdu_id(int cdu_id) { Cdu_id = cdu_id; }
+
     /**
-     * Nested Classes:
-     * It is a way of logically grouping classes that are only used in one place,
-     * it increases encapsulation,
-     * it can lead to more readable and maintainable code,
-     * This is a "static nested class"
+     * Nested Class
      */
 
-    public static class exemplar {
+    public class exemplar {
         private int id, Biblioteca_id, EstatutoExemplar_id, TipoExemplar_id, Obra_id;
         private boolean suplemento;
         private String[] estado = {"arruamacao", "estante", "quarentena", "perdido", "reservado", "nd"};
         private String cota, codBarras, notaInterna;
 
-        private static int autoIncrement = 1;
+        private int autoIncrement = 1;
 
         public exemplar(int id, int biblioteca_id, int estatutoExemplar_id, int tipoExemplar_id,
                         int obra_id, boolean suplemento, String[] estado, String cota,
@@ -160,10 +162,6 @@ public class Obra {
         public String getNotaInterna() { return notaInterna; }
 
         public void setNotaInterna(String notaInterna) { this.notaInterna = notaInterna; }
-
-        public static int getAutoIncrement() { return autoIncrement; }
-
-        public static void setAutoIncrement(int autoIncrement) { exemplar.autoIncrement = autoIncrement; }
     }
 
 }
