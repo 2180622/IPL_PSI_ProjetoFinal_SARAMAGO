@@ -1048,10 +1048,10 @@ class ConfigController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success','A '. $model->info .' foi alterada com sucesso.');
-            return $this->redirect('slidesopac');
+            return $this->redirect('resexemplar');
         }
 
-        return $this->renderAjax('slidesopac/update', ['model' => $model,]);
+        return $this->renderAjax('resexemplar/update', ['model' => $model,]);
     }
 
     public function findModelResexemplar($id){
