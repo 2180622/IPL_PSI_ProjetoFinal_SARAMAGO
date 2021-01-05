@@ -1,14 +1,5 @@
 package com.example.saramago.modelos;
 
-import android.media.Image;
-import android.provider.ContactsContract;
-import android.widget.ImageView;
-
-import com.example.saramago.R;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Leitor {
@@ -194,5 +185,65 @@ public class Leitor {
 
     public void setDataAtualizado(Date dataAtualizado) {
         this.dataAtualizado = dataAtualizado;
+    }
+
+    /**
+     * Classe aninhada: Funcionario
+     */
+
+    public class funcionario{
+        private int idFuncionario, Leitor_id;
+        private String departamento;
+
+        public funcionario(int id, String departamento, int leitor_id) {
+            int autoIncrement = 1;
+            this.idFuncionario = autoIncrement++;
+            this.Leitor_id = id;
+            this.departamento = departamento;
+        }
+
+        public int getIdFuncionario() { return idFuncionario; }
+
+        public void setIdFuncionario(int idFuncionario) { this.idFuncionario = idFuncionario; }
+
+        public int getLeitor_id() { return Leitor_id; }
+
+        public void setLeitor_id(int leitor_id) { Leitor_id = leitor_id; }
+
+        public String getDepartamento() { return departamento; }
+
+        public void setDepartamento(String departamento) { this.departamento = departamento; }
+    }
+
+    /**
+     * Classe aninhada: Aluno
+     */
+
+    public class aluno{
+        private int idAluno, Leitor_id, numero, Curso_id;
+
+        public aluno(int id, int leitor_id, int numero, int curso_id) {
+            int autoIncrement = 1;
+            this.idAluno = autoIncrement++;
+            this.Leitor_id = id;
+            this.numero = numero;
+            this.Curso_id = curso_id;
+        }
+
+        public int getIdAluno() { return idAluno; }
+
+        public void setIdAluno(int idAluno) { this.idAluno = idAluno; }
+
+        public int getLeitor_id() { return Leitor_id; }
+
+        public void setLeitor_id(int leitor_id) { Leitor_id = leitor_id; }
+
+        public int getNumero() { return numero; }
+
+        public void setNumero(int numero) { this.numero = numero; }
+
+        public int getCurso_id() { return Curso_id; }
+
+        public void setCurso_id(int curso_id) { Curso_id = curso_id; }
     }
 }
