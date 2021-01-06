@@ -3,11 +3,12 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Model;
 
-class ChangeUsernameForm extends User
+class ChangeUsernameForm extends Model
 {
     public $oldUsername ;
-    public $newUsername;
+    public $username;
     public $retypeUsername;
 
     /**
@@ -16,10 +17,12 @@ class ChangeUsernameForm extends User
     public function rules()
     {
         return [
-            [['oldUsername', 'newUsername', 'retypeUsername'], 'required'],
-            [['newUsername'], 'string', 'min' => 5],
-            [['newUsername'], 'compare', 'operator' => '!=','compareAttribute' => 'oldUsername'],
-            [['retypeUsername'], 'compare', 'compareAttribute' => 'newUsername'],
+            [['oldUsername', 'username', 'retypeUsername'], 'required'],
+            [['username'], 'string', 'min' => 5],
+            //FIXME "Username em uso" não funciona
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Username em uso.'],
+            [['username'], 'compare', 'operator' => '!=','compareAttribute' => 'oldUsername', 'message' => 'Username não pode ser igual ao atual.'],
+            [['retypeUsername'], 'compare', 'compareAttribute' => 'username', 'message' => 'Username não coincide.'],
         ];
     }
 
@@ -30,8 +33,8 @@ class ChangeUsernameForm extends User
     {
         return [
             'oldUsername' => 'Username Atual',
-            'newUsername' => 'Username Nova',
-            'retypeUsername' => 'Username Nova',
+            'newUsername' => 'Username Novo',
+            'retypeUsername' => 'Repita o Username Novo',
         ];
     }
 
@@ -48,15 +51,13 @@ class ChangeUsernameForm extends User
         if($this->validate())
         {
             $user = User::findOne(Yii::$app->user->id);
-            $user->setUsername($this->$newUsername);
-            $user->save();
+            $user->setUsername($this->username);
 
-            return true;
-
-        } else {
-            return false;
+            if ($user->save()) {
+                return true;
+            }
         }
-
+        return false;
     }
 
 }

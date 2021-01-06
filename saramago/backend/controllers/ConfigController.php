@@ -135,8 +135,9 @@ class ConfigController extends Controller
 
         $UsernameModel = new ChangeUsernameForm();
 
-        if($model->load(Yii::$app->request->post())&& $model->save()) {
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> ");
+        if($UsernameModel->load(Yii::$app->request->post()) && $UsernameModel->change()) {
+            Yii::$app->session->setFlash('success',
+                "<strong>Informação: </strong> O username foi alterado com sucesso! ");
             return $this->redirect(['conta']);
         }
         return $this->renderAjax('conta/username', ['model'=> $UsernameModel, 'identity' => $identity]);
@@ -146,13 +147,13 @@ class ConfigController extends Controller
     {
         $PasswordModel = new ChangePasswordForm();
 
-        if($model->load(Yii::$app->request->post())&& $model->save()) {
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> ");
+        if($PasswordModel->load(Yii::$app->request->post())&& $PasswordModel->change()) {
+            Yii::$app->session->setFlash('success',
+                "<strong>Informação:</strong> A password foi alterada com sucesso!");
             return $this->redirect(['conta']);
         }
         return $this->renderAjax('conta/password',['model' => $PasswordModel]);
     }
-
 
     #endregion
 
