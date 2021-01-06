@@ -299,6 +299,21 @@
 
 /* region CONFIG */
 
+.config-conta h1,
+.config-conta h2,
+.config-conta h3,
+.config-conta h4,
+.config-conta h5,
+.config-conta h6{
+    font-family: "Geometric 415 Black BT BT Lite", sans-serif;
+}
+
+.config-conta p,
+.config-conta a{
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    color: #000000;
+}
+
 .config-entidade h1,
 .config-entidade h2,
 .config-entidade h3,

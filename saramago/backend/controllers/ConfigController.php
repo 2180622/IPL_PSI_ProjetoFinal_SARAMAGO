@@ -1,6 +1,8 @@
 <?php
 namespace backend\controllers;
 
+use common\models\ChangePasswordForm;
+use common\models\ChangeUsernameForm;
 use Yii;
 
 use backend\models\CduSearch;
@@ -56,7 +58,8 @@ class ConfigController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','conta',
+                        'actions' => ['logout', 'index',
+                            'conta', 'conta-username','conta-password',
                             'entidade', 'entidade-update','entidade-reset',
                             'bibliotecas','bibliotecas-view','bibliotecas-create','bibliotecas-update', 'bibliotecas-delete',
                             'postos', 'postos-view', 'postos-create', 'postos-update', 'postos-delete',
@@ -121,8 +124,36 @@ class ConfigController extends Controller
     #region Conta
     public function actionConta()
     {
+        $PasswordModel = new ChangePasswordForm();
         return $this->render('conta/index');
     }
+
+    public function actionContaUsername()
+    {
+        $user = Yii::$app->user;
+        $identity = $user->identity->username;
+
+        $UsernameModel = new ChangeUsernameForm();
+
+        if($model->load(Yii::$app->request->post())&& $model->save()) {
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> ");
+            return $this->redirect(['conta']);
+        }
+        return $this->renderAjax('conta/username', ['model'=> $UsernameModel, 'identity' => $identity]);
+    }
+
+    public function actionContaPassword()
+    {
+        $PasswordModel = new ChangePasswordForm();
+
+        if($model->load(Yii::$app->request->post())&& $model->save()) {
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> ");
+            return $this->redirect(['conta']);
+        }
+        return $this->renderAjax('conta/password',['model' => $PasswordModel]);
+    }
+
+
     #endregion
 
     #region Entidade
