@@ -1,0 +1,10 @@
+frontend/tests
+
+java -jar "/caminho/selenium-server-standalone-3.141.59.jar"
+
+Windows: 
+..\vendor\bin\codecept run acceptance (a partir da pasta frontend)
+
+
+Testa descompactar o que está na pasta saramago/frontend/tests gonçalo
+(Mac chromedriver) e apagar o do windows ver se funciona no teu computador o teste de aceitação 
