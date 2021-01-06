@@ -1,5 +1,6 @@
 package com.example.saramago.vistas.leitores.tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,9 +13,8 @@ import android.widget.TextView;
 import com.example.saramago.R;
 import com.example.saramago.modelos.Leitor;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.vistas.leitores.EditLeitorActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import static com.example.saramago.vistas.leitores.DetalhesLeitorActivity.ID;
 
@@ -49,7 +49,15 @@ public class FichaLeitorFragment extends Fragment {
         dataRegisto = view.findViewById(R.id.tv_fl_dtaRegisto);
         dataAtualizado = view.findViewById(R.id.tv_fl_dtaAtualizado);
         irregularidade = view.findViewById(R.id.tv_fl_irregularidade);
+        FloatingActionButton fabEdit = view.findViewById(R.id.fabSave);
 
+        fabEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditLeitorActivity.class);
+                startActivity(intent);
+            }
+        });
 
         if(leitor != null){
             carregarConteudo();

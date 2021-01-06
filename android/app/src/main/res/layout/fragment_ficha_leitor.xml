@@ -517,7 +517,7 @@
         android:layout_marginBottom="30dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fabAdd"
+        app:layout_constraintEnd_toStartOf="@id/fabSave"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -538,7 +538,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
+        android:id="@+id/fabSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"

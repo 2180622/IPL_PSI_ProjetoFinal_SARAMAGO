@@ -12,23 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".vistas.leitores.EditLeitorActivity"></activity>
         <!-- Leitores -->
-        <activity android:name=".vistas.leitores.AddLeitorActivity"/>
+        <activity android:name=".vistas.leitores.AddLeitorActivity" />
         <activity android:name=".vistas.leitores.DetalhesLeitorActivity" />
-        <activity android:name=".vistas.leitores.ListaLeitoresActivity" />
-        <!-- DASHBOARD -->
+        <activity android:name=".vistas.leitores.ListaLeitoresActivity" /> <!-- DASHBOARD -->
         <activity
             android:name=".vistas.MenuMainActivity"
             android:label=""
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!-- LOGIN -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- LOGIN -->
         <activity
             android:name=".vistas.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
