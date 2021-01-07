@@ -26,6 +26,11 @@ class m201023_142905_init_rbac extends Migration
     {
         $auth = Yii::$app->authManager;
 
+        // Acesso geral dos leitores frontend
+        $acessoFrontend = $auth->createPermission('acessoFrontend');
+        $acessoFrontend->description = 'Aceder ao frontend';
+        $auth->add($acessoFrontend);
+
         #region Gestão de equipa
 
         // add "verOperadores" permission
@@ -553,48 +558,137 @@ class m201023_142905_init_rbac extends Migration
         // as well as the permissions of the "author" role
         $leitorAluno = $auth->createRole('leitorAluno');
         $auth->add($leitorAluno);
-        $auth->addChild($leitorAluno, $verHorario);
+        $auth->addChild($leitorAluno, $acessoFrontend);
 
         // add "leitorExterno" role and give this role permissions
         // as well as the permissions of the "author" role
         $leitorExterno = $auth->createRole('leitorExterno');
         $auth->add($leitorExterno);
+        $auth->addChild($leitorExterno, $acessoFrontend);
         //$auth->addChild($leitorExterno, $createPost);
 
         // add "leitorFuncionario" role and give this role permissions
         // as well as the permissions of the "author" role
         $leitorFuncionario = $auth->createRole('leitorFuncionario');
         $auth->add($leitorFuncionario);
+        $auth->addChild($leitorFuncionario, $acessoFrontend);
         //$auth->addChild($leitorFuncionario, $createPost);
 
         // add "leitorDocente" role and give this role permissions
         // as well as the permissions of the "author" role
         $leitorDocente = $auth->createRole('leitorDocente');
         $auth->add($leitorDocente);
+        $auth->addChild($leitorDocente, $acessoFrontend);
         //$auth->addChild($leitorDocente, $createPost);
 
         // add "operadorCirculacao" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorCirculacao = $auth->createRole('operadorCirculacao');
         $auth->add($operadorCirculacao);
+        $auth->addChild($operadorCirculacao, $verExemplaresPerdidos);
+        $auth->addChild($operadorCirculacao, $inserirExemplaresPerdidos);
+        $auth->addChild($operadorCirculacao, $inserirMultiplosEmprestimos);
+        $auth->addChild($operadorCirculacao, $verEmprestimosDia);
+        $auth->addChild($operadorCirculacao, $verExemplaresAtrasados);
+        $auth->addChild($operadorCirculacao, $inserirRenovarEmprestimos);
+        $auth->addChild($operadorCirculacao, $inserirRenovacao);
+        $auth->addChild($operadorCirculacao, $verDevolucoesDia);
+        $auth->addChild($operadorCirculacao, $verReservaFilaEspera);
+        $auth->addChild($operadorCirculacao, $cancelarReservaFilaEspera);
+        $auth->addChild($operadorCirculacao, $verReservaAguardaRecolha);
+        $auth->addChild($operadorCirculacao, $cancelarReservaAguardaRecolha);
+        $auth->addChild($operadorCirculacao, $verReservaNaoLevantada);
+        $auth->addChild($operadorCirculacao, $retornarReservaNaoLevantada);
+        $auth->addChild($operadorCirculacao, $verExemplaresAReceber);
         //$auth->addChild($operadorCirculacao, $createPost);
 
         // add "operadorCatalogacao" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorCatalogacao = $auth->createRole('operadorCatalogacao');
         $auth->add($operadorCatalogacao);
+        $auth->addChild($operadorCatalogacao, $verCDU);
+        $auth->addChild($operadorCatalogacao, $inserirCDU);
+        $auth->addChild($operadorCatalogacao, $eliminarCDU);
+        $auth->addChild($operadorCatalogacao, $verTiposExemplares);
+        $auth->addChild($operadorCatalogacao, $inserirTiposExemplares);
+        $auth->addChild($operadorCatalogacao, $eliminarTiposExemplares);
+        $auth->addChild($operadorCatalogacao, $verEstatutosExemplares);
+        $auth->addChild($operadorCatalogacao, $inserirEstatutosExemplares);
+        $auth->addChild($operadorCatalogacao, $verLeitores);
+        $auth->addChild($operadorCatalogacao, $inserirLeitores);
+        $auth->addChild($operadorCatalogacao, $editarLeitores);
+        $auth->addChild($operadorCatalogacao, $eliminarLeitores);
+        $auth->addChild($operadorCatalogacao, $verTiposLeitor);
+        $auth->addChild($operadorCatalogacao, $inserirTiposLeitor);
+        $auth->addChild($operadorCatalogacao, $eliminarTiposLeitor);
+        $auth->addChild($operadorCatalogacao, $verTiposIrregularidades);
+        $auth->addChild($operadorCatalogacao, $inserirTiposIrregularidades);
+        $auth->addChild($operadorCatalogacao, $eliminarTiposIrregularidades);
+        $auth->addChild($operadorCatalogacao, $verObras);
+        $auth->addChild($operadorCatalogacao, $inserirObras);
+        $auth->addChild($operadorCatalogacao, $editarObras);
+        $auth->addChild($operadorCatalogacao, $eliminarObras);
+        $auth->addChild($operadorCatalogacao, $verExemplares);
+        $auth->addChild($operadorCatalogacao, $inserirExemplares);
+        $auth->addChild($operadorCatalogacao, $editarExemplares);
+        $auth->addChild($operadorCatalogacao, $eliminarExemplares);
+
+        
+
         //$auth->addChild($operadorCatalogacao, $createPost);
 
         // add "operadorChefe" role and give this role permissions
         // as well as the permissions of the "author" role
         $operadorChefe = $auth->createRole('operadorChefe');
         $auth->add($operadorChefe);
+        $auth->addChild($operadorChefe, $verHorario);
+        $auth->addChild($operadorChefe, $verNoticias);
+        $auth->addChild($operadorChefe, $verMorada);
+        $auth->addChild($operadorChefe, $verDadosEntidade);
+        $auth->addChild($operadorChefe, $inserirDadosEntidade);
+        $auth->addChild($operadorChefe, $editarDadosEntidade);
+        $auth->addChild($operadorChefe, $verBibliotecas);
+        $auth->addChild($operadorChefe, $inserirBibliotecas);
+        $auth->addChild($operadorChefe, $eliminarBibliotecas);
+        $auth->addChild($operadorChefe, $verPostosTrabalho);
+        $auth->addChild($operadorChefe, $inserirPostosTrabalho);
+        $auth->addChild($operadorChefe, $editarPostosTrabalho);
+        $auth->addChild($operadorChefe, $eliminarPostosTrabalho);
+        $auth->addChild($operadorChefe, $ativacaoRecibosEmprestimos);
+        $auth->addChild($operadorChefe, $desativacaoRecibosEmprestimos);
+        $auth->addChild($operadorChefe, $ativacaoRecibosDevolucoes);
+        $auth->addChild($operadorChefe, $desativacaoRecibosDevolucoes);
+        $auth->addChild($operadorChefe, $ativacaoRecibosRenovacoes);
+        $auth->addChild($operadorChefe, $desativacaoRecibosRenovacoes);
+        $auth->addChild($operadorChefe, $ativacaoRecibosReservasExemplares);
+        $auth->addChild($operadorChefe, $desativacaoRecibosReservasExemplares);
+        $auth->addChild($operadorChefe, $ativacaoRecibosReservaPostoTrabalho);
+        $auth->addChild($operadorChefe, $desativacaoRecibosReservaPostoTrabalho);
+        $auth->addChild($operadorChefe, $ativacaoCancelarReservaLivros);
+        $auth->addChild($operadorChefe, $desativacaoCancelarReservaLivros);
+        $auth->addChild($operadorChefe, $ativarObrasSlideShow);
+        $auth->addChild($operadorChefe, $desativarObrasSlideShow);
+        $auth->addChild($operadorChefe, $ativacaoEmArrumacao);
+        $auth->addChild($operadorChefe, $desativacaoEmArrumacao);
+        
+       
         //$auth->addChild($operadorChefe, $createPost);
 
         // add "admin" role and give this role permissions
         // as well as the permissions of the "author" role
         $admin = $auth->createRole('admin');
         $auth->add($admin);
+        $auth->addChild($admin, $verOperadores);
+        $auth->addChild($admin, $inserirOperadores);
+        $auth->addChild($admin, $editarOperadores);
+        $auth->addChild($admin, $eliminarOperadores);
+        $auth->addChild($admin, $operadorChefe);
+        $auth->addChild($admin, $operadorCatalogacao);
+        $auth->addChild($admin, $operadorCirculacao);
+        $auth->addChild($admin, $leitorDocente);
+        $auth->addChild($admin, $leitorFuncionario);
+        $auth->addChild($admin, $leitorExterno);
+        $auth->addChild($admin, $leitorAluno);
         $admin->description = "Administrador";
         //$auth->addChild($admin, $createPost);
 
