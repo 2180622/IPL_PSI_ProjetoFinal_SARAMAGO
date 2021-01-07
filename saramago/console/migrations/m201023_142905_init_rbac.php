@@ -31,6 +31,35 @@ class m201023_142905_init_rbac extends Migration
         $acessoFrontend->description = 'Aceder ao frontend';
         $auth->add($acessoFrontend);
 
+        // Acesso geral dos operadores backend
+        $acessoBackend = $auth->createPermission('acessoBackend');
+        $acessoBackend->description = 'Aceder ao backend';
+        $auth->add($acessoBackend);
+
+        $acessoAdministracao = $auth->createPermission('acessoAdministracao');
+        $acessoAdministracao->description = 'Aceder à página de administração';
+        $auth->add($acessoAdministracao);
+
+        $acessoCatalogo = $auth->createPermission('acessoCatalogo');
+        $acessoCatalogo->description = 'Aceder à página Catálogo';
+        $auth->add($acessoCatalogo);
+
+        $acessoCirculacao = $auth->createPermission('acessoCirculacao');
+        $acessoCirculacao->description = 'Aceder à página Circulação';
+        $auth->add($acessoCirculacao);
+
+        $acessoPostosDeTrabalho = $auth->createPermission('acessoPostosDeTrabalho');
+        $acessoPostosDeTrabalho->description = 'Aceder á página Postos de Trabalho';
+        $auth->add($acessoPostosDeTrabalho);
+
+        $acessoServicosReprograficos = $auth->createPermission('acessoServicosReprograficos');
+        $acessoServicosReprograficos->description = 'Aceder à pagina Serviços Reprográficos';
+        $auth->add($acessoServicosReprograficos);
+
+        $acessoLeitores = $auth->createPermission('acessoLeitores');
+        $acessoLeitores->description = 'Aceder à página Leitores';
+        $auth->add($acessoLeitores);
+
         #region Gestão de equipa
 
         // add "verOperadores" permission
@@ -585,6 +614,13 @@ class m201023_142905_init_rbac extends Migration
         // as well as the permissions of the "author" role
         $operadorCirculacao = $auth->createRole('operadorCirculacao');
         $auth->add($operadorCirculacao);
+        $auth->addChild($operadorCirculacao, $acessoBackend);
+        $auth->addChild($operadorCirculacao, $acessoPostosDeTrabalho);
+        $auth->addChild($operadorCirculacao, $acessoServicosReprograficos);
+        $auth->addChild($operadorCirculacao, $acessoCirculacao);
+        $auth->addChild($operadorCirculacao, $acessoCatalogo);
+        $auth->addChild($operadorCirculacao, $acessoAdministracao);
+        $auth->addChild($operadorCirculacao, $acessoLeitores);
         $auth->addChild($operadorCirculacao, $verExemplaresPerdidos);
         $auth->addChild($operadorCirculacao, $inserirExemplaresPerdidos);
         $auth->addChild($operadorCirculacao, $inserirMultiplosEmprestimos);
@@ -606,6 +642,13 @@ class m201023_142905_init_rbac extends Migration
         // as well as the permissions of the "author" role
         $operadorCatalogacao = $auth->createRole('operadorCatalogacao');
         $auth->add($operadorCatalogacao);
+        $auth->addChild($operadorCatalogacao, $acessoBackend);
+        $auth->addChild($operadorCatalogacao, $acessoPostosDeTrabalho);
+        $auth->addChild($operadorCatalogacao, $acessoServicosReprograficos);
+        $auth->addChild($operadorCatalogacao, $acessoCirculacao);
+        $auth->addChild($operadorCatalogacao, $acessoCatalogo);
+        $auth->addChild($operadorCatalogacao, $acessoAdministracao);
+        $auth->addChild($operadorCatalogacao, $acessoLeitores);
         $auth->addChild($operadorCatalogacao, $verCDU);
         $auth->addChild($operadorCatalogacao, $inserirCDU);
         $auth->addChild($operadorCatalogacao, $eliminarCDU);
@@ -641,6 +684,13 @@ class m201023_142905_init_rbac extends Migration
         // as well as the permissions of the "author" role
         $operadorChefe = $auth->createRole('operadorChefe');
         $auth->add($operadorChefe);
+        $auth->addChild($operadorChefe, $acessoBackend);
+        $auth->addChild($operadorChefe, $acessoPostosDeTrabalho);
+        $auth->addChild($operadorChefe, $acessoServicosReprograficos);
+        $auth->addChild($operadorChefe, $acessoCirculacao);
+        $auth->addChild($operadorChefe, $acessoCatalogo);
+        $auth->addChild($operadorChefe, $acessoAdministracao);
+        $auth->addChild($operadorChefe, $acessoLeitores);
         $auth->addChild($operadorChefe, $verHorario);
         $auth->addChild($operadorChefe, $verNoticias);
         $auth->addChild($operadorChefe, $verMorada);
