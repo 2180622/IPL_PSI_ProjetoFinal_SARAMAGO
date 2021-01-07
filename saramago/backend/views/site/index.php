@@ -81,7 +81,7 @@ $this->title = 'SARAMAGO';
                     </div>
                 </a>
                 <br>
-                <a href="'.Url::to(['/postos/']).'">
+                <a href="'.Url::to(['/pto/']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Postos de Trabalho</h3>
