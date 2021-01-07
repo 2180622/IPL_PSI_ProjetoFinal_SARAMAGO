@@ -35,7 +35,7 @@ class LeitorCreateCest
         $I->fillField('#leitorform-mail2', null);
         $I->fillField('#leitorform-notainterna', null);
         $I->selectOption('#leitorform-biblioteca_id', 'Biblioteca Alberto Caeiro');
-        $I->selectOption('#leitorform-tipoleitor_id', 'Funcionário');
+        $I->selectOption('#leitorform-tipoleitor_id', 'Aluno de TeSP');
 
         $I->click('#guardar');
     }

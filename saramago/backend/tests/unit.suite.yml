@@ -5,6 +5,6 @@ modules:
         - Yii2
         - Asserts
         - Db:
-            dsn: 'mysql:host=localhost;dbname=yii2saramago'
+            dsn: 'mysql:host=localhost;dbname=yii2saramago_test'
             user: 'root'
             password: ''
