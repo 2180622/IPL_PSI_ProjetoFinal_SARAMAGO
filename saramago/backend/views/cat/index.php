@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-cat">
     <?php
-    if($dataProvider->totalCount == 0){
+    if($obrasTotalCount == 0){
         echo '<div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
                 <strong>Informação:</strong> Comece por registar as suas obras.
               </div>';
@@ -26,12 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="grid-container">
         <div class="menu-search-saramago">
             <?php Pjax::begin(); ?>
-            <?= $this->render('_search', ['model' => $searchModel, 'cduAll'=>$cduAll, 'colecaoAll'=>$colecaoAll]) ?>
+            <?= $this->render('_search', ['model' => $ObraSearchModel, 'cduAll'=>$cduAll, 'colecaoAll'=>$colecaoAll]) ?>
             <?php Pjax::end(); ?>
         </div>
         <div class="menu-nav-saramago">
             <?= Html::button(FAS::icon('plus') . ' Adicionar Obra',
-                ['value' => 'cat/create',  'class' => 'btn btn-alt','id' => 'modalButtonCreate']) ?>
+                ['value' => 'cat/create',  'class' => 'btn btn-alt','id' => 'modalButtonObraCreate']) ?>
             <?= ButtonDropdown::widget([
                 'label' => FAS::icon('users') . ' Autores',
                 'encodeLabel' => false,
@@ -57,10 +57,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'items' => [
                     [
                         'label' => 'Obras',
+                        'options' => ['id' => 'tabObras'],
                         'content' => '<br>'.
                             GridView::widget([
-                            'dataProvider' => $dataProvider,
-                            'filterModel' => $searchModel,
+                            'dataProvider' => $ObraDataProvider,
+                            'filterModel' => $ObraSearchModel,
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
                                 //'id',
@@ -127,11 +128,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'buttons' => [
                                         'view' => function ($url, $model, $id) {
                                             return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                                                ['value' => Url::to(['view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonView' . $id]);
+                                                ['value' => Url::to(['view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonObraView' . $id]);
                                         },
                                         'update' => function ($url, $model, $id) {
                                             return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                                                ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
+                                                ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonObraUpdate' . $id]);
                                         },
                                         'delete' => function ($url, $model, $id) {
                                             return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
@@ -143,12 +144,54 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                 ],
                             ]]),
-                        //'options' => ['id' => 'myveryownID'],
                     ],
                     [
                         'label' => 'Autores',
                         'options' => ['id' => 'tabAutores'],
-                        'content'=> false,
+                        'content'=> '<br>'.
+                            GridView::widget([
+                                    'dataProvider' => $AutorDataProvider,
+                                    'filterModel' => $AutorSearchModel,
+                                'columns' => [
+                                    ['class' => 'yii\grid\SerialColumn'],
+                                    'primeiroNome',
+                                    'segundoNome',
+                                    'apelido',
+                                    'tipo',
+                                    [
+                                        'attribute' => 'tipo',
+                                        'label' => 'Tipo',
+                                        'filter' => ['individual'=>'Individual','coletivo'=>'Coletivo'],
+                                        'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
+                                    ],
+                                    [
+                                        'attribute' => 'orcid',
+                                        'label' => 'ORCid',
+                                    ],
+                                    ['class' => 'yii\grid\ActionColumn',
+                                        'header' => 'Ações',
+                                        'template' => '{view} {update} {delete}',
+                                        'buttons' => [
+                                            'view' => function ($url, $model, $id) {
+                                                return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
+                                                    ['value' => Url::to(['autor-view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonAutorView' . $id]);
+                                            },
+                                            'update' => function ($url, $model, $id) {
+                                                return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
+                                                    ['value' => Url::to(['autor-update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonAutorUpdate' . $id]);
+                                            },
+                                            'delete' => function ($url, $model, $id) {
+                                                $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
+                                                return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
+                                                    ['class' => 'btn btn-danger btn-sm inline']), Url::to(['autor-delete', 'id' => $id]),
+                                                    ['data' =>
+                                                        ['confirm' => "Tem a certeza de que pretende apagar o autor:\n" .$autor . ' ?', 'method' => 'post']
+                                                    ]);
+                                            },
+                                        ],
+                                    ],
+                                ],
+                            ])
                     ],
                 ],
                 'options' => ['class' =>'nav nav-tabs', 'role'=>'tablist'],
@@ -159,16 +202,38 @@ $this->params['breadcrumbs'][] = $this->title;
             foreach ($obrasModel as $obra) {
                 $this->registerJs("
                     $(function () {
-                    $('#modalButtonView" . $obra->id . "').click(function (){
-                        $('#modalView" . $obra->id . "').modal('show')
+                    $('#modalButtonObraView" . $obra->id . "').click(function (){
+                        $('#modalObraView" . $obra->id . "').modal('show')
                             .find('#modalContent')
                             .load($(this).attr('value'))
                     })
                 });
     
                 $(function () {
-                    $('#modalButtonUpdate" . $obra->id . "').click(function (){
-                        $('#modalUpdate" . $obra->id . "').modal('show')
+                    $('#modalButtonObraUpdate" . $obra->id . "').click(function (){
+                        $('#modalObraUpdate" . $obra->id . "').modal('show')
+                            .find('#modalContent')
+                            .load($(this).attr('value'))
+                    })
+                });
+                ");
+            }
+            ?>
+
+            <?php
+            foreach ($autorModel as $autor) {
+                $this->registerJs("
+                    $(function () {
+                    $('#modalButtonAutorView" . $autor->id . "').click(function (){
+                        $('#modalAutorView" . $autor->id . "').modal('show')
+                            .find('#modalContent')
+                            .load($(this).attr('value'))
+                    })
+                });
+    
+                $(function () {
+                    $('#modalButtonAutorUpdate" . $autor->id . "').click(function (){
+                        $('#modalAutorUpdate" . $autor->id . "').modal('show')
                             .find('#modalContent')
                             .load($(this).attr('value'))
                     })
@@ -183,14 +248,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
 
     <?php
-    $this->registerJs("
+    $this->registerJs( /**@lang JavaScript */"
         $(function () {
-            $('#modalButtonCreate').click(function (){
-                $('#modalCreate').modal('show')
+            $('#modalButtonObraCreate').click(function (){
+                $('#modalObraCreate').modal('show')
                     .find('#modalContent')
                     .load($(this).attr('value'))
             })
         });
+        
+        $(function () {
+            $('#modalButtonAutorCreate').click(function (){
+                $('#modalAutorCreate').modal('show')
+                    .find('#modalContent')
+                    .load($(this).attr('value'))
+            })
+        });
+        
     ");
 
     ?>
@@ -198,7 +272,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     Modal::begin([
         'header' => '<h3>Nova Obra</h3>',
-        'id' => 'modalCreate',
+        'id' => 'modalObraCreate',
+        'size' => 'modal-lg',
+        'clientOptions' => ['backdrop' => 'static']
+    ]);
+    echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+    Modal::end();
+    ?>
+
+    <?php
+    Modal::begin([
+        'header' => '<h3>Novo Autor</h3>',
+        'id' => 'modalAutorCreate',
         'size' => 'modal-lg',
         'clientOptions' => ['backdrop' => 'static']
     ]);
@@ -210,7 +295,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         Modal::begin([
             'header' => '<h4>'.$obra->titulo.'</h4>',
-            'id' => 'modalView' . $obra->id,
+            'id' => 'modalObraView' . $obra->id,
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']
         ]);
@@ -219,7 +304,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
         Modal::begin([
             'header' => '<h4>'.$obra->titulo.'</h4>',
-            'id' => 'modalUpdate' . $obra->id,
+            'id' => 'modalObraUpdate' . $obra->id,
+            'size' => 'modal-lg',
+            'clientOptions' => ['backdrop' => 'static']
+        ]);
+        echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+        Modal::end();
+    }
+    ?>
+
+    <?php foreach ($autorModel as $autor) {
+
+        Modal::begin([
+            'header' => '<h4>'.$autor->primeiroNome.' '.$autor->segundoNome.' '.$autor->apelido.'</h4>',
+            'id' => 'modalAutorView' . $autor->id,
+            'size' => 'modal-lg',
+            'clientOptions' => ['backdrop' => 'static']
+        ]);
+        echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+        Modal::end();
+
+        Modal::begin([
+            'header' => '<h4>'.$autor->primeiroNome.' '.$autor->segundoNome.' '.$autor->apelido.'</h4>',
+            'id' => 'modalAutorUpdate' . $autor->id,
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']
         ]);

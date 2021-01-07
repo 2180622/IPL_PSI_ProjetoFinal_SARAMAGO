@@ -3,8 +3,10 @@ namespace backend\controllers;
 
 use app\models\ExemplarSearch;
 use app\models\ObraSearch;
+use app\models\AutorSearch;
 use backend\models\ObraForm;
 use backend\models\ExemplarForm;
+use common\models\Autor;
 use common\models\Cdu;
 use common\models\Colecao;
 use common\models\Exemplar;
@@ -43,6 +45,7 @@ class CatController extends Controller
                         'actions' => ['logout', 'index',
                             'view','view-full', 'create', 'update', 'delete',
                             'exemplar-index','exemplar-update','exemplar-view','exemplar-create','exemplar-delete',
+                            'autor-view','autor-create', 'autor-update','autor-delete',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -76,27 +79,41 @@ class CatController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {   
+    {
         if ((Yii::$app->user->can('acessoCatalogo'))) {
-            $this->layout="minor";
+            $this->layout = "minor";
 
             $obrasModel = Obra::find()->all();
+            $autorModel = Autor::find()->all();
+
+            $obrasTotalCount = Obra::find()->count();
+            $autorTotalCount = Autor::find()->count();
+
             $exemplarModels = Exemplar::find()->all();
-            $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
-            $tiposExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
+            $cduAll = ArrayHelper::map(Cdu::find()->all(), 'id', 'designacao', 'codCdu', ['enctype' => 'multipart/form-data']);
+            $tiposExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(), 'id', 'designacao', 'tipo', ['enctype' => 'multipart/form-data']);
             $colecaoAll = ArrayHelper::map(Colecao::find()->all(), 'id', 'tituloColecao', ['enctype' => 'multipart/form-data']);
 
-            $searchModel = new ObraSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $ObraSearchModel = new ObraSearch();
+            $ObraDataProvider = $ObraSearchModel->search(Yii::$app->request->queryParams);
 
-            return $this->render('index',
-                ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-                    'obrasModel' => $obrasModel, 'cduAll'=>$cduAll,
-                    'tiposExemplarAll'=>$tiposExemplarAll, 'colecaoAll' => $colecaoAll]);
+            $AutorSearchModel = new AutorSearch();
+            $AutorDataProvider = $AutorSearchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('index', [
+                'obrasModel' => $obrasModel,
+                'obrasTotalCount' => $obrasTotalCount,
+                'ObraSearchModel' => $ObraSearchModel,
+                'ObraDataProvider' => $ObraDataProvider,
+                'autorModel' => $autorModel,
+                'autorTotalCount' => $autorTotalCount,
+                'AutorSearchModel' => $AutorSearchModel,
+                'AutorDataProvider' => $AutorDataProvider,
+
+                'cduAll' => $cduAll, 'tiposExemplarAll' => $tiposExemplarAll, 'colecaoAll' => $colecaoAll]);
         }
         return $this->redirect(['../web']);
     }
-
     /**
      * Displays a single obra model in modal.
      * @param integer $id
@@ -190,7 +207,7 @@ class CatController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
-    {  
+    {
         if ((Yii::$app->user->can('editarObras'))) {
             $this->findModel($id)->delete();
 
@@ -226,7 +243,7 @@ class CatController extends Controller
     {
         if ((Yii::$app->user->can('verExemplares'))) {
             $searchModel = new ExemplarSearch();
-            
+
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('exemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
@@ -338,8 +355,86 @@ class CatController extends Controller
     #endregion
 
     #region Autor
+    /**
+     * Displays a single Autor model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionAutorView($id)
+    {
+        return $this->renderAjax('autor/view', ['model' => $this->findModelAutor($id),]);
+    }
 
-    //TODO
+    public function actionAutorCreate()
+    {
+        $model = new Autor();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi adicionado com sucesso.');
+            return $this->redirect(['index']);
+        }
+
+        return $this->renderAjax('autor/create', ['model' => $model,]);
+    }
+
+    /**
+     * Updates an existing Autor model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionAutorUpdate($id)
+    {
+        $model = $this->findModelAutor($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi editado com sucesso.');
+            return $this->redirect(['index']);
+        }
+
+        return $this->renderAjax('autor/update', ['model' => $model]);
+    }
+
+    /**
+     * Deletes an existing Autor model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionAutorDelete($id)
+    {
+        $autor = $this->findModelAutor($id);
+        $oldAutor = $autor->primeiroNome.' '.$autor->segundoNome.' '.$autor->apelido;
+
+        $this->findModelAutor($id)->delete();
+
+        Yii::$app->session->setFlash('success',
+            '<strong>Informação:</strong> O autor "'.$oldAutor.' foi eliminado com sucesso.');
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Autor model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Autor the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelAutor($id)
+    {
+        if (($model = Autor::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('Autor não encontrado.');
+    }
+
 
     #endregion
 
