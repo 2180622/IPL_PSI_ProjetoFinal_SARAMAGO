@@ -31,6 +31,11 @@ class NoticiasSearch extends Noticias
         return Model::scenarios();
     }
 
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+    }
+
     /**
      * Creates data provider instance with search query applied
      *

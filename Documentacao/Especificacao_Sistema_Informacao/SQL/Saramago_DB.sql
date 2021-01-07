@@ -371,8 +371,10 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Noticias` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
   `interface` ENUM('opac', 'Interna', 'todas') NOT NULL COMMENT 'Interface onde será apresentada',
   `dataVisivel` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data visível',
+  `dataRegisto` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data Registo',
   `dataExpiracao` DATETIME NULL COMMENT 'Data da expiração',
   `autor` VARCHAR(255) NOT NULL COMMENT 'Autor',
+  `assunto` VARCHAR(255) NOT NULL COMMENT 'Assunto',
   `conteudo` LONGTEXT NOT NULL COMMENT 'Conteúdo',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB

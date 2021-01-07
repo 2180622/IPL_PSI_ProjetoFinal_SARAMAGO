@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     if($dataProvider->totalCount == 0)
     {
         echo '
-            <div class="alert alert-info alert-dismissible config" role="alert">
+            <div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
                 <strong>Informação:</strong> Comece por registar conteúdos relevantes para os seus leitores ou a sua equipa.
             </div>
         ';

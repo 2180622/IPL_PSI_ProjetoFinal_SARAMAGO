@@ -472,6 +472,16 @@ class ConfigController extends Controller
         $oldNoticia = $this->findModelNoticias($id);
         $model = $this->findModelNoticias($id);
 
+        $user = Yii::$app->user;
+        $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
+
+        if($leitor!=null)
+        {
+            $identity = $leitor->nome;
+        }else{
+            $identity = '@' . $user->identity->username . '';
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             if($oldNoticia->assunto == $model->assunto){
@@ -480,10 +490,10 @@ class ConfigController extends Controller
                 Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto. '" foi atualizada para "' . $model->assunto . '"');
             }
 
-            return $this->redirect(['view', '#' => $model->id]);
+            return $this->redirect(['noticias', '#' => $model->id]);
         }
 
-        return $this->renderAjax('noticias/update', ['model' => $model,]);
+        return $this->renderAjax('noticias/update', ['model' => $model,'identity'=> $identity]);
     }
 
     /**
