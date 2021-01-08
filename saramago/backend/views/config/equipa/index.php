@@ -147,15 +147,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
     <?php
-    /*$this->registerJs("
-        $(function () {
-            $('#modalButtonCreate').click(function (){
-                $('#modalCreate').modal('show')
-                    .find('#modalContent')
-                    .load($(this).attr('value'))
-            })
-        });
-    ");*/
     $this->registerJs("
         $(function () {
             $('#modalButtonAssociate').click(function (){
@@ -166,18 +157,6 @@ $this->params['breadcrumbs'][] = $this->title;
         });
     ");
     ?>
-<!--
-    --><?php
-/*    Modal::begin([
-
-        'header' => '<h3>Novo Operador</h3>',
-        'id' => 'modalCreate',
-        'size' => 'modal-lg',
-        'clientOptions' => ['backdrop' => 'static']
-    ]);
-    echo '<div id="modalContent"><div style="text-align:center">' . FAS::icon('spinner')->size(FAS::SIZE_7X)->spin() . '</div></div>';
-    Modal::end();
-    */?>
 
     <?php
     Modal::begin([

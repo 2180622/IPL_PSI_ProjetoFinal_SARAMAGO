@@ -2,9 +2,13 @@ suite_namespace: backend\tests\unit
 actor: UnitTester
 modules:
     enabled:
-        - Yii2
+        - Yii2:
+            part: [orm, email, fixtures]
+            transaction:
+                true
         - Asserts
         - Db:
             dsn: 'mysql:host=localhost;dbname=yii2saramago_test'
             user: 'root'
             password: ''
+            cleanup: false

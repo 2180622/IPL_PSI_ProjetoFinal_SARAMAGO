@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
                 <br>
                 <a href="' . Url::to(['config/bibliotecas']) . '">
-                    <div class="card card-config">
+                    <div class="card card-config" id="bibliotecas">
                         <div class="card-body"><h4>Bibliotecas</h4>Defina as bibliotecas da entidade</div>
                     </div>
                 </a>

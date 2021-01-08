@@ -15,16 +15,18 @@ class LeitorAssociateCest
         $I->click('#config');
         $I->amOnPage('/config');
         $I->click('#equipa');
-
     }
 
     // tests
     public function tryToTest(FunctionalTester $I)
     {
-        $I->amOnPage('/config/equipa');
+        $I->amOnPage('/config/equipa/associate');
         $I->click('#modalButtonAssociate');
 
-        $I->see('', '.modal-content');
+        $I->seeElement('.modal-content');
+        $I->seeElement('.modal-header');
+        $I->seeElement('.modal-body');
+        $I->seeElement('#modalContent');
 
         $I->selectOption('#equipacreateform-leitor_id', 'André Machado');
         $I->selectOption('#equipacreateform-rolenova', 'Operador Chefe');

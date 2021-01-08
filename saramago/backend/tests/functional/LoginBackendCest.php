@@ -5,7 +5,7 @@ namespace backend\tests\functional;
 use common\fixtures\UserFixture;
 use backend\tests\FunctionalTester;
 
-class LoginTestCest
+class LoginBackendCest
 {
     /**
      * @var \backend\tests\FunctionalTester

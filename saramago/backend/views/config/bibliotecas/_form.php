@@ -28,7 +28,7 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'notasOpac')->widget(CKEditor::className(), ['options' => ['rows' => 6, 'id' => $model->id], 'preset' => 'basic']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success', 'id' => 'guardar']) ?>
     </div>
 
     <?php ActiveForm::end();?>
