@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
                     'browseLabel' => '',
                     'uploadClass' => 'btn btn-success',
                     'showUpload' => true,
-                ]
+                ],
             ]
         )->hint('Capa');
     }else{
@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
                     'browseLabel' => '',
                     'uploadClass' => 'btn btn-success',
                     'showUpload' => true,
-                ]
+                ],
             ]
         )->hint('Capa');
     }

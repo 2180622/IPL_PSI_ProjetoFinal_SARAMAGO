@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="menu-nav-saramago">
             <?= Html::button(FAS::icon('plus') . ' Adicionar Obra',
-                ['value' => 'cat/create',  'class' => 'btn btn-alt','id' => 'modalButtonObraCreate']) ?>
+                ['value' => 'create',  'class' => 'btn btn-alt','id' => 'modalButtonObraCreate']) ?>
             <?= ButtonDropdown::widget([
                 'label' => FAS::icon('users') . ' Autores',
                 'encodeLabel' => false,

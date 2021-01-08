@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\Url;
 
-class ObraForm extends \yii\db\ActiveRecord
+class ObraForm extends Obra
 {
     public $id;
     public $imgCapa;
@@ -33,42 +33,42 @@ class ObraForm extends \yii\db\ActiveRecord
                 'maxSize' => 1024 * 1024 * 2,
             ],
 
-            ['imgCapa' => 'trim'],
-            ['imgCapa' => 'string', 'max' => 255],
+            ['imgCapa', 'trim'],
+            ['imgCapa', 'string', 'max' => 255],
 
-            ['titulo' => 'trim'],
-            ['titulo' => 'required'],
-            ['tituto' => 'string', 'max' => 255],
+            ['titulo', 'trim'],
+            ['titulo', 'required'],
+            ['titulo', 'string', 'max' => 255],
 
-            ['resumo' => 'trim'],
-            ['resumo' => 'string'],
+            ['resumo', 'trim'],
+            ['resumo', 'string'],
 
             ['editor', 'trim'],
-            ['editor' => 'required'],
-            ['editor' => 'string', 'max' => 255],
+            ['editor', 'required'],
+            ['editor', 'string', 'max' => 255],
 
-            ['ano' => 'required'],
-            ['ano' => 'integer'],
+            ['ano', 'required'],
+            ['ano', 'integer'],
 
-            ['tipoObra' => 'required'],
-            ['tipoObra' => 'string'],
+            ['tipoObra', 'required'],
+            ['tipoObra', 'string'],
 
-            ['descricao' => 'required'],
-            ['descricao' => 'string', 'max' => 255],
+            ['descricao', 'required'],
+            ['descricao', 'string', 'max' => 255],
 
-            ['local' => 'trim'],
-            ['local' => 'string', 'max' => 45],
+            ['local', 'trim'],
+            ['local', 'string', 'max' => 45],
 
-            ['edicao' => 'trim'],
-            ['edicao' => 'string', 'max' => 45],
+            ['edicao', 'trim'],
+            ['edicao', 'string', 'max' => 45],
 
-            ['assuntos' => 'string', 'max' => 255],
+            ['assuntos', 'string', 'max' => 255],
 
-            ['preco' => 'number'],
+            ['preco', 'number'],
 
-            ['Cdu_id' => 'integer'],
+            ['Cdu_id', 'integer'],
 
-            ['Colecao_id' => 'integer'],
+            ['Colecao_id', 'integer'],
         ];
     }
 

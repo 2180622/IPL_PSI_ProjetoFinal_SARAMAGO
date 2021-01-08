@@ -70,7 +70,7 @@ $this->title = 'SARAMAGO';
                 </a>
             </div>
             <div class="bottom-space col-md-4">
-                <a href="'.Url::to(['/cat/']).'">
+                <a href="'.Url::to(['/cat/index']).'">
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Catálogo</h3>
