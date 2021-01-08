@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Noticias;
 use common\models\Obra;
+use common\models\Autor;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -16,7 +17,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use frontend\models\AutorSearch;
 /**
  * Site controller
  */
@@ -38,7 +39,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'autor', 'autor-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -81,12 +82,14 @@ class SiteController extends Controller
         $tagsDasObras = Obra::getAssuntosDasObrasTodas();
         $quantidadeDeLivrosNaMesmaTag = Obra::getLivrosComMesmoAssunto();
     	$obrasRecentementeAdquiridas = Obra::find()->orderBy(['dataRegisto' => SORT_DESC])->all();
+        $autores = Autor::find()->all();
 
         return $this->render('index', [
             'tagsDasObras' => $tagsDasObras,
             'quantidadeDeLivrosNaMesmaTag' => $quantidadeDeLivrosNaMesmaTag,
             'obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas,
-            'noticias' => $noticias]);
+            'noticias' => $noticias,
+            'autores' => $autores]);
     }
 
     /**
@@ -255,6 +258,37 @@ class SiteController extends Controller
 
         Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
         return $this->goHome();
+    }
+
+    public function actionAutorIndex()
+    {
+        $this->layout = 'main-login';
+
+        $searchModel = new AutorSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('autor/index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    public function actionAutorView($id)
+    {
+        $this->layout = 'main-login';
+
+        return $this->render('autor/view', ['model' => $this->findModelAutor($id),]);
+    }
+
+
+    protected function findModelAutor($id)
+    {
+        if (($model = Autor::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**

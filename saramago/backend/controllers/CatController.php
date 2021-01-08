@@ -4,6 +4,7 @@ namespace backend\controllers;
 use app\models\ExemplarSearch;
 use app\models\ObraSearch;
 use app\models\AutorSearch;
+use backend\models\AutorForm;
 use backend\models\ObraForm;
 use backend\models\ExemplarForm;
 use common\models\Autor;
@@ -365,7 +366,7 @@ class CatController extends Controller
     public function actionAutorView($id)
     {
         if ((Yii::$app->user->can('acessoCatalogo'))) {
-            return $this->renderAjax('autor/view', ['model' => $this->findModelAutor($id),]);
+            return $this->renderAjax('autor\view', ['model' => $this->findModelAutor($id),]);
         }
 
         throw new NotFoundHttpException('Exemplar não encontrado.');
@@ -374,15 +375,15 @@ class CatController extends Controller
     public function actionAutorCreate()
     {
         if ((Yii::$app->user->can('acessoCatalogo'))) {
-            $model = new Autor();
+            $model = new AutorForm();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post()) && $model->createAutor()) {
                 $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
                 Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi adicionado com sucesso.');
                 return $this->redirect(['index']);
             }
 
-            return $this->renderAjax('autor/create', ['model' => $model,]);
+            return $this->renderAjax('autor\create', ['model' => $model,]);
         }
         throw new NotFoundHttpException('Exemplar não encontrado.');
     }
@@ -405,7 +406,7 @@ class CatController extends Controller
                 return $this->redirect(['index']);
             }
 
-            return $this->renderAjax('autor/update', ['model' => $model]);
+            return $this->renderAjax('autor\update', ['model' => $model]);
         }
         throw new NotFoundHttpException('Exemplar não encontrado.');
     }
