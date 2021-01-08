@@ -167,6 +167,9 @@ $this->title = 'SARAMAGO';
                 <div class="panel panel-default">
                     <div class="panel-heading">Autores</div>
                     <div class="panel-body">
+                        <?php foreach ($autores as $autor) { ?>
+                            <a href="../site/autor/view/<?=$autor->id?>"><button type="button" class="btn btn-outline-light"> <?=$autor->primeiroNome .' '. $autor->segundoNome .' '. $autor->apelido ?> <span class="badge badge-light">~</span></button></a>
+                        <?php } ?> 
                         <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">4</span></button>
                         <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">1</span></button>
                         <button type="button" class="btn btn-outline-light">Teste <span class="badge badge-light">6</span></button>
