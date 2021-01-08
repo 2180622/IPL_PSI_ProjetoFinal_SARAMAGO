@@ -80,7 +80,8 @@ AppAsset::register($this);
         //TODO Pesquisa
         ['label' => 'Pesquisa', 'url' => ['\index'],
          'items' =>[
-                 ['label' =>'Pesquisa Avançada', 'url' =>['/pesquisa']],
+                 ['label' =>'Obras', 'url' =>['/pesquisa/obra']],
+                 ['label' =>'Autores', 'url' =>['/pesquisa/autor']],
 
          ],
         ],

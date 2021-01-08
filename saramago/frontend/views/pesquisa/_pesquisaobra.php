@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
         [
             'attribute'=>'',
             //'value'=>$model->imgCapa,
-            'value'=>Html::a(Html::img(Yii::$app->getUrlManager()->getBaseUrl() . "/" .$model->imgCapa, ['width'=>'192', 'height' => "256"]), $model->imgCapa),
+            'value'=>Html::a(Html::img('@web/img/' . $model->imgCapa, ['width'=>'192', 'height' => "256"]), $model->imgCapa),
             'format' => 'raw',
         ],
         [
@@ -32,10 +32,5 @@ use yii\widgets\DetailView;
             'value'=>$model->preco.' '.'€',
         ],
         // info
-        [
-            'attribute'=>'',
-            'format' => 'raw',
-            'value'=> Html::a(Yii::t('app','Comprar'), Url::toRoute(['contacto/create2'])),
-        ],
     ],
 ]) ?>

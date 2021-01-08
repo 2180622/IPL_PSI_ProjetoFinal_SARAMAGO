@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,6 +11,7 @@ use common\models\Obra;
  */
 class ObraSearch extends Obra
 {
+    public $pesquisaGeral;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class ObraSearch extends Obra
     {
         return [
             [['id', 'Cdu_id', 'Colecao_id'], 'integer'],
-            [['imgCapa', 'titulo', 'resumo', 'editor', 'ano', 'tipoObra', 'descricao', 'local', 'edicao', 'assuntos', 'dataRegisto', 'dataAtualizado'], 'safe'],
+            [['imgCapa', 'pesquisaGeral', 'titulo', 'resumo', 'editor', 'ano', 'tipoObra', 'descricao', 'local', 'edicao', 'assuntos', 'dataRegisto', 'dataAtualizado'], 'safe'],
             [['preco'], 'number'],
         ];
     }
@@ -57,25 +58,15 @@ class ObraSearch extends Obra
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'ano' => $this->ano,
-            'preco' => $this->preco,
-            'dataRegisto' => $this->dataRegisto,
-            'dataAtualizado' => $this->dataAtualizado,
-            'Cdu_id' => $this->Cdu_id,
-            'Colecao_id' => $this->Colecao_id,
-        ]);
-
-        $query->andFilterWhere(['like', 'titulo', $this->titulo])
-            ->andFilterWhere(['like', 'resumo', $this->resumo])
-            ->andFilterWhere(['like', 'editor', $this->editor])
-            ->andFilterWhere(['like', 'tipoObra', $this->tipoObra])
-            ->andFilterWhere(['like', 'descricao', $this->descricao])
-            ->andFilterWhere(['like', 'local', $this->local])
-            ->andFilterWhere(['like', 'edicao', $this->edicao])
-            ->andFilterWhere(['like', 'assuntos', $this->assuntos]);
+        $query->orFilterWhere(['like', 'titulo', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'resumo', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'editor', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'tipoObra', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'descricao', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'local', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'edicao', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'assuntos', $this->pesquisaGeral])
+            /*->andFilterWhere(['like', 'tituloColecao', $this->colecao->tituloColecao])*/;
 
         return $dataProvider;
     }

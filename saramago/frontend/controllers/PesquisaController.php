@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use app\models\ObraSearch;
+use frontend\models\ObraSearch;
 use Yii;
 use common\models\Obra;
 use yii\data\ActiveDataProvider;
@@ -35,14 +35,28 @@ class PesquisaController extends Controller
      * @return mixed
      */
 
-    public function actionIndex()
+    public function actionObra()
     {
         $model = new Obra();
         $searchModel = new ObraSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         // render
-        return $this->render('index', [
+        return $this->render('obra', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
+        ]);
+    }
+
+    public function actionAvancada()
+    {
+        $model = new Obra();
+        $searchModel = new ObraSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // render
+        return $this->render('avancada', [
             'model' => $model,
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel
