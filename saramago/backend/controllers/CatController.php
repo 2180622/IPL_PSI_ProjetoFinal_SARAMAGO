@@ -21,6 +21,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -112,7 +113,7 @@ class CatController extends Controller
 
                 'cduAll' => $cduAll, 'tiposExemplarAll' => $tiposExemplarAll, 'colecaoAll' => $colecaoAll]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
     /**
      * Displays a single obra model in modal.
@@ -150,7 +151,7 @@ class CatController extends Controller
             return $this->render('view-full', ['model' => $this->findModel($id), 'totalExemplaresDaObra' => $totalExemplaresDaObra,
                 'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'exemplarModels' => $exemplarModels, 'bibliotecaAll' => $bibliotecaAll]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -175,7 +176,7 @@ class CatController extends Controller
 
             return $this->renderAjax('create', ['model' => $model, 'cduAll'=> $cduAll, 'colecaoAll' => $colecaoAll]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -196,7 +197,7 @@ class CatController extends Controller
 
             return $this->renderAjax('update', ['model' => $model]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -213,7 +214,7 @@ class CatController extends Controller
 
             return $this->redirect(['index']);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -248,7 +249,7 @@ class CatController extends Controller
 
             return $this->render('exemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -262,7 +263,7 @@ class CatController extends Controller
         if ((Yii::$app->user->can('verExemplares'))) {
             return $this->renderAjax('exemplar/view', ['model' => $this->findModelExemplar($id),]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -285,7 +286,7 @@ class CatController extends Controller
             }
             return $this->renderAjax('exemplar/create', ['model' => $model, 'bibliotecaAll' => $bibliotecaAll, 'tipoexemplarAll' => $tipoexemplarAll, 'estatutoexemplarAll' => $estatutoexemplarAll]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -310,7 +311,7 @@ class CatController extends Controller
 
             return $this->renderAjax('exemplar/update', ['model' => $model, 'bibliotecaAll' => $bibliotecaAll, 'tipoexemplarAll' => $tipoexemplarAll, 'estatutoexemplarAll' => $estatutoexemplarAll]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -333,7 +334,7 @@ class CatController extends Controller
 
             return $this->redirect(['view-full', 'id' => $model->obra->id]);
         }
-        return $this->redirect(['../web']);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -363,20 +364,27 @@ class CatController extends Controller
      */
     public function actionAutorView($id)
     {
-        return $this->renderAjax('autor/view', ['model' => $this->findModelAutor($id),]);
+        if ((Yii::$app->user->can('acessoCatalogo'))) {
+            return $this->renderAjax('autor/view', ['model' => $this->findModelAutor($id),]);
+        }
+
+        throw new NotFoundHttpException('Exemplar não encontrado.');
     }
 
     public function actionAutorCreate()
     {
-        $model = new Autor();
+        if ((Yii::$app->user->can('acessoCatalogo'))) {
+            $model = new Autor();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi adicionado com sucesso.');
-            return $this->redirect(['index']);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi adicionado com sucesso.');
+                return $this->redirect(['index']);
+            }
+
+            return $this->renderAjax('autor/create', ['model' => $model,]);
         }
-
-        return $this->renderAjax('autor/create', ['model' => $model,]);
+        throw new NotFoundHttpException('Exemplar não encontrado.');
     }
 
     /**
@@ -388,15 +396,18 @@ class CatController extends Controller
      */
     public function actionAutorUpdate($id)
     {
-        $model = $this->findModelAutor($id);
+        if ((Yii::$app->user->can('acessoCatalogo'))) {
+            $model = $this->findModelAutor($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi editado com sucesso.');
-            return $this->redirect(['index']);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.' foi editado com sucesso.');
+                return $this->redirect(['index']);
+            }
+
+            return $this->renderAjax('autor/update', ['model' => $model]);
         }
-
-        return $this->renderAjax('autor/update', ['model' => $model]);
+        throw new NotFoundHttpException('Exemplar não encontrado.');
     }
 
     /**
@@ -408,15 +419,18 @@ class CatController extends Controller
      */
     public function actionAutorDelete($id)
     {
-        $autor = $this->findModelAutor($id);
-        $oldAutor = $autor->primeiroNome.' '.$autor->segundoNome.' '.$autor->apelido;
+        if ((Yii::$app->user->can('acessoCatalogo'))) {
+            $autor = $this->findModelAutor($id);
+            $oldAutor = $autor->primeiroNome.' '.$autor->segundoNome.' '.$autor->apelido;
 
-        $this->findModelAutor($id)->delete();
+            $this->findModelAutor($id)->delete();
 
-        Yii::$app->session->setFlash('success',
-            '<strong>Informação:</strong> O autor "'.$oldAutor.' foi eliminado com sucesso.');
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> O autor "'.$oldAutor.' foi eliminado com sucesso.');
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        throw new NotFoundHttpException('Exemplar não encontrado.');
     }
 
     /**

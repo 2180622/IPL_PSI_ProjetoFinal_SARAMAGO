@@ -37,6 +37,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -109,50 +110,62 @@ class ConfigController extends Controller
      */
     public function actionIndex()
     {
-        $user = Yii::$app->user;
-        $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $user = Yii::$app->user;
+            $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
 
-        if($leitor!=null)
-        {
-            $identity = $leitor->nome;
-        }else{
-            $identity = '@' . $user->identity->username . '';
+            if($leitor!=null)
+            {
+                $identity = $leitor->nome;
+            }else{
+                $identity = '@' . $user->identity->username . '';
+            }
+            return $this->render('index', ['identity'=>$identity]);
         }
-        return $this->render('index', ['identity'=>$identity]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     #region Conta
     public function actionConta()
     {
-        $PasswordModel = new ChangePasswordForm();
-        return $this->render('conta/index');
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $PasswordModel = new ChangePasswordForm();
+            return $this->render('conta/index');
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionContaUsername()
     {
-        $user = Yii::$app->user;
-        $identity = $user->identity->username;
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $user = Yii::$app->user;
+            $identity = $user->identity->username;
 
-        $UsernameModel = new ChangeUsernameForm();
+            $UsernameModel = new ChangeUsernameForm();
 
-        if($UsernameModel->load(Yii::$app->request->post()) && $UsernameModel->change()) {
-            Yii::$app->session->setFlash('success',
-                "<strong>Informação: </strong> O username foi alterado com sucesso! ");
-            return $this->redirect(['conta']);
+            if($UsernameModel->load(Yii::$app->request->post()) && $UsernameModel->change()) {
+                Yii::$app->session->setFlash('success',
+                    "<strong>Informação: </strong> O username foi alterado com sucesso! ");
+                return $this->redirect(['conta']);
+            }
+            return $this->renderAjax('conta/username', ['model'=> $UsernameModel, 'identity' => $identity]);
         }
-        return $this->renderAjax('conta/username', ['model'=> $UsernameModel, 'identity' => $identity]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionContaPassword()
     {
-        $PasswordModel = new ChangePasswordForm();
+        if ((Yii::$app->user->can('acessoAdministracao'))) {    
+            $PasswordModel = new ChangePasswordForm();
 
-        if($PasswordModel->load(Yii::$app->request->post())&& $PasswordModel->change()) {
-            Yii::$app->session->setFlash('success',
-                "<strong>Informação:</strong> A password foi alterada com sucesso!");
-            return $this->redirect(['conta']);
+            if($PasswordModel->load(Yii::$app->request->post())&& $PasswordModel->change()) {
+                Yii::$app->session->setFlash('success',
+                    "<strong>Informação:</strong> A password foi alterada com sucesso!");
+                return $this->redirect(['conta']);
+            }
+            return $this->renderAjax('conta/password',['model' => $PasswordModel]);
         }
-        return $this->renderAjax('conta/password',['model' => $PasswordModel]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     #endregion
@@ -166,32 +179,41 @@ class ConfigController extends Controller
      */
     public function actionEntidade()
     {
-        $searchModel = new Entidade();
-        $entidadeModel = Config::find()->all();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('verDadosEntidade'))) {
+            $searchModel = new Entidade();
+            $entidadeModel = Config::find()->all();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('entidade/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-            'entidadeModels' => $entidadeModel]);
+            return $this->render('entidade/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                'entidadeModels' => $entidadeModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEntidadeUpdate($id)
     {
-        $model = $this->findModelEntidade($id);
+        if ((Yii::$app->user->can('editarDadosEntidade'))) {    
+            $model = $this->findModelEntidade($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi alterado.");
-            return $this->redirect(['entidade']);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi alterado.");
+                return $this->redirect(['entidade']);
+            }
+            return $this->renderAjax('entidade/update', ['model' => $model]);
         }
-        return $this->renderAjax('entidade/update', ['model' => $model]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEntidadeReset($id)
     {
-        $model = $this->findModelEntidade($id);
-        $model->reset($id);
-        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi reposto.");
+        if ((Yii::$app->user->can('editarDadosEntidade'))) {
+            $model = $this->findModelEntidade($id);
+            $model->reset($id);
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi reposto.");
 
-        return $this->redirect(['entidade/index']);
+            return $this->redirect(['entidade/index']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelEntidade($id)
@@ -213,51 +235,67 @@ class ConfigController extends Controller
      */
     public function actionBibliotecas()
     {
-        $searchModel = new BibliotecaSearch();
-        $bibliotecasModel = Biblioteca::find()->all();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('verBibliotecas'))) {
+            $searchModel = new BibliotecaSearch();
+            $bibliotecasModel = Biblioteca::find()->all();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('bibliotecas/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-            'bibliotecasModels' => $bibliotecasModel]);
+            return $this->render('bibliotecas/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                'bibliotecasModels' => $bibliotecasModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionBibliotecasView($id)
     {
-        if (($model = Biblioteca::findOne($id)) !== null) {
-            return $this->renderAjax('bibliotecas/view', ['model' => $model]);
-        }
+        if ((Yii::$app->user->can('verBibliotecas'))) {
 
-        throw new NotFoundHttpException();
+            if (($model = Biblioteca::findOne($id)) !== null) {
+                return $this->renderAjax('bibliotecas/view', ['model' => $model]);
+            }
+
+            throw new NotFoundHttpException();
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionBibliotecasCreate()
     {
-        $model = new Biblioteca();
+        if ((Yii::$app->user->can('inserirBibliotecas'))) {
+            $model = new Biblioteca();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Foi adicionada uma nova biblioteca.");
-            return $this->redirect('bibliotecas');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "Foi adicionada uma nova biblioteca.");
+                return $this->redirect('bibliotecas');
+            }
+
+            return $this->renderAjax('bibliotecas/create', ['model'=>$model]);
         }
-
-        return $this->renderAjax('bibliotecas/create', ['model'=>$model]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionBibliotecasUpdate($id)
     {
-        $model = $this->findModelBibliotecas($id);
+        if ((Yii::$app->user->can('inserirBibliotecas'))) {
+            $model = $this->findModelBibliotecas($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "A biblioteca foi atualizada.");
-            return $this->redirect('bibliotecas');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "A biblioteca foi atualizada.");
+                return $this->redirect('bibliotecas');
+            }
+            return $this->renderAjax('bibliotecas/update', ['model' => $model,]);
         }
-        return $this->renderAjax('bibliotecas/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionBibliotecasDelete($id)
     {
-        $this->findModelBibliotecas($id)->delete();
-        Yii::$app->session->setFlash('success', "A biblioteca foi eliminada.");
-        return $this->redirect(['bibliotecas']);
+        if ((Yii::$app->user->can('eliminarBibliotecas'))) {
+            $this->findModelBibliotecas($id)->delete();
+            Yii::$app->session->setFlash('success', "A biblioteca foi eliminada.");
+            return $this->redirect(['bibliotecas']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelBibliotecas($id)
@@ -279,56 +317,70 @@ class ConfigController extends Controller
      */
     public function actionPostos()
     {
-        $searchModel = new PostotrabalhoSearch();
-        $postoTrabalhoModel = Postotrabalho::find()->all();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('verPostosTrabalho'))) {
+            $searchModel = new PostotrabalhoSearch();
+            $postoTrabalhoModel = Postotrabalho::find()->all();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('postos/index',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-            'postoTrabalhoModels' => $postoTrabalhoModel]);
+            return $this->render('postos/index',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                'postoTrabalhoModels' => $postoTrabalhoModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionPostosView($id){
+        if ((Yii::$app->user->can('verPostosTrabalho'))) {
+            //FIXME
+            if (($model = Postotrabalho::findOne($id)) !== null) {
+                return $this->renderAjax('postos/view', ['model' => $model]);
+            }
 
-        //FIXME
-        if (($model = Postotrabalho::findOne($id)) !== null) {
-            return $this->renderAjax('postos/view', ['model' => $model]);
+            return 1;
         }
-
-        return 1;
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionPostosCreate(){
-        $model = new Postotrabalho();
-        new Biblioteca();
-        $listaBibliotecas = Biblioteca::find()->all();
+        if ((Yii::$app->user->can('inserirPostosTrabalho'))) {
+            $model = new Postotrabalho();
+            new Biblioteca();
+            $listaBibliotecas = Biblioteca::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "O posto de trabalho foi adicionado.");
-            return $this->redirect('postos');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "O posto de trabalho foi adicionado.");
+                return $this->redirect('postos');
+            }
+
+            return $this->renderAjax('postos/create', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
         }
-
-        return $this->renderAjax('postos/create', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
+    
     public function actionPostosUpdate($id)
-    {
-        $model = $this->findModelPostostrabalho($id);
-        new Biblioteca();
-        $listaBibliotecas = Biblioteca::find()->all();
+    {   
+        if ((Yii::$app->user->can('editarPostosTrabalho'))) {
+            $model = $this->findModelPostostrabalho($id);
+            new Biblioteca();
+            $listaBibliotecas = Biblioteca::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "O posto de trabalho foi atualizado.");
-            return $this->redirect('postos');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "O posto de trabalho foi atualizado.");
+                return $this->redirect('postos');
+            }
+            return $this->renderAjax('postos/update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
         }
-        return $this->renderAjax('postos/update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionPostosDelete($id)
     {
-        $this->findModelPostostrabalho($id)->delete();
+        if ((Yii::$app->user->can('eliminarPostosTrabalho'))) {
+            $this->findModelPostostrabalho($id)->delete();
 
-        Yii::$app->session->setFlash('success', "O posto de trabalho foi eliminado.");
+            Yii::$app->session->setFlash('success', "O posto de trabalho foi eliminado.");
 
-        return $this->redirect(['postos']);
+            return $this->redirect(['postos']);
+        }
     }
 
     protected function findModelPostostrabalho($id)
@@ -350,45 +402,56 @@ class ConfigController extends Controller
      */
     public function actionLogotipos()
     {
-        $logotiposModels = Config::find()->where(['like', 'key', 'logotipo'])->orWhere(['like', 'key', 'favicon'])->all();
-        $dataProvider = new ActiveDataProvider(
-            ['query' => Config::find()->where(['like', 'key', 'logotipo'])->orWhere(['like', 'key', 'favicon'])]
-        );
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $logotiposModels = Config::find()->where(['like', 'key', 'logotipo'])->orWhere(['like', 'key', 'favicon'])->all();
+            $dataProvider = new ActiveDataProvider(
+                ['query' => Config::find()->where(['like', 'key', 'logotipo'])->orWhere(['like', 'key', 'favicon'])]
+            );
 
-        return $this->render('logotipos/index', ['dataProvider' => $dataProvider, 'logotiposModels'=>$logotiposModels]);
-
+            return $this->render('logotipos/index', ['dataProvider' => $dataProvider, 'logotiposModels'=>$logotiposModels]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
+
     public function actionLogotiposView($id)
     {
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
 
-        return $this->renderAjax('logotipos/view', ['model' => $this->findModelLogotipos($id)]);
-
+            return $this->renderAjax('logotipos/view', ['model' => $this->findModelLogotipos($id)]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionLogotiposUpdate($id)
     {
-        $model = $this->findModelLogotipos($id);
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $model = $this->findModelLogotipos($id);
 
-        if(Yii::$app->request->isPost)
-        {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if(Yii::$app->request->isPost)
+            {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-            if ($model->upload($id)) {
-                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->info. " foi adicionado.");
-                return $this->redirect('logotipos');
+                if ($model->upload($id)) {
+                    Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->info. " foi adicionado.");
+                    return $this->redirect('logotipos');
+                }
             }
+            return $this->renderAjax('logotipos/update', ['model' => $model,]);
         }
-        return $this->renderAjax('logotipos/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionLogotiposReset($id)
     {
-        $model = $this->findModelLogotipos($id);
-        $model->reset($id);
-        Yii::$app->session->setFlash('success',
-            '<strong>Informação:</strong> O ' . $model->info. ' foi reposto para <span class="label label-danger">Não Definido</span>');
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $model = $this->findModelLogotipos($id);
+            $model->reset($id);
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> O ' . $model->info. ' foi reposto para <span class="label label-danger">Não Definido</span>');
 
-        return $this->redirect(['config/logotipos']);
+            return $this->redirect(['config/logotipos']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
 
@@ -410,13 +473,16 @@ class ConfigController extends Controller
      */
     public function actionNoticias()
     {
-        $searchModel = new NoticiasSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $searchModel = new NoticiasSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $noticiasModel = Noticias::find()->all();
+            $noticiasModel = Noticias::find()->all();
 
-        return $this->render('noticias/index',
-            ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'noticiasModel'=> $noticiasModel]);
+            return $this->render('noticias/index',
+                ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'noticiasModel'=> $noticiasModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -427,9 +493,12 @@ class ConfigController extends Controller
      */
     public function actionNoticiasView($id)
     {
-        return $this->renderAjax('noticias/view', [
-            'model' => $this->findModelNoticias($id),
-        ]);
+        if ((Yii::$app->user->can('verNoticias'))) {
+            return $this->renderAjax('noticias/view', [
+                'model' => $this->findModelNoticias($id),
+            ]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -439,25 +508,28 @@ class ConfigController extends Controller
      */
     public function actionNoticiasCreate()
     {
-        $model = new Noticias();
+        if ((Yii::$app->user->can('verNoticias'))) {
+            $model = new Noticias();
 
-        $user = Yii::$app->user;
-        $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
+            $user = Yii::$app->user;
+            $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
 
-        if($leitor!=null)
-        {
-            $identity = $leitor->nome;
-        }else{
-            $identity = '@' . $user->identity->username . '';
+            if($leitor!=null)
+            {
+                $identity = $leitor->nome;
+            }else{
+                $identity = '@' . $user->identity->username . '';
+            }
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $model->assunto. '" foi adicionada.');
+
+                return $this->redirect(['noticias', '#' => $model->id]);
+            }
+
+            return $this->renderAjax('noticias/create', ['model' => $model,'identity'=> $identity]);
         }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $model->assunto. '" foi adicionada.');
-
-            return $this->redirect(['noticias', '#' => $model->id]);
-        }
-
-        return $this->renderAjax('noticias/create', ['model' => $model,'identity'=> $identity]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -469,31 +541,34 @@ class ConfigController extends Controller
      */
     public function actionNoticiasUpdate($id)
     {
-        $oldNoticia = $this->findModelNoticias($id);
-        $model = $this->findModelNoticias($id);
+        if ((Yii::$app->user->can('verNoticias'))) {
+            $oldNoticia = $this->findModelNoticias($id);
+            $model = $this->findModelNoticias($id);
 
-        $user = Yii::$app->user;
-        $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
+            $user = Yii::$app->user;
+            $leitor = Leitor::find()->where(['user_id' => $user->id])->one();
 
-        if($leitor!=null)
-        {
-            $identity = $leitor->nome;
-        }else{
-            $identity = '@' . $user->identity->username . '';
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            if($oldNoticia->assunto == $model->assunto){
-                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $model->assunto. '" foi atualizada.');
+            if($leitor!=null)
+            {
+                $identity = $leitor->nome;
             }else{
-                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto. '" foi atualizada para "' . $model->assunto . '"');
+                $identity = '@' . $user->identity->username . '';
             }
 
-            return $this->redirect(['noticias', '#' => $model->id]);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-        return $this->renderAjax('noticias/update', ['model' => $model,'identity'=> $identity]);
+                if($oldNoticia->assunto == $model->assunto){
+                    Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $model->assunto. '" foi atualizada.');
+                }else{
+                    Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto. '" foi atualizada para "' . $model->assunto . '"');
+                }
+
+                return $this->redirect(['noticias', '#' => $model->id]);
+            }
+
+            return $this->renderAjax('noticias/update', ['model' => $model,'identity'=> $identity]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -504,13 +579,16 @@ class ConfigController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionNoticiasDelete($id)
-    {
-        $oldNoticia = $this->findModelNoticias($id);
-        $this->findModelNoticias($id)->delete();
+    {  
+        if ((Yii::$app->user->can('verNoticias'))) {
+            $oldNoticia = $this->findModelNoticias($id);
+            $this->findModelNoticias($id)->delete();
 
-        Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto . '" foi apagada.');
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A notícia "' . $oldNoticia->assunto . '" foi apagada.');
 
-        return $this->redirect(['noticias']);
+            return $this->redirect(['noticias']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -540,92 +618,105 @@ class ConfigController extends Controller
      */
     public function actionEquipa()
     {
-        $operadores = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->all();
-        $operadorCount = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->count();
-        $searchModel = new EquipaSearch();
+        if ((Yii::$app->user->can('verOperadores'))) {
+            $operadores = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->all();
+            $operadorCount = User::find()->leftJoin(AuthAssignment::tableName(), "user_id = id")->where("item_name LIKE '%operador%'")->count();
+            $searchModel = new EquipaSearch();
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('equipa/index',
-            ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-                'operadores' => $operadores, 'operadorCount' => $operadorCount]);
+            return $this->render('equipa/index',
+                ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                    'operadores' => $operadores, 'operadorCount' => $operadorCount]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEquipaView($id){
+        if ((Yii::$app->user->can('verOperadores'))) {
+            //TODO APAGAR
+            if (($model = Funcionario::findOne($id)) !== null) {
+                $leitor = Leitor::findOne($model->Leitor_id);
+                $user = User::findOne($model->leitor->user_id);
 
-        //TODO APAGAR
-        if (($model = Funcionario::findOne($id)) !== null) {
-            $leitor = Leitor::findOne($model->Leitor_id);
-            $user = User::findOne($model->leitor->user_id);
+                return $this->renderAjax('equipa/view', [
+                    'model' => $model,
+                    'leitor'=>$leitor,
+                    'user'=>$user]);
+            }
 
-            return $this->renderAjax('equipa/view', [
-                'model' => $model,
-                'leitor'=>$leitor,
-                'user'=>$user]);
+            throw new NotFoundHttpException();
         }
-
-        throw new NotFoundHttpException();
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEquipaAssociate()
     {
-        //FIXME
-        $model = new EquipaCreateForm();
-        $leitores = Leitor::find()->all();
-        $users = Leitor::find()->all();
+        if ((Yii::$app->user->can('inserirOperadores'))) {
+            //FIXME
+            $model = new EquipaCreateForm();
+            $leitores = Leitor::find()->all();
+            $users = Leitor::find()->all();
 
 
-        if($leitores == null){
-            Yii::$app->session->setFlash('error', "Não existem Leitores possíveis para associar");
-            return $this->redirect('equipa');
-        }else if($model->associateOperador() == false) {
-            Yii::$app->session->setFlash('error', "Houve um erro.");
-            return $this->redirect('equipa');
-        }else if($model->load(Yii::$app->request->post()) && $model->associateOperador()) {
-            Yii::$app->session->setFlash('success', "O Operador foi modificado.");
-            return $this->redirect('equipa');
+            if($leitores == null){
+                Yii::$app->session->setFlash('error', "Não existem Leitores possíveis para associar");
+                return $this->redirect('equipa');
+            }else if($model->associateOperador() == false) {
+                Yii::$app->session->setFlash('error', "Houve um erro.");
+                return $this->redirect('equipa');
+            }else if($model->load(Yii::$app->request->post()) && $model->associateOperador()) {
+                Yii::$app->session->setFlash('success', "O Operador foi modificado.");
+                return $this->redirect('equipa');
+            }
+
+            return $this->renderAjax('equipa/associate', [
+                'model'=>$model,
+                'leitores'=>$leitores,
+                'users' => $users]);
         }
-
-        return $this->renderAjax('equipa/associate', [
-            'model'=>$model,
-            'leitores'=>$leitores,
-            'users' => $users]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEquipaUpdate($id){
-        $model = new EquipaCreateForm();
-        $leitores = Leitor::find()->all();
-        $listaBibliotecas = Biblioteca::find()->all();
-        $listaTiposLeitors = Tipoleitor::find()->all();
-        $leitores = Leitor::find()->all();
+        if ((Yii::$app->user->can('editarOperadores'))) {
+            $model = new EquipaCreateForm();
+            $leitores = Leitor::find()->all();
+            $listaBibliotecas = Biblioteca::find()->all();
+            $listaTiposLeitors = Tipoleitor::find()->all();
+            $leitores = Leitor::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->updateRole($id)) {
-            Yii::$app->session->setFlash('success', "O Operador foi atualizado.");
-            return $this->redirect('equipa');
-        }elseif($model->load(Yii::$app->request->post()) && !($model->updateRole($id))){
-            Yii::$app->session->setFlash('danger', "Lamentamos!");  // TODO
-            return $this->redirect('equipa');
+            if ($model->load(Yii::$app->request->post()) && $model->updateRole($id)) {
+                Yii::$app->session->setFlash('success', "O Operador foi atualizado.");
+                return $this->redirect('equipa');
+            }elseif($model->load(Yii::$app->request->post()) && !($model->updateRole($id))){
+                Yii::$app->session->setFlash('danger', "Lamentamos!");  // TODO
+                return $this->redirect('equipa');
+            }
+
+            return $this->renderAjax('equipa/update', [
+                'model' => $model,
+                'leitores'=>$leitores,
+                'leitores' > $leitores,
+                'listaBibliotecas' => $listaBibliotecas,
+                'listaTiposLeitors' => $listaTiposLeitors]);
         }
-
-        return $this->renderAjax('equipa/update', [
-            'model' => $model,
-            'leitores'=>$leitores,
-            'leitores' > $leitores,
-            'listaBibliotecas' => $listaBibliotecas,
-            'listaTiposLeitors' => $listaTiposLeitors]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEquipaDelete($id){
-        $funcionario = $this->findModelEquipa($id);
-        $leitor = Leitor::findOne($funcionario->Leitor_id);
-        $user = User::findOne($leitor->user_id);
-        $user->status = 9;
+        if ((Yii::$app->user->can('eliminarOperadores'))) {
+            $funcionario = $this->findModelEquipa($id);
+            $leitor = Leitor::findOne($funcionario->Leitor_id);
+            $user = User::findOne($leitor->user_id);
+            $user->status = 9;
 
-        $user->save();
-        $funcionario->delete();
-        $leitor->delete();
+            $user->save();
+            $funcionario->delete();
+            $leitor->delete();
 
-        return $this->redirect('equipa');
+            return $this->redirect('equipa');
+        }
     }
 
     public function findModelEquipa($id){
@@ -646,44 +737,56 @@ class ConfigController extends Controller
      */
     public function actionTipoexemplar()
     {
-        $searchModel = new TipoexemplarSearch();
-        $tipoexemplarModels = Tipoexemplar::find()->all();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('verTiposExemplares'))) {
+            $searchModel = new TipoexemplarSearch();
+            $tipoexemplarModels = Tipoexemplar::find()->all();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('tipoexemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'tipoexemplarModels' => $tipoexemplarModels]);
+            return $this->render('tipoexemplar/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'tipoexemplarModels' => $tipoexemplarModels]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionTipoexemplarView($id)
     {
-        if (($model = Tipoexemplar::findOne($id)) !== null) {
-            return $this->renderAjax('tipoexemplar/view', ['model' => $model]);
-        }
+        if ((Yii::$app->user->can('verTiposExemplares'))) {
+            if (($model = Tipoexemplar::findOne($id)) !== null) {
+                return $this->renderAjax('tipoexemplar/view', ['model' => $model]);
+            }
 
-        throw new NotFoundHttpException();
+            throw new NotFoundHttpException();
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionTipoexemplarCreate()
     {
-        $model = new Tipoexemplar();
+        if ((Yii::$app->user->can('inserirTiposExemplares'))) {
+            $model = new Tipoexemplar();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Foi adicionada um novo tipo de exemplar.");
-            return $this->redirect('tipoexemplar');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "Foi adicionada um novo tipo de exemplar.");
+                return $this->redirect('tipoexemplar');
+            }
+
+            return $this->renderAjax('tipoexemplar/create', ['model' => $model]);
         }
-
-        return $this->renderAjax('tipoexemplar/create', ['model' => $model]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionTipoexemplarUpdate($id)
     {
-        $model = $this->findModelTipoexemplar($id);
+        if ((Yii::$app->user->can('inserirTiposExemplares'))) {
+            $model = $this->findModelTipoexemplar($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O tipo de exemplar "' . $model->designacao . '" foi atualizado.');
-            return $this->redirect('tipoexemplar');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O tipo de exemplar "' . $model->designacao . '" foi atualizado.');
+                return $this->redirect('tipoexemplar');
+            }
+
+            return $this->renderAjax('tipoexemplar/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('tipoexemplar/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelTipoexemplar($id)
@@ -705,31 +808,40 @@ class ConfigController extends Controller
      */
     public function actionEstexemplar()
     {
-        $estExemplarModels = Estatutoexemplar::find()->all();
-        $dataProvider = new ActiveDataProvider(['query' => EstatutoExemplar::find()]);
+        if ((Yii::$app->user->can('verEstatutosExemplares'))) {
+            $estExemplarModels = Estatutoexemplar::find()->all();
+            $dataProvider = new ActiveDataProvider(['query' => EstatutoExemplar::find()]);
 
-        return $this->render('estexemplar/index', ['dataProvider' => $dataProvider, 'estExemplarModels' => $estExemplarModels]);
+            return $this->render('estexemplar/index', ['dataProvider' => $dataProvider, 'estExemplarModels' => $estExemplarModels]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEstexemplarUpdate($id)
     {
-        $model = $this->findModelEstexemplar($id);
+        if ((Yii::$app->user->can('inserirEstatutosExemplares'))) {
+            $model = $this->findModelEstexemplar($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "' . $model->estatuto . '" foi atualizado.');
-            return $this->redirect('estexemplar');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "' . $model->estatuto . '" foi atualizado.');
+                return $this->redirect('estexemplar');
+            }
+
+            return $this->renderAjax('estexemplar/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('estexemplar/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEstexemplarReset($id)
     {
-        $model = $this->findModelEstexemplar($id);
-        $model->reset($id);
-        Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "' . $model->estatuto. '" foi reposto.');
+        if ((Yii::$app->user->can('verEstatutosExemplares'))) {
+            $model = $this->findModelEstexemplar($id);
+            $model->reset($id);
+            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "' . $model->estatuto. '" foi reposto.');
 
-        return $this->redirect(['estexemplar']);
+            return $this->redirect(['estexemplar']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelEstexemplar($id)
@@ -750,13 +862,16 @@ class ConfigController extends Controller
      */
     public function actionCdu()
     {
-        $searchModel = new CduSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('verCDU'))) {
+            $searchModel = new CduSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $cduModel = Cdu::find()->all();
+            $cduModel = Cdu::find()->all();
 
-        return $this->render('cdu/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-                'cduModel'=>$cduModel]);
+            return $this->render('cdu/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                    'cduModel'=>$cduModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -767,7 +882,10 @@ class ConfigController extends Controller
      */
     public function actionCduView($id)
     {
-        return $this->renderAjax('cdu/view', ['model' => $this->findModelCdu($id),]);
+        if ((Yii::$app->user->can('verCDU'))) {
+            return $this->renderAjax('cdu/view', ['model' => $this->findModelCdu($id),]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -777,16 +895,19 @@ class ConfigController extends Controller
      */
     public function actionCduCreate()
     {
-        $model = new Cdu();
-        $searchModel = new CduSearch();
+        if ((Yii::$app->user->can('inserirCDU'))) {
+            $model = new Cdu();
+            $searchModel = new CduSearch();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
 
-            return $this->redirect(['cdu', 'page'=> $endPage, '#'=> $model->id]);
+                return $this->redirect(['cdu', 'page'=> $endPage, '#'=> $model->id]);
+            }
+
+            return $this->renderAjax('cdu/create', ['model' => $model,]);
         }
-
-        return $this->renderAjax('cdu/create', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -798,16 +919,19 @@ class ConfigController extends Controller
      */
     public function actionCduUpdate($id)
     {
-        $oldCdu = $this->findModelCdu($id);
-        $model = $this->findModelCdu($id);
+        if ((Yii::$app->user->can('inserirCDU'))) {
+            $oldCdu = $this->findModelCdu($id);
+            $model = $this->findModelCdu($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi alterado para '.$model->codCdu.' - "'.$model->designacao.'".');
-            return $this->redirect(['cdu', '#' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi alterado para '.$model->codCdu.' - "'.$model->designacao.'".');
+                return $this->redirect(['cdu', '#' => $model->id]);
+            }
+
+            return $this->renderAjax('cdu/update', ['model' => $model]);
         }
-
-        return $this->renderAjax('cdu/update', ['model' => $model]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -819,16 +943,19 @@ class ConfigController extends Controller
      */
     public function actionCduDelete($id)
     {
-        $oldCdu = $this->findModelCdu($id);
-        $this->findModelCdu($id)->delete();
+        if ((Yii::$app->user->can('eliminarCDU'))) {
+            $oldCdu = $this->findModelCdu($id);
+            $this->findModelCdu($id)->delete();
 
-        $searchModel = new CduSearch();
-        $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+            $searchModel = new CduSearch();
+            $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
 
-        Yii::$app->session->setFlash('success',
-            '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi apagado.');
+            Yii::$app->session->setFlash('success',
+                '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi apagado.');
 
-        return $this->redirect(['cdu', 'page'=> $endPage]);
+            return $this->redirect(['cdu', 'page'=> $endPage]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -861,52 +988,65 @@ class ConfigController extends Controller
      */
     public function actionEstleitor()
     {
-        $searchModel = new TipoLeitorSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('verTiposLeitor'))) {
+            $searchModel = new TipoLeitorSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $tipoleitorModel = Tipoleitor::find()->all();
+            $tipoleitorModel = Tipoleitor::find()->all();
 
-        return $this->render('estleitor/index', ['searchModel' => $searchModel,
-            'dataProvider' => $dataProvider, 'tipoleitorModel'=>$tipoleitorModel]);
+            return $this->render('estleitor/index', ['searchModel' => $searchModel,
+                'dataProvider' => $dataProvider, 'tipoleitorModel'=>$tipoleitorModel]);
+        }
     }
 
     public function actionEstleitorView($id)
     {
-        return $this->renderAjax('estleitor/view', ['model' => $this->findModelEstleitor($id),]);
+        if ((Yii::$app->user->can('verTiposLeitor'))) {
+            return $this->renderAjax('estleitor/view', ['model' => $this->findModelEstleitor($id),]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEstleitorCreate()
     {
-        $model = new TipoLeitor();
+        if ((Yii::$app->user->can('inserirTiposLeitor'))) {
+            $model = new TipoLeitor();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "'.$model->estatuto.'" foi adicionado.');
-            return $this->redirect('estleitor');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O estatuto "'.$model->estatuto.'" foi adicionado.');
+                return $this->redirect('estleitor');
+            }
+
+            return $this->renderAjax('estleitor/create', ['model' => $model,]);
         }
-
-        return $this->renderAjax('estleitor/create', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEstleitorUpdate($id)
     {
-        $model = $this->findModelEstleitor($id);
+        if ((Yii::$app->user->can('inserirTiposLeitor'))) {
+            $model = $this->findModelEstleitor($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '<strong>Informação:</strong>O estatuto "'.$model->estatuto.'" foi atualizado.');
-            return $this->redirect('estleitor');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong>O estatuto "'.$model->estatuto.'" foi atualizado.');
+                return $this->redirect('estleitor');
+            }
+
+            return $this->renderAjax('estleitor/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('estleitor/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionEstleitorDelete($id)
     {
+        if ((Yii::$app->user->can('eliminarTiposLeitor'))) {
+            $oldEstatuto=$this->findModelCursos($id)->nome;
+            $this->findModelEstleitor($id)->delete();
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O estatuto ".$oldEstatuto." foi apagado.");
 
-        $oldEstatuto=$this->findModelCursos($id)->nome;
-        $this->findModelEstleitor($id)->delete();
-        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O estatuto ".$oldEstatuto." foi apagado.");
-
-        return $this->redirect(['estleitor']);
+            return $this->redirect(['estleitor']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelEstleitor($id)
@@ -928,22 +1068,28 @@ class ConfigController extends Controller
      */
     public function actionIrregularidades()
     {
-        $dataProvider = new ActiveDataProvider(['query' => Tipoirregularidade::find()]);
-        $irregularidadesModels = Tipoirregularidade::find()->all();
+        if ((Yii::$app->user->can('verTiposIrregularidades'))) {
+            $dataProvider = new ActiveDataProvider(['query' => Tipoirregularidade::find()]);
+            $irregularidadesModels = Tipoirregularidade::find()->all();
 
-        return $this->render('irregularidades/index', ['dataProvider' => $dataProvider, 'irregularidadesModels'=>$irregularidadesModels]);
+            return $this->render('irregularidades/index', ['dataProvider' => $dataProvider, 'irregularidadesModels'=>$irregularidadesModels]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionIrregularidadesUpdate($id)
     {
-        $model = $this->findModelIrregularidades($id);
+        if ((Yii::$app->user->can('inserirTiposIrregularidades'))) {
+            $model = $this->findModelIrregularidades($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'A irregularidade para o tipo de obra "'. $model->irregularidade .'" foi atualizada.');
-            return $this->redirect('irregularidades');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'A irregularidade para o tipo de obra "'. $model->irregularidade .'" foi atualizada.');
+                return $this->redirect('irregularidades');
+            }
+
+            return $this->renderAjax('irregularidades/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('irregularidades/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelIrregularidades($id)
@@ -965,55 +1111,69 @@ class ConfigController extends Controller
      */
     public function actionCursos()
     {
-        $cursosModels = Curso::find()->all();
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $cursosModels = Curso::find()->all();
 
-        $searchModel = new CursoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $searchModel = new CursoSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('cursos/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'cursosModels'=>$cursosModels]);
+            return $this->render('cursos/index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'cursosModels'=>$cursosModels]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionCursosView($id)
     {
-        return $this->renderAjax('cursos/view', ['model' => $this->findModelCursos($id)]);
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            return $this->renderAjax('cursos/view', ['model' => $this->findModelCursos($id)]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionCursosCreate()
     {
-        $model = new Curso();
-        $searchModel = new CursoSearch();
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $model = new Curso();
+            $searchModel = new CursoSearch();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$model->nome." foi adicionado com sucesso.");
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$model->nome." foi adicionado com sucesso.");
 
-            $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+                $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
 
-            return $this->redirect(['cursos', 'page'=>$endPage]);
+                return $this->redirect(['cursos', 'page'=>$endPage]);
+            }
+
+            return $this->renderAjax('cursos/create', ['model' => $model,]);
         }
-
-        return $this->renderAjax('cursos/create', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionCursosUpdate($id){
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $model = $this->findModelCursos($id);
 
-        $model = $this->findModelCursos($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$model->nome." foi atualizado com sucesso.");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$model->nome." foi atualizado com sucesso.");
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->renderAjax('cursos/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('cursos/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionCursosDelete($id)
     {
-        $oldCurso=$this->findModelCursos($id)->nome;
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            $oldCurso=$this->findModelCursos($id)->nome;
 
-        $this->findModelCursos($id)->delete();
-        Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$oldCurso." foi apagado.");
+            $this->findModelCursos($id)->delete();
+            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$oldCurso." foi apagado.");
 
-        return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelCursos($id)
@@ -1026,8 +1186,6 @@ class ConfigController extends Controller
     }
     #endregion
 
-    #endregion
-
     #region Recibos
 
     /**
@@ -1037,24 +1195,29 @@ class ConfigController extends Controller
      */
     public function actionRecibos()
     {
-        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "recibo_"])]);
-        $recibosModel = Config::find()->all();
+        if ((Yii::$app->user->can('ativacaoRecibosEmprestimos'))) {
+            $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "recibo_"])]);
+            $recibosModel = Config::find()->all();
 
-        return $this->render('recibos/index', ['dataProvider' => $dataProvider, 'recibosModel'=> $recibosModel]);
-
+            return $this->render('recibos/index', ['dataProvider' => $dataProvider, 'recibosModel'=> $recibosModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionRecibosUpdate($id)
     {
-        $model = $this->findModelRecibos($id);
+        if ((Yii::$app->user->can('ativacaoRecibosEmprestimos'))) {
+            $model = $this->findModelRecibos($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
-            return $this->redirect('recibos');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
+                return $this->redirect('recibos');
+            }
+
+            return $this->renderAjax('recibos/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('recibos/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelRecibos($id)
@@ -1076,32 +1239,40 @@ class ConfigController extends Controller
      */
     public function actionResexemplar()
     {
-        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', 'opac_reservaExemplares'])]);
-        $resexemplares = Config::find()->all();
+        if ((Yii::$app->user->can('verReservaFilaEspera'))) {
+            $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', 'opac_reservaExemplares'])]);
+            $resexemplares = Config::find()->all();
 
-        return $this->render('resexemplar/index',[
-            'resexemplares'=>$resexemplares,
-            'dataProvider'=>$dataProvider]);
+            return $this->render('resexemplar/index',[
+                'resexemplares'=>$resexemplares,
+                'dataProvider'=>$dataProvider]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionResexemplarUpdate($id){
+        if ((Yii::$app->user->can('verReservaFilaEspera'))) {
+            $model = $this->findModelResexemplar($id);
 
-        $model = $this->findModelResexemplar($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success','A '. $model->info .' foi alterada com sucesso.');
+                return $this->redirect('resexemplar');
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success','A '. $model->info .' foi alterada com sucesso.');
-            return $this->redirect('resexemplar');
+            return $this->renderAjax('resexemplar/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('resexemplar/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function findModelResexemplar($id){
-        if (($model = Config::findOne($id)) !== null) {
-            return $model;
-        }
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            if (($model = Config::findOne($id)) !== null) {
+                return $model;
+            }
 
-        throw new NotFoundHttpException();
+            throw new NotFoundHttpException();
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -1111,24 +1282,29 @@ class ConfigController extends Controller
      */
     public function actionSlidesopac()
     {
-        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "opac_obrasAdquiridas"])]);
-        $slidesopacModel = Config::find()->all();
+        if ((Yii::$app->user->can('ativarObrasSlideShow'))) {
+            $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "opac_obrasAdquiridas"])]);
+            $slidesopacModel = Config::find()->all();
 
-        return $this->render('slidesopac/index', ['dataProvider' => $dataProvider, 'slidesopacModels'=> $slidesopacModel]);
-
+            return $this->render('slidesopac/index', ['dataProvider' => $dataProvider, 'slidesopacModels'=> $slidesopacModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionSlidesopacUpdate($id)
     {
-        $model = $this->findModelSlidesopac($id);
+        if ((Yii::$app->user->can('desativarObrasSlideShow'))) {
+            $model = $this->findModelSlidesopac($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
-            return $this->redirect('slidesopac');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
+                return $this->redirect('slidesopac');
+            }
+
+            return $this->renderAjax('slidesopac/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('slidesopac/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelSlidesopac($id)
@@ -1152,36 +1328,44 @@ class ConfigController extends Controller
      */
     public function actionArrumacao()
     {
-        $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "modulo_arrumacao"])]);
-        $ArrumacaoModel = Config::find()->all();
+        if ((Yii::$app->user->can('ativacaoEmArrumacao'))) {
+            $dataProvider = new ActiveDataProvider(['query' => Config::find()->where(['like','key', "modulo_arrumacao"])]);
+            $ArrumacaoModel = Config::find()->all();
 
-        return $this->render('arrumacao/index', ['dataProvider' => $dataProvider, 'ArrumacaoModel' => $ArrumacaoModel]);
+            return $this->render('arrumacao/index', ['dataProvider' => $dataProvider, 'ArrumacaoModel' => $ArrumacaoModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionArrumacaoUpdate($id)
     {
-        $model = $this->findModelArrumacao($id);
+        if ((Yii::$app->user->can('desativacaoEmArrumacao'))) {
+            $model = $this->findModelArrumacao($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
-            return $this->redirect('arrumacao');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> A definição "'. $model->info .'" foi alterada com sucesso.');
+                return $this->redirect('arrumacao');
+            }
+
+            return $this->renderAjax('arrumacao/update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('arrumacao/update', ['model' => $model,]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelArrumacao($id)
     {
-        if (($model = Config::findOne($id)) !== null) {
-            return $model;
+        if ((Yii::$app->user->can('acessoAdministracao'))) {
+            if (($model = Config::findOne($id)) !== null) {
+                return $model;
+            }
+
+            throw new NotFoundHttpException();
         }
 
-        throw new NotFoundHttpException();
     }
 
     #endregion
 
-    #endregion
 
 }
