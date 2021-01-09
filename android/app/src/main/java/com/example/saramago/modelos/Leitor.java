@@ -4,18 +4,16 @@ import java.util.Date;
 
 public class Leitor {
 
-    private int id, icon, nif, codPostal, telemovel, telefone, Biblioteca_id, TipoLeitor_Id;
+    private int id, nif, codPostal, telemovel, telefone, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id;
     private String nome, dataNasc, codBarras, DocId, morada, localidade,email, mail2, notaInterna;
-    private Date dataRegisto, dataAtualizado;
     private static int autoIncrement = 1;
 
-    public Leitor(String nome, int icon, String codBarras, int nif, String DocId, String dataNasc, String morada,
+    public Leitor(int id, String nome, String codBarras, int nif, String DocId, String dataNasc, String morada,
                   String localidade, int codPostal, int telemovel, int telefone, String email,
-                  String mail2, Date dataRegisto, Date dataAtualizado, int Biblioteca_id, int TipoLeitor_id){
+                  String mail2, int dataRegisto, int dataAtualizado, int Biblioteca_id, int TipoLeitor_id, int user_id){
 
-            this.id = autoIncrement++;
+            this.id = id;
             this.nome = nome;
-            this.icon = icon;
             this.codBarras = codBarras;
             this.nif = nif;
             this.DocId = DocId;
@@ -30,7 +28,8 @@ public class Leitor {
             this.dataRegisto = dataRegisto;
             this.dataAtualizado = dataAtualizado;
             this.Biblioteca_id = Biblioteca_id;
-            this.TipoLeitor_Id = 2;
+            this.TipoLeitor_id = 2;
+            this.user_id = user_id;
             // TODO: Tipo de Leitor é um id de outra tabela mas devido ao erro atual
             //  vou ter que passar um numero para conseguir listar sem dar erro
     }
@@ -49,14 +48,6 @@ public class Leitor {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getIcon() {
-        return icon;
-    }
-
-    public void setIcon(int icon) {
-        this.icon = icon;
     }
 
     public int getNif() {
@@ -100,11 +91,11 @@ public class Leitor {
     }
 
     public int getTipoLeitor_Id() {
-        return TipoLeitor_Id;
+        return TipoLeitor_id;
     }
 
     public void setTipoLeitor_Id(int tipoLeitor_Id) {
-        TipoLeitor_Id = tipoLeitor_Id;
+        TipoLeitor_id = tipoLeitor_Id;
     }
 
     public String getCodBarras() {
@@ -171,20 +162,36 @@ public class Leitor {
         this.dataNasc = dataNasc;
     }
 
-    public Date getDataRegisto() {
+    public int getDataRegisto() {
         return dataRegisto;
     }
 
-    public void setDataRegisto(Date dataRegisto) {
+    public void setDataRegisto(int dataRegisto) {
         this.dataRegisto = dataRegisto;
     }
 
-    public Date getDataAtualizado() {
+    public int getDataAtualizado() {
         return dataAtualizado;
     }
 
-    public void setDataAtualizado(Date dataAtualizado) {
+    public void setDataAtualizado(int dataAtualizado) {
         this.dataAtualizado = dataAtualizado;
+    }
+
+    public int getTipoLeitor_id() {
+        return TipoLeitor_id;
+    }
+
+    public void setTipoLeitor_id(int tipoLeitor_id) {
+        TipoLeitor_id = tipoLeitor_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     /**

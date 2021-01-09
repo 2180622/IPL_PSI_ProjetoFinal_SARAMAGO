@@ -1,10 +1,14 @@
 package com.example.saramago.modelos;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class SaramagoBDHelper extends SQLiteOpenHelper {
 
@@ -128,7 +132,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     private final SQLiteDatabase db;
 
-    public SaramagoBDHelper(@Nullable Context context, SQLiteDatabase db) {
+    public SaramagoBDHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.db = this.getWritableDatabase();
     }
@@ -178,7 +182,60 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     }
 
     //region CRUD
-    //TODO
+    public void adicionarLivroBD(Leitor leitor){
+        ContentValues values=new ContentValues();
+        values.put(ID, leitor.getId());
+        values.put(NOME, leitor.getNome());
+        values.put(COD_BARRAS, leitor.getCodBarras());
+        values.put(NIF,leitor.getNif());
+        values.put(DOC_ID,leitor.getDocId());
+        values.put(DATA_NASC,leitor.getDataNasc());
+        values.put(MORADA,leitor.getMorada());
+        values.put(LOCALIDADE,leitor.getLocalidade());
+        values.put(COD_POSTAL,leitor.getCodPostal());
+        values.put(TELEMOVEL,leitor.getTelemovel());
+        values.put(TELEFONE,leitor.getTelefone());
+        values.put(EMAIL,leitor.getEmail());
+        values.put(MAIL2,leitor.getMail2());
+        values.put(DATA_REGISTO,leitor.getDataRegisto());
+        values.put(DATA_ATUALIZADO,leitor.getDataAtualizado());
+        values.put(BIBLIOTECA_ID,leitor.getBiblioteca_id());
+        values.put(TIPOLEITOR_ID,leitor.getTipoLeitor_Id());
+        values.put(USER_ID,leitor.getUser_id());
+
+        this.db.insert(TABLE_LEITOR,null,values);
+    }
+    public void removerAllLeitoresBD(){
+        this.db.delete(TABLE_LEITOR,null,null);
+    }
+
+    public ArrayList<Leitor> getAllLeitoresBD(){
+        ArrayList<Leitor> leitores =new ArrayList<>();
+        Cursor cursor=this.db.query(TABLE_LEITOR,new String[]{ID,NOME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID,USER_ID},
+                null,null,null,null,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Leitor auxLeitor =new Leitor(cursor.getInt(0),
+                        cursor.getString(1), cursor.getString(2),
+                        cursor.getInt(3),cursor.getString(4),
+                        cursor.getString(5),cursor.getString(6),
+                        cursor.getString(7),cursor.getInt(8),
+                        cursor.getInt(9),cursor.getInt(10),
+                        cursor.getString(11),cursor.getString(12),
+                        cursor.getInt(13),cursor.getInt(14),
+                        cursor.getInt(15),cursor.getInt(16),
+                        cursor.getInt(17));
+                // auxLivro.setId(cursor.getInt(0));
+                leitores.add(auxLeitor);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        return leitores;
+    }
     //endregion
+
+
 
 }
