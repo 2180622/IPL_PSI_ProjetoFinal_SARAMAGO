@@ -167,7 +167,7 @@ class CatController extends Controller
 
             $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
             $colecaoAll = ArrayHelper::map(Colecao::find()->all(),'id','tituloColecao',['enctype' => 'multipart/form-data']);
-            if(Yii::$app->request->isPost) {
+            if(Yii::$app->request->post()) {
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 if ($model->createObra()) {
                     Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O " . $model->titulo . " foi adicionado.");

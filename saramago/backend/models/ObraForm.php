@@ -34,6 +34,7 @@ class ObraForm extends Obra
                 'checkExtensionByMimeType'=>true,
                 'maxSize' => 1024 * 1024 * 2,
             ],
+            ['imageFile', 'safe'],
 
             ['imgCapa', 'trim'],
             ['imgCapa', 'string', 'max' => 255],
@@ -91,7 +92,7 @@ class ObraForm extends Obra
             'tipoObra' => 'Tipo de Obra',
             'descricao' => 'Descrição da Obra',
             'local' => 'Local',
-            'edicao' => 'edicao',
+            'edicao' => 'Edição',
             'assuntos' => 'Assuntos',
             'preco' => 'Preço',
             'dataRegisto' => 'Data Registado',
@@ -104,8 +105,7 @@ class ObraForm extends Obra
     public function createObra(){
         if($this->validate()) {
             $obra = new Obra();
-            //temporary TODO
-            $obra->imgCapa = $this->titulo;
+            $obra->imgCapa = $this->upload();
             $obra->titulo = $this->titulo;
 
             $obra->resumo = $this->resumo;
@@ -128,7 +128,10 @@ class ObraForm extends Obra
             $obra->Colecao_id = $this->Colecao_id;
 
             $obra->save();
+
+            return $obra;
         }
+        return false;
     }
 
     public function upload()
