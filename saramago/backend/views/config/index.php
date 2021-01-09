@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <hr>
-    <div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
+    <div class="alert alert-info config" role="alert" id="alert-saramago">
         <strong>Sugestão:</strong> Personalize as definições pela ordem listada.
     </div>
 

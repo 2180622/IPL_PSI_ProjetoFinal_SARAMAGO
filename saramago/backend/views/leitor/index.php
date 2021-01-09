@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-leitor">
     <?php
     if($dataProvider->totalCount == 0){
-        echo '<div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
+        echo '<div class="alert alert-info config" role="alert" id="alert-saramago">
                 <strong>Informação:</strong> Comece por registar os seus leitores.
               </div>';
     }

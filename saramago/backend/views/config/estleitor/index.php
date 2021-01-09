@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     if($dataProvider->totalCount == 0)
     {
         echo '
-            <div class="alert alert-info alert-dismissible config" role="alert">
+            <div class="alert alert-info config" role="alert">
                 <strong>Informação:</strong> Comece por registar os seus tipos de leitor.
             </div>
         ';

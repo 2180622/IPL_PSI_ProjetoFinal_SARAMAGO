@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
     if($dataProvider->totalCount == 0)
     {
         echo '
-            <div class="alert alert-info alert-dismissible config" role="alert">
+            <div class="alert alert-info config" role="alert">
                 <strong>Informação:</strong> Comece por registar as suas bibliotecas
             </div>
         ';
@@ -106,6 +106,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     .find('#modalContent')
                     .load($(this).attr('value'))
             })
+        });
+        $(function () {
+            if(location.hash == '#create'){
+                 $('#modalCreate').modal('show')
+                    .find('#modalContent')
+                    .load('bibliotecas-create')
+            }
         });
     ");
 

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-cat">
     <?php
     if($obrasTotalCount == 0){
-        echo '<div class="alert alert-info alert-dismissible config" role="alert" id="alert-saramago">
+        echo '<div class="alert alert-info config" role="alert" id="alert-saramago">
                 <strong>Informação:</strong> Comece por registar as suas obras.
               </div>';
     }?>

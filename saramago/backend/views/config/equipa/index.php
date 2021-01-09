@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     if ($operadorCount == 0) {
         echo '
-            <div class="alert alert-info alert-dismissible config" role="alert">
+            <div class="alert alert-info config" role="alert">
                 <strong>Informação:</strong> Comece por registar um operador.
             </div>
         ';
