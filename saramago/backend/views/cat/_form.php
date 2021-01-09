@@ -4,6 +4,7 @@ use common\models\Cdu;
 use common\models\Colecao;
 use dosamigos\ckeditor\CKEditor;
 use kartik\file\FileInput;
+use yii\jui\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -29,8 +30,7 @@ use yii\widgets\ActiveForm;
                     'initialCaption' => $model->titulo,
                     'previewFileType' => 'image',
                     'browseLabel' => '',
-                    'uploadClass' => 'btn btn-success',
-                    'showUpload' => true,
+                    'showUpload' => false,
                 ],
             ]
         )->hint('Capa');
@@ -39,8 +39,7 @@ use yii\widgets\ActiveForm;
                 'options' => ['accept' => 'image/*'],
                 'pluginOptions' => [
                     'browseLabel' => '',
-                    'uploadClass' => 'btn btn-success',
-                    'showUpload' => true,
+                    'showUpload' => false,
                 ],
             ]
         )->hint('Capa');
@@ -67,7 +66,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'preco')->textInput() ?>
 
-
+    <?= $form->field($model, 'dataRegisto')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
 
     <?= $form->field($model, 'Cdu_id')->dropDownList($cduAll,['prompt'=>'Selecione...'])->label('Código Decimal Universal') ?>
 

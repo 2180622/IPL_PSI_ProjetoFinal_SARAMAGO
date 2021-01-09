@@ -5,12 +5,14 @@ use common\models\Obra;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Url;
+use DateTime;
+
 
 class ObraForm extends Obra
 {
     public $id;
-    public $imgCapa;
     public $imageFile;
+    public $imgCapa;
     public $titulo;
     public $resumo;
     public $editor;
@@ -66,6 +68,11 @@ class ObraForm extends Obra
 
             ['preco', 'number'],
 
+            ['dataRegisto', 'trim'],
+            ['dataRegisto', 'required'],
+            ['dataRegisto', 'datetime', 'format' => 'dd/MM/yyyy', 'message' => 'Formato de data inválido.'],
+            ['dataRegisto', 'string', 'min' => 1, 'max' => 50],
+
             ['Cdu_id', 'integer'],
 
             ['Colecao_id', 'integer'],
@@ -97,9 +104,9 @@ class ObraForm extends Obra
     public function createObra(){
         if($this->validate()) {
             $obra = new Obra();
-
+            //temporary TODO
+            $obra->imgCapa = $this->titulo;
             $obra->titulo = $this->titulo;
-            $obra->imgCapa = $this->upload();
 
             $obra->resumo = $this->resumo;
             $obra->editor = $this->editor;
@@ -112,6 +119,10 @@ class ObraForm extends Obra
             $obra->edicao = $this->edicao;
             $obra->assuntos = $this->assuntos;
             $obra->preco = $this->preco;
+
+            $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
+            $newDateString = $myDateTime->format('Y/m/d');
+            $obra->dataRegisto = $newDateString;
 
             $obra->Cdu_id = $this->Cdu_id;
             $obra->Colecao_id = $this->Colecao_id;

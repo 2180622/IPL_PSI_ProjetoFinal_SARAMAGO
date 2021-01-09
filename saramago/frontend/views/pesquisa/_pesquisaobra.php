@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 ?>
 <?= DetailView::widget([
     'model' => $model,
-    'options' => ['class' => ''],
+    'options' => ['class' => 'rapido-saramago'],
     'attributes' => [
         [
             'attribute'=>'',
