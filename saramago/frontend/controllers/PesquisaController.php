@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use frontend\models\ObraSearch;
+use frontend\models\AutorSearch;
 use Yii;
 use common\models\Obra;
+use common\models\Autor;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -49,14 +51,14 @@ class PesquisaController extends Controller
         ]);
     }
 
-    public function actionAvancada()
+    public function actionAutor()
     {
-        $model = new Obra();
-        $searchModel = new ObraSearch();
+        $model = new Autor();
+        $searchModel = new AutorSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         // render
-        return $this->render('avancada', [
+        return $this->render('autor', [
             'model' => $model,
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel

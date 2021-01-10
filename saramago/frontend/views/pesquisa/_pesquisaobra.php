@@ -17,20 +17,20 @@ use yii\widgets\DetailView;
         ],
         [
             'attribute'=>'',
-            'value'=>$model->titulo,
+            'value'=>'Titulo da obra: '.$model->titulo,
         ],
         [
             'attribute'=>'',
-            'value'=>$model->assuntos,
+            'value'=>'Assuntos: '.$model->assuntos,
         ],
         [
             'attribute'=>'',
-            'value'=>$model->resumo,
+            'value'=>'Resumo: '.$model->resumo,
         ],
         [
             'attribute'=>'',
-            'value'=>$model->preco.' '.'€',
+            'value'=>'Preço: '.$model->preco.' '.'€',
         ],
-        // info
+
     ],
 ]) ?>

@@ -11,6 +11,7 @@ use common\models\Autor;
  */
 class AutorSearch extends Autor
 {
+    public $pesquisaGeral;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class AutorSearch extends Autor
     {
         return [
             [['id'], 'integer'],
-            [['primeiroNome', 'segundoNome', 'apelido', 'tipo', 'bibliografia', 'dataNasc', 'nacionalidade', 'orcid'], 'safe'],
+            [['primeiroNome', 'pesquisaGeral', 'segundoNome', 'apelido', 'tipo', 'bibliografia', 'dataNasc', 'nacionalidade', 'orcid'], 'safe'],
         ];
     }
 
@@ -56,19 +57,14 @@ class AutorSearch extends Autor
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'dataNasc' => $this->dataNasc,
-        ]);
 
-        $query->andFilterWhere(['like', 'primeiroNome', $this->primeiroNome])
-            ->andFilterWhere(['like', 'segundoNome', $this->segundoNome])
-            ->andFilterWhere(['like', 'apelido', $this->apelido])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
-            ->andFilterWhere(['like', 'bibliografia', $this->bibliografia])
-            ->andFilterWhere(['like', 'nacionalidade', $this->nacionalidade])
-            ->andFilterWhere(['like', 'orcid', $this->orcid]);
+        $query->orFilterWhere(['like', 'primeiroNome', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'segundoNome', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'apelido', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'tipo', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'bibliografia', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'nacionalidade', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'orcid', $this->pesquisaGeral]);
 
         return $dataProvider;
     }
