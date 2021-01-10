@@ -26,11 +26,14 @@ use common\models\Curso;
 use common\models\Entidade;
 use common\models\Estatutoexemplar;
 use common\models\Leitor;
+use common\models\Aluno;
 use common\models\Noticias;
 use common\models\Postotrabalho;
 use common\models\Tipoirregularidade;
 use common\models\Tipoexemplar;
-
+use common\models\Exemplar;
+use common\models\Reservasposto;
+use common\models\Obra;
 use yii\data\ActiveDataProvider;
 use yii\rbac\Role;
 use yii\web\Controller;
@@ -38,6 +41,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\ConflictHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -291,8 +295,19 @@ class ConfigController extends Controller
     public function actionBibliotecasDelete($id)
     {
         if ((Yii::$app->user->can('eliminarBibliotecas'))) {
-            $this->findModelBibliotecas($id)->delete();
-            Yii::$app->session->setFlash('success', "A biblioteca foi eliminada.");
+            $leitores = Leitor::find()->where("Biblioteca_id = '$id'")->count();
+            $postos = Postotrabalho::find()->where("Biblioteca_id = '$id'")->count();
+            $exemplares = Exemplar::find()->where("Biblioteca_id = '$id'")->count();
+            if ($leitores == 0 && $postos == 0 && $exemplares == 0) {
+                $this->findModelBibliotecas($id)->delete();
+                Yii::$app->session->setFlash('success', "A biblioteca foi eliminada.");
+                return $this->redirect(['bibliotecas']);
+            }
+            $errorDisplay = 'Existem dados agregados a esta biblioteca, será necessário apagá-los primeiro para poder efetuar esta ação'.
+                ($postos > 0 ? '<br>&#9679 '.$postos.' posto(s) de trabalho':'').
+                ($leitores > 0 ? '<br>&#9679 '.$leitores.' leitor(es)':'').
+                ($exemplares > 0 ? '<br>&#9679 '.$exemplares.' exemplares(es)':'');
+            Yii::$app->session->setFlash('error', $errorDisplay);
             return $this->redirect(['bibliotecas']);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
@@ -375,12 +390,19 @@ class ConfigController extends Controller
     public function actionPostosDelete($id)
     {
         if ((Yii::$app->user->can('eliminarPostosTrabalho'))) {
-            $this->findModelPostostrabalho($id)->delete();
+            $reservas = Postotrabalho::find()->where("PostoTrabalho_id = '$id'")->count();
+            if ($reservas == 0) {
+                $this->findModelPostostrabalho($id)->delete();
 
             Yii::$app->session->setFlash('success', "O posto de trabalho foi eliminado.");
-
+            return $this->redirect(['postos']);
+            }
+            $errorDisplay = 'Existem dados agregados a este posto de trabalho, será necessário apagá-los primeiro para poder efetuar esta ação'.
+                ($reservas > 0 ? '<br>&#9679 '.$reservas.' reserva(s) de posto':'');
+            Yii::$app->session->setFlash('error', $errorDisplay);
             return $this->redirect(['postos']);
         }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     protected function findModelPostostrabalho($id)
@@ -789,6 +811,24 @@ class ConfigController extends Controller
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
+    public function actionTipoexemplarDelete($id)
+    {
+        if ((Yii::$app->user->can('inserirTiposExemplares'))) {
+            $exemplares = Exemplar::find()->where("TipoExemplar_id = '$id'")->count();
+            if ($exemplares == 0) {
+                $this->findModelTipoexemplar($id)->delete();
+
+            Yii::$app->session->setFlash('success', "O tipo de exemplar foi eliminado.");
+            return $this->redirect(['tipoexemplar']);
+            }
+            $errorDisplay = 'Existem dados agregados a este tipo de exemplar, será necessário apagá-los primeiro para poder efetuar esta ação'.
+                ($exemplares > 0 ? '<br>&#9679 '.$exemplares.' exemplar(es)':'');
+            Yii::$app->session->setFlash('error', $errorDisplay);
+            return $this->redirect(['tipoexemplar']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
+    }
+
     protected function findModelTipoexemplar($id)
     {
         if (($model = Tipoexemplar::findOne($id)) !== null) {
@@ -944,16 +984,23 @@ class ConfigController extends Controller
     public function actionCduDelete($id)
     {
         if ((Yii::$app->user->can('eliminarCDU'))) {
-            $oldCdu = $this->findModelCdu($id);
-            $this->findModelCdu($id)->delete();
+            $obras = Obra::find()->where("Cdu_id = '$id'")->count();
+            if ($obras == 0) {
+                $oldCdu = $this->findModelCdu($id);
+                $this->findModelCdu($id)->delete();
 
-            $searchModel = new CduSearch();
-            $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
+                $searchModel = new CduSearch();
+                $endPage = $searchModel->search(Yii::$app->request->queryParams)->pagination->getLimit();
 
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi apagado.');
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> O Código Decimal Universal '.$oldCdu->codCdu.' - "'.$oldCdu->designacao.'" foi apagado.');
 
-            return $this->redirect(['cdu', 'page'=> $endPage]);
+                return $this->redirect(['cdu', 'page'=> $endPage]);
+            }
+            $errorDisplay = 'Existem dados agregados a este CDU, será necessário apagá-los primeiro para poder efetuar esta ação'.
+                ($obras > 0 ? '<br>&#9679 '.$obras.' obra(s)':'');
+            Yii::$app->session->setFlash('error', $errorDisplay);
+            return $this->redirect(['cdu']);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
@@ -1040,10 +1087,17 @@ class ConfigController extends Controller
     public function actionEstleitorDelete($id)
     {
         if ((Yii::$app->user->can('eliminarTiposLeitor'))) {
-            $oldEstatuto=$this->findModelCursos($id)->nome;
-            $this->findModelEstleitor($id)->delete();
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O estatuto ".$oldEstatuto." foi apagado.");
+            $leitores = Leitor::find()->where("TipoLeitor_id = '$id'")->count();
+            if ($leitores == 0) {
+                $oldEstatuto=$this->findModelCursos($id)->nome;
+                $this->findModelEstleitor($id)->delete();
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O estatuto ".$oldEstatuto." foi apagado.");
 
+                return $this->redirect(['estleitor']);
+            }
+            $errorDisplay = 'Existem dados agregados ao estatuto de leitor, será necessário apagá-los primeiro para poder efetuar esta ação'.
+                ($leitores > 0 ? '<br>&#9679 '.$leitores.' leitor(es)':'');
+            Yii::$app->session->setFlash('error', $errorDisplay);
             return $this->redirect(['estleitor']);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
@@ -1166,11 +1220,18 @@ class ConfigController extends Controller
     public function actionCursosDelete($id)
     {
         if ((Yii::$app->user->can('acessoAdministracao'))) {
-            $oldCurso=$this->findModelCursos($id)->nome;
+            $alunos = Aluno::find()->where("Curso_id = '$id'")->count();
+            if ($alunos == 0) {
+                $oldCurso=$this->findModelCursos($id)->nome;
 
-            $this->findModelCursos($id)->delete();
-            Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$oldCurso." foi apagado.");
+                $this->findModelCursos($id)->delete();
+                Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O curso ".$oldCurso." foi apagado.");
 
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            $errorDisplay = 'Existem dados agregados a esta biblioteca, será necessário apagá-los primeiro para poder efetuar esta ação'.
+                ($alunos > 0 ? '<br>&#9679 '.$alunos.' leitor(es) (do tipo aluno)':'');
+            Yii::$app->session->setFlash('error', $errorDisplay);
             return $this->redirect(Yii::$app->request->referrer);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
