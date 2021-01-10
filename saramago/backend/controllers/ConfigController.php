@@ -1229,7 +1229,7 @@ class ConfigController extends Controller
 
                 return $this->redirect(Yii::$app->request->referrer);
             }
-            $errorDisplay = 'Existem dados agregados a esta biblioteca, será necessário apagá-los primeiro para poder efetuar esta ação'.
+            $errorDisplay = 'Existem dados agregados a este curso, será necessário apagá-los primeiro para poder efetuar esta ação'.
                 ($alunos > 0 ? '<br>&#9679 '.$alunos.' leitor(es) (do tipo aluno)':'');
             Yii::$app->session->setFlash('error', $errorDisplay);
             return $this->redirect(Yii::$app->request->referrer);
