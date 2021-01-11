@@ -47,9 +47,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca)->label('Biblioteca associada') ?>
+    <?= $form->field($model, 'Biblioteca_id')->dropDownList($listasBiblioteca, ['prompt' => 'Selecione...'])->label('Biblioteca associada') ?>
 
-    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor)->label('Tipo de Leitor') ?>
+    <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor, ['prompt' => 'Selecione...'])->label('Tipo de Leitor') ?>
 
     <div id="departamento" hidden>
     <?= $form->field($model, 'departamento')->textInput(['maxlength' => true])->label('Departamento'); ?>

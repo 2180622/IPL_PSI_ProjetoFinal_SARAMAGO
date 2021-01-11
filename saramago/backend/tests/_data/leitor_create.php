@@ -10,8 +10,8 @@ return [
         'localidade' => 'Leiria',
         'codPostal' => '2400135',
 	'telemovel' => '915992201',
-	'Biblioteca_id' => 1,
-	'TipoLeitor_id' => 6,
-	'user_id' => 1,
+	'Biblioteca_id' => '1',
+	'TipoLeitor_id' => '1',
+	'user_id' => '1',
     ],
 ];
