@@ -20,19 +20,20 @@ class BibliotecaCreateCest
     }
 
     // tests
-    public function tryToTest(FunctionalTester $I)
+    public function CreateBiblioteca(FunctionalTester $I)
     {
-        $I->amOnPage('/config/bibliotecas/create');
+        $I->amOnPage('/config/bibliotecas-create');
 
-        $I->seePageNotFound('/config/bibliotecas/create/_form');
         $I->fillField('#biblioteca-codbiblioteca', 'BJS');
         $I->fillField('#biblioteca-nome', 'Biblioteca José Saramgo');
         $I->fillField('#biblioteca-morada', 'Rua da Biblioteca');
         $I->fillField('#biblioteca-localidade', 'Leiria');
-        $I->fillField('#biblioteca-codPostal', 2400413);
+        $I->fillField('#biblioteca-codpostal', 2400413);
         $I->selectOption('#biblioteca-levantamento', 'Sim');
         $I->fillField('#biblioteca-notasopac', 'Uma nota da biblioteca');
 
         $I->click('#guardar');
+
+        $I->see('Foi adicionada uma nova biblioteca.');
     }
 }

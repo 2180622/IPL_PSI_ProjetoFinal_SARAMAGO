@@ -73,11 +73,17 @@ class LeitorController extends Controller
         $leitores = Leitor::find()->all();
         $tiposLeitorAll = ArrayHelper::map(Tipoleitor::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
         $dataProvider = $searchLeitor->search(Yii::$app->request->queryParams);
+        $bibliotecasCount = Biblioteca::find()->count();
+        $tiposLeitoresCount = Tipoleitor::find()->count();
 
         $this->layout = 'minor';
 
         return $this->render('index', [
-            'searchLeitor'=>$searchLeitor, 'leitores' => $leitores, 'dataProvider'=>$dataProvider]);
+            'searchLeitor'=>$searchLeitor,
+            'leitores' => $leitores,
+            'dataProvider'=>$dataProvider,
+            'tiposLeitoresCount'=>$tiposLeitoresCount,
+            'bibliotecasCount'=>$bibliotecasCount,]);
     }
 
     public function actionView($id)

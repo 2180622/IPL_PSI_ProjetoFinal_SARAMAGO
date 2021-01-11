@@ -74,6 +74,5 @@ class CreateLeitorTest extends \Codeception\Test\Unit
         ]);
 
         $this->tester->seeRecord('common\models\Leitor', ['telemovel' => 915992252]);
-
     }
 }
