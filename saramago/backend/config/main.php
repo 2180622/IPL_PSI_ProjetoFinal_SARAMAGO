@@ -51,7 +51,7 @@ return [
                 //leitores
                 'leitor'=>'leitor/index',
                 'leitor/create'=>'leitor/create',
-                'leitor/<id:[a-zA-Z0-9_.]+>'=>'leitor/view-full',
+                'leitor/<id:[a-zA-Z0-9_]+>'=>'leitor/view-full',
                 //FIXME 'leitor/<username:[a-zA-Z0-9_.]+>'=>'leitor/view-full'
                 //postos de trabalho
                 //index site

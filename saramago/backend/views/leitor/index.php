@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $model \common\models\Leitor */
 
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\Modal;
@@ -31,9 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['value' => 'leitor/create', 'class' => 'btn btn-alt','id' => 'modalButtonCreate']) ?>
         </div>
         <div class="menu-table-saramago">
-            <div>
-                <p>Procurar por primeiro nome:</p>
-            </div>
+
             <?php Pjax::begin(); ?>
             <?php
             echo GridView::widget([
@@ -45,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => 'Nome',
                         'attribute' => 'nome',
                         'format' => 'html',
-                        'value' => function ($leitores) { return Html::a($leitores->nome, ['view-full', 'id' => $leitores->id]);}
+                        'value' => function ($model) { return Html::a($model->nome, ['view-full', 'id' => $model->id]);}
                     ],
                     [
                         'label' => 'Doc. Id',
@@ -61,16 +60,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => 'Tipo de Leitor',
                         'attribute' => 'TipoLeitor_id',
                         'headerOptions' => ['width' => '150'],
-                        'filter' => ['Grupo'=> [
+                        'filter' => [
                             'aluno'=>'Aluno',
                             'docente'=> 'Docente',
                             'funcionario'=>'Funcionário',
                             'externo'=>'Externo',
-                           // 'Tipo'=> $tiposExemplarAll
-                        ],
-                                    ],
+                            ],
                         'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
-                        'value' => function ($leitores) { return '' . $leitores->tipoLeitor->tipo;},
+                        'value' => function ($model) {
+                            if($model->tipoLeitor->tipo == 'aluno'){ return 'Aluno';}
+                            elseif($model->tipoLeitor->tipo == 'docente'){ return 'Docente';}
+                            elseif($model->tipoLeitor->tipo == 'funcionario'){ return 'Funcionário';}
+                            elseif($model->tipoLeitor->tipo == 'externo'){ return 'Externo';}
+                        }
                     ],
                     [
                         'label' => 'E-mail',

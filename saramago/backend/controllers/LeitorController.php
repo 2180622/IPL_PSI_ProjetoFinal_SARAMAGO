@@ -80,12 +80,6 @@ class LeitorController extends Controller
             'searchLeitor'=>$searchLeitor, 'leitores' => $leitores, 'dataProvider'=>$dataProvider]);
     }
 
-    /**
-     * Displays a single Leitor model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         $leitores = Leitor::find()->all();
@@ -97,23 +91,17 @@ class LeitorController extends Controller
         return '<h5>Lamentamos! Ocorreu um erro com o seu pedido.</h5>';
     }
 
-    /**
-     * Displays a single Leitor full model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionViewFull($id)
     {
-        $this->layout = 'minor';
-        $leitor = $this->findModel($id);
-        $user = User::findOne($leitor->id);
+        $this->layout='minor';
+        if (($model = Leitor::findOne($id)) !== null) {
+            $user = User::findOne($model->user_id);
+            return $this->render('view-full', ['model' => $model, 'user' => $user]);
+        }
 
-        return $this->render('view-full', [
-            'model' => $this->findModel($id),
-            'user' => $user,
-            ]);
+        throw new NotFoundHttpException('Leitor não encontrado.');
     }
+
 
     /**
      * Creates a new Leitor model.
