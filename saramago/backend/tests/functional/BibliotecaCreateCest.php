@@ -14,14 +14,25 @@ class BibliotecaCreateCest
         $I->click('#config');
         $I->amOnPage('/config');
         $I->click('#bibliotecas');
+        $I->amOnPage('/config/bibliotecas');
+
+        $I->click('#modalButtonCreate');
     }
 
     // tests
     public function tryToTest(FunctionalTester $I)
     {
-        $I->amOnPage('/config/bibliotecas');
+        $I->amOnPage('/config/bibliotecas/create');
 
-        $I->click('#modalButtonCreate');
-        $I->amOnPage('/leitor/create/_form');
+        $I->seePageNotFound('/config/bibliotecas/create/_form');
+        $I->fillField('#biblioteca-codbiblioteca', 'BJS');
+        $I->fillField('#biblioteca-nome', 'Biblioteca José Saramgo');
+        $I->fillField('#biblioteca-morada', 'Rua da Biblioteca');
+        $I->fillField('#biblioteca-localidade', 'Leiria');
+        $I->fillField('#biblioteca-codPostal', 2400413);
+        $I->selectOption('#biblioteca-levantamento', 'Sim');
+        $I->fillField('#biblioteca-notasopac', 'Uma nota da biblioteca');
+
+        $I->click('#guardar');
     }
 }

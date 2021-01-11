@@ -1,6 +1,7 @@
 <?php namespace backend\tests;
 
 use common\models\Leitor;
+use common\models\Tipoleitor;
 use common\models\User;
 
 class CreateLeitorTest extends \Codeception\Test\Unit
@@ -9,76 +10,70 @@ class CreateLeitorTest extends \Codeception\Test\Unit
      * @var \backend\tests\UnitTester
      */
     protected $tester;
-    private $leitor;
 
     public function testSomeFeature()
     {
-        $this->leitor = new Leitor();
 
-        $this->leitor->nome = 55;
-        $this->assertFalse($this->leitor->validate('nome'));
-        $this->leitor->nome = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-        $this->assertFalse($this->leitor->validate('nome'));
-        $this->leitor->nome = 'André Machado';
-        $this->assertTrue($this->leitor->validate('nome'));
+        $leitor = new Leitor();
+        $user = new User();
+        $tipoLeitor = new Tipoleitor();
 
-        $this->leitor->codBarras = 45;
-        $this->assertFalse($this->leitor->validate('codBarras'));
-        $this->leitor->codBarras = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-        $this->assertFalse($this->leitor->validate('codBarras'));
-        $this->leitor->codBarras = 'wer2dgdeg';
-        $this->assertTrue($this->leitor->validate('codBarras'));
-
-        $this->leitor->nif = 111111111111111111111111;
-        $this->assertFalse($this->leitor->validate('nif'));
-        $this->leitor->nif = 'sdgsadgsdfg';
-        $this->assertFalse($this->leitor->validate('nif'));
-        $this->leitor->nif = 269745015;
-        $this->assertTrue($this->leitor->validate('nif'));
-
-        $this->leitor->dataNasc = ' ';
-        $this->assertFalse($this->leitor->validate('dataNasc'));
-        $this->leitor->dataNasc = null;
-        $this->assertFalse($this->leitor->validate('dataNasc'));
-        $this->leitor->dataNasc = '2020-01-01';
-        $this->assertTrue($this->leitor->validate('dataNasc'));
+        $tipoLeitor->estatuto = 0;
+        $this->assertFalse($tipoLeitor->validate('estatuto'));
+        $tipoLeitor->estatuto = "aluno de Mestrado";
+        $this->assertTrue($tipoLeitor->validate('estatuto'));
 
 
-        $this->leitor->morada = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-        $this->assertFalse($this->leitor->validate('morada'));
-        $this->leitor->morada = 27;
-        $this->assertFalse($this->leitor->validate('morada'));
-        $this->leitor->morada = 'Rua';
-        $this->assertTrue($this->leitor->validate('morada'));
+        $tipoLeitor->tipo = null;
+        $this->assertFalse($tipoLeitor->validate('tipo'));
+        $tipoLeitor->tipo = "aluno";
+        $this->assertTrue($tipoLeitor->validate('tipo'));
 
-        $this->leitor->localidade = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-        $this->assertFalse($this->leitor->validate('localidade'));
-        $this->leitor->localidade = 27;
-        $this->assertFalse($this->leitor->validate('localidade'));
-        $this->leitor->localidade = 'Peniche';
-        $this->assertTrue($this->leitor->validate('localidade'));
+        $tipoLeitor->nItens = "falhar";
+        $this->assertFalse($tipoLeitor->validate('nItens'));
+        $tipoLeitor->nItens = 5;
+        $this->assertTrue($tipoLeitor->validate('nItens'));
 
-        $this->leitor->codPostal = 'a';
-        $this->assertFalse($this->leitor->validate('codPostal'));
-        $this->leitor->codPostal = 0.1;
-        $this->assertFalse($this->leitor->validate('codPostal'));
-        $this->leitor->codPostal = 2520295;
-        $this->assertTrue($this->leitor->validate('codPostal'));
+        $tipoLeitor->prazoDias = "sem prazo";
+        $this->assertFalse($tipoLeitor->validate('prazoDias'));
+        $tipoLeitor->prazoDias = 10;
+        $this->assertTrue($tipoLeitor->validate('prazoDias'));
 
-        $this->leitor->telemovel = .05;
-        $this->assertFalse($this->leitor->validate('telemovel'));
-        $this->leitor->telemovel = 'teste';
-        $this->assertFalse($this->leitor->validate('telemovel'));
-        $this->leitor->telemovel = 915992258;
-        $this->assertTrue($this->leitor->validate('telemovel'));
+        $tipoLeitor->registoOpac = 't';
+        $this->assertFalse($tipoLeitor->validate('registoOpac'));
+        $tipoLeitor->registoOpac = 1;
+        $this->assertTrue($tipoLeitor->validate('registoOpac'));
 
-        $this->leitor->Biblioteca_id = 1;
-        $this->leitor->TipoLeitor_id = 1;
-        $this->leitor->user_id = 2;
 
-        $this->leitor->save();
+        $user->username = 'andre';
+        $this->assertTrue($user->validate('username'));
 
-        $this->tester->seeRecord('common\models\Leitor', ['nif' => 269745015]);
+        $user->generateAuthKey();
+        $user->setPassword('password');
+
+        $user->email = 0;
+        $this->assertFalse($user->validate('email'));
+        $user->email = 'teste@gmail.com';
+        $this->assertTrue($user->validate('email'));
+
+        $tipoLeitor->save();
+        $user->save();
+
+        $this->tester->haveRecord('common\models\Leitor',[
+            'nome' => 'Andre Machado',
+            'codBarras' => 'wer2dgdeg',
+            'nif' => 269745015,
+            'dataNasc' =>'2020-01-01',
+            'morada' => 'rua',
+            'localidade' => 'leiria',
+            'codPostal' => 2400413,
+            'telemovel' => 915992252,
+            'Biblioteca_id' => 1,
+            'TipoLeitor_id' => $tipoLeitor->id,
+            'user_id' => $user->id
+        ]);
+
+        $this->tester->seeRecord('common\models\Leitor', ['telemovel' => 915992252]);
 
     }
 }

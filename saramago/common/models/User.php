@@ -54,7 +54,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['username', 'required'],
-            ['username', 'string', 'max' => 255 ],
+            ['username', 'string', 'max' => 255],
+
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
 
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],

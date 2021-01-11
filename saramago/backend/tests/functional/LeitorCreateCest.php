@@ -19,15 +19,20 @@ class LeitorCreateCest
     // tests
     public function tryToTest(FunctionalTester $I)
     {
-        $I->amOnPage('/config/bibliotecas/create/_form');
+        $I->amOnPage('/leitor/create/_form');
 
-        $I->fillField('#biblioteca-codbiblioteca', 'BJS');
-        $I->fillField('#biblioteca-nome', 'Biblioteca José Saramgo');
-        $I->fillField('#biblioteca-morada', 'Rua da Biblioteca');
-        $I->fillField('#biblioteca-localidade', 'Leiria');
-        $I->fillField('#biblioteca-codPostal', 2400413);
-        $I->selectOption('#biblioteca-levantamento', 'Sim');
-        $I->fillField('#biblioteca-notasopac', 'Uma nota da biblioteca');
+        $I->fillField('#leitorform-nome', 'Andre');
+        $I->fillField('#leitorform-username', 'andremach');
+        $I->fillField('#leitorform-nif', 269745017);
+        $I->fillField('#leitorform-docid', 303159959);
+        $I->fillField('#leitorform-datanasc', '2000-11-10');
+        $I->fillField('#leitorform-morada', 'Rua');
+        $I->fillField('#leitorform-localidade', 'Leiria');
+        $I->fillField('#leitorform-codpostal', 2400413);
+        $I->fillField('#leitorform-telemovel', 915992258);
+        $I->fillField('#leitorform-email', 'andre@gmail.com');
+        $I->selectOption('#leitorform-biblioteca_id', 'Biblioteca Alberto Caeiro');
+        $I->selectOption('#leitorform-tipoleitor_id', 'Aluno de TeSP');
 
         $I->click('#guardar');
     }

@@ -22,23 +22,36 @@ class CreateTipoLeitorTest extends \Codeception\Test\Unit
     {
         $this->tipoLeitor = new Tipoleitor();
 
-        $this->tipoLeitor->estatuto = "alunoalunoaluno";
-        $this->tipoLeitor->estatuto = "";
+        $this->tipoLeitor->estatuto = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        $this->assertFalse($this->tipoLeitor->validate('estatuto'));
+        $this->tipoLeitor->estatuto = null;
+        $this->assertFalse($this->tipoLeitor->validate('estatuto'));
+        $this->tipoLeitor->estatuto = 0;
+        $this->assertFalse($this->tipoLeitor->validate('estatuto'));
+        $this->tipoLeitor->estatuto = "Aluno de TeSP";
+        $this->assertTrue($this->tipoLeitor->validate('estatuto'));
 
-        $this->tipoLeitor->tipo = "";
+        $this->tipoLeitor->tipo = 0;
+        $this->assertFalse($this->tipoLeitor->validate('tipo'));
+        $this->tipoLeitor->tipo = "aluno";
+        $this->asserttrue($this->tipoLeitor->validate('tipo'));
 
         $this->tipoLeitor->nItens = 5;
+        $this->asserttrue($this->tipoLeitor->validate('nItens'));
 
-        $this->tipoLeitor->prazoDias = 3;
+        $this->tipoLeitor->prazoDias = 10;
+        $this->asserttrue($this->tipoLeitor->validate('prazoDias'));
 
-        $this->tipoLeitor->registoOpac = 0;
+        $this->tipoLeitor->registoOpac = 1;
+        $this->asserttrue($this->tipoLeitor->validate('registoOpac'));
 
-        $this->tipoLeitor->notas = "";
+        $this->tipoLeitor->notas = "Uma Nota";
+        $this->asserttrue($this->tipoLeitor->validate('notas'));
 
-        $this->assertEquals();
+        $this->tipoLeitor->save();
 
-        $this->tester->dontSeeRecord('common\models\Tipoleitor', ['estatuto' => 'alunoalunoaluno']);
+        $this->assertEquals('aluno - Aluno de TeSP', $this->tipoLeitor->tipo.' - '.$this->tipoLeitor->estatuto);
 
-
+        $this->tester->seeRecord('common\models\TipoLeitor', ['estatuto' => 'Aluno de TeSP', 'tipo' => 'aluno', 'nItens' => 5, 'prazoDias' => 10, 'registoOpac' =>  1, 'notas' => 'Uma Nota']);
     }
 }
