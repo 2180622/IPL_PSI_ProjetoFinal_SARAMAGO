@@ -265,6 +265,38 @@ class Obra extends \yii\db\ActiveRecord
     }
 
 
+    public static function getAnosDasObrasTodas() {
+        $obrasTodas = Obra::find()->all();
+        $anosTodos = null;
+        foreach ($obrasTodas as $obra) {
+            $anosTodos .= $obra->ano . ', ';
+        }
+        $anosTodos = implode(', ',array_unique(explode(', ', $anosTodos)));
+        $anos = explode(', ', $anosTodos);
+        array_pop($anos);
+
+        return $anos;
+    }
+
+
+    public static function getLivrosComMesmoAno() {
+        $obrasTodas = Obra::find()->all();
+        $primeiro = true;
+        $anosTodos = null;
+        foreach ($obrasTodas as $obra) {
+            if ($primeiro) {
+                $anosTodos = $obra->ano;
+                $primeiro = false;
+            }
+            else {
+                $anosTodos .= ', ' . $obra->ano;
+            }
+        }
+        $contagemTotal = Obra::NumeroDeNumerosIguais($anosTodos);
+
+        return $contagemTotal;
+    }
+
     public static function NumeroDePalavrasIguais($frase) {
         $contagem = array();
         
@@ -282,7 +314,22 @@ class Obra extends \yii\db\ActiveRecord
         return $contagem;
     }
 
-
+    public static function NumeroDeNumerosIguais($frase) {
+        $contagem = array();
+        
+        $numeros = explode(', ', $frase);
+        foreach ($numeros as $numero) {
+            $numero = preg_replace("/[^0-9]/", "", $numero);
+            if (isset($contagem[$numero])) {
+                $contagem[$numero] += 1;
+            }
+            else {
+                $contagem[$numero] = 1;
+            }
+        }
+        
+        return $contagem;
+    }
 
     #endRegion
 }

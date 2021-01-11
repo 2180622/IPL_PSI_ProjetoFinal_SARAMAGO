@@ -76,4 +76,33 @@ class ObraAutor extends \yii\db\ActiveRecord
     {
         return new ObraAutorQuery(get_called_class());
     }
+
+    public static function getNumeroDeObrasDoAutor() {
+        $obrasDosAutores = ObraAutor::find()->orderBy(['Autor_id' => SORT_ASC])->all();
+        $autoresDiferentes =  array();
+        $contador = 0;
+        $primeiro = true;
+        foreach($obrasDosAutores as $obraDeAutor) {
+            if ($primeiro == true) {
+                $autor = $obraDeAutor->Autor_id;
+                $autoresDiferentes[$contador] = 0;
+                $autoresDiferentes[$contador]++;
+                $primeiro = false;
+            }
+            else {
+                if ($autor == $obraDeAutor->Autor_id) {
+                    $autoresDiferentes[$contador]++;
+                }
+                else{
+                    $contador++;
+                    $autoresDiferentes[$contador] = 0;
+                    $autoresDiferentes[$contador]++;
+                    $autor = $obraDeAutor->Autor_id;
+                }
+            } 
+        }
+
+        return $autoresDiferentes;
+    }
 }
+

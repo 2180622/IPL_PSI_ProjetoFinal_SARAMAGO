@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\Noticias;
 use common\models\Obra;
 use common\models\Autor;
+use common\models\ObraAutor;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -80,14 +81,20 @@ class SiteController extends Controller
         $model = Obra::find()->all();
         $noticias = Noticias::find()->all();
         $tagsDasObras = Obra::getAssuntosDasObrasTodas();
+        $anosDasObras= Obra::getAnosDasObrasTodas();
+        $quantidadeDeLivrosDoMesmoAno = Obra::getLivrosComMesmoAno();
         $quantidadeDeLivrosNaMesmaTag = Obra::getLivrosComMesmoAssunto();
     	$obrasRecentementeAdquiridas = Obra::find()->orderBy(['dataRegisto' => SORT_DESC])->all();
         $autores = Autor::find()->all();
+        $numeroDeObrasDoAutor = ObraAutor::getNumeroDeObrasDoAutor();
 
         return $this->render('index', [
             'tagsDasObras' => $tagsDasObras,
+            'anosDasObras' => $anosDasObras,
             'quantidadeDeLivrosNaMesmaTag' => $quantidadeDeLivrosNaMesmaTag,
+            'quantidadeDeLivrosDoMesmoAno' => $quantidadeDeLivrosDoMesmoAno,
             'obrasRecentementeAdquiridas' => $obrasRecentementeAdquiridas,
+            'numeroDeObrasDoAutor' => $numeroDeObrasDoAutor,
             'noticias' => $noticias,
             'autores' => $autores]);
     }
