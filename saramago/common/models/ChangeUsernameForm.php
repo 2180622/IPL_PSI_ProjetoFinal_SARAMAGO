@@ -19,8 +19,8 @@ class ChangeUsernameForm extends Model
         return [
             [['oldUsername', 'username', 'retypeUsername'], 'required'],
             [['username'], 'string', 'min' => 5],
-            //FIXME "Username em uso" não funciona
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Username em uso.'],
+            ['username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u'],
             [['username'], 'compare', 'operator' => '!=','compareAttribute' => 'oldUsername', 'message' => 'Username não pode ser igual ao atual.'],
             [['retypeUsername'], 'compare', 'compareAttribute' => 'username', 'message' => 'Username não coincide.'],
         ];

@@ -42,7 +42,9 @@ use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\ConflictHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
 
 /**
  * Site controller
@@ -147,7 +149,12 @@ class ConfigController extends Controller
 
             $UsernameModel = new ChangeUsernameForm();
 
-            if($UsernameModel->load(Yii::$app->request->post()) && $UsernameModel->change()) {
+            if (Yii::$app->request->isAjax && $UsernameModel->load(Yii::$app->request->post()))
+            {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($UsernameModel);
+            }
+            elseif($UsernameModel->load(Yii::$app->request->post()) && $UsernameModel->change()) {
                 Yii::$app->session->setFlash('success',
                     "<strong>Informação: </strong> O username foi alterado com sucesso! ");
                 return $this->redirect(['conta']);
