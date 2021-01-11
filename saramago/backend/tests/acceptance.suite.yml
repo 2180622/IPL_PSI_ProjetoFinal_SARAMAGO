@@ -1,0 +1,14 @@
+suite_namespace: backend\tests\acceptance
+actor: AcceptanceTester
+modules:
+    enabled:
+      - WebDriver:
+         url: 'http://localhost/IPL_PSI_ProjetoFinal2/saramago/backend/web/'
+         window_size: false # disabled in ChromeDriver
+         port: 8080
+         browser: chrome # 'chrome' or 'firefox'
+extensions:
+    enabled:
+       - Codeception\Extension\RunProcess:
+         - java -jar selenium-server-standalone-3.141.59.jar -port 8080
+         - chromedriver --url-base=/wd/hub
