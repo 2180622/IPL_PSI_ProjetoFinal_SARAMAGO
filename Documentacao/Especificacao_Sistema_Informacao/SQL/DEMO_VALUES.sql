@@ -1,14 +1,14 @@
---DEMO
+-- DEMO
 
---Bibliotecas
+-- Bibliotecas
 INSERT INTO `Biblioteca` (`id`, `codBiblioteca`, `nome`, `notasOpac`, `morada`, `localidade`, `codPostal`, `levantamento`) VALUES
-(1, 'BAC', 'Biblioteca Alberto Caeiro', '<p><strong>knlkkl</strong></p>\r\n', 'Rua Acácio de Paivam', 'Leiria', 2400076, 1),
-(2, 'BAN', 'Biblioteca Almada Negreiros', NULL, 'Escadas de Artur Lobo de Campos', 'Leiria', 2400101, 1),
-(3, 'BAG', 'Biblioteca Almeida Garrett', '<p>Fechado por <strong>tempo inderteminado</strong></p>\r\n', 'R. Almeida Garrett 6', 'Leiria', 2400137, 1),
-(4, 'BAR', 'Biblioteca Alves Redol', '<p><strong>FECHADO</strong></p>\r\n', 'Rua da Flores ', 'Leiria', 2400000, 1);
+(NUll, 'BAC', 'Biblioteca Alberto Caeiro', '<p><strong>knlkkl</strong></p>\r\n', 'Rua Acácio de Paivam', 'Leiria', 2400076, 1),
+(NULL, 'BAN', 'Biblioteca Almada Negreiros', NULL, 'Escadas de Artur Lobo de Campos', 'Leiria', 2400101, 1),
+(NUll, 'BAG', 'Biblioteca Almeida Garrett', '<p>Fechado por <strong>tempo inderteminado</strong></p>\r\n', 'R. Almeida Garrett 6', 'Leiria', 2400137, 1),
+(NULL, 'BAR', 'Biblioteca Alves Redol', '<p><strong>FECHADO</strong></p>\r\n', 'Rua da Flores ', 'Leiria', 2400000, 1);
 
 
---Tipos de Leitor
+-- Tipos de Leitor
 INSERT INTO `TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `registoOpac`, `notas`) VALUES
 (NULL, 'Aluno', 'Aluno', '6', '10', '1', NULL),
 (NULL, 'Alunos de Mestrados, Doutoramento e Pós-Graduação', 'Aluno', '10', '15', '1', NULL),
@@ -16,14 +16,14 @@ INSERT INTO `TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `regi
 (NULL, 'Docentes em Mestrado e Doutoramento', 'Docente', '25', '180', '1', NULL),
 (NULL, 'Externo', 'Externo', '5', '10', '1', NULL);
 
---Postos de Trabalho
+-- Postos de Trabalho
 INSERT INTO `PostoTrabalho` (`id`, `designacao`, `totalLugares`, `notaOpac`, `notaInterna`, `Biblioteca_id`) VALUES
 (NULL, 'Sala de Estudo A', 10, '', 'teste teste', 1),
 (NULL, 'Sala de Estudo B', 10, '', '', 1),
 (NULL, 'Sala de Informática', 20, '', '', 2),
 (NULL, 'Sala de Informática', 30, '<p>Fechado</p>\r\n', '', 3);
 
---Cursos
+-- Cursos
 INSERT INTO `Curso` (`id`, `CodCurso`, `nome`) VALUES
 (1, 'LIC', 'Licenciatura em Administração Pública'),
 (2, 'LIC', 'Licenciatura em Animação Turística'),
