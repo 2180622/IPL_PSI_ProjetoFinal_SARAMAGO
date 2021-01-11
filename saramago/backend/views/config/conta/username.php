@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="conta-password-form">
 
-    <?php $form = ActiveForm::begin(['id'=>'username-form', 'options' => ['data' => ['pjax' => true]]]); ?>
+    <?php $form = ActiveForm::begin(['id'=>'username-form']); ?>
 
     <?= $form->field($model, 'oldUsername')->textInput(['disabled' => true]) ?>
-    <?= $form->field($model, 'username') ?>
-    <?= $form->field($model, 'retypeUsername') ?>
+    <?= $form->field($model, 'username', ['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'retypeUsername')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

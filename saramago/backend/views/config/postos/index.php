@@ -22,11 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </h1>
     <hr>
     <?php
-    if($dataProvider->totalCount == 0)
+    if($bibliotecasCount == 0)
     {
         echo '
-            <div class="alert alert-info alert-dismissible config" role="alert">
-                <strong>Informação:</strong> Comece por registar os Postos de Trabalho da sua entidade.
+            <div class="alert alert-warning config" role="alert">
+                <strong>Informação:</strong> Comece por registar primeiro as bibliotecas, em "Administração / Bibliotecas / Adicionar" ou '.Html::a( 'clicando aqui',['bibliotecas#create']).'.
+            </div>
+        ';
+
+    }elseif($dataProvider->totalCount == 0)
+    {
+        echo '
+            <div class="alert alert-info config" role="alert" id="alert-saramago">
+                <strong>Informação:</strong> Comece por registar os Postos de Trabalho, em cada biblioteca, da sua entidade.
             </div>
         ';
 
@@ -78,12 +86,31 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
-    $this->registerJs("
+    $this->registerJs(/**@lang JavaScript*/"
     $(function () {
         $('#modalButtonCreate').click(function (){
-            $('#modalCreate').modal('show').find('#modalContent').load($(this).attr('value'))
+            $('#modalCreate').modal('show')
+                .find('#modalContent')
+                .load($(this).attr('value'))
         })
-    });");
+    })
+    
+    $(function () {
+            if(location.hash == '#create'){
+                 $('#modalCreate').modal('show')
+                    .find('#modalContent')
+                    .load('postos-create')
+            }
+        });
+
+    $(function () {
+                var idHash = location.hash;
+                var idRef = idHash.substring(1);
+                $('#modalView'+idRef).modal('show')
+                    .find('#modalContent')
+                    .load('postos-update?id='+idRef)
+        });
+    ;");
 
     foreach ($postoTrabalhoModels as $postoTrabalhoModel)
     {

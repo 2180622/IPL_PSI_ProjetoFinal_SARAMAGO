@@ -342,10 +342,11 @@ class ConfigController extends Controller
         if ((Yii::$app->user->can('verPostosTrabalho'))) {
             $searchModel = new PostotrabalhoSearch();
             $postoTrabalhoModel = Postotrabalho::find()->all();
+            $bibliotecasCount = Biblioteca::find()->count();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('postos/index',['searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-                'postoTrabalhoModels' => $postoTrabalhoModel]);
+            'postoTrabalhoModels' => $postoTrabalhoModel, 'bibliotecasCount'=>$bibliotecasCount]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
@@ -369,7 +370,7 @@ class ConfigController extends Controller
             $listaBibliotecas = Biblioteca::find()->all();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', "O posto de trabalho foi adicionado.");
+                Yii::$app->session->setFlash('success', 'O posto de trabalho "'.$model->designacao.'"foi adicionado com sucesso.');
                 return $this->redirect('postos');
             }
 
@@ -379,14 +380,14 @@ class ConfigController extends Controller
     }
     
     public function actionPostosUpdate($id)
-    {   
+    {
         if ((Yii::$app->user->can('editarPostosTrabalho'))) {
             $model = $this->findModelPostostrabalho($id);
             new Biblioteca();
             $listaBibliotecas = Biblioteca::find()->all();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', "O posto de trabalho foi atualizado.");
+                Yii::$app->session->setFlash('success', 'O posto de trabalho "'.$model->designacao.'"foi atualizado com sucesso.');
                 return $this->redirect('postos');
             }
             return $this->renderAjax('postos/update', ['model' => $model, 'listaBibliotecas'=>$listaBibliotecas]);
