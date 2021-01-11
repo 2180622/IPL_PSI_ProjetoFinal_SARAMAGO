@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller
@@ -70,21 +71,24 @@ class PtoController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout="minor";
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            $this->layout="minor";
 
-        $bibliotecasCount = Biblioteca::find()->count();
-        $postosCount = Postotrabalho::find()->count();
+            $bibliotecasCount = Biblioteca::find()->count();
+            $postosCount = Postotrabalho::find()->count();
 
-        $bibliotecasModel = Biblioteca::find()->all();
-        $postosModel = Postotrabalho::find()->all();
+            $bibliotecasModel = Biblioteca::find()->all();
+            $postosModel = Postotrabalho::find()->all();
 
-        $reservasModel = Reservasposto::find()->all();
+            $reservasModel = Reservasposto::find()->all();
 
-        $userRoleLogin = array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->id))[0];
+            $userRoleLogin = array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->id))[0];
 
-        return $this->render('index', ['bibliotecasCount'=>$bibliotecasCount, 'postosCount'=>$postosCount,
-            'bibliotecasModel'=>$bibliotecasModel, 'postosModel'=> $postosModel, 'userRoleLogin'=>$userRoleLogin,
-            'reservas'=>$reservasModel]);
+            return $this->render('index', ['bibliotecasCount'=>$bibliotecasCount, 'postosCount'=>$postosCount,
+                'bibliotecasModel'=>$bibliotecasModel, 'postosModel'=> $postosModel, 'userRoleLogin'=>$userRoleLogin,
+                'reservas'=>$reservasModel]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
 
     #endregion
@@ -99,11 +103,13 @@ class PtoController extends Controller
      */
     public function actionPostoInfo($id)
     {
-        if (($model = Postotrabalho::findOne($id)) !== null) {
-            return $this->renderAjax('posto-info', ['model' => $model]);
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            if (($model = Postotrabalho::findOne($id)) !== null) {
+                return $this->renderAjax('posto-info', ['model' => $model]);
+            }
+            throw new NotFoundHttpException('O Posto de Trabalho não existe');
         }
-        throw new NotFoundHttpException('O Posto de Trabalho não existe');
-
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -113,18 +119,21 @@ class PtoController extends Controller
 
     public function actionPostoReservas($idPosto)
     {
-        $searchModelHoje = new ReservaspostoHojeSearch();
-        $dataProviderHoje = $searchModelHoje->search(Yii::$app->request->queryParams);
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            $searchModelHoje = new ReservaspostoHojeSearch();
+            $dataProviderHoje = $searchModelHoje->search(Yii::$app->request->queryParams);
 
-        $searchModel = new ReservaspostoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $searchModel = new ReservaspostoSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $reservas = Reservasposto::find()->all();
+            $reservas = Reservasposto::find()->all();
 
-        return $this->renderAjax('posto-reservas',
-            ['searchModelHoje' => $searchModelHoje, 'dataProviderHoje' => $dataProviderHoje,
-            'searchModel' => $searchModel, 'dataProvider' => $dataProvider,
-            'reservas'=>$reservas]);
+            return $this->renderAjax('posto-reservas',
+                ['searchModelHoje' => $searchModelHoje, 'dataProviderHoje' => $dataProviderHoje,
+                'searchModel' => $searchModel, 'dataProvider' => $dataProvider,
+                'reservas'=>$reservas]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
 
     }
     #endregion
@@ -138,31 +147,34 @@ class PtoController extends Controller
      */
     public function actionReservaCreate($idPosto)
     {
-        $model = new Reservasposto();
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            $model = new Reservasposto();
 
-        $totalLugaresCount = Postotrabalho::findOne($idPosto)->totalLugares;
+            $totalLugaresCount = Postotrabalho::findOne($idPosto)->totalLugares;
 
-        $totalLugares = array();
-        for ($i = 1; $i <= $totalLugaresCount; $i++) {
-            $totalLugares[$i]=$i;
+            $totalLugares = array();
+            for ($i = 1; $i <= $totalLugaresCount; $i++) {
+                $totalLugares[$i]=$i;
+            }
+
+            $listLeitores = Leitor::find()->all();
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> Foi reservado o lugar <u>' . $model->lugar . '</u> para <u>' .
+                    Yii::$app->formatter->asDate($model->dataReserva, 'full') . '</u>, em nome de <u>' .
+                    $model->leitor->nome . '</u> [@' . $model->leitor->user->username . '], em <u>' .
+                    $model->postoTrabalho->designacao . ' (' . $model->postoTrabalho->biblioteca->codBiblioteca . ')</u>.');
+
+                return $this->redirect(['index', '#' => $model->postoTrabalho->id . '-' . $model->id]);
+            }
+
+            return $this->renderAjax('reserva-create', ['model' => $model,
+                'totalLugares' => $totalLugares, 'listLeitores'=>$listLeitores,
+                'idPosto'=>$idPosto]);
         }
-
-        $listLeitores = Leitor::find()->all();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> Foi reservado o lugar <u>' . $model->lugar . '</u> para <u>' .
-                Yii::$app->formatter->asDate($model->dataReserva, 'full') . '</u>, em nome de <u>' .
-                $model->leitor->nome . '</u> [@' . $model->leitor->user->username . '], em <u>' .
-                $model->postoTrabalho->designacao . ' (' . $model->postoTrabalho->biblioteca->codBiblioteca . ')</u>.');
-
-            return $this->redirect(['index', '#' => $model->postoTrabalho->id . '-' . $model->id]);
-        }
-
-        return $this->renderAjax('reserva-create', ['model' => $model,
-            'totalLugares' => $totalLugares, 'listLeitores'=>$listLeitores,
-            'idPosto'=>$idPosto]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -173,7 +185,10 @@ class PtoController extends Controller
      */
     public function actionReservaView($id)
     {
-        return $this->renderAjax('reserva-view', ['model' => $this->findModelReservasposto($id)]);
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            return $this->renderAjax('reserva-view', ['model' => $this->findModelReservasposto($id)]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -185,17 +200,19 @@ class PtoController extends Controller
      */
     public function actionReservaUpdate($id)
     {
-        $model = $this->findModelReservasposto($id);
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            $model = $this->findModelReservasposto($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            Yii::$app->session->setFlash('success',
-                '<strong>Informação:</strong> Foi atualizada a informação da reserva nº <u>'.$model->id.'</u>.');
-            return $this->redirect(['index', '#' => $model->postoTrabalho->id . '-' . $model->id]);
+                Yii::$app->session->setFlash('success',
+                    '<strong>Informação:</strong> Foi atualizada a informação da reserva nº <u>'.$model->id.'</u>.');
+                return $this->redirect(['index', '#' => $model->postoTrabalho->id . '-' . $model->id]);
+            }
+
+            return $this->renderAjax('reserva-update', ['model' => $model,]);
         }
-
-        return $this->renderAjax('reserva-update', ['model' => $model,]);
-
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -207,27 +224,29 @@ class PtoController extends Controller
      */
     public function actionReservaConf($id)
     {
-        $model = $this->findModelReservasposto($id);
+        if ((Yii::$app->user->can('acessoPostosDeTrabalho'))) {
+            $model = $this->findModelReservasposto($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            if($model->estadoReserva == 'concluido')
-            {
-                Yii::$app->session->setFlash('success',
-                    '<strong>Informação:</strong> A reserva nº: <u>'.$model->id.'</u> foi <u>Concluída</u> com sucesso.');
+                if($model->estadoReserva == 'concluido')
+                {
+                    Yii::$app->session->setFlash('success',
+                        '<strong>Informação:</strong> A reserva nº: <u>'.$model->id.'</u> foi <u>Concluída</u> com sucesso.');
 
+                }
+                elseif($model->estadoReserva == 'cancelado')
+                {
+                    Yii::$app->session->setFlash('success',
+                        '<strong>Informação:</strong> A reserva nº: <u>'.$model->id.'</u> foi <u>Cancelada</u> com sucesso.');
+                }
+
+               return $this->redirect(['index', '#' => $model->postoTrabalho->id . '-' . $model->id]);
             }
-            elseif($model->estadoReserva == 'cancelado')
-            {
-                Yii::$app->session->setFlash('success',
-                    '<strong>Informação:</strong> A reserva nº: <u>'.$model->id.'</u> foi <u>Cancelada</u> com sucesso.');
-            }
 
-           return $this->redirect(['index', '#' => $model->postoTrabalho->id . '-' . $model->id]);
+            return $this->renderAjax('reserva-conf', ['model' => $model,]);
         }
-
-        return $this->renderAjax('reserva-conf', ['model' => $model,]);
-
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página'); 
     }
 
     /**

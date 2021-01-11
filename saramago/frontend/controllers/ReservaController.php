@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * ReservaController implements the CRUD actions for Reserva model.
@@ -35,15 +36,18 @@ class ReservaController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Reserva::find(),
-        ]);
-        $reservas = Reserva::find()->all();
+        if ((Yii::$app->user->can('acessoFronte'))) {
+            $dataProvider = new ActiveDataProvider([
+                'query' => Reserva::find(),
+            ]);
+            $reservas = Reserva::find()->all();
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'reservas'=>$reservas,
-        ]);
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'reservas'=>$reservas,
+            ]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
     }
 
     /**
@@ -54,9 +58,12 @@ class ReservaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
     }
 
     /**
@@ -66,15 +73,18 @@ class ReservaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Reserva();
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $model = new Reserva();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
     }
 
     /**
@@ -86,15 +96,18 @@ class ReservaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
     }
 
     /**
@@ -106,9 +119,12 @@ class ReservaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
     }
 
     /**
