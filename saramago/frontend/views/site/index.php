@@ -111,7 +111,10 @@ $this->title = 'SARAMAGO';
                         <div class="panel-heading">Autores</div>
                         <div class="panel-body">
                             <?php foreach ($autores as $autor) { ?>
-                                <a href="../site/autor/view/<?=$autor->id?>"><button type="button" class="btn btn-outline-light"> <?=$autor->primeiroNome .' '. $autor->segundoNome .' '. $autor->apelido ?> <span class="badge badge-light"> <?= $numeroDeObrasDoAutor[$autor->id-1] ?></span></button></a>
+                                <a href="../site/autor/view/<?=$autor->id?>"><button type="button" class="btn btn-outline-light"> <?=$autor->primeiroNome .' '. $autor->segundoNome .' '. $autor->apelido ?> <span class="badge badge-light">
+                                <?php if (isset($numeroDeObrasDoAutor[$autor->id-1])) { ?>
+                                    <?= $numeroDeObrasDoAutor[$autor->id-1] ?>
+                                <?php  } ?></span></button></a>
                             <?php } ?> 
                         </div>
                     </div>

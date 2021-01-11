@@ -30,7 +30,7 @@ class Tipoexemplar extends \yii\db\ActiveRecord
     {
         return [
             [['designacao', 'tipo'], 'required'],
-            [['tipo'], 'string'],
+            [['tipo'], 'string', 'max' => 45],
             [['designacao'], 'string', 'max' => 255],
         ];
     }
