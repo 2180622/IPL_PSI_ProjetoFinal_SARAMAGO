@@ -162,9 +162,15 @@ class ConfigController extends Controller
     public function actionContaPassword()
     {
         if ((Yii::$app->user->can('acessoAdministracao'))) {    
+
             $PasswordModel = new ChangePasswordForm();
 
-            if($PasswordModel->load(Yii::$app->request->post())&& $PasswordModel->change()) {
+            if (Yii::$app->request->isAjax && $PasswordModel->load(Yii::$app->request->post()))
+            {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($PasswordModel);
+            }
+            elseif($PasswordModel->load(Yii::$app->request->post())&& $PasswordModel->change()) {
                 Yii::$app->session->setFlash('success',
                     "<strong>Informação:</strong> A password foi alterada com sucesso!");
                 return $this->redirect(['conta']);

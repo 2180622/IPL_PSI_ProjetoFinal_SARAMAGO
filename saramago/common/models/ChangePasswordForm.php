@@ -69,6 +69,7 @@ class ChangePasswordForm extends Model
             $user = Yii::$app->user->identity;
             $user->setPassword($this->newPassword);
             $user->generateAuthKey();
+
             if ($user->save()) {
                 return true;
             }

@@ -11,8 +11,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['id'=>'password-form', 'options' => ['data' => ['pjax' => true]]]); ?>
 
-    <?= $form->field($model, 'oldPassword')->passwordInput() ?>
-    <?= $form->field($model, 'newPassword')->passwordInput() ?>
+    <?= $form->field($model, 'oldPassword',['enableAjaxValidation' => true, 'enableClientValidation'=>true])->passwordInput() ?>
+    <?= $form->field($model, 'newPassword',['enableAjaxValidation' => true, 'enableClientValidation'=>true])->passwordInput() ?>
     <?= $form->field($model, 'retypePassword')->passwordInput() ?>
 
     <div class="form-group">

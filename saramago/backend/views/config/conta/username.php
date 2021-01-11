@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ChangeUsernameForm */
+/* @var $model backend\models\ChangeUsernameForm */
 /* @var $form ActiveForm */
 ?>
 <div class="conta-password-form">
