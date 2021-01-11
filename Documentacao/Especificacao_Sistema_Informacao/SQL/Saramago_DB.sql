@@ -1072,3 +1072,14 @@ INSERT INTO `yii2saramago`.`Config` (`id`, `info`, `key`, `value`) VALUES (DEFAU
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Data for table `yii2saramago`.`TipoLeitor`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `yii2saramago`;
+
+INSERT INTO `yii2saramago`.`TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `registoOpac`, `notas`) VALUES (DEFAULT, 'Aluno', 'Aluno', '6', '10', '1', NULL);
+INSERT INTO `yii2saramago`.`TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `registoOpac`, `notas`) VALUES (DEFAULT, 'Alunos de Mestrados, Doutoramento e Pós-Graduação', 'Aluno', '10', '15', '1', NULL);
+INSERT INTO `yii2saramago`.`TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `registoOpac`, `notas`) VALUES (DEFAULT, 'Docentes, Técnicos e Administrativos', 'Docente', '15', '90', '1', NULL);
+INSERT INTO `yii2saramago`.`TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `registoOpac`, `notas`) VALUES (DEFAULT, 'Docentes em Mestrado e Doutoramento', 'Docente', '25', '180', '1', NULL);
+INSERT INTO `yii2saramago`.`TipoLeitor` (`id`, `estatuto`, `tipo`, `nItens`, `prazoDias`, `registoOpac`, `notas`) VALUES (DEFAULT, 'Externo', 'Externo', '5', '10', '1', NULL);
