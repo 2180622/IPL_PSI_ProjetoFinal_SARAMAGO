@@ -45,8 +45,8 @@ $this->title = 'SARAMAGO';
             				</div>
                 		</div>
                         <?php $primeiro = false; ?>
-                        <?php } ?>  
-                        <?php if ($primeiro == false) { ?>
+                        <?php }
+                        else { ?>  
                         <div class="item">
                             <?= Html::img('@web/img/' . $obra->imgCapa,['width' => '100%', 'alt'=> $obra->titulo . ' ('. $obra->ano .')'])?>
                             <div class="carousel-caption">
