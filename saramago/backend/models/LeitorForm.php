@@ -45,8 +45,9 @@ class LeitorForm extends Leitor
         return [
             ['username', 'trim'],
             ['username', 'required'],
+            ['username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Nome de utilizador em uso.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'string', 'min' => 5, 'max' => 10],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -69,10 +70,10 @@ class LeitorForm extends Leitor
             ['numero', 'trim'],
             ['numero', 'integer'],
 
-            ['nif', 'trim'],
             ['nif', 'required'],
             ['nif', 'string', 'min' => 9, 'max' => 9],
             ['nif', 'unique', 'targetClass' => '\common\models\Leitor', 'message' => 'NIF já se encontra em uso.'],
+            ['nif', 'match', 'pattern' => '/^[0-9]+$/', 'message' => 'Formato inválido.'],
 
             ['docId', 'trim'],
             ['docId', 'required'],
@@ -94,7 +95,8 @@ class LeitorForm extends Leitor
 
             ['codPostal', 'trim'],
             ['codPostal', 'required'],
-            ['codPostal', 'string', 'min' => 6, 'max' => 10],
+            ['codPostal', 'string', 'min' => 4, 'max' => 7],
+            ['codPostal', 'match', 'pattern' => '/^[0-9]{4}|[0-9]{7}$/', 'message' => 'Formato inválido.'],
 
             ['telemovel', 'trim'],
             ['telemovel', 'required'],
@@ -215,7 +217,7 @@ class LeitorForm extends Leitor
             }
 
 
-            return $leitor;
+            return $leitor->id;
         }
         return false;
     }

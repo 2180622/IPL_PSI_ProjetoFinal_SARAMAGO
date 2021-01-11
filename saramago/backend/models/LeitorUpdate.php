@@ -45,8 +45,9 @@ class LeitorUpdate extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
+            ['username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Nome de utilizador em uso.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'string', 'min' => 5, 'max' => 10],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -75,11 +76,13 @@ class LeitorUpdate extends Model
             ['nif', 'trim'],
             ['nif', 'required'],
             ['nif', 'string', 'min' => 9, 'max' => 9],
+            ['nif', 'match', 'pattern' => '/^[0-9]+$/u'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Leitor', 'message' => 'NIF já se encontra em uso.'],
 
             ['docId', 'trim'],
             ['docId', 'required'],
             ['docId', 'unique', 'targetClass' => '\common\models\Leitor', 'message' => 'Número de documento em uso.'],
-            ['docId', 'string', 'min' => 9, 'max' => 9],
+            ['docId', 'string', 'min' => 9, 'max' => 45],
 
             ['dataNasc', 'trim'],
             ['dataNasc', 'required'],
@@ -96,7 +99,7 @@ class LeitorUpdate extends Model
 
             ['codPostal', 'trim'],
             ['codPostal', 'required'],
-            ['codPostal', 'string', 'min' => 6, 'max' => 10],
+            ['codPostal', 'string', 'min' => 4, 'max' => 7],
 
             ['telemovel', 'trim'],
             ['telemovel', 'required'],
