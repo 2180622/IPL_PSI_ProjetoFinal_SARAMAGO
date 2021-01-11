@@ -1,9 +1,10 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
+use common\models\User;
 
 class ChangeUsernameForm extends Model
 {
@@ -18,7 +19,8 @@ class ChangeUsernameForm extends Model
     {
         return [
             [['oldUsername', 'username', 'retypeUsername'], 'required'],
-            [['username'], 'string', 'min' => 5],
+            [['username'], 'string', 'min' => 5, 'max'=>10],
+            [['retypeUsername'], 'string', 'min' => 5, 'max'=>10],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Username em uso.'],
             ['username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u'],
             [['username'], 'compare', 'operator' => '!=','compareAttribute' => 'oldUsername', 'message' => 'Username não pode ser igual ao atual.'],

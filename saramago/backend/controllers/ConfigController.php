@@ -1,10 +1,9 @@
 <?php
 namespace backend\controllers;
 
-use common\models\ChangePasswordForm;
-use common\models\ChangeUsernameForm;
 use Yii;
-
+use backend\models\ChangeUsernameForm;
+use common\models\ChangePasswordForm;
 use backend\models\CduSearch;
 use backend\models\EquipaCreateForm;
 use backend\models\EquipaSearch;
@@ -32,10 +31,8 @@ use common\models\Postotrabalho;
 use common\models\Tipoirregularidade;
 use common\models\Tipoexemplar;
 use common\models\Exemplar;
-use common\models\Reservasposto;
 use common\models\Obra;
 use yii\data\ActiveDataProvider;
-use yii\rbac\Role;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -134,7 +131,6 @@ class ConfigController extends Controller
     public function actionConta()
     {
         if ((Yii::$app->user->can('acessoAdministracao'))) {
-            $PasswordModel = new ChangePasswordForm();
             return $this->render('conta/index');
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
