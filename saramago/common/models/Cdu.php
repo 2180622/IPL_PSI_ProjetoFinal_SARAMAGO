@@ -29,9 +29,8 @@ class Cdu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codCdu'], 'required'],
-            [['designacao'], 'string'],
-            [['codCdu'], 'string', 'max' => 255],
+            [['codCdu', 'designacao'], 'required'],
+            [['codCdu', 'designacao'], 'string', 'max' => 255],
         ];
     }
 
