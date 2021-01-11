@@ -39,7 +39,7 @@ use yii\widgets\Pjax;
                             [   'attribute'=> 'Leitor_id',
                                 'label'=>'Leitor',
                                 'format' => 'html',
-                                'value' => function ($model) { return Html::a($model->leitor->nome, ['leitor/view-full', 'id' => $model->Leitor_id]);}
+                                'value' => function ($model) { return Html::a($model->leitor->nome, Url::toRoute(['leitor/'.$model->Leitor_id]));}
                             ],
                             'dataPedido','dataReserva',
                             'notaInterna:html',

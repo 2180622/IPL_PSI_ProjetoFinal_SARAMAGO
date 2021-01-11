@@ -64,18 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     {
                                         echo '<div>'.Html::button(FAS::icon('briefcase') . ' ' . $posto->designacao,
                                                 ['value' => Url::to(['posto-info','id'=>$posto->id]), 'class' => 'btn btn-alt','style'=>'margin: 2px;', 'id' => 'infoButtonPosto'.$posto->id]).'</div>';
-
-                                        $this->registerJs(/**@lang JavaScript*/"
-                                            $(function () {
-                                                $('#infoButtonPosto".$posto->id."').click(function (){
-                                                    $('.menu-nav-saramago').removeClass('hidden');
-                                                    $('.menu-table-saramago').removeClass('hidden');
-                                                    $('.alert-start').addClass('hidden');
-                                                    $('.menu-nav-saramago').load($(this).attr('value'))
-                                                    $('.menu-table-saramago').load('pto/posto-reservas?idPosto=".$posto->id."')
-                                                })
-                                            });
-                                        ");
                                     }
                                 }
             echo'       </div>
@@ -114,17 +102,37 @@ $this->params['breadcrumbs'][] = $this->title;
                     $('.menu-nav-saramago').removeClass('hidden');
                     $('.menu-table-saramago').removeClass('hidden');
                     $('.alert-start').addClass('hidden');
-                    $('.menu-nav-saramago').load('posto-info?id='+idPosto)
-                    $('.menu-table-saramago').load('posto-reservas?idPosto='+idPosto)
+                    $('.menu-nav-saramago').load('pto/posto-info?id='+idPosto)
+                    $('.menu-table-saramago').load('pto/posto-reservas?idPosto='+idPosto)
                     $('#modalReservaView'+idPosto).modal('show')
                        .find('#modalContent')
-                       .load('reserva-view?id='+idReserva)
+                       .load('pto/reserva-view?id='+idReserva)
                 }
                     
             }
                     
         });
     ");
+    foreach ($bibliotecasModel as $biblioteca)
+    {
+        if($biblioteca->postotrabalhos != null)
+        {
+            foreach($biblioteca->postotrabalhos as $posto)
+            {
+                $this->registerJs(/**@lang JavaScript*/"
+                    $(function () {
+                        $('#infoButtonPosto".$posto->id."').click(function (){
+                            $('.menu-nav-saramago').removeClass('hidden');
+                            $('.menu-table-saramago').removeClass('hidden');
+                            $('.alert-start').addClass('hidden');
+                            $('.menu-nav-saramago').load($(this).attr('value'))
+                            $('.menu-table-saramago').load('pto/posto-reservas?idPosto=".$posto->id."')
+                        })
+                    });
+                ");
+            }
+        }
+    }
     ?>
 
     <?php

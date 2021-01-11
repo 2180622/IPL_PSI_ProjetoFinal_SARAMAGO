@@ -54,6 +54,7 @@ return [
                 'leitor/<id:[a-zA-Z0-9_]+>'=>'leitor/view-full',
                 //FIXME 'leitor/<username:[a-zA-Z0-9_.]+>'=>'leitor/view-full'
                 //postos de trabalho
+                'pto'=>'pto/index',
                 //index site
                 'about'=>'site/about',
                 //serviços reprográficos
