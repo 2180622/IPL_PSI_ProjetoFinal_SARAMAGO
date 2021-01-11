@@ -10,16 +10,7 @@ class CreateLeitorTest extends \Codeception\Test\Unit
      */
     protected $tester;
     private $leitor;
-    
-    protected function _before()
-    {
-    }
 
-    protected function _after()
-    {
-    }
-
-    // tests
     public function testSomeFeature()
     {
         $this->leitor = new Leitor();

@@ -12,3 +12,4 @@ modules:
             user: 'root'
             password: ''
             cleanup: false
+            populate: true
