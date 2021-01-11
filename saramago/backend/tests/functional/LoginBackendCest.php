@@ -38,15 +38,34 @@ class LoginBackendCest
         ];
     }
 
+    public function _before(FunctionalTester $I)
+    {
+        $I->amOnRoute('site/login');
+    }
+
     // tests
     public function loginUser(FunctionalTester $I){
-        //$I->amOnRoute('site/login');
-        $I->amOnPage('site/login');
+
         $I->seeElement('#login-form');
         $I->submitForm('#login-form', $this->formParams('admin','adminsaramago'));
 
+        $I->dontSeeLink('Login');
+        $I->dontSeeElement('#login-form');
         //ver a conta que está iniciada
+
         $I->see('admin', '.dropdown-toggle');
+    }
+
+    public function loginFailPassword(FunctionalTester $I)
+    {
+        $I->submitForm('#login-form', $this->formParams('admin', 'ov7to87tvo87'));
+        $I->seeValidationError('Incorrect username or password.');
+    }
+
+    public function loginFailUser(FunctionalTester $I)
+    {
+        $I->submitForm('#login-form', $this->formParams('iugkhfy', 'ov7to87tvo87'));
+        $I->seeValidationError('Incorrect username or password.');
     }
 
 }
