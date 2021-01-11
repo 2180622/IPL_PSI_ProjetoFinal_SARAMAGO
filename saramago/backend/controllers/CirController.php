@@ -5,6 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller
@@ -65,38 +66,54 @@ class CirController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout="minor";
-        return $this->render('index');
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $this->layout="minor";
+
+            return $this->render('index');
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     #region Circulação
 
     public function actionEmprestimo()
     {
-        $this->layout="minor";
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $this->layout="minor";
 
-        return $this->render('emprestimo/index');
+            return $this->render('emprestimo/index');
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
 
     public function actionDevolucao()
     {
-        $this->layout="minor";
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $this->layout="minor";
 
-        return $this->render('devolucao/index');
+            return $this->render('devolucao/index');
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
 
     public function actionRenovacao()
     {
-        $this->layout="minor";
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $this->layout="minor";
 
-        return $this->render('renovar/index');
+            return $this->render('renovar/index');
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     public function actionPresencial()
     {
-        $this->layout="minor";
+        if ((Yii::$app->user->can('acessoCirculacao'))) {
+            $this->layout="minor";
 
-        return $this->render('presencial/index');
+            return $this->render('presencial/index');
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     #endregion
