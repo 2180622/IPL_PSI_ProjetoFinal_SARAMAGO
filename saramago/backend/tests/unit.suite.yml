@@ -9,6 +9,3 @@ modules:
             dsn: 'mysql:host=localhost;dbname=yii2saramago_test'
             user: 'root'
             password: ''
-            dump: 'tests/_data/dump.sql'
-            cleanup: false
-            populate: true
