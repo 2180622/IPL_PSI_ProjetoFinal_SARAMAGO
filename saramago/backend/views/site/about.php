@@ -44,6 +44,7 @@ $this->title = 'Sobre';
             <h3>Informação da plataforma:</h3>
             <br>
             <p><?= Yii::$app->name ?><small class="text-muted"><?= Yii::$app->version ?></small></p>
+            <p><small class="text-muted">Sistema de Gestão de Bibliotecas Académicas</small></p>
             <p><small class="text-muted"><?= Yii::powered() ?> (<?= Yii::getVersion() ?>)</small></p>
             <p>Extensões: </p>
             <?php foreach (Yii::$app->extensions as $ext => $ext2)

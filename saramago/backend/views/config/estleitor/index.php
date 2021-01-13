@@ -48,8 +48,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'tipo',
                 'label' => 'Tipo',
-                'filter' => ['Aluno' => 'Aluno', 'Docente' => 'Docente',
-                    'Funcionário' => 'Funcionário', 'Externo' => 'Externo'],
+                'filter' => ['aluno' => 'Aluno', 'docente' => 'Docente',
+                    'funcionario' => 'Funcionário', 'externo' => 'Externo'],
+                'value' => function ($model)
+                {
+                    if($model->tipo == 'aluno')
+                    {return 'Aluno';}
+                    elseif($model->tipo == 'docente')
+                    {return 'Docente';}
+                    elseif($model->tipo == 'funcionario')
+                    {return 'Funcionário';}
+                    elseif ($model->tipo == 'externo')
+                    {return 'Externo';}
+                }
             ],
             [
                 'attribute' => 'nItens',

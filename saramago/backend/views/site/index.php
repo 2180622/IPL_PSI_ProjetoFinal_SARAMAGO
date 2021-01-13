@@ -52,7 +52,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Leitores</h3>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                                Faça a gestão dos seus leitores aqui.
                             </p>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Serviços Reprográficos</h3>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                                Pedidos de digitalização e impressão.
                             </p>
                         </div>
                     </div>
@@ -75,7 +75,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Catálogo</h3>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                                Gestão de obras, autores, coleções, e muito mais.
                             </p>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Postos de Trabalho</h3>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                                Gestão de reservas de postos de trabalho.
                             </p>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Circulação</h3>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                                Gestão de empréstimos, reservas e transferências.
                             </p>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Administração</h3>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ultricies justo ac posuere. Integer ac tristique elit. Sed ac dolor a justo dictum ultricies.
+                                Gestão do Saramago    .
                             </p>
                         </div>
                     </div>

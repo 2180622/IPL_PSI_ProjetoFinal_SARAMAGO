@@ -39,7 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
             	'label' => 'Grupo',
                 'attribute' => 'tipo',
-
+                'filter' => [
+                        'materialAv' => 'Material Audio-Visual', 'monografia' => 'Monografia',
+                        'pubPeriodica' => 'Publicação Periódica'
+                ],
+                'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
                 'value' => function ($model) {
                             if($model->tipo == 'materialAv'){ return 'Material Audio-Visual';}
                             elseif ($model->tipo == 'monografia'){return 'Monografia';}

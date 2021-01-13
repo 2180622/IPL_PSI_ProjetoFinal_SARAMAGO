@@ -20,25 +20,25 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
+    <?php // $form->field($model, 'id')->textInput(['placeholder'=>'Editor'])->label(false) ?>
 
-    <?= $form->field($model, 'codBarras')->textInput() ?>
+    <?= $form->field($model, 'codBarras')->textInput(['placeholder'=>'Cód.Barras'])->label(false) ?>
 
-    <?= $form->field($model, 'nome')->textInput() ?>
+    <?= $form->field($model, 'nome')->textInput(['placeholder'=>'Nome'])->label(false) ?>
 
-    <?= $form->field($model, 'nif')->textInput() ?>
+    <?= $form->field($model, 'nif')->textInput(['placeholder'=>'NIF/NIPC'])->label(false) ?>
 
-    <?= $form->field($model, 'docId')->textInput() ?>
+    <?= $form->field($model, 'docId')->textInput(['placeholder'=>'Doc. Id'])->label(false) ?>
 
     <?php // echo $form->field($model, 'dataNasc') ?>
 
     <?php // echo $form->field($model, 'morada') ?>
 
-    <?php // echo $form->field($model, 'localidade') ?>
+    <?php echo $form->field($model, 'localidade')->textInput(['placeholder'=>'Localidade'])->label(false) ?>
 
     <?php // echo $form->field($model, 'codPostal') ?>
 
-    <?php // echo $form->field($model, 'telemovel') ?>
+    <?= $form->field($model, 'telemovel')->textInput(['placeholder'=>'Telemóvel'])->label(false) ?>
 
     <?php // echo $form->field($model, 'telefone') ?>
 
@@ -58,7 +58,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Procurar', ['class' => 'btn btn-create']) ?>
-        <?= Html::resetButton('Repor', ['class' => 'btn btn-outline-secondary', 'id' => 'Refresh']) ?>
+        <?= Html::resetButton('Repor', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

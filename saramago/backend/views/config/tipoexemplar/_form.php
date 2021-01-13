@@ -14,7 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'designacao')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tipo')->dropDownList([ 'materialAv' => 'MaterialAv', 'monografia' => 'Monografia', 'pubPeriodica' => 'PubPeriodica', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tipo')->dropDownList([ 'materialAv' => 'Material Audio-Visual', 'monografia' => 'Monografia',
+        'pubPeriodica' => 'Publicação Periódica', ], ['prompt' => 'Selecione...']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
