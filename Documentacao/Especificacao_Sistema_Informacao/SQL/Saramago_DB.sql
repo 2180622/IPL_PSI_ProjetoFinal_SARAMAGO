@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Monografia` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
   `volume` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Número do Volume',
   `paginas` INT NOT NULL COMMENT 'Numero de páginas',
-  `isbn` INT NOT NULL COMMENT 'International Standard Book Number (ISBN-10/ISBN-13)',
+  `isbn` BIGINT(13) NOT NULL COMMENT 'International Standard Book Number (ISBN-10/ISBN-13)',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
   INDEX `fk_Monografia_Obra1_idx` (`Obra_id` ASC),
