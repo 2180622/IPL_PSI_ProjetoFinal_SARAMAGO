@@ -59,8 +59,8 @@ class Obra extends \yii\db\ActiveRecord
             [['ano', 'dataRegisto', 'dataAtualizado'], 'safe'],
             [['preco'], 'number'],
             [['Cdu_id', 'Colecao_id'], 'integer'],
-            [['imgCapa', 'editor', 'descricao', 'assuntos'], 'string', 'max' => 255],
-            [['titulo', 'local', 'edicao'], 'string', 'max' => 45],
+            [['imgCapa', 'titulo','editor', 'descricao', 'assuntos'], 'string', 'max' => 255],
+            [['local', 'edicao'], 'string', 'max' => 45],
             [['Cdu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cdu::className(), 'targetAttribute' => ['Cdu_id' => 'id']],
             [['Colecao_id'], 'exist', 'skipOnError' => true, 'targetClass' => Colecao::className(), 'targetAttribute' => ['Colecao_id' => 'id']],
         ];

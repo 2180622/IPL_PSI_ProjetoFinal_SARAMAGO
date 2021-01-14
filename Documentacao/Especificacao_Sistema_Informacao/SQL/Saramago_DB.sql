@@ -135,7 +135,7 @@ DROP TABLE IF EXISTS `yii2saramago`.`Obra` ;
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`Obra` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
   `imgCapa` VARCHAR(255) NULL COMMENT 'Imagem da Capa',
-  `titulo` VARCHAR(45) NOT NULL COMMENT 'Titulo da obra',
+  `titulo` VARCHAR(255) NOT NULL COMMENT 'Titulo da obra',
   `resumo` MEDIUMTEXT NULL COMMENT 'Resumo da obra',
   `editor` VARCHAR(255) NOT NULL COMMENT 'Editor',
   `ano` YEAR(4) NOT NULL COMMENT 'Ano',
