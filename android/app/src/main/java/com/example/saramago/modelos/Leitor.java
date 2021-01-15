@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Leitor {
 
-    private int id, nif, codPostal, telemovel, telefone, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id;
-    private String nome, dataNasc, codBarras, DocId, morada, localidade,email, mail2, notaInterna;
+    private int id, nif, codPostal, telemovel, telefone, Biblioteca_id, TipoLeitor_id, user_id;
+    private String nome, dataNasc, codBarras, DocId, morada, localidade,email, mail2, notaInterna, dataRegisto, dataAtualizado;
     private static int autoIncrement = 1;
 
     public Leitor(int id, String nome, String codBarras, int nif, String DocId, String dataNasc, String morada,
                   String localidade, int codPostal, int telemovel, int telefone, String email,
-                  String mail2, int dataRegisto, int dataAtualizado, int Biblioteca_id, int TipoLeitor_id, int user_id){
+                  String mail2, String dataRegisto, String dataAtualizado, int Biblioteca_id, int TipoLeitor_id, int user_id){
 
             this.id = id;
             this.nome = nome;
@@ -162,19 +162,19 @@ public class Leitor {
         this.dataNasc = dataNasc;
     }
 
-    public int getDataRegisto() {
+    public String getDataRegisto() {
         return dataRegisto;
     }
 
-    public void setDataRegisto(int dataRegisto) {
+    public void setDataRegisto(String dataRegisto) {
         this.dataRegisto = dataRegisto;
     }
 
-    public int getDataAtualizado() {
+    public String getDataAtualizado() {
         return dataAtualizado;
     }
 
-    public void setDataAtualizado(int dataAtualizado) {
+    public void setDataAtualizado(String dataAtualizado) {
         this.dataAtualizado = dataAtualizado;
     }
 

@@ -32,8 +32,8 @@ public class LeitoresJsonParser {
                 int telefone = leitor.getInt("telefone");
                 String email = leitor.getString("mail2"); //FIXME mail2 temp
                 String mail2 = leitor.getString("mail2");
-                int dataRegisto = leitor.getInt("dataRegisto"); //FIXME string
-                int dataAtualizado = leitor.getInt("dataAtualizado"); //FIXME string
+                String dataRegisto = leitor.getString("dataRegisto");
+                String dataAtualizado = leitor.getString("dataAtualizado");
                 int Biblioteca_id = leitor.getInt("Biblioteca_id");
                 int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
                 int user_id = leitor.getInt("user_id");
@@ -66,8 +66,8 @@ public class LeitoresJsonParser {
             int telefone = leitor.getInt("telefone");
             String email = leitor.getString("mail2"); //FIXME mail2 temp
             String mail2 = leitor.getString("mail2");
-            int dataRegisto = leitor.getInt("dataRegisto"); //FIXME string
-            int dataAtualizado = leitor.getInt("dataAtualizado"); //FIXME string
+            String dataRegisto = leitor.getString("dataRegisto");
+            String dataAtualizado = leitor.getString("dataAtualizado");
             int Biblioteca_id = leitor.getInt("Biblioteca_id");
             int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
             int user_id = leitor.getInt("user_id");

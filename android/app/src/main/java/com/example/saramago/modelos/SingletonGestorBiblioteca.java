@@ -23,7 +23,7 @@ public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
     private static final String urlAPILeitores = "https://localhost:80/IPL_PSI_ProjetoFinal2/saramago/api/web/v1/leitor";
     private ArrayList<Leitor> leitores;
-    int currentTime = (int) (new Date().getTime()/1000);
+    int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
     private SaramagoBDHelper saramagoBD;
     private static RequestQueue volleyQueue = null;
@@ -44,8 +44,8 @@ public class SingletonGestorBiblioteca {
     private void gerarLeitores(){
         // instanciar o array de livros
         leitores = new ArrayList<>();
-        leitores.add(new Leitor(1, "Alfredo", "696969", 269745017, "069", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", currentTime, currentTime,1,1,1));
-        leitores.add(new Leitor(2, "Joaquim", "690420", 123456789, "420", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", currentTime, currentTime,2,2,2));
+        leitores.add(new Leitor(1, "Alfredo", "696969", 269745017, "069", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", Integer.toString(currentTime), Integer.toString(currentTime),1,1,1));
+        leitores.add(new Leitor(2, "Joaquim", "690420", 123456789, "420", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", Integer.toString(currentTime), Integer.toString(currentTime),2,2,2));
     }
     public ArrayList<Leitor> getLeitores(){
         leitores = saramagoBD.getAllLeitoresBD();

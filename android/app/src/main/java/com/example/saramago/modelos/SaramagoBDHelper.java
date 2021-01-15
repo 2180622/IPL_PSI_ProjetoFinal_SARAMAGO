@@ -221,7 +221,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                         cursor.getString(7),cursor.getInt(8),
                         cursor.getInt(9),cursor.getInt(10),
                         cursor.getString(11),cursor.getString(12),
-                        cursor.getInt(13),cursor.getInt(14),
+                        cursor.getString(13),cursor.getString(14),
                         cursor.getInt(15),cursor.getInt(16),
                         cursor.getInt(17));
                 // auxLivro.setId(cursor.getInt(0));

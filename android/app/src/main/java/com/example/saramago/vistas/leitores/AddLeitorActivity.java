@@ -58,7 +58,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
                 leitor = new Leitor(0, nome.getText().toString(), codBarras.getText().toString(),
                         Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
                         Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email.getText().toString(),
-                        email2.getText().toString(), Integer.parseInt(date.toString()), Integer.parseInt(date.toString()), 1, 1, 0);
+                        email2.getText().toString(), date.toString(), date.toString(), 1, 1, 0);
 
                 SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitor(leitor);
                 setResult(RESULT_OK);
