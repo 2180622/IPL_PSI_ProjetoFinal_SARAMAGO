@@ -36,9 +36,10 @@ public class LeitoresJsonParser {
                 int dataAtualizado = leitor.getInt("dataAtualizado");
                 int Biblioteca_id = leitor.getInt("Biblioteca_id");
                 int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
+                int user_id = leitor.getInt("user_id");
 
                 Leitor auxLeitor = new Leitor(id, nome, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
-                        telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
+                        telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
                 leitores.add(auxLeitor);
             }
         } catch (JSONException e) {
@@ -69,10 +70,11 @@ public class LeitoresJsonParser {
             int dataAtualizado = leitor.getInt("dataAtualizado");
             int Biblioteca_id = leitor.getInt("Biblioteca_id");
             int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
+            int user_id = leitor.getInt("user_id");
 
 
             auxLeitor = new Leitor(id, nome, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
-                    telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
+                    telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
 
         } catch (JSONException e) {
             e.printStackTrace();

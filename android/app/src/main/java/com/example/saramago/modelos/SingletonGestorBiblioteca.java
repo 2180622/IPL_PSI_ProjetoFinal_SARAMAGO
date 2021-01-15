@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
-    private static final String urlAPILeitores = "";
+    private static final String urlAPILeitores = "https://localhost:80/IPL_PSI_ProjetoFinal2/saramago/api/web/v1/leitor";
     private ArrayList<Leitor> leitores;
     int currentTime = (int) (new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
@@ -31,6 +31,7 @@ public class SingletonGestorBiblioteca {
     public static synchronized SingletonGestorBiblioteca getInstance(Context context){
         if(instance == null){
             instance = new SingletonGestorBiblioteca(context);
+            volleyQueue = Volley.newRequestQueue(context);
         }
         return instance;
     }
@@ -90,6 +91,12 @@ public class SingletonGestorBiblioteca {
         }
     }
 
+    public void setLeitoresListener(LeitoresListener leitoresListener) {
+        this.leitoresListener = leitoresListener;
+    }
+
+    /****************************** BD ******************************************/
+
     public void adicionarLeitorBD(Leitor leitor) {
         saramagoBD.adicionarLivroBD(leitor);
     }
@@ -100,16 +107,16 @@ public class SingletonGestorBiblioteca {
             adicionarLeitorBD(leitor);
     }
 
-
+    /****************************** API *****************************************/
     public void getAllLeitoresAPI(final Context context){
         if(!LeitoresJsonParser.isConnectionInternet(context)){
-            Toast.makeText(context, "Não possui ligação à internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.semInternet, Toast.LENGTH_LONG).show();
 
             if(leitoresListener != null){
                 leitoresListener.onRefreshListaLeitores(saramagoBD.getAllLeitoresBD());
             }
-        }else{                                          //FIXME     ADICIONAR LA EM CIMA A DECLARACAO DO URL DA API (LEITORES)
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, "URL AQUI DENTRO", null, new Response.Listener<JSONArray>() {
+        }else{
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlAPILeitores, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     leitores = LeitoresJsonParser.parserJsonLeitores(response);

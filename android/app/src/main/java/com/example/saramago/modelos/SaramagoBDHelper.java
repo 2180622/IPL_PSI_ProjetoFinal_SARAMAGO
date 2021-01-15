@@ -1,5 +1,6 @@
 package com.example.saramago.modelos;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "saramagoBD" ;
-    private static final Integer DB_VERSION = 1;
+    private static final int DB_VERSION = 1;
 
     //region shared Declaration
     private static final String ID="id";
@@ -31,6 +32,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String ID_USER="id";
     private static final String USERNAME="username";
     private static final String EMAIL="email";
+    private static final String PASSWORD_HASH = "password_hash";
     private static final String STATUS="status";
     private static final String AUTH_KEY ="auth_key"; //TODO
     private static final String ITEM_NAME = "item_name"; //TODO
@@ -134,31 +136,27 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     public SaramagoBDHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        this.db = this.getWritableDatabase();
+        this.db=this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         //region Create User Table
-        String createTableUser = "CREATE TABLE " + TABLE_USER + " ("+
-                ID_USER+" INTERGER PRIMARY KEY AUTOINCREMENT, "+
-                NOME + " TEXT NOT NULL, "+
-                NIF + " TEXT NOT NULL, "+
-                NIF + " TEXT NOT NULL, "+
-                STATUS + " INTEGER NOT NULL, "+
-                AUTH_KEY + " TEXT NOT NULL );";
-
+        String createTableUser = "CREATE TABLE "+TABLE_USER+" ( "+
+                ID_USER+" INTERGER PRIMARY KEY, "+
+                USERNAME+" TEXT NOT NULL, "+
+                PASSWORD_HASH+" TEXT NOT NULL, "+
+                EMAIL+" TEXT NOT NULL );";
         db.execSQL(createTableUser);
         //endregion
 
         //region Create Leitor Table
-        String createTableLeitor = "CREATE TABLE " + TABLE_LEITOR + " ("+
-                ID+" INTERGER PRIMARY KEY AUTOINCREMENT, "+
-                USERNAME + " TEXT NOT NULL, "+
-                EMAIL + " TEXT NOT NULL, "+
-                STATUS + " INTEGER NOT NULL, "+
-                AUTH_KEY + " TEXT NOT NULL );";
+        String createTableLeitor = "CREATE TABLE " + TABLE_LEITOR + " ( "+
+                ID+" INTERGER PRIMARY KEY, "+
+                NOME+" TEXT NOT NULL, "+
+                NIF+" TEXT NOT NULL, "+
+                STATUS+" INTEGER NOT NULL, "+
+                AUTH_KEY+" TEXT NOT NULL );";
 
         db.execSQL(createTableLeitor);
         //endregion
@@ -166,8 +164,8 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         //TODO createTable (...)
 
         //region Create Config Table
-        String createTableConfig = "CREATE TABLE " + TABLE_CONFIG + " ("+
-                ID+" INTERGER PRIMARY KEY AUTOINCREMENT, "+
+        String createTableConfig = "CREATE TABLE " + TABLE_CONFIG + "( "+
+                ID+" INTERGER PRIMARY KEY, "+
                 KEY_CONFIG + " TEXT NOT NULL, "+
                 VALUE_CONFIG + " TEXT NOT NULL ); ";
 
