@@ -29,8 +29,8 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
+            'enableAutoLogin' => false,
+            'loginUrl' => null, //to show a HTTP 403 error instead of redirecting to the login page.
         ],
         'session' => [
             // this is the name of the session cookie used for login on the api
@@ -48,7 +48,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
@@ -69,7 +68,6 @@ return [
                     'pluralize'=> false,
                     'extraPatterns' => [
                         'POST login' => 'login',
-                        "PUT validate_token/{id}/{token}"=>"validate_token",
                     ],
                     "tokens"=>[
                         '{id}' => '<id:\\d+>',
@@ -77,7 +75,6 @@ return [
                     ]
                 ],
                 //User
-                //FIXME A estrutura da regra seguinte serve apenas e só de exemplo.
                 /** @notice
                  * GET /users: list all users page by page;
                  * HEAD /users: show the overview information of user listing;
@@ -100,6 +97,7 @@ return [
                         'PUT update_user/{id}'=> 'update_user'
                     ],
 
+
                 ],
                 //Leitores
                 [
@@ -107,10 +105,7 @@ return [
                     'controller' => 'v1/leitor',
                     'pluralize'=> false,
                     'extraPatterns' => [
-                        'GET user' => 'user',
-                        'GET user/{id}' => 'get_user',
-                        'GET user_type/{id}' => 'get_user_type',
-                        'PUT update_user/{id}'=> 'update_user'
+
                     ],
 
                 ],
@@ -120,7 +115,7 @@ return [
                     'controller' => 'v1/cat',
                     'pluralize'=> false,
                     'extraPatterns' => [
-                        'GET user' => 'user',
+
                     ],
                 ],
                 //Circulação
@@ -129,7 +124,7 @@ return [
                     'controller' => 'v1/cir',
                     'pluralize'=> false,
                     'extraPatterns' => [
-                        'GET user' => 'user',
+
                     ],
                 ],
                 //Serviços Reprográficos
@@ -138,7 +133,7 @@ return [
                     'controller' => 'v1/sr',
                     'pluralize'=> false,
                     'extraPatterns' => [
-                        'GET user' => 'user',
+
                     ],
                 ],
                 //Postos de Trabalho
@@ -147,16 +142,16 @@ return [
                     'controller' => 'v1/pto',
                     'pluralize'=> false,
                     'extraPatterns' => [
-                        'GET user' => 'user',
+
                     ],
                 ],
                 //Administração
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/pto',
+                    'controller' => 'v1/config',
                     'pluralize'=> false,
                     'extraPatterns' => [
-                        'GET user' => 'user',
+
                     ],
                 ],
             ],

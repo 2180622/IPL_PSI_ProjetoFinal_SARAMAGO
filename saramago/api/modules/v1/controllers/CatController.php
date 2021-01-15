@@ -24,15 +24,8 @@ class CatController extends ActiveController
         return $behaviors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
+    public function actionObra()
     {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
+        
     }
 }

@@ -18,8 +18,11 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+
+        // Modo stateless - módulo sem sessões
         \Yii::$app->user->enableSession = false;
         // custom initialization code goes here
 
     }
+
 }

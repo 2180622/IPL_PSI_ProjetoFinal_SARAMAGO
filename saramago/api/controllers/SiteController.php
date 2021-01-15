@@ -1,11 +1,11 @@
 <?php
-namespace api\controllers;
+namespace app\controllers;
 
 use Yii;
 
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\rest\Controller;
+use yii\web\Controller;
 
 /**
  * Site controller
