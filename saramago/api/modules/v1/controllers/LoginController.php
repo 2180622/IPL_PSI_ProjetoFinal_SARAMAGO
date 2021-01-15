@@ -10,6 +10,7 @@ use yii\rest\ActiveController;
 use yii\rest\Controller;
 use yii\web\HttpException;
 use yii\web\Response;
+use yii\web\IdentityInterface;
 
 class LoginController extends ActiveController
 {
@@ -18,48 +19,32 @@ class LoginController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'auth' => [$this, 'auth'],
-            'only' => ['auth']
+            'auth' => [$this, 'auth']
         ];
+
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
             'formats' => [
                 'application/json' => Response::FORMAT_XML,
             ],
         ];
+
         return $behaviors;
     }
 
     public function auth($username,$password)
     {
-        $user = User::findByUsername($username);
-
-        $u = User::findOne($user->id);
+        $user = User::findOne(['username' => $username]);
 
         if($user!=null && $user->validatePassword($password))
         {
-            $response = [
-                'username' => $u->username,
-                'token' => $u->auth_key,
-            ];
-            return $response;
+            $auth_key = $user->auth_key;
+
+            return $auth_key;
         }
         throw new HttpException('401', 'O username ou a password está incorreta.');
-
     }
-
-    /*public function actionLogin()
-    {
-        $model = new LoginForm();
-
-        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->login()) {
-            return ['token' => Yii::$app->user->identity->getAuthKey()];
-        } else {
-            $model->validate();
-            return $model;
-        }
-    }*/
-
 }

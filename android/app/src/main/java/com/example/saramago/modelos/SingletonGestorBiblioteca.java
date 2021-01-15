@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.saramago.R;
 import com.example.saramago.listeners.LeitoresListener;
+import com.example.saramago.listeners.LoginListener;
 import com.example.saramago.utils.LeitoresJsonParser;
 
 import org.json.JSONArray;
@@ -21,10 +22,11 @@ import java.util.Date;
 
 public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
-    private static final String urlAPILeitores = "https://localhost:80/IPL_PSI_ProjetoFinal2/saramago/api/web/v1/leitor";
+    private static final String urlAPILeitores = "https://10.0.2.2/IPL_PSI_ProjetoFinal2/saramago/api/web/v1/leitor";
     private ArrayList<Leitor> leitores;
     int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
+    private LoginListener loginListener;
     private SaramagoBDHelper saramagoBD;
     private static RequestQueue volleyQueue = null;
 
@@ -93,6 +95,10 @@ public class SingletonGestorBiblioteca {
 
     public void setLeitoresListener(LeitoresListener leitoresListener) {
         this.leitoresListener = leitoresListener;
+    }
+
+    public void setLoginListener(LoginListener loginListener) {
+        this.loginListener = loginListener;
     }
 
     /****************************** BD ******************************************/

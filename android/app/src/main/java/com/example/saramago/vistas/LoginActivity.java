@@ -11,14 +11,16 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.example.saramago.listeners.LoginListener;
 import com.example.saramago.R;
+import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.utils.LeitoresJsonParser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText etEmail, etPassword, etAPI;
+    private EditText etUsername, etPassword, etAPI;
     private CheckBox cbAPI, cbGuardaSessao;
-    private String email;
+    private String username;
     private String nome;
 
 
@@ -28,30 +30,28 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setTitle("Login");
 
-        etEmail = findViewById(R.id.etEmail);
+        etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etAPI = findViewById(R.id.etAPI);
-    }
 
-    public boolean isEmailValid(String email){
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        SingletonGestorBiblioteca.getInstance(getApplicationContext()).setLoginListener(this);
     }
 
     public void onClickLogin(View view){
-        Context context = getApplicationContext();
-        email = etEmail.getText().toString();
-        nome = "John Doe";
+        if(LeitoresJsonParser.isConnectionInternet(getApplicationContext())){
 
-        if(!isEmailValid(email)){
-            Toast.makeText(context, "Email inválido", Toast.LENGTH_LONG).show();
-            return;
+            username = etUsername.getText().toString();
+            nome = "John Doe";
+            if(username.length() > 10 || username.length() < 5){
+                return;
+            }
+
+            Intent intent = new Intent(this, MenuMainActivity.class);
+            intent.putExtra(MenuMainActivity.USERNAME, username);
+            intent.putExtra(MenuMainActivity.NOME, nome);
+            startActivity(intent);
+            finish();
         }
-
-        Intent intent = new Intent(this, MenuMainActivity.class);
-        intent.putExtra(MenuMainActivity.EMAIL, email);
-        intent.putExtra(MenuMainActivity.NOME, nome);
-        startActivity(intent);
-        finish();
     }
 
     //FIXME

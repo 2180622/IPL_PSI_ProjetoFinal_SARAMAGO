@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String EMAIL = "EMAIL";
+    public static final String USERNAME = "USERNAME";
     public static final String NOME = "NOME";
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -48,12 +48,12 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void carregarCabecalho() {
-        String email = "";
+        String username = "";
 
-        email = getIntent().getStringExtra(EMAIL);
+        username = getIntent().getStringExtra(USERNAME);
         View hview = navigationView.getHeaderView(0);
-        TextView tv_email = hview.findViewById(R.id.tv_email);
-        tv_email.setText(email);
+        TextView tv_email = hview.findViewById(R.id.tv_username);
+        tv_email.setText(username);
     }
 
     private void carregarFragmentoInicial(){
@@ -71,7 +71,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 //System.out.println("-->Nav Estatico");
                 fragment = new Dashboard();
                 break;
-            case R.id.tv_email:
+            case R.id.tv_username:
                 //System.out.println("-->Nav Dinamico");
             default:
                 //System.out.println("-->Nav Estatico");

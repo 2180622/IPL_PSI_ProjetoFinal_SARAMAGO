@@ -17,15 +17,14 @@
         app:srcCompat="@drawable/background_2x" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etUsername"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
         android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
-        android:text="andre@gmail.com" />
+        android:inputType="textPersonName"
+        android:text="admin" />
 
     <EditText
         android:id="@+id/etPassword"
