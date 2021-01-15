@@ -14,38 +14,52 @@ use yii\web\Response;
 class LoginController extends ActiveController
 {
     public $modelClass = 'common\models\User';
-    public $modelLogin = 'common\models\LoginForm';
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
-            'auth' => [$this, 'actionLogin'],
+            'auth' => [$this, 'auth'],
+            'only' => ['auth']
         ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
             'formats' => [
-                'application/json' => Response::FORMAT_JSON,
+                'application/json' => Response::FORMAT_XML,
             ],
         ];
         return $behaviors;
     }
 
-    public function actionLogin($username,$password)
+    public function auth($username,$password)
     {
-        $loginModel = new $this->modelLogin;
-
-        $loginModel->username = $username;
-        $loginModel->password = $password;
-
         $user = User::findByUsername($username);
+
+        $u = User::findOne($user->id);
+
         if($user!=null && $user->validatePassword($password))
         {
-            return $user->id;
+            $response = [
+                'username' => $u->username,
+                'token' => $u->auth_key,
+            ];
+            return $response;
         }
-        throw new HttpException('404', 'O username ou a password está incorreta.');
+        throw new HttpException('401', 'O username ou a password está incorreta.');
 
     }
+
+    /*public function actionLogin()
+    {
+        $model = new LoginForm();
+
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->login()) {
+            return ['token' => Yii::$app->user->identity->getAuthKey()];
+        } else {
+            $model->validate();
+            return $model;
+        }
+    }*/
 
 }

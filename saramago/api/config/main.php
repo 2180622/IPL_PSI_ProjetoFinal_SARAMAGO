@@ -14,7 +14,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'v1' => [
-            'basePath' => '@api/modules/v1',
+            'basePath' => '@app/modules/v1',
             'class' => 'api\modules\v1\Module'
         ]
     ],
@@ -25,6 +25,7 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ],
             'enableCookieValidation' => false,
+            'enableCsrfValidation'   => false,
             'cookieValidationKey' => 'saramago-api',
         ],
         'user' => [
@@ -32,10 +33,9 @@ return [
             'enableAutoLogin' => false,
             'loginUrl' => null, //to show a HTTP 403 error instead of redirecting to the login page.
         ],
-        'session' => [
+        //'session' => [
             // this is the name of the session cookie used for login on the api
-            'name' => 'saramago-api',
-        ],
+        //    'name' => 'saramago-api',],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
