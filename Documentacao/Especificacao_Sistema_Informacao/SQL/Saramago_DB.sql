@@ -327,7 +327,7 @@ DROP TABLE IF EXISTS `yii2saramago`.`MaterialAv` ;
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`MaterialAv` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
   `duracao` VARCHAR(45) NOT NULL COMMENT 'Duração (min)',
-  `ean` INT(13) NOT NULL COMMENT 'Código de Barras EAN-13',
+  `ean` BIGINT(13) NOT NULL COMMENT 'Código de Barras EAN-13',
   `Obra_id` INT NOT NULL COMMENT 'Chave estrangeira',
   PRIMARY KEY (`id`),
   INDEX `fk_MaterialAv_Obra1_idx` (`Obra_id` ASC),
