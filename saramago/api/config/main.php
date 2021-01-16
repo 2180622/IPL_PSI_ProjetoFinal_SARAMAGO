@@ -67,6 +67,7 @@ return [
                     'controller' => 'v1/login',
                     'pluralize'=> false,
                     'extraPatterns' => [
+                        'GET index' => 'index',
                         'POST login' => 'login',
                     ],
                     "tokens"=>[
