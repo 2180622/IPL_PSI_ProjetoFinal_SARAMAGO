@@ -61,10 +61,10 @@ return [
                     'controller' => 'v1/',
                     'pluralize'=> false,
                 ],
-                //Login
+                //Auth
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/login',
+                    'controller' => 'v1/auth',
                     'pluralize'=> false,
                     'extraPatterns' => [
                         'GET index' => 'index',

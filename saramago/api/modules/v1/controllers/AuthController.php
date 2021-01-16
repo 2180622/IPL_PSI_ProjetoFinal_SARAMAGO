@@ -12,7 +12,7 @@ use yii\rest\Controller;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
 
     public function behaviors()

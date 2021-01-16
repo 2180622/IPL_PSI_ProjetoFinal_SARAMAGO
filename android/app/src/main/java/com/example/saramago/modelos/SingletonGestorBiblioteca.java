@@ -28,7 +28,7 @@ public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
     //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/v1/leitor";
     private static final String urlAPILeitores = "/v1/leitor";
-    private static final String urlAPILogin = "/v1/login/login";
+    private static final String urlAPILogin = "/v1/auth/login";
     private ArrayList<Leitor> leitores;
     int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
