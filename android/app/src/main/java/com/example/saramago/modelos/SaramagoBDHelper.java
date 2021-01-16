@@ -109,30 +109,43 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String FUNDO = "designacao";
     //endregion
 
+    //region Declaration cdu
+
+    private static final String TABLE_CDU = "cdu";
+    private static final String ID_CDU = "id";
+    private static final String COD_CDU = "codCdu";
+    // private static final String DESIGNACAO = "designacao";
+
+    //endregion
+
+    //region Declaration colecao
+
+    private static final String TABLE_COLECAO = "colecao";
+    private static final String ID_COLECAO = "id";
+    private static final String TITULO_COLECAO = "tituloColecao";
+
+    //endregion
+
     //region Declaration obra
     private static final String TABLE_OBRA = "obra";
     private static final String ID_OBRA="id";
     private static final String IMG_CAPA = "imgCapa"; //FIXME
     private static final String TITULO = "titulo";
-    private static final String resumo = "resumo";
+    private static final String RESUMO = "resumo";
     private static final String EDITOR = "editor";
+    private static final String ANO = "ano";
     private static final String TIPO_OBRA = "tipoObra";
     private static final String DESCRICAO = "descricao";
-    private static final String IDIOMA = "idioma";
     private static final String LOCAL = "local";
     private static final String EDICAO = "edicao";
-
-    private static final String VOLUME = "volume";
-    private static final String PAGINAS = "paginas";
-    private static final String ISBN = "isbn";
-
-    private static final String SERIE = "serie";
-    private static final String NUMERO = "numero";
-    private static final String ISNN = "isnn";
-
-    private static final String DURACAO = "duracao";
-    private static final String EAN = "EAN";
+    private static final String ASSUNTOS = "assuntos";
+    private static final String PRECO = "preco";
+    //private static final String DATA_REGISTO = "dataRegisto";
+    //private static final String DATA_ATUALIZADO = "dataAtualizado";
+    private static final String CDU_ID = "CDU_ID";
     //endregion
+
+    //region Declaration
 
     //region Declaration Config
     private static final String TABLE_CONFIG = "config";
@@ -190,6 +203,47 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         db.execSQL(createTableLeitor);
         //endregion
 
+        //region Create Cdu Table
+
+        String createTableCdu = "CREATE TABLE " + TABLE_CDU + "( "+
+                ID_CDU+" INTEGER PRIMARY KEY, "+
+                COD_CDU + " TEXT NOT NULL, "+
+                DESIGNACAO + " TEXT); ";
+        db.execSQL(createTableCdu);
+
+        //endregion
+
+        //region Create Cdu Table
+
+        String createTableColecao = "CREATE TABLE " + TABLE_COLECAO + "( "+
+                ID_COLECAO + " INTEGER PRIMARY KEY, "+
+                TITULO_COLECAO + " TEXT NOT NULL); ";
+        db.execSQL(createTableColecao);
+
+        //endregion
+
+        //region Create Obra Table
+
+        String createTableObra = "CREATE TABLE " + TABLE_OBRA + " ( "+
+                ID_OBRA+" INTEGER PRIMARY KEY, "+
+                IMG_CAPA+" TEXT, "+
+                TITULO+" TEXT NOT NULL, "+
+                RESUMO+" TEXT, "+
+                EDITOR+" TEXT NOT NULL, "+
+                ANO+" INT NOT NULL, "+
+                TIPO_OBRA+" TEXT NOT NULL, "+
+                DESCRICAO+" TEXT NOT NULL, "+
+                EDITOR+" TEXT, "+
+                ASSUNTOS+" TEXT, "+
+                PRECO+" TEXT, "+
+                DATA_REGISTO+" DATE NOT NULL, "+
+                DATA_ATUALIZADO+" DATE, "+
+                "FOREIGN KEY(CDU_ID) REFERENCES TABLE_CDU(ID_CDU), " +
+                "FOREIGN KEY(COLECAO_ID) REFERENCES TABLE_COLECAO(ID_COLECAO));";
+        db.execSQL(createTableObra);
+
+        //endregion
+
         //region Create Biblioteca Table
         String createTableBiblioteca = "CREATE TABLE " + TABLE_BIBLIOTECA + " ( "+
                 ID_BIBLIOTECA+" INTEGER PRIMARY KEY, "+
@@ -231,8 +285,8 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         //TODO
     }
 
-    //region CRUD
-    public void adicionarLivroBD(Leitor leitor){
+    //region CRUD leitor
+    public void adicionarLeitorBD(Leitor leitor){
         ContentValues values=new ContentValues();
         values.put(ID_LEITOR, leitor.getId());
         values.put(NOME, leitor.getNome());
@@ -283,6 +337,59 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return leitores;
+    }
+    //endregion
+
+
+
+
+    //region CRUD obra
+    public void adicionarObraBD(Obra obra){
+        ContentValues values=new ContentValues();
+        values.put(ID_OBRA,obra.getId());
+        values.put(IMG_CAPA,obra.getImgCapa());
+        values.put(TITULO,obra.getTitulo());
+        values.put(RESUMO,obra.getResumo());
+        values.put(EDITOR,obra.getEditor());
+        values.put(ANO,obra.getAno());
+        values.put(TIPO_OBRA,obra.getTipoObra());
+        values.put(DESCRICAO,obra.getDescricao());
+        values.put(LOCAL,obra.getLocal());
+        values.put(EDICAO,obra.getEdicao());
+        values.put(ASSUNTOS,obra.getAssuntos());
+        values.put(PRECO,obra.getPreco());
+        values.put(CDU_ID,obra.getCdu_id());
+        values.put(DATA_REGISTO,obra.getDataRegisto());
+        values.put(DATA_ATUALIZADO,obra.getDataAtualizado());
+
+        this.db.insert(TABLE_OBRA,null,values);
+    }
+    public void removerAllObrasBD(){
+        this.db.delete(TABLE_OBRA,null,null);
+    }
+
+    public ArrayList<Obra> getAllObrasBD(){
+        ArrayList<Obra> obras =new ArrayList<>();
+        Cursor cursor=this.db.query(TABLE_OBRA,new String[]{ID_OBRA,IMG_CAPA,TITULO,RESUMO,EDITOR,ANO,TIPO_OBRA,DESCRICAO,LOCAL,EDICAO,ASSUNTOS,PRECO,CDU_ID,DATA_REGISTO,DATA_ATUALIZADO},
+                null,null,null,null,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Obra auxObra =new Obra(cursor.getInt(0),
+                        cursor.getString(1), cursor.getInt(2),
+                        cursor.getInt(3),cursor.getInt(4),
+                        cursor.getString(5),cursor.getString(6),
+                        cursor.getString(7),cursor.getString(8),
+                        cursor.getString(9),cursor.getString(10),
+                        cursor.getString(11),cursor.getString(12),
+                        cursor.getString(13),cursor.getString(14));
+                // auxLivro.setId(cursor.getInt(0));
+                obras.add(auxObra);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        return obras;
     }
     //endregion
 

@@ -11,8 +11,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.saramago.R;
 import com.example.saramago.listeners.LeitoresListener;
+import com.example.saramago.listeners.ObrasListener;
 import com.example.saramago.listeners.LoginListener;
 import com.example.saramago.utils.LeitoresJsonParser;
+import com.example.saramago.utils.ObrasJsonParser;
 import com.example.saramago.utils.LoginJsonParser;
 import com.example.saramago.vistas.LoginActivity;
 
@@ -29,9 +31,13 @@ public class SingletonGestorBiblioteca {
     //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/v1/leitor";
     private static final String urlAPILeitores = "/v1/leitor";
     private static final String urlAPILogin = "/v1/auth/login";
+    private static final String urlAPIObras = "/v1/cat/obra";
+    private ObrasListener obrasListener;
+    private ArrayList<Obra> obras;
     private ArrayList<Leitor> leitores;
     int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
+
     private LoginListener loginListener;
     private SaramagoBDHelper saramagoBD;
     private static RequestQueue volleyQueue = null;
@@ -46,17 +52,18 @@ public class SingletonGestorBiblioteca {
 
     private SingletonGestorBiblioteca(Context context){
         leitores = new ArrayList<>();
+        obras = new ArrayList<>();
         saramagoBD = new SaramagoBDHelper(context);
     }
 
     //region Leitor CRUD
-    private void gerarLeitores(){
+    private void gerarLeitores() {
         // instanciar o array de livros
         leitores = new ArrayList<>();
         //leitores.add(new Leitor(1, "Alfredo", "696969", 269745017, "069", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", Integer.toString(currentTime), Integer.toString(currentTime),1,1,1));
         //leitores.add(new Leitor(2, "Joaquim", "690420", 123456789, "420", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", Integer.toString(currentTime), Integer.toString(currentTime),2,2,2));
     }
-    public ArrayList<Leitor> getLeitores(){
+    public ArrayList<Leitor> getLeitores() {
         leitores = saramagoBD.getAllLeitoresBD();
         return leitores;
     }
@@ -106,14 +113,64 @@ public class SingletonGestorBiblioteca {
 
     //endregion
 
-    //region Catalogação CRUD
-        //TODO
+    //region catalogo CRUD
+    private void gerarObras(){
+        // instanciar o array de livros
+        obras = new ArrayList<>();
+    }
+    public ArrayList<Obra> getObras(){
+        obras = saramagoBD.getAllObrasBD();
+        return obras;
+    }
+    public Obra getObra(int id)
+    {
+        for(Obra obra: obras)
+        {
+            if(obra.getId()==id)
+            {
+                return obra;
+            }
+        }
+        return null;
+    }
+    public void adicionarObra(Obra obra){
+        obras.add(obra);
+    }
+    public void editarObra(Obra obra){
+        Obra l = getObra(obra.getId());
+
+        if(obra != null){
+            l.setImgCapa(obra.getImgCapa());
+            l.setTitulo(obra.getTitulo());
+            l.setResumo(obra.getResumo());
+            l.setEditor(obra.getEditor());
+            l.setAno(obra.getAno());
+            l.setTipoObra(obra.getTipoObra());
+            l.setDescricao(obra.getDescricao());
+            l.setLocal(obra.getLocal());
+            l.setEdicao(obra.getEdicao());
+            l.setAssuntos(obra.getAssuntos());
+            l.setDataRegisto(obra.getDataRegisto());
+            l.setDataAtualizado(obra.getDataAtualizado());
+            l.setCdu_id(obra.getCdu_id());
+        }
+    }
+    public void removerObra(int id){
+        Obra obra = getObra(id);
+        if(obra != null){
+            obras.remove(obra);
+        }
+    }
+
+    public void setObrasListener(ObrasListener obrasListener) {
+        this.obrasListener = obrasListener;
+    }
     //endregion
 
-    //region BD
+    //region BD leitor
 
     public void adicionarLeitorBD(Leitor leitor) {
-        saramagoBD.adicionarLivroBD(leitor);
+        saramagoBD.adicionarLeitorBD(leitor);
     }
 
     public void adicionarLeitoresBD(ArrayList<Leitor> leitores) {
@@ -124,7 +181,21 @@ public class SingletonGestorBiblioteca {
 
     //endregion
 
-    //region API
+    //region BD obra
+
+    public void adicionarObraBD(Obra obra) {
+        saramagoBD.adicionarObraBD(obra);
+    }
+
+    public void adicionarObrasBD(ArrayList<Obra> obras) {
+        saramagoBD.removerAllObrasBD();
+        for (Obra obra : obras)
+            adicionarObraBD(obra);
+    }
+
+    //endregion
+
+    //region API login
 
     public void setLoginListener(LoginActivity loginActivity)
     {
@@ -162,6 +233,9 @@ public class SingletonGestorBiblioteca {
         volleyQueue.add(req);
     }
 
+    //endregion
+
+    //region API leitores
     public void getAllLeitoresAPI(final Context context){
         if(!LeitoresJsonParser.isConnectionInternet(context)){
             Toast.makeText(context, R.string.semInternet, Toast.LENGTH_LONG).show();
@@ -178,6 +252,36 @@ public class SingletonGestorBiblioteca {
 
                     if (leitoresListener != null) {
                         leitoresListener.onRefreshListaLeitores(leitores);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(request);
+        }
+    }
+    //endregion
+
+    //region API obras
+    public void getAllObrasAPI(final Context context){
+        if(!ObrasJsonParser.isConnectionInternet(context)){
+            Toast.makeText(context, R.string.semInternet, Toast.LENGTH_LONG).show();
+
+            if(obrasListener != null){
+                obrasListener.onRefreshListaObras(saramagoBD.getAllObrasBD());
+            }
+        }else{
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlAPIObras, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    obras = ObrasJsonParser.parserJsonObras(response);
+                    adicionarObrasBD(obras);
+
+                    if (obrasListener != null) {
+                        obrasListener.onRefreshListaObras(obras);
                     }
                 }
             }, new Response.ErrorListener() {
