@@ -49,6 +49,9 @@ class LoginController extends Controller
                         "id"=>$user->id,
                         "username"=>$user->username,
                         "token"=>$user->getAuthKey(),
+                        "success"=> true,
+                        "status"=>'200',
+                        "saramago"=>"v".Yii::$app->version,
                     ];
                 }
             }

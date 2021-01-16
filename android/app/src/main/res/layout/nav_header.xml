@@ -20,7 +20,7 @@
         android:id="@+id/tv_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="John Doe"
+        android:text="Username"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold" />

@@ -8,6 +8,9 @@
     <string name="dashboard">Dashboard</string>
     <string name="pedidos">Pedidos</string>
     <string name="terminar_sess_o">Terminar Sessão</string>
-    <string name="logoff">LogOff</string>
+    <string name="Conta">Conta</string>
     <string name="semInternet">Não existe ligação à internet</string>
+    <string name="etUsernameInvalido">Username Inválido</string>
+    <string name="invalidUrl">URL inválido</string>
+    <string name="etPasswordInvalida">Password invalida!</string>
 </resources>

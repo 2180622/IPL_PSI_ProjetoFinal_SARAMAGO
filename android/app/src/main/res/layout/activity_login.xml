@@ -37,13 +37,14 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/etAPI"
+        android:id="@+id/etApi"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
         android:ems="10"
         android:hint="API"
+        android:text="http://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web"
         android:inputType="textPersonName" />
 
     <CheckBox
@@ -93,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:gravity="center"
-        android:text="v1.0"
+        android:text="API v1.0"
         android:textColor="#4D000000" />
 
     <View
@@ -110,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:gravity="center"
-        android:text="2020 © ESTG - IPLeiria"
+        android:text="2020 © ESTG - Politécnico de Leiria"
         android:textColor="#80000000"
         android:textStyle="bold|italic" />
 

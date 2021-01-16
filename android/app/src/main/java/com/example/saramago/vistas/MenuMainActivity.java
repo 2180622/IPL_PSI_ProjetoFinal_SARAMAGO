@@ -9,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +23,9 @@ import com.google.android.material.navigation.NavigationView;
 public class MenuMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String USERNAME = "USERNAME";
-    public static final String NOME = "NOME";
+    public static final String TOKEN = "TOKEN";
+    public static final String API = "API";
+    public static final String PREF_INFO_USER ="PREF_INFO_USER";
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FragmentManager fragmentManager;
@@ -48,12 +52,13 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void carregarCabecalho() {
-        String username = "";
 
-        username = getIntent().getStringExtra(USERNAME);
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
+        String username = sharedPrefInfoUser.getString(USERNAME, "");
+
         View hview = navigationView.getHeaderView(0);
-        TextView tv_email = hview.findViewById(R.id.tv_username);
-        tv_email.setText(username);
+        TextView tv_username = hview.findViewById(R.id.tv_username);
+        tv_username.setText(username);
     }
 
     private void carregarFragmentoInicial(){
@@ -68,7 +73,6 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
 
         switch (item.getItemId()) {
             case R.id.nav_dashboard:
-                //System.out.println("-->Nav Estatico");
                 fragment = new Dashboard();
                 break;
             case R.id.tv_username:
