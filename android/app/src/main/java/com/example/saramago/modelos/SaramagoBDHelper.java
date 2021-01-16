@@ -17,8 +17,8 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     //region shared Declaration
-    private static final String ID="id";
     private static final String LEITOR_ID = "Leitor_id";
+    private static final String NOME="nome";
     private static final String MORADA="morada";
     private static final String LOCALIDADE="localidade";
     private static final String COD_POSTAL="codPostal";
@@ -36,24 +36,19 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String STATUS="status";
     private static final String AUTH_KEY ="auth_key"; //TODO
     private static final String ITEM_NAME = "item_name"; //TODO
+    private static final String VERIFICATION_TOKEN = "verification_token";
     //endregion
 
     //region Declaration leitor
     private static final String TABLE_LEITOR = "leitor";
-    //private static final String COD_BARRAS="codBarras";
-    private static final String NOME="nome";
+    private static final String ID_LEITOR="id";
     private static final String NIF="nif";
     private static final String DOC_ID="docId";
     private static final String DATA_NASC="dataNasc";
-    //private static final String MORADA="morada";
-    //private static final String LOCALIDADE="localidade";
-    //private static final String COD_POSTAL="codPostal";
     private static final String TELEMOVEL="telemovel";
     private static final String TELEFONE="telefone";
     private static final String MAIL2="mail2";
-    private static final String NOTA="notaInterna";
-    //private static final String DATA_REGISTO="dataRegisto";
-    //private static final String DATA_ATUALIZADO="dataAtualizado";
+    private static final String NOTAINTERNA="notaInterna";
     private static final String BIBLIOTECA_ID="Biblioteca_id"; //Todo
     private static final String TIPOLEITOR_ID="TipoLeitor_id"; //Todo
     private static final String USER_ID="User_id"; //Todo
@@ -64,14 +59,26 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     //region Declaration biblioteca
     private static final String TABLE_BIBLIOTECA = "biblioteca";
-    private static final String COD_BIB = "codBib";
-    //private static final String MORADA = "";
-    //private static final String LOCALIDADE = "";
-    //private static final String CodPostal ="";
+    private static final String ID_BIBLIOTECA="id";
+    private static final String COD_BIB = "codBiblioteca";
+    private static final String NOTASOPAC = "notasOpac";
+    private static final String CODPOSTAL = "codPostal";
+    //endregion
+
+    //region Declaration tipoLeitor
+    private static final String TABLE_TIPOLEITOR = "tipoLeitor";
+    private static final String ID_TIPOLEITOR="id";
+    private static final String ESTATUTO = "estatuto";
+    private static final String TIPO = "tipo";
+    private static final String NITENS = "nItens";
+    private static final String PRAZODIAS = "prazoDias";
+    private static final String REGISTOOPAC = "registoOpac";
+    private static final String NOTAS = "notas";
     //endregion
 
     //region Declaration reserva //TODO FEITO
     private static final String TABLE_RESERVA = "reserva";
+    private static final String ID_RESERVA="id";
     private static final String DATA_RESERVA = "dataReserva";
     private static final String ESTADO_RESERVA = "estadoReserva";
     private static final String DATA_FECHO = "estadoReserva";
@@ -81,16 +88,18 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String EXEMPLAR_ID = "Exemplar_Id";
     //endregion
 
-    //region Declaration requesicao
-    private static final String TABLE_REQUESICAO = "requesicao";
+    //region Declaration requisicao
+    private static final String TABLE_REQUISICAO = "requisicao";
+    private static final String ID_REQUISICAO="id";
     private static final String DATA_EMPRESTIMO = "dataEmprestimo";
-    private static final String ENTREGA_PRevista = "entregaPrevista";
+    private static final String ENTREGA_PREVISTA = "entregaPrevista";
     private static final String DATA_DEVOLUCAO = "dataDevolucao";
     private static final String RENOVACOES = "renovacoes";
     //endregion
 
     //region Declaration exemplar
     private static final String TABLE_EXEMPLAR = "exemplar";
+    private static final String ID_EXEMPLAR="id";
     private static final String COTA = "cota";
     private static final String ESTADO = "estado";
     private static final String NOTA_INTERNA = "notaInterna";
@@ -102,6 +111,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     //region Declaration obra
     private static final String TABLE_OBRA = "obra";
+    private static final String ID_OBRA="id";
     private static final String IMG_CAPA = "imgCapa"; //FIXME
     private static final String TITULO = "titulo";
     private static final String resumo = "resumo";
@@ -111,8 +121,6 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String IDIOMA = "idioma";
     private static final String LOCAL = "local";
     private static final String EDICAO = "edicao";
-    //private static final String DATA_REGISTO = "dataRegisto";
-    //private static final String DATA_ATUALIZADO = "dataAtualizado";
 
     private static final String VOLUME = "volume";
     private static final String PAGINAS = "paginas";
@@ -128,6 +136,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     //region Declaration Config
     private static final String TABLE_CONFIG = "config";
+    private static final String ID_CONFIG="id";
     private static final String KEY_CONFIG = "key_config";
     private static final String VALUE_CONFIG = "value_config";
     //endregion
@@ -143,29 +152,72 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //region Create User Table
         String createTableUser = "CREATE TABLE "+TABLE_USER+" ( "+
-                ID_USER+" INTERGER PRIMARY KEY, "+
+                ID_USER+" INTEGER PRIMARY KEY, "+
                 USERNAME+" TEXT NOT NULL, "+
+                AUTH_KEY+" TEXT NOT NULL, "+
                 PASSWORD_HASH+" TEXT NOT NULL, "+
-                EMAIL+" TEXT NOT NULL );";
+                EMAIL+" TEXT NOT NULL, "+
+                STATUS+" INTEGER NOT NULL, "+
+                DATA_REGISTO+" INTEGER NOT NULL, "+
+                DATA_ATUALIZADO+" INTEGER NOT NULL, "+
+                VERIFICATION_TOKEN+" TEXT );";
         db.execSQL(createTableUser);
         //endregion
 
         //region Create Leitor Table
         String createTableLeitor = "CREATE TABLE " + TABLE_LEITOR + " ( "+
-                ID+" INTERGER PRIMARY KEY, "+
+                ID_LEITOR+" INTEGER PRIMARY KEY, "+
+                COD_BARRAS+" TEXT NOT NULL, "+
                 NOME+" TEXT NOT NULL, "+
                 NIF+" TEXT NOT NULL, "+
-                STATUS+" INTEGER NOT NULL, "+
-                AUTH_KEY+" TEXT NOT NULL );";
-
+                DOC_ID+" TEXT NOT NULL, "+
+                DATA_NASC+" DATE NOT NULL, "+
+                MORADA+" TEXT NOT NULL, "+
+                LOCALIDADE+" TEXT NOT NULL, "+
+                COD_POSTAL+" INTEGER NOT NULL, "+
+                TELEMOVEL+" INTEGER NOT NULL, "+
+                TELEFONE+" INTEGER NOT NULL, "+
+                MAIL2+" TEXT, "+
+                NOTA_INTERNA+" TEXT, "+
+                DATA_REGISTO+" DATE NOT NULL, "+
+                DATA_ATUALIZADO+" DATE, "+
+                BIBLIOTECA_ID+" INTEGER NOT NULL, "+
+                TIPOLEITOR_ID+" INTEGER NOT NULL, "+
+                USER_ID+" INTEGER NOT NULL, " +
+                "FOREIGN KEY(BIBLIOTECA_ID) REFERENCES TABLE_BIBLIOTECA(ID_BIBLIOTECA), " +
+                "FOREIGN KEY(TIPOLEITOR_ID) REFERENCES TABLE_TIPOLEITOR(ID_TIPOLEITOR), " +
+                "FOREIGN KEY(USER_ID) REFERENCES TABLE_USER(ID_USER))";
         db.execSQL(createTableLeitor);
         //endregion
 
-        //TODO createTable (...)
+        //region Create Biblioteca Table
+        String createTableBiblioteca = "CREATE TABLE " + TABLE_BIBLIOTECA + " ( "+
+                ID_BIBLIOTECA+" INTEGER PRIMARY KEY, "+
+                COD_BIB+" TEXT NOT NULL, "+
+                NOME+" TEXT NOT NULL, "+
+                NOTASOPAC+" TEXT, "+
+                MORADA+" TEXT, "+
+                LOCALIDADE+" TEXT, "+
+                COD_POSTAL+" INTEGER, "+
+                LEVANTAMENTO+" INTEGER NOT NULL );";
+        db.execSQL(createTableBiblioteca);
+        //endregion
+
+        //region Create TipoLeitor Table
+        String createTableTipoLeitor = "CREATE TABLE " + TABLE_TIPOLEITOR + " ( "+
+                ID_TIPOLEITOR+" INTEGER PRIMARY KEY, "+
+                ESTATUTO+" TEXT NOT NULL, "+
+                TIPO+" TEXT NOT NULL, "+
+                NITENS+" INTEGER NOT NULL, "+
+                PRAZODIAS+" INTEGER NOT NULL, "+
+                REGISTOOPAC+" INTEGER NOT NULL, "+
+                NOTAS+" TEXT NOT NULL );";
+        db.execSQL(createTableTipoLeitor);
+        //endregion
 
         //region Create Config Table
         String createTableConfig = "CREATE TABLE " + TABLE_CONFIG + "( "+
-                ID+" INTERGER PRIMARY KEY, "+
+                ID_CONFIG+" INTEGER PRIMARY KEY, "+
                 KEY_CONFIG + " TEXT NOT NULL, "+
                 VALUE_CONFIG + " TEXT NOT NULL ); ";
 
@@ -182,7 +234,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     //region CRUD
     public void adicionarLivroBD(Leitor leitor){
         ContentValues values=new ContentValues();
-        values.put(ID, leitor.getId());
+        values.put(ID_LEITOR, leitor.getId());
         values.put(NOME, leitor.getNome());
         values.put(COD_BARRAS, leitor.getCodBarras());
         values.put(NIF,leitor.getNif());
@@ -209,7 +261,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     public ArrayList<Leitor> getAllLeitoresBD(){
         ArrayList<Leitor> leitores =new ArrayList<>();
-        Cursor cursor=this.db.query(TABLE_LEITOR,new String[]{ID,NOME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID,USER_ID},
+        Cursor cursor=this.db.query(TABLE_LEITOR,new String[]{ID_LEITOR,NOME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID,USER_ID},
                 null,null,null,null,null);
 
         if(cursor.moveToFirst()){
