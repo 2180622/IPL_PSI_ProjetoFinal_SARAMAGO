@@ -4,16 +4,14 @@ import java.lang.reflect.Array;
 import java.util.Date;
 
 public class Obra {
-    private int id, imgCapa, ano, preco, Cdu_id;
-    private String[] tipoObra = {"arruamacao", "estante", "quarentena", "perdido", "reservado", "nd"};
-    private String titulo, resumo, editor, descricao, idioma, local, edicao, assuntos;
-    private Date dataRegisto, dataAtualizado;
+    private int id, ano, preco, Cdu_id;
+    private String imgCapa, tipoObra, titulo, resumo, editor, descricao, local, edicao, assuntos, dataRegisto, dataAtualizado;
 
     private static int autoIncrement = 1;
 
-    public Obra(int id, int imgCapa, int ano, int preco, int Cdu_id, String titulo, String resumo, String editor,
-                String[] tipoObra, String descricao, String idioma, String local, String edicao,
-                String assuntos, Date dataRegisto, Date dataAtualizado) {
+    public Obra(int id, String imgCapa, int ano, int preco, int Cdu_id, String titulo, String resumo, String editor,
+                String tipoObra, String descricao, String local, String edicao,
+                String assuntos, String dataRegisto, String dataAtualizado) {
         this.id = autoIncrement++;
         this.imgCapa = imgCapa;
         this.ano = ano;
@@ -23,7 +21,6 @@ public class Obra {
         this.editor = editor;
         this.tipoObra = tipoObra;
         this.descricao = descricao;
-        this.idioma = idioma;
         this.local = local;
         this.edicao = edicao;
         this.assuntos = assuntos;
@@ -36,9 +33,9 @@ public class Obra {
 
     public void setId(int id) { this.id = id; }
 
-    public int getImgCapa() { return imgCapa; }
+    public String getImgCapa() { return imgCapa; }
 
-    public void setImgCapa(int imgCapa) { this.imgCapa = imgCapa; }
+    public void setImgCapa(String imgCapa) { this.imgCapa = imgCapa; }
 
     public int getAno() { return ano; }
 
@@ -60,17 +57,13 @@ public class Obra {
 
     public void setEditor(String editor) { this.editor = editor; }
 
-    public String[] getTipoObra() { return tipoObra; }
+    public String getTipoObra() { return tipoObra; }
 
-    public void setTipoObra(String[] tipoObra) { this.tipoObra = tipoObra; }
+    public void setTipoObra(String tipoObra) { this.tipoObra = tipoObra; }
 
     public String getDescricao() { return descricao; }
 
     public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    public String getIdioma() { return idioma; }
-
-    public void setIdioma(String idioma) { this.idioma = idioma; }
 
     public String getLocal() { return local; }
 
@@ -84,13 +77,13 @@ public class Obra {
 
     public void setAssuntos(String assuntos) { this.assuntos = assuntos; }
 
-    public Date getDataRegisto() { return dataRegisto; }
+    public String getDataRegisto() { return dataRegisto; }
 
-    public void setDataRegisto(Date dataRegisto) { this.dataRegisto = dataRegisto; }
+    public void setDataRegisto(String dataRegisto) { this.dataRegisto = dataRegisto; }
 
-    public Date getDataAtualizado() { return dataAtualizado; }
+    public String getDataAtualizado() { return dataAtualizado; }
 
-    public void setDataAtualizado(Date dataAtualizado) { this.dataAtualizado = dataAtualizado; }
+    public void setDataAtualizado(String dataAtualizado) { this.dataAtualizado = dataAtualizado; }
 
     public int getCdu_id() { return Cdu_id; }
 
@@ -103,13 +96,12 @@ public class Obra {
     public class exemplar {
         private int id, Biblioteca_id, EstatutoExemplar_id, TipoExemplar_id, Obra_id;
         private boolean suplemento;
-        private String[] estado = {"arruamacao", "estante", "quarentena", "perdido", "reservado", "nd"};
-        private String cota, codBarras, notaInterna;
+        private String cota, estado, codBarras, notaInterna;
 
         private int autoIncrement = 1;
 
         public exemplar(int id, int biblioteca_id, int estatutoExemplar_id, int tipoExemplar_id,
-                        int obra_id, boolean suplemento, String[] estado, String cota,
+                        int obra_id, boolean suplemento, String estado, String cota,
                         String codBarras, String notaInterna) {
             this.id = autoIncrement++;
             this.Biblioteca_id = biblioteca_id;
@@ -147,9 +139,9 @@ public class Obra {
 
         public void setSuplemento(boolean suplemento) { this.suplemento = suplemento; }
 
-        public String[] getEstado() { return estado; }
+        public String getEstado() { return estado; }
 
-        public void setEstado(String[] estado) { this.estado = estado; }
+        public void setEstado(String estado) { this.estado = estado; }
 
         public String getCota() { return cota; }
 
