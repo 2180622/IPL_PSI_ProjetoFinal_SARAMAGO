@@ -65,6 +65,7 @@ class LoginController extends Controller
             'username' => 'username',
             'password' => 'password',
         ];
+
         return $response;
     }
 

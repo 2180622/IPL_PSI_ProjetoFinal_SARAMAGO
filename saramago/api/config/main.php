@@ -106,7 +106,12 @@ return [
                     'controller' => 'v1/leitor',
                     'pluralize'=> false,
                     'extraPatterns' => [
-
+                        'GET leitor' => 'leitor',
+                        'GET total' => 'total',
+                        'GET leitor/{id}' => 'get_leitor',
+                        'POST create' => 'create_leitor',
+                        'PUT update/{id}' => 'update_leitor',
+                        'POST delete/{id}' => 'delete_leitor'
                     ],
 
                 ],
@@ -116,6 +121,16 @@ return [
                     'controller' => 'v1/cat',
                     'pluralize'=> false,
                     'extraPatterns' => [
+                        'GET obra' => 'obra',
+                        'GET obratotal' => 'obratotal',
+                        'GET autors' => 'autors',
+                        'GET autortotal' => 'autortotal',
+                        'POST obra/create' => 'obracreate', //FIXME
+                        'PUT update_obra/{id}' => 'update_obra',
+                        'POST delete_obra/{id}' => 'delete_obra',
+                        'POST create_autor' => 'create_autor',
+                        'PUT update_autor/{id}' => 'update_autor',
+                        'POST delete_autor/{id}' => 'delete_autor'
 
                     ],
                 ],
