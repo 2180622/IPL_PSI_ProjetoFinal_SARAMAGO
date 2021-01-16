@@ -44,8 +44,8 @@
         android:layout_weight="0"
         android:ems="10"
         android:hint="API"
-        android:text="http://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:text="http://10.0.2.2/IPL_PSI_ProjetoFinal2/saramago/api/web" />
 
     <CheckBox
         android:id="@+id/cbAPI"

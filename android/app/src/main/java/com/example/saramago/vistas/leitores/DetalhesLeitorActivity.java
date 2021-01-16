@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.saramago.R;
 import com.example.saramago.adaptadores.leitores.TabsLeitorAdaptador;
@@ -48,5 +49,15 @@ public class DetalhesLeitorActivity extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { //https://stackoverflow.com/questions/24032956/action-bar-back-button-not-working/24033351
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

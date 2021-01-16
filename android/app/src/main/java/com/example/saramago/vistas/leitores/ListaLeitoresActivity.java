@@ -1,10 +1,12 @@
 package com.example.saramago.vistas.leitores;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -40,6 +42,7 @@ public class ListaLeitoresActivity extends AppCompatActivity implements SwipeRef
         setContentView(R.layout.activity_lista_leitores);
         //para aparecer a seta <-- de voltar para tras
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         lvListaLeitores= findViewById(R.id.lvListaLeitores);  // list view dos leitores
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         swipeRefreshLayout= findViewById(R.id.swipeRefreshLayout);
@@ -87,5 +90,16 @@ public class ListaLeitoresActivity extends AppCompatActivity implements SwipeRef
     @Override
     public void onRefreshDetalhes() {
 
+    }
+
+    //METODO PARA RETROCEDER A ACTIVITY
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { //https://stackoverflow.com/questions/24032956/action-bar-back-button-not-working/24033351
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

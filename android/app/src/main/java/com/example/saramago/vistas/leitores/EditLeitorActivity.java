@@ -95,7 +95,6 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
         codPostal.setText(leitor.getCodPostal()+"");
         telemovel.setText(leitor.getTelemovel()+"");
         telefone.setText(leitor.getTelefone()+"");
-        email.setText(leitor.getEmail());
         email2.setText(leitor.getMail2());
     }
 }

@@ -9,7 +9,7 @@ public class Leitor {
     private static int autoIncrement = 1;
 
     public Leitor(int id, String nome, String codBarras, int nif, String DocId, String dataNasc, String morada,
-                  String localidade, int codPostal, int telemovel, int telefone, String email,
+                  String localidade, int codPostal, int telemovel, int telefone,
                   String mail2, String dataRegisto, String dataAtualizado, int Biblioteca_id, int TipoLeitor_id, int user_id){
 
             this.id = id;
@@ -23,7 +23,6 @@ public class Leitor {
             this.codPostal = codPostal;
             this.telemovel = telemovel;
             this.telefone = telefone;
-            this.email = email;
             this.mail2 = mail2;
             this.dataRegisto = dataRegisto;
             this.dataAtualizado = dataAtualizado;
@@ -128,14 +127,6 @@ public class Leitor {
 
     public void setLocalidade(String localidade) {
         this.localidade = localidade;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getMail2() {

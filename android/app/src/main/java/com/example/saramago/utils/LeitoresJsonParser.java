@@ -15,10 +15,20 @@ import java.util.ArrayList;
 public class LeitoresJsonParser {
 
     public static ArrayList<Leitor> parserJsonLeitores(JSONArray response) {
+        int telefone = 0;
+        String  mail2 = "";
+        String dataAtualizado ="";
+
         ArrayList<Leitor> leitores = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject leitor = (JSONObject) response.get(i);
+                if(leitor != null && !leitor.toString().equals(null)) {
+                    if(leitor.getString("telefone") == null)
+                        telefone = 0;
+                    mail2 = "";
+                    dataAtualizado = "";
+                }
                 int id = leitor.getInt("id");
                 String nome = leitor.getString("nome");
                 String codBarras = leitor.getString("codBarras");
@@ -29,17 +39,13 @@ public class LeitoresJsonParser {
                 String localidade = leitor.getString("localidade");
                 int codPostal = leitor.getInt("codPostal");
                 int telemovel = leitor.getInt("telemovel");
-                int telefone = leitor.getInt("telefone");
-                String email = leitor.getString("mail2"); //FIXME mail2 temp
-                String mail2 = leitor.getString("mail2");
                 String dataRegisto = leitor.getString("dataRegisto");
-                String dataAtualizado = leitor.getString("dataAtualizado");
                 int Biblioteca_id = leitor.getInt("Biblioteca_id");
                 int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
                 int user_id = leitor.getInt("user_id");
 
                 Leitor auxLeitor = new Leitor(id, nome, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
-                        telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
+                        telefone, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
                 leitores.add(auxLeitor);
             }
         } catch (JSONException e) {
@@ -64,7 +70,6 @@ public class LeitoresJsonParser {
             int codPostal = leitor.getInt("codPostal");
             int telemovel = leitor.getInt("telemovel");
             int telefone = leitor.getInt("telefone");
-            String email = leitor.getString("mail2"); //FIXME mail2 temp
             String mail2 = leitor.getString("mail2");
             String dataRegisto = leitor.getString("dataRegisto");
             String dataAtualizado = leitor.getString("dataAtualizado");
@@ -74,7 +79,7 @@ public class LeitoresJsonParser {
 
 
             auxLeitor = new Leitor(id, nome, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
-                    telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
+                    telefone, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
 
         } catch (JSONException e) {
             e.printStackTrace();

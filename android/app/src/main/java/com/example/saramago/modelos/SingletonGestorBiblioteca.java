@@ -1,6 +1,7 @@
 package com.example.saramago.modelos;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,10 +14,12 @@ import com.example.saramago.R;
 import com.example.saramago.listeners.LeitoresListener;
 import com.example.saramago.listeners.ObrasListener;
 import com.example.saramago.listeners.LoginListener;
+import com.example.saramago.listeners.UserListener;
 import com.example.saramago.utils.LeitoresJsonParser;
 import com.example.saramago.utils.ObrasJsonParser;
 import com.example.saramago.utils.LoginJsonParser;
 import com.example.saramago.vistas.LoginActivity;
+import com.example.saramago.vistas.MenuMainActivity;
 
 import org.json.JSONArray;
 
@@ -25,6 +28,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.saramago.vistas.MenuMainActivity.API;
 
 public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
@@ -35,12 +40,14 @@ public class SingletonGestorBiblioteca {
     private ObrasListener obrasListener;
     private ArrayList<Obra> obras;
     private ArrayList<Leitor> leitores;
+    private ArrayList<User> users;
     int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
 
     private LoginListener loginListener;
     private SaramagoBDHelper saramagoBD;
     private static RequestQueue volleyQueue = null;
+    private Context context;
 
     public static synchronized SingletonGestorBiblioteca getInstance(Context context){
         if(instance == null){
@@ -52,6 +59,7 @@ public class SingletonGestorBiblioteca {
 
     private SingletonGestorBiblioteca(Context context){
         leitores = new ArrayList<>();
+        users = new ArrayList<>();
         obras = new ArrayList<>();
         saramagoBD = new SaramagoBDHelper(context);
     }
@@ -60,10 +68,10 @@ public class SingletonGestorBiblioteca {
     private void gerarLeitores() {
         // instanciar o array de livros
         leitores = new ArrayList<>();
-        //leitores.add(new Leitor(1, "Alfredo", "696969", 269745017, "069", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", Integer.toString(currentTime), Integer.toString(currentTime),1,1,1));
-        //leitores.add(new Leitor(2, "Joaquim", "690420", 123456789, "420", "2000/02/02", "Rua do Leitor", "Leiria", 2400653, 919191919, 262088200, "leitor@hotmail.com", "leitor2@gmail.com", Integer.toString(currentTime), Integer.toString(currentTime),2,2,2));
     }
-    public ArrayList<Leitor> getLeitores() {
+
+
+    public ArrayList<Leitor> getLeitores(){
         leitores = saramagoBD.getAllLeitoresBD();
         return leitores;
     }
@@ -94,7 +102,6 @@ public class SingletonGestorBiblioteca {
             l.setCodPostal(leitor.getCodPostal());
             l.setTelemovel(leitor.getTelemovel());
             l.setTelefone(leitor.getTelefone());
-            l.setEmail(leitor.getEmail());
             l.setMail2(leitor.getMail2());
             l.setDataRegisto(leitor.getDataRegisto());
             l.setDataAtualizado(leitor.getDataAtualizado());
@@ -107,8 +114,19 @@ public class SingletonGestorBiblioteca {
         }
     }
 
+    public User getUser(int id){
+        for(User user: users){
+            if(user.getId()==id)
+                return user;
+        }
+        return null;
+    }
+
     public void setLeitoresListener(LeitoresListener leitoresListener) {
         this.leitoresListener = leitoresListener;
+    }
+
+    public void setUserListener(UserListener userListener){
     }
 
     //endregion
@@ -244,7 +262,9 @@ public class SingletonGestorBiblioteca {
                 leitoresListener.onRefreshListaLeitores(saramagoBD.getAllLeitoresBD());
             }
         }else{
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlAPILeitores, null, new Response.Listener<JSONArray>() {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+            String api = sharedPreferences.getString(API, "");
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, api + urlAPILeitores, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     leitores = LeitoresJsonParser.parserJsonLeitores(response);
