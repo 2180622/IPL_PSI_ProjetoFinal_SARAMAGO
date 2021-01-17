@@ -7,7 +7,6 @@ use app\models\LeitorUpdate;
 use common\models\Leitor;
 use common\models\User;
 use Yii;
-use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;
 use yii\rest\Controller;
@@ -49,14 +48,13 @@ class LeitorController extends Controller
         $model = new LeitorForm();
 
         $model->attributes = Yii::$app->request->post();
-        if($model->load(Yii::$app->request->post()) && $model->signup())
+
+        if($model->validate() && $model->signup())
         {
-            return $model;
+            return true;
         }
-        else
-        {
-            $model->getErrors();
-        }
+        
+        $model->getErrors();
 
         /*$leitor = new LeitorForm();
         if($leitor->load(Yii::$app->getRequest()->getBodyParams(), '') && $leitor->validate() && $leitor->load(Yii::$app->request->post())){
