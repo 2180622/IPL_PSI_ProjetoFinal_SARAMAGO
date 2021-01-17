@@ -27,7 +27,7 @@ public class Leitor {
             this.dataRegisto = dataRegisto;
             this.dataAtualizado = dataAtualizado;
             this.Biblioteca_id = Biblioteca_id;
-            this.TipoLeitor_id = 2;
+            this.TipoLeitor_id = TipoLeitor_id;
             this.user_id = user_id;
             // TODO: Tipo de Leitor é um id de outra tabela mas devido ao erro atual
             //  vou ter que passar um numero para conseguir listar sem dar erro

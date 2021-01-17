@@ -396,8 +396,38 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
         this.db.insert(TABLE_LEITOR,null,values);
     }
+    public boolean editarLeitorBD(Leitor leitor) {
+        ContentValues values=new ContentValues();
+        values.put(ID_LEITOR, leitor.getId());
+        values.put(NOME, leitor.getNome());
+        values.put(COD_BARRAS, leitor.getCodBarras());
+        values.put(NIF,leitor.getNif());
+        values.put(DOC_ID,leitor.getDocId());
+        values.put(DATA_NASC,leitor.getDataNasc());
+        values.put(MORADA,leitor.getMorada());
+        values.put(LOCALIDADE,leitor.getLocalidade());
+        values.put(COD_POSTAL,leitor.getCodPostal());
+        values.put(TELEMOVEL,leitor.getTelemovel());
+        values.put(TELEFONE,leitor.getTelefone());
+        values.put(MAIL2,leitor.getMail2());
+        values.put(DATA_REGISTO,leitor.getDataRegisto());
+        values.put(DATA_ATUALIZADO,leitor.getDataAtualizado());
+        values.put(BIBLIOTECA_ID,leitor.getBiblioteca_id());
+        values.put(TIPOLEITOR_ID,leitor.getTipoLeitor_Id());
+        values.put(USER_ID,leitor.getUser_id());
+
+        int nRows=this.db.update(TABLE_LEITOR,values, "id = ?", new String[]{leitor.getId()+""});
+
+        return (nRows>0);
+    }
+
     public void removerAllLeitoresBD(){
         this.db.delete(TABLE_LEITOR,null,null);
+    }
+
+    public boolean removerLeitorBD(int id){
+        int nRows=this.db.delete(TABLE_USER,"id = ?", new String[]{id+""});
+        return (nRows>0);
     }
 
     public ArrayList<Leitor> getAllLeitoresBD(){
@@ -458,7 +488,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         values.put(DATA_ATUALIZADO, user.getUpdated_at());
         this.db.insert(TABLE_USER,null,values);
     }
-    public void removerAllUserssBD(){
+    public void removerAllUsersBD(){
         this.db.delete(TABLE_USER,null,null);
     }
     //endregion

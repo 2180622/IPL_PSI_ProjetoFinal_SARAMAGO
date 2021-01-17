@@ -35,8 +35,12 @@ import static com.example.saramago.vistas.MenuMainActivity.API;
 
 public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
+    private static final int ADICIONAR_BD = 1;
+    private static final int EDITAR_BD =2 ;
+    private static final int REMOVER_BD =3 ;
     //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/v1/leitor";
     private static final String urlAPILeitores = "/v1/leitor";
+    private static final String urlAPILeitoresCreate = "/v1/leitor/create";
     private static final String urlAPIUsers = "/v1/user";
     private static final String urlAPILogin = "/v1/auth/login";
     private static final String urlAPIObras = "/v1/cat/obra";
@@ -68,9 +72,10 @@ public class SingletonGestorBiblioteca {
         saramagoBD = new SaramagoBDHelper(context);
     }
 
-    public User getUser_id(int leitor_id){
+    public User getUser_id(Leitor leitor, int leitor_id){
+        leitor.setId(leitor_id);
         for (User user: users){
-            if(user.getId() == leitor_id){
+            if(user.getId() == leitor.getUser_id()){
                 return user;
             }
         }
@@ -212,6 +217,39 @@ public class SingletonGestorBiblioteca {
             adicionarLeitorBD(leitor);
     }
 
+    public void removerLeitorBD(int id) {
+        Leitor leitor = getLeitor(id);
+
+        if (leitor != null)
+            saramagoBD.removerLeitorBD(id);
+    }
+
+    public void editarLeitorBD(Leitor leitor) {
+        Leitor l = getLeitor(leitor.getId());
+
+        if (l != null) {
+            if (saramagoBD.editarLeitorBD(leitor)) {
+                l.setNome(leitor.getNome());
+                l.setCodBarras(leitor.getCodBarras());
+                l.setNif(leitor.getNif());
+                l.setDocId(leitor.getDocId());
+                l.setDataNasc(leitor.getDataNasc());
+                l.setMorada(leitor.getMorada());
+                l.setLocalidade(leitor.getLocalidade());
+                l.setCodPostal(leitor.getCodPostal());
+                l.setTelemovel(leitor.getTelemovel());
+                l.setTelefone(leitor.getTelefone());
+                l.setMail2(leitor.getMail2());
+                l.setDataRegisto(leitor.getDataRegisto());
+                l.setDataAtualizado(leitor.getDataAtualizado());
+                l.setBiblioteca_id(leitor.getBiblioteca_id());
+                l.setTipoLeitor_Id(leitor.getTipoLeitor_id());
+                l.setUser_id(leitor.getUser_id());
+            }
+        }
+
+    }
+
     //endregion
 
     //region BD user
@@ -219,7 +257,7 @@ public class SingletonGestorBiblioteca {
         saramagoBD.adicionarUserBD(user);
     }
     public void adicionarUsersBD(ArrayList<User> users) {
-        saramagoBD.removerAllUserssBD();
+        saramagoBD.removerAllUsersBD();
         for (User user : users)
             adicionarUserBD(user);
     }
@@ -307,6 +345,65 @@ public class SingletonGestorBiblioteca {
                 }
             });
             volleyQueue.add(request);
+        }
+    }
+
+    public void adicionarLeitorAPI(final Leitor leitor, final Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        String api = sharedPreferences.getString(API, "");
+        // Linha ↓ debaixo ↓ chamada à api
+        StringRequest req = new StringRequest(Request.Method.POST, api + urlAPILeitoresCreate, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Leitor l = LeitoresJsonParser.parserJsonLeitor(response);
+                onUpdateListaLeitoresBD(l,ADICIONAR_BD);
+
+                if(leitoresListener != null){
+                    leitoresListener.onRefreshDetalhes();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("nome",leitor.getNome());
+                params.put("codBarras",leitor.getCodBarras());
+                params.put("nif",leitor.getNif()+"");
+                params.put("docId",leitor.getDocId());
+                params.put("dataNasc",leitor.getDataNasc());
+                params.put("morada",leitor.getMorada());
+                params.put("localidade",leitor.getLocalidade());
+                params.put("codPostal",leitor.getCodPostal()+"");
+                params.put("telemovel",leitor.getTelemovel()+"");
+                params.put("telefone",leitor.getTelefone()+"");
+                params.put("mail2",leitor.getMail2());
+                params.put("dataRegisto",leitor.getDataRegisto());
+                params.put("dataAtualizado",leitor.getDataAtualizado());
+                params.put("Biblioteca_id",leitor.getBiblioteca_id()+"");
+                params.put("TipoLeitor_id",leitor.getTipoLeitor_Id()+"");
+                params.put("User_id",leitor.getUser_id()+"");
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    private void onUpdateListaLeitoresBD( Leitor leitor, int operacao){
+        switch (operacao){
+            case ADICIONAR_BD:
+                adicionarLeitorBD(leitor);
+                break;
+            case EDITAR_BD:
+                editarLeitorBD(leitor);
+                break;
+            case REMOVER_BD:
+                removerLeitorBD(leitor.getId());
+                break;
         }
     }
     //endregion

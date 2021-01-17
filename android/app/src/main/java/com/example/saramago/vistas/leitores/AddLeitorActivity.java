@@ -60,7 +60,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
                         Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email2.getText().toString(),
                         date.toString(), date.toString(), 1, 1, 0);
 
-                SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitor(leitor);
+                SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitorAPI(leitor, getApplicationContext());
                 setResult(RESULT_OK);
                 finish();
             }

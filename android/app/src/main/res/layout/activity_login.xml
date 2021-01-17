@@ -34,7 +34,8 @@
         android:layout_weight="0"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="adminsaramago" />
 
     <EditText
         android:id="@+id/etApi"

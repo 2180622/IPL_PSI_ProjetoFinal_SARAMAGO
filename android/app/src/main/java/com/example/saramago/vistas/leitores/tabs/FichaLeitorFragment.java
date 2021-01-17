@@ -39,7 +39,6 @@ public class FichaLeitorFragment extends Fragment {
 
         int id = getActivity().getIntent().getIntExtra(ID, -1);
         leitor = SingletonGestorBiblioteca.getInstance(getContext()).getLeitor(id);
-        //user = SingletonGestorBiblioteca.getInstance(getContext()).getUser_id(user_id);
 
         nome = view.findViewById(R.id.tv_fl_nome);
         codBarras = view.findViewById(R.id.tv_fl_codBarras);
@@ -66,9 +65,11 @@ public class FichaLeitorFragment extends Fragment {
             }
         });
 
-        if(leitor != null ){
+        if(leitor != null){
             carregarConteudo();
         }
+
+        nif.setText(leitor.getUser_id()+"");
 
         return view;
     }
