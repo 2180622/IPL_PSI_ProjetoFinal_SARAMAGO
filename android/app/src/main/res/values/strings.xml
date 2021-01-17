@@ -13,4 +13,5 @@
     <string name="etUsernameInvalido">Username Inválido</string>
     <string name="invalidUrl">URL inválido</string>
     <string name="etPasswordInvalida">Password invalida!</string>
+    <string name="data_registo">data_registo</string>
 </resources>

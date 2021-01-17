@@ -5,29 +5,33 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.example.saramago.modelos.User;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-//TODO: implementar metodos
 public class UserJsonParser {
 
-    /*public static ArrayList<Users> parserJsonUser(JSONArray json){
-        ArrayList<Users> listaUsers= new ArrayList<>();
+    public static ArrayList<User> parserJsonUser(JSONArray json){
+        ArrayList<User> listaUsers= new ArrayList<>();
 
         try {
             for (int i=0;i<json.length();i++) {
-
                 JSONObject obj = (JSONObject) json.get(i);
-                //TODO:Alterar dados a receber um json
+
                 int idUser = obj.getInt("id");
                 String username = obj.getString("username");
+                String auth_key = obj.getString("auth_key");
                 String password_hash_ = obj.getString("password_hash_");
                 String email = obj.getString("email");
+                int status = obj.getInt("status");
+                int created_at = obj.getInt("created_at");
+                int updated_at = obj.getInt("updated_at");
 
-                listaUsers.add(new Users(idUser, username, password_hash_, email));
+                listaUsers.add(new User(idUser, username, auth_key, password_hash_, email, status, created_at, updated_at));
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -35,18 +39,22 @@ public class UserJsonParser {
         return  listaUsers;
     }
 
-    public static Users parserJsonUser(String json){
-        Users user= null;
+    public static User parserJsonUser(String json){
+        User user= null;
         try {
             JSONObject obj = new JSONObject (json);
 
             int idUser= obj.getInt("id");
             Log.i("jsonUser","id: "+idUser);
             String username = obj.getString("username");
+            String auth_key = obj.getString("auth_key");
             String password_hash = obj.getString("password_hash");
             String email = obj.getString("email");
+            int status = obj.getInt("status");
+            int created_at = obj.getInt("created_at");
+            int updated_at = obj.getInt("updated_at");
 
-            user = new Users(idUser,username,password_hash,email);
+            user = new User(idUser, username, auth_key, password_hash, email, status, created_at, updated_at);
 
             Log.i("getUser","jsonUser:"+user);
         }catch (JSONException e){
@@ -72,7 +80,7 @@ public class UserJsonParser {
             e.printStackTrace();
         }
         return array;
-    }*/
+    }
 
     public static boolean isConnectionInternet(Context context){
         ConnectivityManager cm =(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

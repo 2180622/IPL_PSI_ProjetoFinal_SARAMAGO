@@ -1,6 +1,7 @@
 package com.example.saramago.vistas.leitores.tabs;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.saramago.R;
 import com.example.saramago.modelos.Leitor;
+import com.example.saramago.modelos.SaramagoBDHelper;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
 import com.example.saramago.modelos.User;
 import com.example.saramago.vistas.leitores.EditLeitorActivity;
@@ -24,6 +26,7 @@ public class FichaLeitorFragment extends Fragment {
 
     private Leitor leitor;
     private User user;
+    private int user_id;
     private TextView nome, codBarras, nif, docId, dataNasc, morada, localidade, codPostal, telemovel, telefone, email, email2, dataRegisto, dataAtualizado, irregularidade;
 
     public FichaLeitorFragment() {
@@ -36,7 +39,7 @@ public class FichaLeitorFragment extends Fragment {
 
         int id = getActivity().getIntent().getIntExtra(ID, -1);
         leitor = SingletonGestorBiblioteca.getInstance(getContext()).getLeitor(id);
-        //user = SingletonGestorBiblioteca.getInstance(getContext()).getUser(id);
+        //user = SingletonGestorBiblioteca.getInstance(getContext()).getUser_id(user_id);
 
         nome = view.findViewById(R.id.tv_fl_nome);
         codBarras = view.findViewById(R.id.tv_fl_codBarras);
@@ -63,7 +66,7 @@ public class FichaLeitorFragment extends Fragment {
             }
         });
 
-        if(leitor != null){ // && user != null
+        if(leitor != null ){
             carregarConteudo();
         }
 

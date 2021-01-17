@@ -2,6 +2,7 @@ package com.example.saramago.modelos;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +19,7 @@ import com.example.saramago.listeners.UserListener;
 import com.example.saramago.utils.LeitoresJsonParser;
 import com.example.saramago.utils.ObrasJsonParser;
 import com.example.saramago.utils.LoginJsonParser;
+import com.example.saramago.utils.UserJsonParser;
 import com.example.saramago.vistas.LoginActivity;
 import com.example.saramago.vistas.MenuMainActivity;
 
@@ -35,6 +37,7 @@ public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
     //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/v1/leitor";
     private static final String urlAPILeitores = "/v1/leitor";
+    private static final String urlAPIUsers = "/v1/user";
     private static final String urlAPILogin = "/v1/auth/login";
     private static final String urlAPIObras = "/v1/cat/obra";
     private ObrasListener obrasListener;
@@ -43,6 +46,7 @@ public class SingletonGestorBiblioteca {
     private ArrayList<User> users;
     int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
+    private UserListener usersListener;
 
     private LoginListener loginListener;
     private SaramagoBDHelper saramagoBD;
@@ -64,6 +68,14 @@ public class SingletonGestorBiblioteca {
         saramagoBD = new SaramagoBDHelper(context);
     }
 
+    public User getUser_id(int leitor_id){
+        for (User user: users){
+            if(user.getId() == leitor_id){
+                return user;
+            }
+        }
+        return null;
+    }
     //region Leitor CRUD
     private void gerarLeitores() {
         // instanciar o array de livros
@@ -127,6 +139,7 @@ public class SingletonGestorBiblioteca {
     }
 
     public void setUserListener(UserListener userListener){
+        this.usersListener = userListener;
     }
 
     //endregion
@@ -199,6 +212,17 @@ public class SingletonGestorBiblioteca {
             adicionarLeitorBD(leitor);
     }
 
+    //endregion
+
+    //region BD user
+    public void adicionarUserBD(User user) {
+        saramagoBD.adicionarUserBD(user);
+    }
+    public void adicionarUsersBD(ArrayList<User> users) {
+        saramagoBD.removerAllUserssBD();
+        for (User user : users)
+            adicionarUserBD(user);
+    }
     //endregion
 
     //region BD obra
@@ -274,6 +298,38 @@ public class SingletonGestorBiblioteca {
 
                     if (leitoresListener != null) {
                         leitoresListener.onRefreshListaLeitores(leitores);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(request);
+        }
+    }
+    //endregion
+
+    //region API users
+    public void getAllUsersAPI(final Context context){
+        if(!UserJsonParser.isConnectionInternet(context)){
+            Toast.makeText(context, R.string.semInternet, Toast.LENGTH_LONG).show();
+
+            if( usersListener != null){
+                usersListener.onRefreshListaUsers(saramagoBD.getAllUsersBD());
+            }
+        }else{
+            SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+            String api = sharedPreferences.getString(API, "");
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, api + urlAPIUsers, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    users = UserJsonParser.parserJsonUser(response);
+                    adicionarUsersBD(users);
+
+                    if (usersListener != null) {
+                        usersListener.onRefreshListaUsers(users);
                     }
                 }
             }, new Response.ErrorListener() {

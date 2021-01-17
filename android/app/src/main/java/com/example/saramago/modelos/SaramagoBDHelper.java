@@ -198,8 +198,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 EMAIL+" TEXT NOT NULL, "+
                 STATUS+" INTEGER NOT NULL, "+
                 DATA_REGISTO+" TEXT NOT NULL, "+
-                DATA_ATUALIZADO+" TEXT NOT NULL, "+
-                VERIFICATION_TOKEN+" TEXT );";
+                DATA_ATUALIZADO+" TEXT NOT NULL);";
         db.execSQL(createTableUser);
         //endregion
 
@@ -427,8 +426,42 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     }
     //endregion
 
+    //region CRUD user
+    public ArrayList<User> getAllUsersBD(){
+        ArrayList<User> users =new ArrayList<>();
+        Cursor cursor=this.db.query(TABLE_USER,new String[]{ID_USER,USERNAME,AUTH_KEY,PASSWORD_HASH,EMAIL,STATUS,DATA_REGISTO,DATA_ATUALIZADO},
+                null,null,null,null,null);
 
+        if(cursor.moveToFirst()){
+            do{
+                User auxUser =new User(cursor.getInt(0),
+                        cursor.getString(1), cursor.getString(2),
+                        cursor.getString(3),cursor.getString(4),
+                        cursor.getInt(5),cursor.getInt(6),
+                        cursor.getInt(7));
+                users.add(auxUser);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
 
+        return users;
+    }
+    public void adicionarUserBD(User user){
+        ContentValues values=new ContentValues();
+        values.put(ID_LEITOR, user.getId());
+        values.put(USERNAME, user.getUsername());
+        values.put(AUTH_KEY, user.getAuth_key());
+        values.put(PASSWORD_HASH, user.getPassword_hash_());
+        values.put(EMAIL, user.getEmail());
+        values.put(STATUS, user.getStatus());
+        values.put(DATA_REGISTO, user.getCreated_at());
+        values.put(DATA_ATUALIZADO, user.getUpdated_at());
+        this.db.insert(TABLE_USER,null,values);
+    }
+    public void removerAllUserssBD(){
+        this.db.delete(TABLE_USER,null,null);
+    }
+    //endregion
 
     //region CRUD obra
     public void adicionarObraBD(Obra obra){
@@ -479,7 +512,4 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         return obras;
     }
     //endregion
-
-
-
 }
