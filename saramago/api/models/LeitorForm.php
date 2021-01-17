@@ -82,7 +82,7 @@ class LeitorForm extends Leitor
 
             ['dataNasc', 'trim'],
             ['dataNasc', 'required'],
-            ['dataNasc', 'datetime', 'format' => 'dd-MM-yyyy', 'message' => 'Formato de data inválido.'],
+            ['dataNasc', 'datetime', 'format' => 'yyyy-MM-dd', 'message' => 'Formato de data inválido.'],
             ['dataNasc', 'string', 'min' => 1, 'max' => 50],
 
             ['morada', 'trim'],
@@ -114,7 +114,7 @@ class LeitorForm extends Leitor
             ['TipoLeitor_id', 'trim'],
             ['TipoLeitor_id', 'integer'],
 
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'skipOnEmpty' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -167,9 +167,7 @@ class LeitorForm extends Leitor
             $user->setPassword($leitor->nif);
             $leitor->docId = $this->docId;
             $leitor->codBarras = $this->generateRandomString(9);
-            $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
-            $newDateString = $myDateTime->format('Y/m/d');
-            $leitor->dataNasc = $newDateString;
+            $leitor->dataNasc = $this->dataNasc;
             $leitor->morada = $this->morada;
             $leitor->localidade = $this->localidade;
             $leitor->codPostal = $this->codPostal;
@@ -179,7 +177,6 @@ class LeitorForm extends Leitor
             $leitor->Biblioteca_id = $this->Biblioteca_id;
             $leitor->TipoLeitor_id = $this->TipoLeitor_id;
             $user->save();
-
             $leitor->user_id = $user->getId();
 
             if ($leitor->tipoLeitor->tipo == "aluno") {
@@ -219,8 +216,7 @@ class LeitorForm extends Leitor
                 $auth->assign($leitorExternoRole, $leitor->user_id);
             }
 
-
-            return $leitor->id;
+            return $leitor;
         }
         return false;
     }

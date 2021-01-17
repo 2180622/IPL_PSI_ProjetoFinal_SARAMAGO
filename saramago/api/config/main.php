@@ -109,7 +109,7 @@ return [
                         'GET leitor' => 'leitor',
                         'GET total' => 'total',
                         'GET leitor/{id}' => 'get_leitor',
-                        'POST create' => 'create_leitor',
+                        'POST create' => 'create',
                         'PUT update/{id}' => 'update_leitor',
                         'POST delete/{id}' => 'delete_leitor'
                     ],
