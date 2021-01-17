@@ -11,6 +11,7 @@ use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;
 use yii\rest\Controller;
+use yii\web\HttpException;
 use yii\web\Response;
 
 class LeitorController extends Controller
@@ -20,9 +21,9 @@ class LeitorController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
+        /*$behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
-        ];
+        ];*/
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
             'formats' => [
@@ -43,13 +44,17 @@ class LeitorController extends Controller
         return $leitor;
     }
 
-    public function actionCreateLeitor(){
+    public function actionCreate(){
         $leitor = new LeitorForm();
 
-        $leitor->attributes = Yii::$app->request->post();
-        $create = $leitor->save();
+        if($leitor->load(Yii::$app->getRequest()->getBodyParams(), '') && $leitor->validate() && $leitor->load(Yii::$app->request->post())){
+            //$leitor->attributes = Yii::$app->request->post();
+            $create = $leitor->signup();
 
-        return ['create' => $create];
+            return ['create' => $create];
+        }
+
+        throw new HttpException('400');
     }
 
     public function actionTotal(){
