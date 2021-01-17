@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.saramago.R;
 import com.example.saramago.vistas.leitores.ListaLeitoresActivity;
+import com.example.saramago.vistas.catalogo.ListaObrasActivity;
 
 public class Dashboard extends Fragment {
 
@@ -33,11 +34,20 @@ public class Dashboard extends Fragment {
 
         TextView tvOperador = view.findViewById(R.id.tv_operador);
         LinearLayout btn_leitores = view.findViewById(R.id.btn_leitores);
+        LinearLayout btn_catalogo = view.findViewById(R.id.btn_catalogo);
 
         btn_leitores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ListaLeitoresActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListaObrasActivity.class);
                 startActivity(intent);
             }
         });

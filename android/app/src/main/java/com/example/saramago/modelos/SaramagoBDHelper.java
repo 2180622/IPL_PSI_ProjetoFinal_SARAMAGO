@@ -138,12 +138,15 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String EDICAO = "edicao";
     private static final String ASSUNTOS = "assuntos";
     private static final String PRECO = "preco";
-    private static final String CDU_ID = "CDU_ID";
+    //private static final String DATA_REGISTO = "dataRegisto";
+    //private static final String DATA_ATUALIZADO = "dataAtualizado";
+    private static final String CDU_ID = "Cdu_id";
+    private static final String COLECAO_ID = "Colecao_id";
     //endregion
 
     //region Declaration
     private static final String LEVANTAMENTO = "levantamento";
-    private static final String COLECAO_ID = "Colecao_id";
+    //private static final String COLECAO_ID = "Colecao_id";
 
     private static final String IDIOMA = "idioma";
 
@@ -252,15 +255,18 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 IMG_CAPA+" TEXT, "+
                 TITULO+" TEXT NOT NULL, "+
                 RESUMO+" TEXT, "+
-                EDITOR+" TEXT NOT NULL, "+
+                EDICAO+" TEXT NOT NULL, "+
                 ANO+" INT NOT NULL, "+
                 TIPO_OBRA+" TEXT NOT NULL, "+
                 DESCRICAO+" TEXT NOT NULL, "+
+                LOCAL+" TEXT,"+
                 EDITOR+" TEXT, "+
                 ASSUNTOS+" TEXT, "+
                 PRECO+" TEXT, "+
                 DATA_REGISTO+" DATE NOT NULL, "+
                 DATA_ATUALIZADO+" DATE, "+
+                CDU_ID +" INT NOT NULL, "+
+                COLECAO_ID +" INT,"+
                 "FOREIGN KEY(CDU_ID) REFERENCES TABLE_CDU(ID_CDU), " +
                 "FOREIGN KEY(COLECAO_ID) REFERENCES TABLE_COLECAO(ID_COLECAO));";
         db.execSQL(createTableObra);
@@ -459,12 +465,12 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 Obra auxObra =new Obra(cursor.getInt(0),
                         cursor.getString(1), cursor.getInt(2),
                         cursor.getInt(3),cursor.getInt(4),
-                        cursor.getString(5),cursor.getString(6),
+                        cursor.getInt(5),cursor.getString(6),
                         cursor.getString(7),cursor.getString(8),
                         cursor.getString(9),cursor.getString(10),
                         cursor.getString(11),cursor.getString(12),
-                        cursor.getString(13),cursor.getString(14));
-                // auxLivro.setId(cursor.getInt(0));
+                        cursor.getString(13),cursor.getString(14),
+                        cursor.getString(15));
                 obras.add(auxObra);
             }while(cursor.moveToNext());
         }

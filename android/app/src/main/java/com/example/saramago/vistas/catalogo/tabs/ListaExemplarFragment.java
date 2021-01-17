@@ -13,9 +13,10 @@ import com.example.saramago.R;
 public class ListaExemplarFragment extends Fragment {
     public ListaExemplarFragment() {
         // Required empty public constructor
-    }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    }// TODO EXEMPLARES
+  /*   @Override
+
+   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ficha_leitor, container, false);
 
@@ -25,10 +26,10 @@ public class ListaExemplarFragment extends Fragment {
         TextView docId = view.findViewById(R.id.tv_fl_docId);
         TextView dataNasc = view.findViewById(R.id.tv_fl_dataNasc);
         TextView morada = view.findViewById(R.id.tv_fl_morada);
-        TextView localidade = view.findViewById(R.id.tv_fl_localidade);
+        TextView localidade = view.findViewById(R.id.tv_fo_localidade);
         TextView codPostal = view.findViewById(R.id.tv_fl_codPostal);
         TextView telemovel = view.findViewById(R.id.tv_fl_telemovel);
-        TextView telefone = view.findViewById(R.id.tv_fl_telefone);
+        TextView telefone = view.findViewById(R.id.tv_fo_resumoAdd);
         TextView email = view.findViewById(R.id.tv_fl_mail);
         TextView email2 = view.findViewById(R.id.tv_fl_mail2);
         TextView dataRegisto = view.findViewById(R.id.tv_fl_dtaRegisto);
@@ -36,5 +37,5 @@ public class ListaExemplarFragment extends Fragment {
         TextView irregularidade = view.findViewById(R.id.tv_fl_irregularidade);
 
         return view;
-    }
+    } */
 }

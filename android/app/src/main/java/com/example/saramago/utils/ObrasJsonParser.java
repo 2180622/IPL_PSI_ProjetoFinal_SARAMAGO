@@ -25,6 +25,7 @@ public class ObrasJsonParser {
                 int ano = obra.getInt("ano");
                 int preco = obra.getInt("preco");
                 int Cdu_id = obra.getInt("Cdu_id");
+                int Colecao_id = obra.getInt("Colecao_id");
                 String titulo = obra.getString("titulo");
                 String resumo = obra.getString("resumo");
                 String editor = obra.getString("editor");
@@ -36,7 +37,7 @@ public class ObrasJsonParser {
                 String dataRegisto = obra.getString("dataRegisto");
                 String dataAtualizado = obra.getString("dataAtualizado");
 
-                Obra auxObra = new Obra(id, imgCapa, ano, preco, Cdu_id, titulo, resumo, editor, tipoObra, descricao,
+                Obra auxObra = new Obra(id, imgCapa, ano, preco, Cdu_id, Colecao_id, titulo, resumo, editor, tipoObra, descricao,
                         local, edicao, assuntos, dataRegisto, dataAtualizado);
                 obras.add(auxObra);
             }
@@ -55,6 +56,7 @@ public class ObrasJsonParser {
             int ano = obra.getInt("ano");
             int preco = obra.getInt("preco");
             int Cdu_id = obra.getInt("Cdu_id");
+            int Colecao_id = obra.getInt("Colecao_id");
             String titulo = obra.getString("titulo");
             String resumo = obra.getString("resumo");
             String editor = obra.getString("editor");
@@ -66,7 +68,7 @@ public class ObrasJsonParser {
             String dataRegisto = obra.getString("dataRegisto");
             String dataAtualizado = obra.getString("dataAtualizado");
 
-            auxObra = new Obra(id, imgCapa, ano, preco, Cdu_id, titulo, resumo, editor, tipoObra, descricao,
+            auxObra = new Obra(id, imgCapa, ano, preco, Cdu_id, Colecao_id, titulo, resumo, editor, tipoObra, descricao,
                     local, edicao, assuntos, dataRegisto, dataAtualizado);
 
         } catch (JSONException e) {

@@ -8,9 +8,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.saramago.vistas.catalogo.tabs.FichaObraFragment;
 import com.example.saramago.vistas.catalogo.tabs.ListaExemplarFragment;
 
-public class TabsCatalogoAdaptador extends FragmentStateAdapter {
+public class TabsObraAdaptador extends FragmentStateAdapter {
 
-    public TabsCatalogoAdaptador(@NonNull FragmentActivity fragmentActivity) {
+    public TabsObraAdaptador(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 

@@ -4,12 +4,12 @@ import java.lang.reflect.Array;
 import java.util.Date;
 
 public class Obra {
-    private int id, ano, preco, Cdu_id;
+    private int id, ano, preco, Cdu_id, Colecao_id;
     private String imgCapa, tipoObra, titulo, resumo, editor, descricao, local, edicao, assuntos, dataRegisto, dataAtualizado;
 
     private static int autoIncrement = 1;
 
-    public Obra(int id, String imgCapa, int ano, int preco, int Cdu_id, String titulo, String resumo, String editor,
+    public Obra(int id, String imgCapa, int ano, int preco, int Cdu_id, int Colecao_id, String titulo, String resumo, String editor,
                 String tipoObra, String descricao, String local, String edicao,
                 String assuntos, String dataRegisto, String dataAtualizado) {
         this.id = autoIncrement++;
@@ -27,6 +27,7 @@ public class Obra {
         this.dataRegisto = dataRegisto;
         this.dataAtualizado = dataAtualizado;
         this.Cdu_id = Cdu_id;
+        this.Colecao_id = Colecao_id;
     }
 
     public int getId() { return id; }
@@ -88,6 +89,10 @@ public class Obra {
     public int getCdu_id() { return Cdu_id; }
 
     public void setCdu_id(int cdu_id) { Cdu_id = cdu_id; }
+
+    public int getColecao_id() {return Colecao_id; }
+
+    public void setColecao_id(int colecao_id) { Colecao_id = colecao_id; }
 
     /**
      * Nested Class

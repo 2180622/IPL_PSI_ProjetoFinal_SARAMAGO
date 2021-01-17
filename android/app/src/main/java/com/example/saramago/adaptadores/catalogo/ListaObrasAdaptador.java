@@ -9,18 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.saramago.R;
-import com.example.saramago.modelos.Leitor;
 import com.example.saramago.modelos.Obra;
 
 import java.util.ArrayList;
 
-public class ListaCatalogoAdaptador extends BaseAdapter {
+public class ListaObrasAdaptador extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<Obra> obras;
 
-    public ListaCatalogoAdaptador(Context context, ArrayList<Leitor> leitores) {
+    public ListaObrasAdaptador(Context context, ArrayList<Obra> obras) {
         this.context = context;
         this.obras = obras;
     }
@@ -49,7 +48,7 @@ public class ListaCatalogoAdaptador extends BaseAdapter {
 
         if(convertView==null)
         {
-            //convertView=inflater.inflate(R.layout.item_lista_obras, null);
+            convertView=inflater.inflate(R.layout.item_lista_obras, null);
         }
 
         //otimização
@@ -60,29 +59,29 @@ public class ListaCatalogoAdaptador extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
-        //viewHolder.update(obras.get(position)); //manda a posição e devolve a obra
+        viewHolder.update(obras.get(position)); //manda a posição e devolve a obra
 
         return convertView;
     }
 
     private class ViewHolderLista
     {
-        private TextView tv_nome_leitor, tv_tipo_leitor;
-        private ImageView imgIconLeitor;
+        private TextView tv_titulo_obra, tv_tipo_obra;
+        private ImageView imgIconObra;
 
         public ViewHolderLista(View view)
         {
-            tv_nome_leitor = view.findViewById(R.id.tv_nome_leitor);
-            tv_tipo_leitor = view.findViewById(R.id.tv_tipo_leitor);
-            imgIconLeitor = view.findViewById(R.id.imgIconLeitor);
+            tv_titulo_obra = view.findViewById(R.id.tv_titulo_obra);
+            tv_tipo_obra = view.findViewById(R.id.tv_tipo_obra);
+            imgIconObra = view.findViewById(R.id.imgIconObra);
 
         }
 
-        public void update(Leitor leitor)
+        public void update(Obra obra)
         {
-            //tv_nome_leitor.setText(obras.getNome());
-            tv_tipo_leitor.setText(leitor.getTipoLeitor_Id()+"");
-            imgIconLeitor.setImageResource(R.drawable.ic_undraw_male_avatar);
+            tv_titulo_obra.setText(obra.getTitulo()+"");
+            tv_tipo_obra.setText(obra.getTipoObra()+"");
+            imgIconObra.setImageResource(R.drawable.ic_undraw_books);
         }
     }
 }

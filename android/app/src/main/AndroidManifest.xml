@@ -13,6 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Catalogo -->
+        <activity android:name=".vistas.catalogo.EditObraActivity"></activity>
+        <activity android:name=".vistas.catalogo.AddObraActivity" />
+        <activity android:name=".vistas.catalogo.DetalhesObraActivity" />
+        <activity android:name=".vistas.catalogo.ListaObrasActivity" />
         <activity android:name=".vistas.leitores.EditLeitorActivity"></activity>
         <!-- Leitores -->
         <activity android:name=".vistas.leitores.AddLeitorActivity" />

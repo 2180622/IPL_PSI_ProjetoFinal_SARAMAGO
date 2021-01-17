@@ -168,9 +168,11 @@ public class SingletonGestorBiblioteca {
             l.setLocal(obra.getLocal());
             l.setEdicao(obra.getEdicao());
             l.setAssuntos(obra.getAssuntos());
+            l.setPreco(obra.getPreco());
             l.setDataRegisto(obra.getDataRegisto());
             l.setDataAtualizado(obra.getDataAtualizado());
             l.setCdu_id(obra.getCdu_id());
+            l.setColecao_id(obra.getColecao_id());
         }
     }
     public void removerObra(int id){
@@ -294,7 +296,9 @@ public class SingletonGestorBiblioteca {
                 obrasListener.onRefreshListaObras(saramagoBD.getAllObrasBD());
             }
         }else{
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlAPIObras, null, new Response.Listener<JSONArray>() {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+            String api = sharedPreferences.getString(API, "");
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, api + urlAPIObras, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     obras = ObrasJsonParser.parserJsonObras(response);

@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vistas.catalogo.tabs.FichaObraFragment">
+    tools:context=".vistas.catalogo.EditObraActivity">
 
     <TextView
-        android:id="@+id/tvFichaObra"
+        android:id="@+id/tvObraEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/geometric_lt_bt_lite"
-        android:text="Ficha da Obra:"
+        android:text="Editar obra:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,61 +21,59 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imgCapa"
+        android:id="@+id/imgObraEdit"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/ic_undraw_books"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFichaObra" />
+        app:layout_constraintTop_toBottomOf="@id/tvObraEdit" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutTitulo"
+        android:id="@+id/linearLayoutTituloEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayoutTipoObra"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutTipoObraEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgCapa"
-        app:layout_constraintTop_toBottomOf="@+id/tvFichaObra">
+        app:layout_constraintStart_toEndOf="@id/imgObraEdit"
+        app:layout_constraintTop_toBottomOf="@+id/tvObraEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/titulo"
+                android:id="@+id/tituloEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Titulo"
+                android:text="Titulo:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="titulo"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_tituloEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutTipoObra"
+        android:id="@+id/linearLayoutTipoObraEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="238dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgCapa"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutTitulo">
+        app:layout_constraintStart_toEndOf="@id/imgObraEdit"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutTituloEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,35 +81,32 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tipoObra"
+                android:id="@+id/tipoObraEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tipo de obra:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_tipoObra"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/sp_fo_tipoObraEdit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="tipo"
-                android:textSize="18sp" />
+                android:layout_weight="1" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutEdicao"
+        android:id="@+id/linearLayoutEdicaoEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgCapa"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutTipoObra">
+        app:layout_constraintStart_toEndOf="@id/imgObraEdit"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutTipoObraEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,33 +114,32 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/edicao"
+                android:id="@+id/edicaoEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edição:"
+                android:text="Edicao:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_edicao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="123º"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_edicaoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="number" />
+
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutAno"
+        android:id="@+id/linearLayoutAnoEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgCapa"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutEdicao">
+        app:layout_constraintStart_toEndOf="@id/imgObraEdit"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutEdicaoEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,33 +147,33 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ano"
+                android:id="@+id/anoEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ano:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_ano"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="0000"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_anoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutDescricao"
+        android:id="@+id/linearLayoutDescricaoEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgCapa">
+        app:layout_constraintStart_toEndOf="@id/imgObraEdit"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAnoEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,33 +181,34 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/descricao"
+                android:id="@+id/descricaoEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Descrição:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_descricao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="Text"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_descricaoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textLongMessage|text" />
+
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutLocal"
+        android:id="@+id/linearLayoutLocalEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="65dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutDescricao">
+        app:layout_constraintTop_toBottomOf="@id/imgObraEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -221,41 +216,33 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/local"
+                android:id="@+id/localEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Local:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_local"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="TextView"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_fo_localEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutAssuntos"
+        android:id="@+id/linearLayoutDataRegistoEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutLocal">
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutLocalEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -263,34 +250,65 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/assuntos"
+                android:id="@+id/dataRegistoEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data registado:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_fo_dataRegistoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAssuntosEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutDataRegistoEdit">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/assuntosEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Assuntos:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_assuntos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="TextView"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_assuntosEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="text" />
 
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutEditor"
+        android:id="@+id/linearLayoutEditorEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutAssuntos">
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutAssuntosEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -298,20 +316,85 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/editor"
+                android:id="@+id/editorEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editor:"
+                android:text="Editor::"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <EditText
+                android:id="@+id/et_fo_editorEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="text" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutResumoEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutEditorEdit">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/tv_fo_editor"
+                android:id="@+id/resumoEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Resumo:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_fo_resumoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_marginStart="5dp"
-                android:text="textview"
                 android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCdu_idEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutResumoEdit">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cdu_idEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cdu:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_fo_cdu_idEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="number" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -323,7 +406,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutEditor">
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutCdu_idEdit">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -331,29 +414,29 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/preco"
+                android:id="@+id/precoEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Preço:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_preco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="0 €"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_precoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutCdu_Id"
+        android:id="@+id/linearLayoutColecao_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -365,161 +448,33 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/Cdu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CDU:"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_fo_cdu_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="cdu info"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutColecao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutCdu_Id">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/Colecao"
+                android:id="@+id/Colecao_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Coleção:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fo_colecao_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="colecao info"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/et_fo_colecao_idEdit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutDataRegisto"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutColecao">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/dataRegisto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/data_registo"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_fo_dataRegisto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="colecao info"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutDtaAtualizado"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutDataRegisto">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/dataAtualizado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data atualizado:"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_fo_dataAtualizado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="00/00/0000"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutResumo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fabEditObra"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/resumo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Resumo:"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_fo_resumo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Resumo não disponível."
-            android:textSize="18sp" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabEditObra"
+        android:id="@+id/fabSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@color/DarkBlue"
         android:clickable="true"
-        android:src="@drawable/ic_action_editar"
+        android:src="@drawable/ic_action_guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
