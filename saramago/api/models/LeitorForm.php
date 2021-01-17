@@ -82,7 +82,7 @@ class LeitorForm extends Leitor
 
             ['dataNasc', 'trim'],
             ['dataNasc', 'required'],
-            ['dataNasc', 'datetime', 'format' => 'dd/MM/yyyy', 'message' => 'Formato de data inválido.'],
+            ['dataNasc', 'datetime', 'format' => 'dd-MM-yyyy', 'message' => 'Formato de data inválido.'],
             ['dataNasc', 'string', 'min' => 1, 'max' => 50],
 
             ['morada', 'trim'],
@@ -113,6 +113,8 @@ class LeitorForm extends Leitor
 
             ['TipoLeitor_id', 'trim'],
             ['TipoLeitor_id', 'integer'],
+
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -133,6 +135,7 @@ class LeitorForm extends Leitor
             'codPostal' => 'Código Postal',
             'telemovel' => 'Telemóvel',
             'telefone' => 'Telefone',
+            'email' => 'Email',
             'mail2' => 'E-mail (2)',
             'notaInterna' => 'Nota interna referente ao leitor',
             'dataRegisto' => 'Data Registado',
