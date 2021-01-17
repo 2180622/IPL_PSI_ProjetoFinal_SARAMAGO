@@ -48,8 +48,8 @@ class LeitorController extends Controller
     {
         $model = new LeitorForm();
 
-        $model->setAttribute(Yii::$app->request->post(), false);
-        if($model->validate() && $model->signup())
+        $model->attributes = Yii::$app->request->post();
+        if($model->load(Yii::$app->request->post()) && $model->signup())
         {
             return $model;
         }
@@ -57,9 +57,6 @@ class LeitorController extends Controller
         {
             $model->getErrors();
         }
-
-
-        throw new HttpException('400');
 
         /*$leitor = new LeitorForm();
         if($leitor->load(Yii::$app->getRequest()->getBodyParams(), '') && $leitor->validate() && $leitor->load(Yii::$app->request->post())){
