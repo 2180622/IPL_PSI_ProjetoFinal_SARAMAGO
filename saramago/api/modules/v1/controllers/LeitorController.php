@@ -5,23 +5,24 @@ namespace api\modules\v1\controllers;
 use app\models\LeitorForm;
 use app\models\LeitorUpdate;
 use common\models\Leitor;
+use common\models\User;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;
-use yii\rest\ActiveController;
+use yii\rest\Controller;
 use yii\web\Response;
 
-class LeitorController extends ActiveController
+class LeitorController extends Controller
 {
     public $modelClass = 'common\models\Leitor';
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        /*$behaviors['authenticator'] = [
+        $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
-        ];*/
+        ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
             'formats' => [
@@ -31,9 +32,15 @@ class LeitorController extends ActiveController
         return $behaviors;
     }
 
-    public function actionUserLeitor()
+    public function actionIndex()
     {
+        $leitor = Leitor::find()
+            ->select('*')
+            ->join("left join","user as user","user.id = user_id")
+            ->asArray()
+            ->all();
 
+        return $leitor;
     }
 
     public function actionCreateLeitor(){
