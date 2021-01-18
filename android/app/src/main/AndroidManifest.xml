@@ -15,14 +15,22 @@
         android:theme="@style/AppTheme">
         <!-- Catalogo -->
         <activity android:name=".vistas.catalogo.EditObraActivity"></activity>
-        <activity android:name=".vistas.catalogo.AddObraActivity" />
+        <activity
+            android:name=".vistas.catalogo.AddObraActivity"
+            android:label="Adicionar Obra"/>
         <activity android:name=".vistas.catalogo.DetalhesObraActivity" />
-        <activity android:name=".vistas.catalogo.ListaObrasActivity" />
-        <activity android:name=".vistas.leitores.EditLeitorActivity"></activity>
+        <activity
+            android:name=".vistas.catalogo.ListaObrasActivity"
+            android:label="Obras"/>
         <!-- Leitores -->
-        <activity android:name=".vistas.leitores.AddLeitorActivity" />
-        <activity android:name=".vistas.leitores.DetalhesLeitorActivity" />
-        <activity android:name=".vistas.leitores.ListaLeitoresActivity" />
+        <activity android:name=".vistas.leitores.EditLeitorActivity"></activity>
+        <activity android:name=".vistas.leitores.AddLeitorActivity"
+            android:label="Adicionar Leitor" />
+        <activity
+            android:name=".vistas.leitores.DetalhesLeitorActivity" />
+        <activity
+            android:name=".vistas.leitores.ListaLeitoresActivity"
+            android:label="Leitores"/>
         <!-- DASHBOARD -->
         <activity
             android:name=".vistas.MenuMainActivity"

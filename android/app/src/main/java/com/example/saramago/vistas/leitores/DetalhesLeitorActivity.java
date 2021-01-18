@@ -1,15 +1,22 @@
 package com.example.saramago.vistas.leitores;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.saramago.R;
 import com.example.saramago.adaptadores.leitores.TabsLeitorAdaptador;
 import com.example.saramago.modelos.Leitor;
+import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.utils.LeitoresJsonParser;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -52,12 +59,52 @@ public class DetalhesLeitorActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(leitor!=null){
+            MenuInflater menuInflater=getMenuInflater();
+            menuInflater.inflate(R.menu.menu_detalhesleitor_drawer,menu);
+            return super.onCreateOptionsMenu(menu);
+        }
+        return false;
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //https://stackoverflow.com/questions/24032956/action-bar-back-button-not-working/24033351
         switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.itemRemover:
+                if(LeitoresJsonParser.isConnectionInternet(getApplicationContext()))
+                    dialogRemover();
+                else
+                    Toast.makeText(getApplicationContext(), R.string.semInternet, Toast.LENGTH_SHORT).show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void dialogRemover() {
+        AlertDialog.Builder builder;
+        builder= new AlertDialog.Builder(this);
+        builder.setTitle("Remover Livro")
+                .setMessage("Pretende mesmo remover o leitor?")
+                .setPositiveButton(R.string.respostaSim, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //SingletonGestorBiblioteca.getInstance(getApplicationContext()).removerLeitorAPI(leitor.getId()); //FIXME
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.respostaNao, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_delete)
+                .show();
     }
 }
