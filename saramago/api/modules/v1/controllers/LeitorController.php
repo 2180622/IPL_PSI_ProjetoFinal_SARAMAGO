@@ -37,7 +37,21 @@ class LeitorController extends Controller
     {
         $leitor = Leitor::find()
             ->select('*')
+            ->join("left join","user as u","u.id = user_id")
+            ->where("status = 10")
+            ->asArray()
+            ->all();
+
+        return $leitor;
+    }
+
+    public function actionView($id)
+    {
+        $leitor = Leitor::find()
+            ->select('*')
             ->join("left join","user as user","user.id = user_id")
+            ->where("status = 10")
+            ->where('leitor.id ='.$id)
             ->asArray()
             ->all();
 
@@ -63,29 +77,56 @@ class LeitorController extends Controller
         }
     }
 
+    public function actionUpdate($id)
+    {
+        if($leitor = Leitor::findOne($id))
+        {
+            $model = new LeitorUpdate($id);
+            $model->attributes = Yii::$app->request->post();
+
+            if ($mUpdate = $model->update())
+            {
+                $user = User::findOne($mUpdate->user_id);
+                return [
+                    "leitor"=>[$mUpdate,$user],
+                    "success"=> true,
+                    "status"=>200,
+                ];
+
+            } else {
+                return $errors = $model->errors;
+            }
+        }else
+            {
+                return "Leitor não encontrado!";
+            }
+    }
+
+    public function actionDelete($id){
+
+        if($leitor = Leitor::findOne($id))
+        {
+            $user = User::findOne($leitor->user_id);
+
+            $user->status = 9;
+            $user->save();
+
+            return [
+            "message"=>"Leitor Apagado!",
+            "success"=> true,
+            "status"=>200,
+            ];
+        }
+        else
+        {
+            return "Leitor não encontrado!";
+        }
+    }
+
     public function actionTotal(){
         $model = new $this->modelClass;
         $leitores = $model::find()->all();
 
         return ['total' => count($leitores)];
-    }
-
-    public function actionUpdateLeitor($id){
-        $leitor = Leitor::findOne($id);
-        $leitor->attributes=Yii::$app->request->post();
-
-        $update = $leitor->save();
-
-        return $update;
-    }
-
-    public function actionDeleteLeitor($id){
-
-        $leitor = Leitor::findOne($id);
-        $leitor->attributes=Yii::$app->request->post();
-
-        $delete = $leitor->delete();
-
-        return $delete;
     }
 }

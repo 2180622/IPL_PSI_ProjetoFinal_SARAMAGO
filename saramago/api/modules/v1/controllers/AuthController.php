@@ -43,12 +43,15 @@ class AuthController extends Controller
             if ((isset($post["username"]) && isset($post["password"])) != null)
             {
                 $user = User::findByUsername($post["username"]);
-                if($user && $user->validatePassword($post["password"]))
+                $nn = Yii::$app->authManager->getRoles();
+
+                if($user->id && $user->validatePassword($post["password"]))
                 {
                     return [
                         "id"=>$user->id,
                         "username"=>$user->username,
                         "token"=>$user->getAuthKey(),
+                        "role"=> array_keys(Yii::$app->authManager->getRolesByUser($user->id))[0],
                         "success"=> true,
                         "status"=>'200',
                         "saramago"=>"v".Yii::$app->version,

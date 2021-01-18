@@ -84,7 +84,7 @@ class LeitorUpdate extends Model
 
             ['dataNasc', 'trim'],
             ['dataNasc', 'required'],
-            ['dataNasc', 'datetime', 'format' => 'dd/MM/yyyy', 'message' => 'Formato de data inválido.'],
+            ['dataNasc', 'datetime', 'format' => 'yyyy-MM-dd', 'message' => 'Formato de data inválido.'],
             ['dataNasc', 'string', 'min' => 1, 'max' => 50],
 
             ['morada', 'trim'],
@@ -392,7 +392,7 @@ class LeitorUpdate extends Model
             }
         }
 
-        return $leitor && $user;
+        return $leitor;
     }
 
     public function findFuncionario($id){
@@ -424,9 +424,7 @@ class LeitorUpdate extends Model
         $leitor->nome = $this->nome;
         $leitor->nif = $this->nif;
         $leitor->docId = $this->docId;
-        $myDateTime = DateTime::createFromFormat('d/m/Y', $this->dataNasc);
-        $newDateString = $myDateTime->format('Y/m/d');
-        $leitor->dataNasc = $newDateString;
+        $leitor->dataNasc = $this->dataNasc;
         $leitor->morada = $this->morada;
         $leitor->localidade = $this->localidade;
         $leitor->codPostal = $this->codPostal;
