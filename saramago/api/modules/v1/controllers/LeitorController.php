@@ -96,7 +96,9 @@ class LeitorController extends Controller
             $user = User::findOne($mCreate->user_id);
 
             return [
-                "leitor"=>[$mCreate,$user],
+                $mCreate,
+                $user->email,
+                $user->username,
                 "success"=> true,
                 "status"=>200,
             ];
@@ -117,7 +119,9 @@ class LeitorController extends Controller
             {
                 $user = User::findOne($mUpdate->user_id);
                 return [
-                    $mUpdate,$user,
+                    $mUpdate,
+                    $user->email,
+                    $user->username,
                     "success"=> true,
                     "status"=>200,
                 ];
