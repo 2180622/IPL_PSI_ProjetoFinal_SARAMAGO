@@ -35,19 +35,33 @@ class LeitorController extends Controller
 
     public function actionIndex()
     {
-        $leitor = Leitor::find()
+        /*$leitor = Leitor::find()
             ->select('*')
             ->join("left join","user as u","u.id = user_id")
             ->where("status = 10")
             ->asArray()
             ->all();
 
+        return $leitor;*/
+
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand(
+            "SELECT leitor.id, user.username, user.auth_key, 
+                    user.password_hash, user.password_reset_token, user.email, user.status,
+                    user.created_at, user.updated_at, user.verification_token, user.id as user_id,
+                    leitor.codBarras, leitor.nome, leitor.nif, leitor.docId, leitor.dataNasc, leitor.morada,
+                    leitor.localidade, leitor.codPostal, leitor.telemovel, leitor.telefone, leitor.mail2, leitor.notaInterna,
+                    leitor.dataRegisto, leitor.dataAtualizado
+                FROM user INNER JOIN leitor ON user.id = leitor.user_id");
+        $leitor = $command->queryAll();
         return $leitor;
+
+
     }
 
     public function actionView($id)
     {
-        $leitor = Leitor::find()
+        /*$leitor = Leitor::find()
             ->select('*')
             ->join("left join","user as user","user.id = user_id")
             ->where("status = 10")
@@ -55,6 +69,19 @@ class LeitorController extends Controller
             ->asArray()
             ->all();
 
+        return $leitor;*/
+
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand(
+            'SELECT leitor.id, user.username, user.auth_key, 
+                    user.password_hash, user.password_reset_token, user.email, user.status,
+                    user.created_at, user.updated_at, user.verification_token, user.id as user_id,
+                    leitor.codBarras, leitor.nome, leitor.nif, leitor.docId, leitor.dataNasc, leitor.morada,
+                    leitor.localidade, leitor.codPostal, leitor.telemovel, leitor.telefone, leitor.mail2, leitor.notaInterna,
+                    leitor.dataRegisto, leitor.dataAtualizado
+                FROM user INNER JOIN leitor ON user.id = leitor.user_id
+                WHERE leitor.id ='.$id);
+        $leitor = $command->queryAll();
         return $leitor;
     }
 
