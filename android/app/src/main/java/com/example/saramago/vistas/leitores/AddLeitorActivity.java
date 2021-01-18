@@ -3,13 +3,16 @@ package com.example.saramago.vistas.leitores;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.saramago.R;
 import com.example.saramago.modelos.Leitor;
+import com.example.saramago.modelos.SaramagoBDHelper;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,6 +48,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
         email2 = findViewById(R.id.et_fl_email2);
         FloatingActionButton fabAdd = findViewById(R.id.fabSave);
 
+        Toast.makeText(getApplicationContext(), R.string.FillAllFields, Toast.LENGTH_LONG).show();
 
         dtaNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +64,8 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
                         Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
                         Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()),
                         email.getText().toString(), email2.getText().toString(), date.toString(), date.toString(), 1, 1);
+
+
 
                 SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitorAPI(leitor, getApplicationContext());
                 setResult(RESULT_OK);

@@ -43,12 +43,12 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     //endregion
 
     //region Declaration leitoruser
-    private static final String TABLE_LEITOR_USER = "leitoruser";
+    public static final String TABLE_LEITOR_USER = "leitoruser";
+    private static final String ID_LEITOR="id";
     //endregion
 
     //region Declaration leitor
     private static final String TABLE_LEITOR = "leitor";
-    private static final String ID_LEITOR="id";
     private static final String NIF="nif";
     private static final String DOC_ID="docId";
     private static final String DATA_NASC="dataNasc";
@@ -364,8 +364,28 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String deleteTableLeitorUser="DROP TABLE IF EXISTS "+TABLE_LEITOR_USER;
+        db.execSQL(deleteTableLeitorUser);
 
-        //TODO
+        String deleteTableCDU = "DROP TABLE IF EXISTS "+TABLE_CDU;
+        db.execSQL(deleteTableCDU);
+
+        String deleteTableColecao = "DROP TABLE IF EXISTS "+TABLE_COLECAO;
+        db.execSQL(deleteTableColecao);
+
+        String deleteTableObra = "DROP TABLE IF EXISTS "+TABLE_OBRA;
+        db.execSQL(deleteTableObra);
+
+        String deleteTableBiblioteca = "DROP TABLE IF EXISTS "+TABLE_BIBLIOTECA;
+        db.execSQL(deleteTableBiblioteca);
+
+        String deleteTableTipoLeitor = "DROP TABLE IF EXISTS "+TABLE_TIPO_LEITOR;
+        db.execSQL(deleteTableTipoLeitor);
+
+        String deleteTableConfig = "DROP TABLE IF EXISTS "+TABLE_CONFIG;
+        db.execSQL(deleteTableConfig);
+
+        this.onCreate(db);
     }
 
     //region CRUD leitor

@@ -21,4 +21,6 @@
     <string name="data_registo">data_registo</string>
     <string name="respostaSim">Sim</string>
     <string name="respostaNao">Não</string>
+    <string name="FillAllFields">Por Favor Preencha Todos Os Campos</string>
+    <string name="UsernamePasswordInvalida">Username ou Password inválida</string>
 </resources>

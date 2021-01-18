@@ -23,13 +23,7 @@ public class LeitoresJsonParser {
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject leitor = (JSONObject) response.get(i);
-                if(leitor != null && !leitor.toString().equals(null)) {
-                    if(leitor.getString("telefone") == null)
-                        telefone = 0;
-                    mail2 = "";
-                    dataAtualizado = "";
-                }
-                int id = leitor.getInt("id");
+                int id = leitor.getInt("user_id");
                 String nome = leitor.getString("nome");
                 String username = leitor.getString("username");
                 String codBarras = leitor.getString("codBarras");
@@ -44,6 +38,13 @@ public class LeitoresJsonParser {
                 String dataRegisto = leitor.getString("dataRegisto");
                 int Biblioteca_id = leitor.getInt("Biblioteca_id");
                 int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
+
+                if(leitor != null) {
+                    if(leitor.getString("telefone") == null)
+                        telefone = 0;
+                    mail2 = "";
+                    dataAtualizado = "";
+                }
 
                 Leitor auxLeitor = new Leitor(id, nome, username, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
                         telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
@@ -60,7 +61,7 @@ public class LeitoresJsonParser {
 
         try {
             JSONObject leitor = new JSONObject(response);
-            int id = leitor.getInt("id");
+            int id = leitor.getInt("user_id");
             String nome = leitor.getString("nome");
             String username = leitor.getString("username");
             String codBarras = leitor.getString("codBarras");

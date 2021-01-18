@@ -42,6 +42,8 @@ public class SingletonGestorBiblioteca {
     private static final String queryParamAuth = "?access-token=";
     private static final String urlAPILeitores = "/v1/leitor";
     private static final String urlAPILeitoresCreate = "/v1/leitor/create";
+    private static final String urlAPILeitoresEdit = "/v1/leitor/edit/";
+    private static final String urlAPILeitoresDelete = "/v1/leitor/delete/";
     private static final String urlAPIObrasCreate = "/v1/cat/obra/create";
     private static final String urlAPIObrasEdit = "/v1/cat/obra/edit/";
     private static final String urlAPIUsers = "/v1/user";
@@ -338,7 +340,7 @@ public class SingletonGestorBiblioteca {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.UsernamePasswordInvalida, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -391,15 +393,16 @@ public class SingletonGestorBiblioteca {
     public void adicionarLeitorAPI(final Leitor leitor, final Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         String api = sharedPreferences.getString(API, "");
+        String token = sharedPreferences.getString(TOKEN, "");
         // Linha ↓ debaixo ↓ chamada à api
-        StringRequest req = new StringRequest(Request.Method.POST, api + urlAPILeitoresCreate, new Response.Listener<String>() {
+        StringRequest req = new StringRequest(Request.Method.POST, api + urlAPILeitoresCreate + queryParamAuth + token, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Leitor l = LeitoresJsonParser.parserJsonLeitor(response);
-                onUpdateListaLeitoresBD(l,ADICIONAR_BD);
 
                 if(leitoresListener != null){
                     leitoresListener.onRefreshDetalhes();
+                    Leitor l = LeitoresJsonParser.parserJsonLeitor(response);
+                    onUpdateListaLeitoresBD(l,ADICIONAR_BD);
                 }
             }
         }, new Response.ErrorListener() {
@@ -431,6 +434,57 @@ public class SingletonGestorBiblioteca {
                 return params;
             }
         };
+        volleyQueue.add(req);
+    }
+
+    public void editarLeitorAPI(final Livro livro, final Context context, final String token) {
+        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPILivros+'/'+livro.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Livro l=LivroJsonParser.parserJsonLivro(response);
+                onUpdateListaLivrosBD(l,EDITAR_BD);
+
+                if(livrosListener != null){
+                    livrosListener.onRefreshDetalhes();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("titulo",livro.getTitulo());
+                params.put("autor",livro.getAutor());
+                params.put("serie",livro.getSerie());
+                params.put("ano", livro.getAno()+"");
+                params.put("capa",livro.getCapa());
+                params.put("token",token);
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    public void removerLeitorAPI(final Leitor leitor, final Context context) {
+        StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPILivros+'/'+livro.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onUpdateListaLivrosBD(livro,REMOVER_BD);
+
+                if(livrosListener != null){
+                    livrosListener.onRefreshDetalhes();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
         volleyQueue.add(req);
     }
 
