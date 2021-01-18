@@ -51,7 +51,7 @@ class LeitorController extends Controller
                     user.created_at, user.updated_at, user.verification_token, user.id as user_id,
                     leitor.codBarras, leitor.nome, leitor.nif, leitor.docId, leitor.dataNasc, leitor.morada,
                     leitor.localidade, leitor.codPostal, leitor.telemovel, leitor.telefone, leitor.mail2, leitor.notaInterna,
-                    leitor.dataRegisto, leitor.dataAtualizado
+                    leitor.dataRegisto, leitor.dataAtualizado,
                     leitor.Biblioteca_id, leitor.TipoLeitor_id
                 FROM user INNER JOIN leitor ON user.id = leitor.user_id");
         $leitor = $command->queryAll();
@@ -79,7 +79,7 @@ class LeitorController extends Controller
                     user.created_at, user.updated_at, user.verification_token, user.id as user_id,
                     leitor.codBarras, leitor.nome, leitor.nif, leitor.docId, leitor.dataNasc, leitor.morada,
                     leitor.localidade, leitor.codPostal, leitor.telemovel, leitor.telefone, leitor.mail2, leitor.notaInterna,
-                    leitor.dataRegisto, leitor.dataAtualizado
+                    leitor.dataRegisto, leitor.dataAtualizado,
                     leitor.Biblioteca_id, leitor.TipoLeitor_id
                 FROM user INNER JOIN leitor ON user.id = leitor.user_id
                 WHERE leitor.id ='.$id);
