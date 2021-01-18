@@ -16,6 +16,7 @@ import com.example.saramago.R;
 import com.example.saramago.adaptadores.leitores.ListaLeitoresAdaptador;
 import com.example.saramago.listeners.LeitoresListener;
 import com.example.saramago.modelos.Leitor;
+import com.example.saramago.modelos.SaramagoBDHelper;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
 import com.example.saramago.utils.LeitoresJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +31,7 @@ public class ListaLeitoresActivity extends AppCompatActivity implements SwipeRef
     //private SearchView searchView;
     private ArrayList<Leitor> listaLeitores;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private SaramagoBDHelper saramagoBD;
 
     public ListaLeitoresActivity(){
 
@@ -49,8 +51,10 @@ public class ListaLeitoresActivity extends AppCompatActivity implements SwipeRef
         swipeRefreshLayout.setOnRefreshListener(this);
 
         // swipeRefreshLayout.setOnRefreshListener();
+        saramagoBD = new SaramagoBDHelper(this);
         SingletonGestorBiblioteca.getInstance(getApplicationContext()).setLeitoresListener(this); // vai buscar do singleton todos os leitores no sistema
         SingletonGestorBiblioteca.getInstance(getApplicationContext()).getAllLeitoresAPI(getApplicationContext()); // insere na listview todos os leitores atraves do adaptador
+        saramagoBD.close();
 
         lvListaLeitores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

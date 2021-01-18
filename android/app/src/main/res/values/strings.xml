@@ -24,4 +24,5 @@
     <string name="FillAllFields">Por favor preencha todos os campos</string>
     <string name="UsernamePasswordInvalida">Username ou Password inválida</string>
     <string name="menuRemover">Remover Leitor</string>
+    <string name="aluno">Aluno</string>
 </resources>

@@ -32,8 +32,13 @@ public class DetalhesLeitorActivity extends AppCompatActivity {
         //para aparecer a seta <-- de voltar para tras
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        int id = getIntent().getIntExtra(ID, -1);
+        leitor = SingletonGestorBiblioteca.getInstance(getApplicationContext()).getLeitor(id);
+
         ViewPager2 viewPager2 = findViewById(R.id.pager);
         viewPager2.setAdapter(new TabsLeitorAdaptador(this));
+
+        setTitle(leitor.getNome());
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -60,13 +65,11 @@ public class DetalhesLeitorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(leitor!=null){
-            MenuInflater menuInflater=getMenuInflater();
-            menuInflater.inflate(R.menu.menu_detalhesleitor_drawer,menu);
-            return super.onCreateOptionsMenu(menu);
-        }
-        return false;
+        MenuInflater menuInflater=getMenuInflater();
 
+        menuInflater.inflate(R.menu.menu_detalhesleitor_drawer,menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -93,7 +96,7 @@ public class DetalhesLeitorActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.respostaSim, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //SingletonGestorBiblioteca.getInstance(getApplicationContext()).removerLeitorAPI(leitor.getId()); //FIXME
+                        SingletonGestorBiblioteca.getInstance(getApplicationContext()).removerLeitorAPI(leitor, getApplicationContext());
                         setResult(RESULT_OK);
                         finish();
                     }

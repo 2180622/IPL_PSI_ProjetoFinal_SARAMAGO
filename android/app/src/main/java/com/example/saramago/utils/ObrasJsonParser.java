@@ -16,6 +16,7 @@ import java.util.Date;
 public class ObrasJsonParser {
 
     public static ArrayList<Obra> parserJsonObras(JSONArray response) {
+        int preco = 0;
         ArrayList<Obra> obras = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
@@ -23,7 +24,6 @@ public class ObrasJsonParser {
                 int id = obra.getInt("id");
                 String imgCapa = obra.getString("imgCapa");
                 int ano = obra.getInt("ano");
-                int preco = obra.getInt("preco");
                 int Cdu_id = obra.getInt("Cdu_id");
                 int Colecao_id = obra.getInt("Colecao_id");
                 String titulo = obra.getString("titulo");
@@ -36,6 +36,11 @@ public class ObrasJsonParser {
                 String assuntos = obra.getString("assuntos");
                 String dataRegisto = obra.getString("dataRegisto");
                 String dataAtualizado = obra.getString("dataAtualizado");
+
+                if(obra != null) {
+                    if(obra.getString("preco") == null)
+                        preco = 0;
+                }
 
                 Obra auxObra = new Obra(id, imgCapa, ano, preco, Cdu_id, Colecao_id, titulo, resumo, editor, tipoObra, descricao,
                         local, edicao, assuntos, dataRegisto, dataAtualizado);

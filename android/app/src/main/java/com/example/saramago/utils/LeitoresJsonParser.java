@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.example.saramago.modelos.Leitor;
+import com.example.saramago.modelos.SaramagoBDHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +46,6 @@ public class LeitoresJsonParser {
                     mail2 = "";
                     dataAtualizado = "";
                 }
-
                 Leitor auxLeitor = new Leitor(id, nome, username, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
                         telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
                 leitores.add(auxLeitor);
@@ -61,7 +61,7 @@ public class LeitoresJsonParser {
 
         try {
             JSONObject leitor = new JSONObject(response);
-            int id = leitor.getInt("id");
+
             String nome = leitor.getString("nome");
             String username = leitor.getString("username");
             String codBarras = leitor.getString("codBarras");
@@ -80,7 +80,7 @@ public class LeitoresJsonParser {
             int Biblioteca_id = leitor.getInt("Biblioteca_id");
             int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
 
-            auxLeitor = new Leitor(id, nome, username, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
+            auxLeitor = new Leitor(leitor.getInt("id"), nome, username, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
                     telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
 
         } catch (JSONException e) {

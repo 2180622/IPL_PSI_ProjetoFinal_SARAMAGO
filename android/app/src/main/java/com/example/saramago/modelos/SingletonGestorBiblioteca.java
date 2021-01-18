@@ -285,7 +285,6 @@ public class SingletonGestorBiblioteca {
 
     public void editarObraBD(Obra obra) {
         Obra ob = getObra(obra.getId());
-
         if (ob != null) {
             if (saramagoBD.editarObraBD(obra)) {
                 ob.setImgCapa(obra.getImgCapa());
@@ -503,9 +502,9 @@ public class SingletonGestorBiblioteca {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         String api = sharedPreferences.getString(API, "");
         String token = sharedPreferences.getString(TOKEN, "");
-        StringRequest req = new StringRequest(Request.Method.DELETE, urlAPILeitoresDelete + '/' + leitor.getId(), new Response.Listener<String>() {
+        StringRequest req = new StringRequest(Request.Method.DELETE, api + urlAPILeitoresDelete + '/' + leitor.getId() +queryParamAuth + token, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response){
                 onUpdateListaLeitoresBD(leitor,REMOVER_BD);
 
                 if(leitoresListener != null){
@@ -521,7 +520,7 @@ public class SingletonGestorBiblioteca {
         volleyQueue.add(req);
     }
 
-    private void onUpdateListaLeitoresBD( Leitor leitor, int operacao){
+    private void onUpdateListaLeitoresBD(Leitor leitor, int operacao){
         switch (operacao){
             case ADICIONAR_BD:
                 adicionarLeitorBD(leitor);

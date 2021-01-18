@@ -28,7 +28,6 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
     private EditText nome, username, codBarras, nif, docId, dtaNascimento, morada, localidade, codPostal, telemovel, telefone, email, email2;
     private Leitor leitor;
     private final Date date = Calendar.getInstance().getTime();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
             @Override
             public void onClick(View v) {
                 if(LeitoresJsonParser.isConnectionInternet(getApplicationContext())){
-                    leitor = new Leitor(0, nome.getText().toString(), username.getText().toString(), codBarras.getText().toString(),
+                    leitor = new Leitor(1,nome.getText().toString(), username.getText().toString(), codBarras.getText().toString(),
                             Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
                             Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()),
                             email.getText().toString(), email2.getText().toString(), date.toString(), date.toString(), 1, 1);

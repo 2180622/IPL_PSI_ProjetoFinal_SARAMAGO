@@ -80,7 +80,7 @@ public class ListaLeitoresAdaptador extends BaseAdapter {
         public void update(Leitor leitor)
         {
             tv_nome_leitor.setText(leitor.getNome());
-            tv_tipo_leitor.setText(leitor.getTipoLeitor_Id()+"");
+            tv_tipo_leitor.setText(R.string.aluno);
             imgIconLeitor.setImageResource(R.drawable.ic_undraw_male_avatar);
         }
     }

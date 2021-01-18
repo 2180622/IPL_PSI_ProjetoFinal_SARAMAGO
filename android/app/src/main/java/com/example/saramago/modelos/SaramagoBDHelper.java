@@ -80,34 +80,6 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String NOTAS = "notas";
     //endregion
 
-    //region Declaration reserva //TODO FEITO
-    private static final String TABLE_RESERVA = "reserva";
-    private static final String ID_RESERVA="id";
-    private static final String DATA_RESERVA = "dataReserva";
-    private static final String ESTADO_RESERVA = "estadoReserva";
-    private static final String DATA_FECHO = "dataFecho";
-    private static final String NOTA_RESERVA = "notaReserva";
-    //endregion
-
-    //region Declaration requisicao
-    private static final String TABLE_REQUISICAO = "requisicao";
-    private static final String ID_REQUISICAO="id";
-    private static final String DATA_EMPRESTIMO = "dataEmprestimo";
-    private static final String ENTREGA_PREVISTA = "entregaPrevista";
-    private static final String DATA_DEVOLUCAO = "dataDevolucao";
-    private static final String RENOVACOES = "renovacoes";
-    //endregion
-
-    //region Declaration exemplar
-    private static final String TABLE_EXEMPLAR = "exemplar";
-    private static final String ID_EXEMPLAR="id";
-    private static final String COTA = "cota";
-    private static final String SUPLEMENTO = "suplemento";
-    private static final String ESTADO = "estado";
-    private static final String NOTA_INTERNA = "notaInterna";
-    private static final String ESTATUTO_EXEMPLAR_ID = "EstatutoExemplar_id";
-    private static final String TIPO_EXEMPLAR_ID = "TipoExemplar_id";
-    //endregion
 
     //region Declaration cdu
 
@@ -139,40 +111,12 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String EDICAO = "edicao";
     private static final String ASSUNTOS = "assuntos";
     private static final String PRECO = "preco";
-    //private static final String DATA_REGISTO = "dataRegisto";
-    //private static final String DATA_ATUALIZADO = "dataAtualizado";
     private static final String CDU_ID = "Cdu_id";
     private static final String COLECAO_ID = "Colecao_id";
     //endregion
 
-    //region Declaration
+    //region Declaration Biblioteca
     private static final String LEVANTAMENTO = "levantamento";
-    //private static final String COLECAO_ID = "Colecao_id";
-
-    private static final String IDIOMA = "idioma";
-
-    private static final String VOLUME = "volume";
-    private static final String PAGINAS = "paginas";
-    private static final String ISBN = "isbn";
-
-    private static final String SERIE = "serie";
-    private static final String NUMERO = "numero";
-    private static final String ISNN = "isnn";
-
-    private static final String DURACAO = "duracao";
-    private static final String EAN = "EAN";
-    //endregion
-
-    //region Declaration estatutoexemplar
-    private static final String TABLE_ESTATUTO_EXEMPLAR = "estatutoexemplar";
-    private static final String ID_ESTATUTO_EXEMPLAR = "id";
-    private static final String PRAZO = "prazo";
-    //endregion
-
-    //region Declatarion tipoexemplar
-    private static final String TABLE_TIPO_EXEMPLAR = "tipoexemplar";
-    private static final String ID_TIPO_EXEMPLAR = "id";
-    //endregion
 
     //region Declaration Config
     private static final String TABLE_CONFIG = "config";
@@ -191,19 +135,6 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //region Create User Table
-        /*String createTableUser = "CREATE TABLE "+TABLE_USER+" ( "+
-                ID_USER+" INTEGER PRIMARY KEY, "+
-                USERNAME+" TEXT NOT NULL, "+
-                AUTH_KEY+" TEXT NOT NULL, "+
-                PASSWORD_HASH+" TEXT NOT NULL, "+
-                EMAIL+" TEXT NOT NULL, "+
-                STATUS+" INTEGER NOT NULL, "+
-                DATA_REGISTO+" TEXT NOT NULL, "+
-                DATA_ATUALIZADO+" TEXT NOT NULL);";
-        db.execSQL(createTableUser);*/
-        //endregion
-
         //region Create LeitorUser Table
         String createTableLeitorUser = "CREATE TABLE " + TABLE_LEITOR_USER + " ( "+
                 ID_LEITOR+" INTEGER PRIMARY KEY, "+
@@ -293,66 +224,6 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         db.execSQL(createTableTipoLeitor);
         //endregion
 
-        //region Create Requisicao Table
-        /*String createTableRequisicao = "CREATE TABLE " + TABLE_REQUISICAO + " ( "+
-                ID_REQUISICAO+" INTEGER PRIMARY KEY, "+
-                DATA_EMPRESTIMO+" TEXT NOT NULL, " +
-                ENTREGA_PREVISTA+" TEXT NOT NULL, "+
-                DATA_DEVOLUCAO+" TEXT, "+
-                RENOVACOES+" INTEGER NOT NULL, "+
-                LEITOR_ID+" INTEGER NOT NULL, "+
-                "FOREIGN KEY(LEITOR_ID) REFERENCES TABLE_LEITOR(ID_LEITOR))";
-        db.execSQL(createTableRequisicao);*/
-        //endregion
-
-        //region Create Reserva Table
-        /*String createTableReserva = "CREATE TABLE " + TABLE_RESERVA + " ( "+
-                ID_RESERVA+" INTEGER PRIMARY KEY, "+
-                DATA_RESERVA+" TEXT, "+
-                ESTADO_RESERVA+" TEXT, "+
-                DATA_FECHO+" TEXT, "+
-                NOTA_RESERVA+" TEXT, "+
-                LEITOR_ID+" INTEGER NOT NULL, "+
-                EXEMPLAR_ID+" INTEGER NOT NULL, "+
-                "FOREIGN KEY(LEITOR_ID) REFERENCES TABLE_LEITOR(ID_LEITOR), " +
-                "FOREIGN KEY(EXEMPLAR_ID) REFERENCES TABLE_EXEMPLAR(ID_EXEMPLAR))";
-        db.execSQL(createTableReserva);*/
-        //endregion
-
-        //region Create EstatutoExemplar Table
-        /*String createTableEstatutoExemplar = "CREATE TABLE " + TABLE_ESTATUTO_EXEMPLAR + " ( "+
-                ID_ESTATUTO_EXEMPLAR+" INTEGER PRIMARY KEY, "+
-                ESTATUTO+" TEXT NOT NULL, "+
-                PRAZO+" INTEGER );";
-        db.execSQL(createTableEstatutoExemplar);*/
-        //endregion
-
-        //region Create TipoExemplar Table
-        /*String createTableTipoExemplar = "CREATE TABLE " + TABLE_TIPO_EXEMPLAR + " ( "+
-                ID_TIPO_EXEMPLAR+" INTEGER PRIMARY KEY, "+
-                DESIGNACAO+" TEXT NOT NULL, "+
-                TIPO+" TEXT NOT NULL );";
-        db.execSQL(createTableTipoExemplar);*/
-        //endregion
-
-        //region Create Exemplar Table
-        /*String createTableExemplar = "CREATE TABLE " + TABLE_EXEMPLAR + " ( "+
-                ID_EXEMPLAR+" INTEGER PRIMARY KEY, "+
-                COTA+" TEXT NOT NULL, "+
-                COD_BARRAS+" TEXT NOT NULL, "+
-                SUPLEMENTO+" INTEGER NOT NULL, "+
-                ESTADO+" TEXT NOT NULL, "+
-                NOTA_INTERNA+" TEXT, "+
-                BIBLIOTECA_ID+" INTEGER NOT NULL, "+
-                ESTATUTO_EXEMPLAR_ID+" INTEGER NOT NULL, "+
-                TIPO_EXEMPLAR_ID+" INTEGER NOT NULL, "+
-                OBRA_ID+" INTEGER NOT NULL, "+
-                "FOREIGN KEY(BIBLIOTECA_ID) REFERENCES TABLE_BIBLIOTECA(ID_BIBLIOTECA), " +
-                //"FOREIGN KEY(ESTATUTO_EXEMPLAR_ID) REFERENCES TABLE_ESTATUTO_EXEMPLAR(ID_ESTATUTO_EXEMPLAR), " +
-                //"FOREIGN KEY(TIPO_EXEMPLAR_ID) REFERENCES TABLE_TIPO_EXEMPLAR(ID_TIPO_EXEMPLAR), " +
-                "FOREIGN KEY(OBRA_ID) REFERENCES TABLE_OBRA(ID_OBRA))";
-        db.execSQL(createTableExemplar);*/
-        //endregion
 
         //region Create Config Table
         String createTableConfig = "CREATE TABLE " + TABLE_CONFIG + " ( "+
@@ -443,6 +314,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     }
 
     public boolean removerLeitorBD(int id){
+        this.db.isOpen();
         int nRows=this.db.delete(TABLE_LEITOR_USER,"id = ?", new String[]{id+""});
         return (nRows>0);
     }

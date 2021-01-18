@@ -1,7 +1,5 @@
 package com.example.saramago.modelos;
 
-import java.util.Date;
-
 public class Leitor {
 
     private int id, nif, codPostal, telemovel, telefone, Biblioteca_id, TipoLeitor_id;
@@ -9,26 +7,26 @@ public class Leitor {
 
     public Leitor(int id, String nome, String username, String codBarras, int nif, String DocId, String dataNasc, String morada,
                   String localidade, int codPostal, int telemovel, int telefone, String email, String mail2,
-                  String dataRegisto, String dataAtualizado, int Biblioteca_id, int TipoLeitor_id){
+                  String dataRegisto, String dataAtualizado, int Biblioteca_id, int TipoLeitor_id) {
 
-            this.id = id;
-            this.username = username;
-            this.nome = nome;
-            this.codBarras = codBarras;
-            this.nif = nif;
-            this.DocId = DocId;
-            this.dataNasc = dataNasc;
-            this.morada = morada;
-            this.localidade = localidade;
-            this.codPostal = codPostal;
-            this.telemovel = telemovel;
-            this.telefone = telefone;
-            this.email = email;
-            this.mail2 = mail2;
-            this.dataRegisto = dataRegisto;
-            this.dataAtualizado = dataAtualizado;
-            this.Biblioteca_id = Biblioteca_id;
-            this.TipoLeitor_id = TipoLeitor_id;
+        this.id = id;
+        this.username = username;
+        this.nome = nome;
+        this.codBarras = codBarras;
+        this.nif = nif;
+        this.DocId = DocId;
+        this.dataNasc = dataNasc;
+        this.morada = morada;
+        this.localidade = localidade;
+        this.codPostal = codPostal;
+        this.telemovel = telemovel;
+        this.telefone = telefone;
+        this.email = email;
+        this.mail2 = mail2;
+        this.dataRegisto = dataRegisto;
+        this.dataAtualizado = dataAtualizado;
+        this.Biblioteca_id = Biblioteca_id;
+        this.TipoLeitor_id = TipoLeitor_id;
     }
 
     public int getId() {
@@ -189,65 +187,5 @@ public class Leitor {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * Classe aninhada: Funcionario
-     */
-
-    public class funcionario{
-        private int idFuncionario, Leitor_id;
-        private String departamento;
-
-        public funcionario(int id, String departamento, int leitor_id) {
-            int autoIncrement = 1;
-            this.idFuncionario = autoIncrement++;
-            this.Leitor_id = id;
-            this.departamento = departamento;
-        }
-
-        public int getIdFuncionario() { return idFuncionario; }
-
-        public void setIdFuncionario(int idFuncionario) { this.idFuncionario = idFuncionario; }
-
-        public int getLeitor_id() { return Leitor_id; }
-
-        public void setLeitor_id(int leitor_id) { Leitor_id = leitor_id; }
-
-        public String getDepartamento() { return departamento; }
-
-        public void setDepartamento(String departamento) { this.departamento = departamento; }
-    }
-
-    /**
-     * Classe aninhada: Aluno
-     */
-
-    public class aluno{
-        private int idAluno, Leitor_id, numero, Curso_id;
-
-        public aluno(int id, int leitor_id, int numero, int curso_id) {
-            int autoIncrement = 1;
-            this.idAluno = autoIncrement++;
-            this.Leitor_id = id;
-            this.numero = numero;
-            this.Curso_id = curso_id;
-        }
-
-        public int getIdAluno() { return idAluno; }
-
-        public void setIdAluno(int idAluno) { this.idAluno = idAluno; }
-
-        public int getLeitor_id() { return Leitor_id; }
-
-        public void setLeitor_id(int leitor_id) { Leitor_id = leitor_id; }
-
-        public int getNumero() { return numero; }
-
-        public void setNumero(int numero) { this.numero = numero; }
-
-        public int getCurso_id() { return Curso_id; }
-
-        public void setCurso_id(int curso_id) { Curso_id = curso_id; }
     }
 }

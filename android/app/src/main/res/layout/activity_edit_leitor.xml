@@ -195,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:textSize="14sp"
-                android:inputType="textPersonName" />
+                android:inputType="number" />
 
         </LinearLayout>
     </LinearLayout>
