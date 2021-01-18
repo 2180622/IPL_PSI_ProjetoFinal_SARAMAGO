@@ -53,7 +53,8 @@ class LeitorController extends Controller
                     leitor.localidade, leitor.codPostal, leitor.telemovel, leitor.telefone, leitor.mail2, leitor.notaInterna,
                     leitor.dataRegisto, leitor.dataAtualizado,
                     leitor.Biblioteca_id, leitor.TipoLeitor_id
-                FROM user INNER JOIN leitor ON user.id = leitor.user_id");
+                FROM leitor INNER JOIN user ON user.id = leitor.user_id
+                WHERE user.status = 10");
         $leitor = $command->queryAll();
         return $leitor;
 
@@ -81,8 +82,8 @@ class LeitorController extends Controller
                     leitor.localidade, leitor.codPostal, leitor.telemovel, leitor.telefone, leitor.mail2, leitor.notaInterna,
                     leitor.dataRegisto, leitor.dataAtualizado,
                     leitor.Biblioteca_id, leitor.TipoLeitor_id
-                FROM user INNER JOIN leitor ON user.id = leitor.user_id
-                WHERE leitor.id ='.$id);
+                FROM leitor INNER JOIN user ON user.id = leitor.user_id
+                WHERE leitor.id ='.$id.' AND user.status = 10');
         $leitor = $command->queryAll();
         return $leitor;
     }
