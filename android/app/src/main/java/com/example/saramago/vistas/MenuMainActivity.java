@@ -25,6 +25,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     public static final String USERNAME = "USERNAME";
     public static final String TOKEN = "TOKEN";
     public static final String API = "API";
+    public static final String ROLE = "ROLE";
     public static final String PREF_INFO_USER ="PREF_INFO_USER";
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -88,11 +89,3 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 }
-
-/*
-88BDBC - Azul Claro
-FFFFFF - Branco
-112D32 - Azul Super Escuro
-4F4A41 - Laranja Terra (Escuro)
-6E6658 - Cinzento Escuro
-*/

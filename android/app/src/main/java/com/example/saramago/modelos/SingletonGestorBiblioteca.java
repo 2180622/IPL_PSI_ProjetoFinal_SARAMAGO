@@ -32,18 +32,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.saramago.vistas.MenuMainActivity.API;
+import static com.example.saramago.vistas.MenuMainActivity.TOKEN;
 
 public class SingletonGestorBiblioteca {
     private static SingletonGestorBiblioteca instance = null;
     private static final int ADICIONAR_BD = 1;
     private static final int EDITAR_BD =2 ;
     private static final int REMOVER_BD =3 ;
-    //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/v1/leitor";
+    //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/";
+    private static final String queryParamAuth = "?access-token=";
     private static final String urlAPILeitores = "/v1/leitor";
     private static final String urlAPILeitoresCreate = "/v1/leitor/create";
     private static final String urlAPIUsers = "/v1/user";
     private static final String urlAPILogin = "/v1/auth/login";
     private static final String urlAPIObras = "/v1/cat/obra";
+
     private ObrasListener obrasListener;
     private ArrayList<Obra> obras;
     private ArrayList<Leitor> leitores;
@@ -86,7 +89,6 @@ public class SingletonGestorBiblioteca {
         // instanciar o array de livros
         leitores = new ArrayList<>();
     }
-
 
     public ArrayList<Leitor> getLeitores(){
         leitores = saramagoBD.getAllLeitoresBD();
@@ -328,7 +330,10 @@ public class SingletonGestorBiblioteca {
         }else{
             SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
             String api = sharedPreferences.getString(API, "");
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, api + urlAPILeitores, null, new Response.Listener<JSONArray>() {
+            String token = sharedPreferences.getString(TOKEN, "");
+
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                    api + urlAPILeitores + queryParamAuth + token, null,new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     leitores = LeitoresJsonParser.parserJsonLeitores(response);
@@ -419,7 +424,9 @@ public class SingletonGestorBiblioteca {
         }else{
             SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
             String api = sharedPreferences.getString(API, "");
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, api + urlAPIUsers, null, new Response.Listener<JSONArray>() {
+            String token = sharedPreferences.getString(TOKEN, "");
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                    api + urlAPIUsers + queryParamAuth + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     users = UserJsonParser.parserJsonUser(response);
@@ -451,7 +458,9 @@ public class SingletonGestorBiblioteca {
         }else{
             SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
             String api = sharedPreferences.getString(API, "");
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, api + urlAPIObras, null, new Response.Listener<JSONArray>() {
+            String token = sharedPreferences.getString(TOKEN, "");
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                    api + urlAPIObras + queryParamAuth + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     obras = ObrasJsonParser.parserJsonObras(response);
