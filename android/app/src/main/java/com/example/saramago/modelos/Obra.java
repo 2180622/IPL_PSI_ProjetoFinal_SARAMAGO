@@ -28,6 +28,28 @@ public class Obra {
         this.Colecao_id = Colecao_id;
     }
 
+    @Override
+    public String toString() {
+        return "Obra{" +
+                "id=" + id +
+                ", ano=" + ano +
+                ", preco=" + preco +
+                ", Cdu_id=" + Cdu_id +
+                ", Colecao_id=" + Colecao_id +
+                ", imgCapa='" + imgCapa + '\'' +
+                ", tipoObra='" + tipoObra + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", resumo='" + resumo + '\'' +
+                ", editor='" + editor + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", local='" + local + '\'' +
+                ", edicao='" + edicao + '\'' +
+                ", assuntos='" + assuntos + '\'' +
+                ", dataRegisto='" + dataRegisto + '\'' +
+                ", dataAtualizado='" + dataAtualizado + '\'' +
+                '}';
+    }
+
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }

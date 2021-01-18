@@ -86,7 +86,6 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
                         obra.setPreco(Integer.parseInt(et_preco.getText().toString()));
                         obra.setCdu_id(Integer.parseInt(et_cdu_id.getText().toString()));
                         obra.setColecao_id(Integer.parseInt(et_colecao_id.getText().toString()));
-                        obra.setDataAtualizado(date.toString());
 
                         SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarObraAPI(obra, getApplicationContext());
                         setResult(RESULT_OK);
@@ -125,7 +124,6 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
         et_edicao.setText(obra.getEdicao());
         et_assuntos.setText(obra.getAssuntos());
         et_preco.setText(obra.getPreco());
-        et_dataRegisto.setText(obra.getDataRegisto());
         et_cdu_id.setText(obra.getCdu_id()+"");
         et_colecao_id.setText(obra.getColecao_id()+"");
     }

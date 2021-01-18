@@ -45,13 +45,9 @@ public class ListaObrasActivity extends AppCompatActivity implements SwipeRefres
         //para aparecer a seta <-- de voltar para tras
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         lvListaObras= findViewById(R.id.lvListaObras);  // list view das obras
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        FloatingActionButton fab = findViewById(R.id.floatingActionButtonAddObra);
         swipeRefreshLayout= findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
-
-        // swipeRefreshLayout.setOnRefreshListener();
-        SingletonGestorBiblioteca.getInstance(getApplicationContext()).setObrasListener(this); // vai buscar do singleton todas as obras no sistema
-        SingletonGestorBiblioteca.getInstance(getApplicationContext()).getAllObrasAPI(getApplicationContext()); // insere na listview todas as obras atraves do adaptador
 
         lvListaObras.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,6 +69,9 @@ public class ListaObrasActivity extends AppCompatActivity implements SwipeRefres
                 }
             }
         });
+        // swipeRefreshLayout.setOnRefreshListener();
+        SingletonGestorBiblioteca.getInstance(getApplicationContext()).setObrasListener(this); // vai buscar do singleton todas as obras no sistema
+        SingletonGestorBiblioteca.getInstance(getApplicationContext()).getAllObrasAPI(getApplicationContext()); // insere na listview todas as obras atraves do adaptador
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.saramago.adaptadores.catalogo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.saramago.R;
 import com.example.saramago.modelos.Obra;
+import com.example.saramago.vistas.MenuMainActivity;
 
 import java.util.ArrayList;
+
+import static com.example.saramago.vistas.MenuMainActivity.API;
 
 public class ListaObrasAdaptador extends BaseAdapter {
 
@@ -81,10 +85,12 @@ public class ListaObrasAdaptador extends BaseAdapter {
 
         public void update(Obra obra)
         {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+            String api = sharedPreferences.getString(API, "");
             tv_titulo_obra.setText(obra.getTitulo()+"");
             tv_tipo_obra.setText(obra.getTipoObra()+"");
             Glide.with(context)
-                    .load("http://192.168.1.77/IPL_PSI_ProjetoFinal2/saramago/backend/web/img/"+obra.getImgCapa())
+                    .load(api+"/img/"+obra.getImgCapa())
                     .placeholder(R.drawable.ic_undraw_books)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .fitCenter().into(iv_imgCapa);

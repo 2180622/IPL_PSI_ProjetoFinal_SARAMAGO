@@ -110,4 +110,5 @@ public class FichaObraFragment extends Fragment {
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .fitCenter().into(iv_imgCapa);
     }
+
 }

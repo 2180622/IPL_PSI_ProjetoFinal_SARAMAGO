@@ -159,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:ems="10"
+                android:ems="1"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -235,39 +235,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutDataRegistoAdd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutLocalAdd">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/dataRegistoAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data registado:"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_fo_dataRegistoAdd"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:ems="10"
-                android:inputType="date" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayoutAssuntosAdd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -275,7 +242,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutDataRegistoAdd">
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutLocalAdd">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -319,7 +286,7 @@
                 android:id="@+id/editorAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editor::"
+                android:text="Editor:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -467,7 +434,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSave"
+        android:id="@+id/fabSaveObra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
