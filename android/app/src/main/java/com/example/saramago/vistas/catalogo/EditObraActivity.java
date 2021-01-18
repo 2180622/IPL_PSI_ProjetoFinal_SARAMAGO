@@ -7,12 +7,14 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.saramago.R;
 import com.example.saramago.modelos.Obra;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.utils.ObrasJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -67,15 +69,32 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*leitor = new Leitor(nome.getText().toString(), R.drawable.ic_undraw_male_avatar, codBarras.getText().toString(),
+                /*obra = new Leitor(nome.getText().toString(), R.drawable.ic_undraw_male_avatar, codBarras.getText().toString(),
                         Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
                         Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email.getText().toString(),
                         email2.getText().toString(), date, date, 1, 1);*/
-                
+                if(ObrasJsonParser.isConnectionInternet(getApplicationContext())) {
+                    if (obra != null) {
+                        obra.setTitulo(et_titulo.getText().toString());
+                        obra.setResumo(et_resumo.getText().toString());
+                        obra.setEditor(et_editor.getText().toString());
+                        obra.setAno(Integer.parseInt(et_ano.getText().toString()));
+                        obra.setDescricao(et_descricao.getText().toString());
+                        obra.setLocal(et_local.getText().toString());
+                        obra.setEdicao(et_edicao.getText().toString());
+                        obra.setAssuntos(et_assuntos.getText().toString());
+                        obra.setPreco(Integer.parseInt(et_preco.getText().toString()));
+                        obra.setCdu_id(Integer.parseInt(et_cdu_id.getText().toString()));
+                        obra.setColecao_id(Integer.parseInt(et_colecao_id.getText().toString()));
+                        obra.setDataAtualizado(date.toString());
 
-                SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarObra(obra);
-                setResult(RESULT_OK);
-                finish();
+                        SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarObraAPI(obra, getApplicationContext());
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.semInternet, Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
     }

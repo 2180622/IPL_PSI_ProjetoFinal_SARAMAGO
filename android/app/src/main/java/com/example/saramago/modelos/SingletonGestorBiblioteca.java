@@ -592,15 +592,16 @@ public class SingletonGestorBiblioteca {
     public void adicionarObraAPI(final Obra obra, final Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         String api = sharedPreferences.getString(API, "");
+        String token = sharedPreferences.getString(TOKEN, "");
         // Linha ↓ debaixo ↓ chamada à api
-        StringRequest req = new StringRequest(Request.Method.POST, api + urlAPIObrasCreate, new Response.Listener<String>() {
+        StringRequest req = new StringRequest(Request.Method.POST, api + urlAPIObrasCreate + queryParamAuth + token, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Obra ob = ObrasJsonParser.parserJsonObra(response);
-                onUpdateListaObrasBD(ob,ADICIONAR_BD);
 
                 if(obrasListener != null){
                     obrasListener.onRefreshDetalhes();
+                    Obra ob = ObrasJsonParser.parserJsonObra(response);
+                    onUpdateListaObrasBD(ob,ADICIONAR_BD);
                 }
             }
         }, new Response.ErrorListener() {
@@ -646,6 +647,54 @@ public class SingletonGestorBiblioteca {
                 break;
         }
     }
+
+    public void editarObraAPI(final Obra obra, final Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        String api = sharedPreferences.getString(API, "");
+        String token = sharedPreferences.getString(TOKEN, "");
+        StringRequest req = new StringRequest(Request.Method.PUT, api + urlAPIObrasEdit + obra.getId() + queryParamAuth + token , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Obra ob=ObrasJsonParser.parserJsonObra(response);
+                onUpdateListaObrasBD(ob,EDITAR_BD);
+
+                if(obrasListener != null){
+                    obrasListener.onRefreshDetalhes();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("imgCapa",obra.getImgCapa());
+                params.put("titulo",obra.getTitulo());
+                params.put("resumo",obra.getResumo());
+                params.put("editor",obra.getEditor());
+                params.put("ano",obra.getAno()+"");
+                params.put("tipoObra",obra.getTipoObra());
+                params.put("descricao",obra.getDescricao());
+                params.put("local",obra.getLocal());
+                params.put("edicao",obra.getEdicao());
+                params.put("assuntos",obra.getAssuntos());
+                params.put("preco",obra.getPreco()+"");
+                params.put("dataRegisto",obra.getDataRegisto());
+                params.put("dataAtualizado",obra.getDataAtualizado());
+                params.put("Cdu_id",obra.getCdu_id()+"");
+                params.put("Colecao_id",obra.getColecao_id()+"");
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+
+
+
 
     //endregion
 

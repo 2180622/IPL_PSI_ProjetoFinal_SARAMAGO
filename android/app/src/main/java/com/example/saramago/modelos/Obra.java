@@ -7,12 +7,10 @@ public class Obra {
     private int id, ano, preco, Cdu_id, Colecao_id;
     private String imgCapa, tipoObra, titulo, resumo, editor, descricao, local, edicao, assuntos, dataRegisto, dataAtualizado;
 
-    private static int autoIncrement = 1;
-
     public Obra(int id, String imgCapa, int ano, int preco, int Cdu_id, int Colecao_id, String titulo, String resumo, String editor,
                 String tipoObra, String descricao, String local, String edicao,
                 String assuntos, String dataRegisto, String dataAtualizado) {
-        this.id = autoIncrement++;
+        this.id = id;
         this.imgCapa = imgCapa;
         this.ano = ano;
         this.preco = preco;

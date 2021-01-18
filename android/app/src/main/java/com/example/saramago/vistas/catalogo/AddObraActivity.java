@@ -3,16 +3,22 @@ package com.example.saramago.vistas.catalogo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.Spinner;
 
 import com.example.saramago.R;
+import com.example.saramago.modelos.Leitor;
 import com.example.saramago.modelos.Obra;
+import com.example.saramago.modelos.SaramagoBDHelper;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.utils.LeitoresJsonParser;
+import com.example.saramago.utils.ObrasJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -60,6 +66,8 @@ public class AddObraActivity extends AppCompatActivity implements DatePickerDial
         et_preco = findViewById(R.id.et_fo_precoAdd);
         FloatingActionButton fabAdd = findViewById(R.id.fabSave);
 
+        Toast.makeText(getApplicationContext(), R.string.FillAllFields, Toast.LENGTH_LONG).show();
+
 
         et_dataRegisto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,14 +79,18 @@ public class AddObraActivity extends AppCompatActivity implements DatePickerDial
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obra = new Obra(0, null, Integer.parseInt(et_ano.getText().toString()), Integer.parseInt(et_preco.getText().toString()), Integer.parseInt(et_cdu_id.getText().toString()), Integer.parseInt(et_colecao_id.getText().toString()), et_titulo.getText().toString(),
-                        et_resumo.getText().toString(), et_editor.getText().toString(), sp_tipoObra.getSelectedItem().toString(), et_descricao.getText().toString(),
-                        et_local.getText().toString(), et_edicao.getText().toString(), et_assuntos.getText().toString(),
-                        et_dataRegisto.getText().toString(), date.toString());
+                if(ObrasJsonParser.isConnectionInternet(getApplicationContext())){
+                    obra = new Obra(0, "noimage", Integer.parseInt(et_ano.getText().toString()), Integer.parseInt(et_preco.getText().toString()), Integer.parseInt(et_cdu_id.getText().toString()), Integer.parseInt(et_colecao_id.getText().toString()), et_titulo.getText().toString(),
+                            et_resumo.getText().toString(), et_editor.getText().toString(), sp_tipoObra.getSelectedItem().toString(), et_descricao.getText().toString(),
+                            et_local.getText().toString(), et_edicao.getText().toString(), et_assuntos.getText().toString(),
+                            et_dataRegisto.getText().toString(), date.toString());
 
-                SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarObra(obra);
-                setResult(RESULT_OK);
-                finish();
+                    SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarObraAPI(obra, getApplicationContext());
+                    setResult(RESULT_OK);
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), R.string.semInternet, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
