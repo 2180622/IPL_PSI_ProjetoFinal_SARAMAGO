@@ -253,7 +253,7 @@
                 android:id="@+id/dataRegistoEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data registado:"
+                android:text="Data registo:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -319,7 +319,7 @@
                 android:id="@+id/editorEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editor::"
+                android:text="Editor:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

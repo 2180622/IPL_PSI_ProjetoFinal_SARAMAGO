@@ -3,6 +3,7 @@ package com.example.saramago.vistas.catalogo;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,6 +23,7 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
     private EditText et_titulo, et_resumo, et_editor, et_ano, et_descricao, et_local, et_edicao, et_assuntos, et_dataRegisto, et_cdu_id, et_colecao_id, et_preco;
     private Obra obra;
     private Spinner sp_tipoObra;
+
     private final Date date = Calendar.getInstance().getTime();
 
     @Override
@@ -30,7 +32,14 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
         setContentView(R.layout.activity_edit_obra);
 
         et_titulo = findViewById(R.id.et_fo_tituloEdit);
-        sp_tipoObra = findViewById(R.id.sp_fo_tipoObraEdit);
+        sp_tipoObra = (Spinner) findViewById(R.id.sp_fo_tipoObraEdit);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.tipo_obra_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        sp_tipoObra.setAdapter(adapter);
         et_resumo = findViewById(R.id.et_fo_resumoEdit);
         et_editor = findViewById(R.id.et_fo_editorEdit);
         et_ano = findViewById(R.id.et_fo_anoEdit);

@@ -261,11 +261,11 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 LOCAL+" TEXT,"+
                 EDITOR+" TEXT, "+
                 ASSUNTOS+" TEXT, "+
-                PRECO+" TEXT, "+
+                PRECO+" INTEGER, "+
                 DATA_REGISTO+" DATE NOT NULL, "+
                 DATA_ATUALIZADO+" DATE, "+
-                CDU_ID +" INT NOT NULL, "+
-                COLECAO_ID +" INT,"+
+                CDU_ID +" INTEGER NOT NULL, "+
+                COLECAO_ID +" INTEGER,"+
                 "FOREIGN KEY(CDU_ID) REFERENCES TABLE_CDU(ID_CDU), " +
                 "FOREIGN KEY(COLECAO_ID) REFERENCES TABLE_COLECAO(ID_COLECAO));";
         db.execSQL(createTableObra);
@@ -514,8 +514,38 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
         this.db.insert(TABLE_OBRA,null,values);
     }
+
+    public boolean editarObraBD(Obra obra) {
+        ContentValues values=new ContentValues();
+        values.put(ID_OBRA,obra.getId());
+        values.put(IMG_CAPA,obra.getImgCapa());
+        values.put(TITULO,obra.getTitulo());
+        values.put(RESUMO,obra.getResumo());
+        values.put(EDITOR,obra.getEditor());
+        values.put(ANO,obra.getAno());
+        values.put(TIPO_OBRA,obra.getTipoObra());
+        values.put(DESCRICAO,obra.getDescricao());
+        values.put(LOCAL,obra.getLocal());
+        values.put(EDICAO,obra.getEdicao());
+        values.put(ASSUNTOS,obra.getAssuntos());
+        values.put(PRECO,obra.getPreco());
+        values.put(CDU_ID,obra.getCdu_id());
+        values.put(DATA_REGISTO,obra.getDataRegisto());
+        values.put(DATA_ATUALIZADO,obra.getDataAtualizado());
+
+        int nRows=this.db.update(TABLE_OBRA,values, "id = ?", new String[]{obra.getId()+""});
+
+        return (nRows>0);
+    }
+
+
     public void removerAllObrasBD(){
         this.db.delete(TABLE_OBRA,null,null);
+    }
+
+    public boolean removerObraBD(int id){
+        int nRows=this.db.delete(TABLE_OBRA,"id = ?", new String[]{id+""});
+        return (nRows>0);
     }
 
     public ArrayList<Obra> getAllObrasBD(){

@@ -13,5 +13,9 @@
     <string name="etUsernameInvalido">Username Inválido</string>
     <string name="invalidUrl">URL inválido</string>
     <string name="etPasswordInvalida">Password invalida!</string>
-    <string name="data_registo">data_registo</string>
+    <string-array name="tipo_obra_array">
+        <item>materialAv</item>
+        <item>pubPeriodica</item>
+        <item>monografia</item>
+    </string-array>
 </resources>

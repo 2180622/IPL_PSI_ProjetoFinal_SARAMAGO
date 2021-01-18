@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,13 +28,25 @@ public class AddObraActivity extends AppCompatActivity implements DatePickerDial
     private Spinner sp_tipoObra;
     private final Date date = Calendar.getInstance().getTime();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_obra);
 
         et_titulo = findViewById(R.id.et_fo_tituloAdd);
-        sp_tipoObra = findViewById(R.id.sp_fo_tipoObraAdd);
+        sp_tipoObra = (Spinner) findViewById(R.id.sp_fo_tipoObraAdd);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.tipo_obra_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        sp_tipoObra.setAdapter(adapter);
+
+
+
         et_resumo = findViewById(R.id.et_fo_resumoAdd);
         et_editor = findViewById(R.id.et_fo_editorAdd);
         et_ano = findViewById(R.id.et_fo_anoAdd);

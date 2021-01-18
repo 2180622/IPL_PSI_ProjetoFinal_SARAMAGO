@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.saramago.R;
 import com.example.saramago.modelos.Obra;
 
@@ -67,13 +69,13 @@ public class ListaObrasAdaptador extends BaseAdapter {
     private class ViewHolderLista
     {
         private TextView tv_titulo_obra, tv_tipo_obra;
-        private ImageView imgIconObra;
+        private ImageView iv_imgCapa;
 
         public ViewHolderLista(View view)
         {
             tv_titulo_obra = view.findViewById(R.id.tv_titulo_obra);
             tv_tipo_obra = view.findViewById(R.id.tv_tipo_obra);
-            imgIconObra = view.findViewById(R.id.imgIconObra);
+            iv_imgCapa = view.findViewById(R.id.imgCapa);
 
         }
 
@@ -81,7 +83,11 @@ public class ListaObrasAdaptador extends BaseAdapter {
         {
             tv_titulo_obra.setText(obra.getTitulo()+"");
             tv_tipo_obra.setText(obra.getTipoObra()+"");
-            imgIconObra.setImageResource(R.drawable.ic_undraw_books);
+            Glide.with(context)
+                    .load("http://192.168.1.77/IPL_PSI_ProjetoFinal2/saramago/backend/web/img/"+obra.getImgCapa())
+                    .placeholder(R.drawable.ic_undraw_books)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .fitCenter().into(iv_imgCapa);
         }
     }
 }

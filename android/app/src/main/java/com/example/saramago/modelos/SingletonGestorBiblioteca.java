@@ -43,6 +43,8 @@ public class SingletonGestorBiblioteca {
     private static final String queryParamAuth = "?access-token=";
     private static final String urlAPILeitores = "/v1/leitor";
     private static final String urlAPILeitoresCreate = "/v1/leitor/create";
+    private static final String urlAPIObrasCreate = "/v1/cat/obra/create";
+    private static final String urlAPIObrasEdit = "/v1/cat/obra/edit/";
     private static final String urlAPIUsers = "/v1/user";
     private static final String urlAPILogin = "/v1/auth/login";
     private static final String urlAPIObras = "/v1/cat/obra";
@@ -154,7 +156,7 @@ public class SingletonGestorBiblioteca {
 
     //region catalogo CRUD
     private void gerarObras(){
-        // instanciar o array de livros
+        // instanciar o array de obras
         obras = new ArrayList<>();
     }
     public ArrayList<Obra> getObras(){
@@ -176,24 +178,24 @@ public class SingletonGestorBiblioteca {
         obras.add(obra);
     }
     public void editarObra(Obra obra){
-        Obra l = getObra(obra.getId());
+        Obra ob = getObra(obra.getId());
 
         if(obra != null){
-            l.setImgCapa(obra.getImgCapa());
-            l.setTitulo(obra.getTitulo());
-            l.setResumo(obra.getResumo());
-            l.setEditor(obra.getEditor());
-            l.setAno(obra.getAno());
-            l.setTipoObra(obra.getTipoObra());
-            l.setDescricao(obra.getDescricao());
-            l.setLocal(obra.getLocal());
-            l.setEdicao(obra.getEdicao());
-            l.setAssuntos(obra.getAssuntos());
-            l.setPreco(obra.getPreco());
-            l.setDataRegisto(obra.getDataRegisto());
-            l.setDataAtualizado(obra.getDataAtualizado());
-            l.setCdu_id(obra.getCdu_id());
-            l.setColecao_id(obra.getColecao_id());
+            ob.setImgCapa(obra.getImgCapa());
+            ob.setTitulo(obra.getTitulo());
+            ob.setResumo(obra.getResumo());
+            ob.setEditor(obra.getEditor());
+            ob.setAno(obra.getAno());
+            ob.setTipoObra(obra.getTipoObra());
+            ob.setDescricao(obra.getDescricao());
+            ob.setLocal(obra.getLocal());
+            ob.setEdicao(obra.getEdicao());
+            ob.setAssuntos(obra.getAssuntos());
+            ob.setPreco(obra.getPreco());
+            ob.setDataRegisto(obra.getDataRegisto());
+            ob.setDataAtualizado(obra.getDataAtualizado());
+            ob.setCdu_id(obra.getCdu_id());
+            ob.setColecao_id(obra.getColecao_id());
         }
     }
     public void removerObra(int id){
@@ -264,6 +266,9 @@ public class SingletonGestorBiblioteca {
         for (User user : users)
             adicionarUserBD(user);
     }
+
+
+
     //endregion
 
     //region BD obra
@@ -276,6 +281,39 @@ public class SingletonGestorBiblioteca {
         saramagoBD.removerAllObrasBD();
         for (Obra obra : obras)
             adicionarObraBD(obra);
+    }
+
+    public void removerObraBD(int id) {
+        Obra obra = getObra(id);
+
+        if (obra != null)
+            saramagoBD.removerObraBD(id);
+    }
+
+    public void editarObraBD(Obra obra) {
+        Obra ob = getObra(obra.getId());
+
+        if (ob != null) {
+            if (saramagoBD.editarObraBD(obra)) {
+                ob.setImgCapa(obra.getImgCapa());
+                ob.setTitulo(obra.getTitulo());
+                ob.setResumo(obra.getResumo());
+                ob.setEditor(obra.getEditor());
+                ob.setAno(obra.getAno());
+                ob.setTipoObra(obra.getTipoObra());
+                ob.setDescricao(obra.getDescricao());
+                ob.setLocal(obra.getLocal());
+                ob.setEdicao(obra.getEdicao());
+                ob.setAssuntos(obra.getAssuntos());
+                ob.setPreco(obra.getPreco());
+                ob.setDataRegisto(obra.getDataRegisto());
+                ob.setDataAtualizado(obra.getDataAtualizado());
+                ob.setCdu_id(obra.getCdu_id());
+                ob.setColecao_id(obra.getColecao_id());
+            }
+
+        }
+
     }
 
     //endregion
@@ -478,6 +516,64 @@ public class SingletonGestorBiblioteca {
                 }
             });
             volleyQueue.add(request);
+        }
+    }
+
+    public void adicionarObraAPI(final Obra obra, final Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        String api = sharedPreferences.getString(API, "");
+        // Linha ↓ debaixo ↓ chamada à api
+        StringRequest req = new StringRequest(Request.Method.POST, api + urlAPIObrasCreate, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Obra ob = ObrasJsonParser.parserJsonObra(response);
+                onUpdateListaObrasBD(ob,ADICIONAR_BD);
+
+                if(obrasListener != null){
+                    obrasListener.onRefreshDetalhes();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("imgCapa",obra.getImgCapa());
+                params.put("titulo",obra.getTitulo());
+                params.put("resumo",obra.getResumo());
+                params.put("editor",obra.getEditor());
+                params.put("ano",obra.getAno()+"");
+                params.put("tipoObra",obra.getTipoObra());
+                params.put("descricao",obra.getDescricao());
+                params.put("local",obra.getLocal());
+                params.put("edicao",obra.getEdicao());
+                params.put("assuntos",obra.getAssuntos());
+                params.put("preco",obra.getPreco()+"");
+                params.put("dataRegisto",obra.getDataRegisto());
+                params.put("dataAtualizado",obra.getDataAtualizado());
+                params.put("Cdu_id",obra.getCdu_id()+"");
+                params.put("Colecao_id",obra.getColecao_id()+"");
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    private void onUpdateListaObrasBD( Obra obra, int operacao){
+        switch (operacao){
+            case ADICIONAR_BD:
+                adicionarObraBD(obra);
+                break;
+            case EDITAR_BD:
+                editarObraBD(obra);
+                break;
+            case REMOVER_BD:
+                removerObraBD(obra.getId());
+                break;
         }
     }
 
