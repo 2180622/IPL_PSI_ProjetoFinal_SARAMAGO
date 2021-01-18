@@ -120,8 +120,8 @@ class LeitorController extends Controller
                 $user = User::findOne($mUpdate->user_id);
                 return [
                     $mUpdate,
-                    $user->email,
-                    $user->username,
+                    "email"=>$user->email,
+                    "username"=> $user->username,
                     "success"=> true,
                     "status"=>200,
                 ];
