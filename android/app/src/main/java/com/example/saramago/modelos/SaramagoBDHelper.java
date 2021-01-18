@@ -45,6 +45,10 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String VERIFICATION_TOKEN = "verification_token";
     //endregion
 
+    //region Declaration leitoruser
+    private static final String TABLE_LEITOR_USER = "leitoruser";
+    //endregion
+
     //region Declaration leitor
     private static final String TABLE_LEITOR = "leitor";
     private static final String ID_LEITOR="id";
@@ -202,11 +206,12 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         db.execSQL(createTableUser);
         //endregion
 
-        //region Create Leitor Table
-        String createTableLeitor = "CREATE TABLE " + TABLE_LEITOR + " ( "+
+        //region Create LeitorUser Table
+        String createTableLeitorUser = "CREATE TABLE " + TABLE_LEITOR_USER + " ( "+
                 ID_LEITOR+" INTEGER PRIMARY KEY, "+
-                COD_BARRAS+" TEXT NOT NULL, "+
                 NOME+" TEXT NOT NULL, "+
+                USERNAME+" TEXT NOT NULL, "+
+                COD_BARRAS+" TEXT NOT NULL, "+
                 NIF+" TEXT NOT NULL, "+
                 DOC_ID+" TEXT NOT NULL, "+
                 DATA_NASC+" TEXT NOT NULL, "+
@@ -215,17 +220,15 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 COD_POSTAL+" INTEGER NOT NULL, "+
                 TELEMOVEL+" INTEGER NOT NULL, "+
                 TELEFONE+" INTEGER, "+
+                EMAIL+" TEXT NOT NULL, "+
                 MAIL2+" TEXT, "+
-                NOTA_INTERNA+" TEXT, "+
                 DATA_REGISTO+" TEXT NOT NULL, "+
-                DATA_ATUALIZADO+" TEXT, "+
+                DATA_ATUALIZADO+" TEXT NOT NULL, "+
                 BIBLIOTECA_ID+" INTEGER NOT NULL, "+
-                TIPOLEITOR_ID+" INTEGER NOT NULL, "+
-                USER_ID+" INTEGER NOT NULL, " +
+                TIPOLEITOR_ID+" INTEGER NOT NULL, " +
                 "FOREIGN KEY(BIBLIOTECA_ID) REFERENCES TABLE_BIBLIOTECA(ID_BIBLIOTECA), " +
-                "FOREIGN KEY(TIPOLEITOR_ID) REFERENCES TABLE_TIPOLEITOR(ID_TIPOLEITOR), " +
-                "FOREIGN KEY(USER_ID) REFERENCES TABLE_USER(ID_USER))";
-        db.execSQL(createTableLeitor);
+                "FOREIGN KEY(TIPOLEITOR_ID) REFERENCES TABLE_TIPOLEITOR(ID_TIPOLEITOR))";
+        db.execSQL(createTableLeitorUser);
         //endregion
 
         //region Create Cdu Table
@@ -277,10 +280,6 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 ID_BIBLIOTECA+" INTEGER PRIMARY KEY, "+
                 COD_BIB+" TEXT NOT NULL, "+
                 NOME+" TEXT NOT NULL, "+
-                NOTASOPAC+" TEXT, "+
-                MORADA+" TEXT, "+
-                LOCALIDADE+" TEXT, "+
-                COD_POSTAL+" INTEGER, "+
                 LEVANTAMENTO+" INTEGER NOT NULL );";
         db.execSQL(createTableBiblioteca);
         //endregion
@@ -292,8 +291,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 TIPO+" TEXT NOT NULL, "+
                 NITENS+" INTEGER NOT NULL, "+
                 PRAZODIAS+" INTEGER NOT NULL, "+
-                REGISTOOPAC+" INTEGER NOT NULL, "+
-                NOTAS+" TEXT NOT NULL );";
+                REGISTOOPAC+" INTEGER NOT NULL);";
         db.execSQL(createTableTipoLeitor);
         //endregion
 
@@ -360,7 +358,6 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
         //region Create Config Table
         String createTableConfig = "CREATE TABLE " + TABLE_CONFIG + " ( "+
-                ID_CONFIG+" INTEGER PRIMARY KEY, "+
                 KEY_CONFIG + " TEXT NOT NULL, "+
                 VALUE_CONFIG + " TEXT NOT NULL ); ";
         db.execSQL(createTableConfig);
@@ -378,6 +375,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         ContentValues values=new ContentValues();
         values.put(ID_LEITOR, leitor.getId());
         values.put(NOME, leitor.getNome());
+        values.put(USERNAME, leitor.getUsername());
         values.put(COD_BARRAS, leitor.getCodBarras());
         values.put(NIF,leitor.getNif());
         values.put(DOC_ID,leitor.getDocId());
@@ -387,19 +385,20 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         values.put(COD_POSTAL,leitor.getCodPostal());
         values.put(TELEMOVEL,leitor.getTelemovel());
         values.put(TELEFONE,leitor.getTelefone());
+        values.put(EMAIL,leitor.getEmail());
         values.put(MAIL2,leitor.getMail2());
         values.put(DATA_REGISTO,leitor.getDataRegisto());
         values.put(DATA_ATUALIZADO,leitor.getDataAtualizado());
         values.put(BIBLIOTECA_ID,leitor.getBiblioteca_id());
         values.put(TIPOLEITOR_ID,leitor.getTipoLeitor_Id());
-        values.put(USER_ID,leitor.getUser_id());
 
-        this.db.insert(TABLE_LEITOR,null,values);
+        this.db.insert(TABLE_LEITOR_USER,null,values);
     }
     public boolean editarLeitorBD(Leitor leitor) {
         ContentValues values=new ContentValues();
         values.put(ID_LEITOR, leitor.getId());
         values.put(NOME, leitor.getNome());
+        values.put(USERNAME, leitor.getUsername());
         values.put(COD_BARRAS, leitor.getCodBarras());
         values.put(NIF,leitor.getNif());
         values.put(DOC_ID,leitor.getDocId());
@@ -409,44 +408,44 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         values.put(COD_POSTAL,leitor.getCodPostal());
         values.put(TELEMOVEL,leitor.getTelemovel());
         values.put(TELEFONE,leitor.getTelefone());
+        values.put(EMAIL,leitor.getEmail());
         values.put(MAIL2,leitor.getMail2());
         values.put(DATA_REGISTO,leitor.getDataRegisto());
         values.put(DATA_ATUALIZADO,leitor.getDataAtualizado());
         values.put(BIBLIOTECA_ID,leitor.getBiblioteca_id());
         values.put(TIPOLEITOR_ID,leitor.getTipoLeitor_Id());
-        values.put(USER_ID,leitor.getUser_id());
 
-        int nRows=this.db.update(TABLE_LEITOR,values, "id = ?", new String[]{leitor.getId()+""});
+        int nRows=this.db.update(TABLE_LEITOR_USER,values, "id = ?", new String[]{leitor.getId()+""});
 
         return (nRows>0);
     }
 
     public void removerAllLeitoresBD(){
-        this.db.delete(TABLE_LEITOR,null,null);
+        this.db.delete(TABLE_LEITOR_USER,null,null);
     }
 
     public boolean removerLeitorBD(int id){
-        int nRows=this.db.delete(TABLE_USER,"id = ?", new String[]{id+""});
+        int nRows=this.db.delete(TABLE_LEITOR_USER,"id = ?", new String[]{id+""});
         return (nRows>0);
     }
 
     public ArrayList<Leitor> getAllLeitoresBD(){
         ArrayList<Leitor> leitores =new ArrayList<>();
-        Cursor cursor=this.db.query(TABLE_LEITOR,new String[]{ID_LEITOR,NOME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID,USER_ID},
+        Cursor cursor=this.db.query(TABLE_LEITOR,new String[]{ID_LEITOR,NOME,USERNAME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID},
                 null,null,null,null,null);
 
         if(cursor.moveToFirst()){
             do{
                 Leitor auxLeitor =new Leitor(cursor.getInt(0),
                         cursor.getString(1), cursor.getString(2),
-                        cursor.getInt(3),cursor.getString(4),
-                        cursor.getString(5),cursor.getString(6),
-                        cursor.getString(7),cursor.getInt(8),
-                        cursor.getInt(9),cursor.getInt(10),
-                        cursor.getString(11),cursor.getString(12),
-                        cursor.getString(13),cursor.getInt(15),
+                        cursor.getString(3),
+                        cursor.getInt(4),cursor.getString(5),
+                        cursor.getString(6),cursor.getString(7),
+                        cursor.getString(8),cursor.getInt(9),
+                        cursor.getInt(10),cursor.getInt(11),
+                        cursor.getString(12),cursor.getString(13),
+                        cursor.getString(14),cursor.getString(15),
                         cursor.getInt(16),cursor.getInt(17));
-                // auxLivro.setId(cursor.getInt(0));
                 leitores.add(auxLeitor);
             }while(cursor.moveToNext());
         }

@@ -4,15 +4,15 @@ import java.util.Date;
 
 public class Leitor {
 
-    private int id, nif, codPostal, telemovel, telefone, Biblioteca_id, TipoLeitor_id, user_id;
-    private String nome, dataNasc, codBarras, DocId, morada, localidade,email, mail2, notaInterna, dataRegisto, dataAtualizado;
-    private static int autoIncrement = 1;
+    private int id, nif, codPostal, telemovel, telefone, Biblioteca_id, TipoLeitor_id;
+    private String nome, username, dataNasc, codBarras, DocId, morada, localidade, email, mail2, notaInterna, dataRegisto, dataAtualizado;
 
-    public Leitor(int id, String nome, String codBarras, int nif, String DocId, String dataNasc, String morada,
-                  String localidade, int codPostal, int telemovel, int telefone,
-                  String mail2, String dataRegisto, String dataAtualizado, int Biblioteca_id, int TipoLeitor_id, int user_id){
+    public Leitor(int id, String nome, String username, String codBarras, int nif, String DocId, String dataNasc, String morada,
+                  String localidade, int codPostal, int telemovel, int telefone, String email, String mail2,
+                  String dataRegisto, String dataAtualizado, int Biblioteca_id, int TipoLeitor_id){
 
             this.id = id;
+            this.username = username;
             this.nome = nome;
             this.codBarras = codBarras;
             this.nif = nif;
@@ -23,14 +23,12 @@ public class Leitor {
             this.codPostal = codPostal;
             this.telemovel = telemovel;
             this.telefone = telefone;
+            this.email = email;
             this.mail2 = mail2;
             this.dataRegisto = dataRegisto;
             this.dataAtualizado = dataAtualizado;
             this.Biblioteca_id = Biblioteca_id;
             this.TipoLeitor_id = TipoLeitor_id;
-            this.user_id = user_id;
-            // TODO: Tipo de Leitor é um id de outra tabela mas devido ao erro atual
-            //  vou ter que passar um numero para conseguir listar sem dar erro
     }
 
     public int getId() {
@@ -177,12 +175,20 @@ public class Leitor {
         TipoLeitor_id = tipoLeitor_id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**

@@ -77,18 +77,9 @@ public class SingletonGestorBiblioteca {
         saramagoBD = new SaramagoBDHelper(context);
     }
 
-    public User getUser_id(Leitor leitor, int leitor_id){
-        leitor.setId(leitor_id);
-        for (User user: users){
-            if(user.getId() == leitor.getUser_id()){
-                return user;
-            }
-        }
-        return null;
-    }
     //region Leitor CRUD
     private void gerarLeitores() {
-        // instanciar o array de livros
+        // instanciar o array de leitores
         leitores = new ArrayList<>();
     }
 
@@ -249,7 +240,6 @@ public class SingletonGestorBiblioteca {
                 l.setDataAtualizado(leitor.getDataAtualizado());
                 l.setBiblioteca_id(leitor.getBiblioteca_id());
                 l.setTipoLeitor_Id(leitor.getTipoLeitor_id());
-                l.setUser_id(leitor.getUser_id());
             }
         }
 
@@ -416,6 +406,7 @@ public class SingletonGestorBiblioteca {
             protected Map<String, String> getParams() {
                 Map<String,String> params=new HashMap<>();
                 params.put("nome",leitor.getNome());
+                params.put("username", leitor.getUsername());
                 params.put("codBarras",leitor.getCodBarras());
                 params.put("nif",leitor.getNif()+"");
                 params.put("docId",leitor.getDocId());
@@ -425,12 +416,12 @@ public class SingletonGestorBiblioteca {
                 params.put("codPostal",leitor.getCodPostal()+"");
                 params.put("telemovel",leitor.getTelemovel()+"");
                 params.put("telefone",leitor.getTelefone()+"");
+                params.put("email",leitor.getEmail());
                 params.put("mail2",leitor.getMail2());
                 params.put("dataRegisto",leitor.getDataRegisto());
                 params.put("dataAtualizado",leitor.getDataAtualizado());
                 params.put("Biblioteca_id",leitor.getBiblioteca_id()+"");
                 params.put("TipoLeitor_id",leitor.getTipoLeitor_Id()+"");
-                params.put("User_id",leitor.getUser_id()+"");
                 return params;
             }
         };

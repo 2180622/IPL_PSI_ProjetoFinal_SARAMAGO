@@ -69,8 +69,6 @@ public class FichaLeitorFragment extends Fragment {
             carregarConteudo();
         }
 
-        nif.setText(leitor.getUser_id()+"");
-
         return view;
     }
 
@@ -85,7 +83,7 @@ public class FichaLeitorFragment extends Fragment {
         codPostal.setText(leitor.getCodPostal()+"");
         telemovel.setText(leitor.getTelemovel()+"");
         telefone.setText(leitor.getTelefone()+"");
-        //email.setText(user.getEmail());
+        email.setText(leitor.getEmail());
         email2.setText(leitor.getMail2());
         dataRegisto.setText(leitor.getDataRegisto()+"");
         dataAtualizado.setText(leitor.getDataAtualizado()+"");

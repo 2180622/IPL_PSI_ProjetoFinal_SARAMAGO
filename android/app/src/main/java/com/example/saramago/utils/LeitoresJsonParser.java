@@ -31,6 +31,7 @@ public class LeitoresJsonParser {
                 }
                 int id = leitor.getInt("id");
                 String nome = leitor.getString("nome");
+                String username = leitor.getString("username");
                 String codBarras = leitor.getString("codBarras");
                 int nif = leitor.getInt("nif");
                 String DocId = leitor.getString("docId");
@@ -39,13 +40,13 @@ public class LeitoresJsonParser {
                 String localidade = leitor.getString("localidade");
                 int codPostal = leitor.getInt("codPostal");
                 int telemovel = leitor.getInt("telemovel");
+                String email = leitor.getString("email");
                 String dataRegisto = leitor.getString("dataRegisto");
                 int Biblioteca_id = leitor.getInt("Biblioteca_id");
                 int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
-                int user_id = leitor.getInt("user_id");
 
-                Leitor auxLeitor = new Leitor(id, nome, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
-                        telefone, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
+                Leitor auxLeitor = new Leitor(id, nome, username, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
+                        telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
                 leitores.add(auxLeitor);
             }
         } catch (JSONException e) {
@@ -61,6 +62,7 @@ public class LeitoresJsonParser {
             JSONObject leitor = new JSONObject(response);
             int id = leitor.getInt("id");
             String nome = leitor.getString("nome");
+            String username = leitor.getString("username");
             String codBarras = leitor.getString("codBarras");
             int nif = leitor.getInt("nif");
             String DocId = leitor.getString("docId");
@@ -70,16 +72,15 @@ public class LeitoresJsonParser {
             int codPostal = leitor.getInt("codPostal");
             int telemovel = leitor.getInt("telemovel");
             int telefone = leitor.getInt("telefone");
+            String email = leitor.getString("email");
             String mail2 = leitor.getString("mail2");
             String dataRegisto = leitor.getString("dataRegisto");
             String dataAtualizado = leitor.getString("dataAtualizado");
             int Biblioteca_id = leitor.getInt("Biblioteca_id");
             int TipoLeitor_id = leitor.getInt("TipoLeitor_id");
-            int user_id = leitor.getInt("user_id");
 
-
-            auxLeitor = new Leitor(id, nome, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
-                    telefone, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id, user_id);
+            auxLeitor = new Leitor(id, nome, username, codBarras, nif, DocId, dataNasc, morada, localidade, codPostal, telemovel,
+                    telefone, email, mail2, dataRegisto, dataAtualizado, Biblioteca_id, TipoLeitor_id);
 
         } catch (JSONException e) {
             e.printStackTrace();

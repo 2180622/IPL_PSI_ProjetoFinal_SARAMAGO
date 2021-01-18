@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class AddLeitorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private EditText nome, codBarras, nif, docId, dtaNascimento, morada, localidade, codPostal, telemovel, telefone, email, email2;
+    private EditText nome, username, codBarras, nif, docId, dtaNascimento, morada, localidade, codPostal, telemovel, telefone, email, email2;
     private Leitor leitor;
     private final Date date = Calendar.getInstance().getTime();
 
@@ -31,6 +31,7 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
         setContentView(R.layout.activity_add_leitor);
 
         nome = findViewById(R.id.et_fl_nome);
+        username = findViewById(R.id.et_fl_username);
         codBarras = findViewById(R.id.et_fl_codBarras);
         nif = findViewById(R.id.et_fl_nif);
         docId = findViewById(R.id.et_fl_docId);
@@ -55,10 +56,10 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                leitor = new Leitor(0, nome.getText().toString(), codBarras.getText().toString(),
+                leitor = new Leitor(0, nome.getText().toString(), username.getText().toString(), codBarras.getText().toString(),
                         Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
-                        Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email2.getText().toString(),
-                        date.toString(), date.toString(), 1, 1, 0);
+                        Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()),
+                        email.getText().toString(), email2.getText().toString(), date.toString(), date.toString(), 1, 1);
 
                 SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitorAPI(leitor, getApplicationContext());
                 setResult(RESULT_OK);
