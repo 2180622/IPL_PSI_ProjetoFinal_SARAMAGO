@@ -21,9 +21,9 @@ class LeitorController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        /*$behaviors['authenticator'] = [
+        $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
-        ];*/
+        ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
             'formats' => [
@@ -88,7 +88,7 @@ class LeitorController extends Controller
             {
                 $user = User::findOne($mUpdate->user_id);
                 return [
-                    "leitor"=>[$mUpdate,$user],
+                    $mUpdate,$user,
                     "success"=> true,
                     "status"=>200,
                 ];
@@ -96,10 +96,9 @@ class LeitorController extends Controller
             } else {
                 return $errors = $model->errors;
             }
-        }else
-            {
-                return "Leitor não encontrado!";
-            }
+        }
+
+        throw new HttpException('404', 'Leitor não encontrado!');
     }
 
     public function actionDelete($id){
@@ -117,10 +116,7 @@ class LeitorController extends Controller
             "status"=>200,
             ];
         }
-        else
-        {
-            return "Leitor não encontrado!";
-        }
+        throw new HttpException('404', 'Leitor não encontrado!');
     }
 
     public function actionTotal(){

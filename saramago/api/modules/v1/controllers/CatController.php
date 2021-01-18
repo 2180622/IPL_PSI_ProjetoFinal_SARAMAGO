@@ -10,6 +10,7 @@ use yii\rest\ActiveController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
+use yii\web\HttpException;
 use yii\web\Response;
 
 /**
@@ -25,9 +26,9 @@ class CatController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        /*$behaviors['authenticator'] = [
+        $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
-        ];*/
+        ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
             'formats' => [
@@ -44,40 +45,58 @@ class CatController extends Controller
         return $obras;
     }
 
-    public function actionObratotal(){
+    public function actionObraTotal()
+    {
         $model = new $this->modelClassObra;
         $obras_count = $model::find()->all();
 
         return count($obras_count);
     }
 
-    public function actionObracreate(){ //FIXME
-        $obra = new ObraForm();
+    public function actionObraCreate()
+    {
+        $model = new ObraForm();
+        $model->attributes = Yii::$app->request->post();
+        if ($mCreate = $model->create())
+        {
+            return $mCreate;
 
-        $obra->attributes = Yii::$app->request->post();
-        $create = $obra->save();
+        } else {
+            return $errors = $model->errors;
+        }
 
-        return ['create' => $create];
     }
 
-    public function actionUpdateObra($id){ //FIXME
-        $obra = Obra::findOne($id);
-        $obra->attributes=Yii::$app->request->post();
+    public function actionObraUpdate($id)
+    {
+        if($model = Obra::findOne($id))
+        {
+            $model = Obra::findOne($id);
+            $model->attributes = Yii::$app->request->post();
 
-        $update = $obra->save();
+            if($mUpdate = $model->update())
+            {
+                return ["success"=> true, "status"=>200];
 
-        return $update;
+            }else
+                {
+                return $errors = $model->errors;
+            }
+        }
+
+        throw new HttpException('404', "Obra não encontrada.");
     }
 
-    public function actionDeleteObra($id){ //FIXME
+    public function actionObraDelete($id)
+    {
+        if($obra = Obra::findOne($id))
+        {
+            $delete = $obra->delete();
 
-        $obra = Obra::findOne($id);
-        $obra->attributes=Yii::$app->request->post();
+            return $delete;
 
-        $delete = $obra->delete();
-
-        return $delete;
+        }
+        throw new HttpException('404', "Obra não encontrada.");
     }
-
 
 }

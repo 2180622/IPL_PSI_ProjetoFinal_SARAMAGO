@@ -98,7 +98,6 @@ return [
                         'PUT update_user/{id}'=> 'update_user'
                     ],
 
-
                 ],
                 //Leitores
                 [
@@ -122,16 +121,16 @@ return [
                     'pluralize'=> false,
                     'extraPatterns' => [
                         'GET obra' => 'obra',
-                        'GET obratotal' => 'obratotal',
-                        'GET autors' => 'autors',
-                        'GET autortotal' => 'autortotal',
-                        'POST obra/create' => 'obracreate', //FIXME
-                        'PUT update_obra/{id}' => 'update_obra',
-                        'POST delete_obra/{id}' => 'delete_obra',
-                        'POST create_autor' => 'create_autor',
-                        'PUT update_autor/{id}' => 'update_autor',
-                        'POST delete_autor/{id}' => 'delete_autor'
+                        'POST obra/create' => 'obra-create',
+                        'PUT obra/update/{id}'=>'obra-update',
+                        'DELETE obra/delete/{id}'=>'obra-delete',
+                        'GET obra/total' => 'obra-total',
 
+                        'GET autor' => 'autor',
+                        'GET autor/total' => 'autor-total',
+                        'POST autor/create' => 'autor-create',
+                        'PUT autor/update/{id}' => 'autor-update',
+                        'DELETE autor/delete/{id}' => 'autor-delete',
                     ],
                 ],
                 //Circulação
