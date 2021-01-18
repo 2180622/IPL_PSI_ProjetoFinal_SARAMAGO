@@ -22,13 +22,15 @@
         <!-- Leitores -->
         <activity android:name=".vistas.leitores.AddLeitorActivity" />
         <activity android:name=".vistas.leitores.DetalhesLeitorActivity" />
-        <activity android:name=".vistas.leitores.ListaLeitoresActivity" /> <!-- DASHBOARD -->
+        <activity android:name=".vistas.leitores.ListaLeitoresActivity" />
+        <!-- DASHBOARD -->
         <activity
             android:name=".vistas.MenuMainActivity"
             android:label=""
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- LOGIN -->
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- LOGIN -->
         <activity
             android:name=".vistas.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">

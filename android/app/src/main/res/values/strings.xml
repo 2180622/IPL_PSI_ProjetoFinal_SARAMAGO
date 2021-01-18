@@ -18,4 +18,7 @@
         <item>pubPeriodica</item>
         <item>monografia</item>
     </string-array>
+    <string name="data_registo">data_registo</string>
+    <string name="respostaSim">Sim</string>
+    <string name="respostaNao">Não</string>
 </resources>

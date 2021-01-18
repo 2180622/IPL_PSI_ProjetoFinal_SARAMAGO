@@ -166,7 +166,7 @@ return [
                     'controller' => 'v1/config',
                     'pluralize'=> false,
                     'extraPatterns' => [
-
+                        'GET config => index'
                     ],
                 ],
             ],

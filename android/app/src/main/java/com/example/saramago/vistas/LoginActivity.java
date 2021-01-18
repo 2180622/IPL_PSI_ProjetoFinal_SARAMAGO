@@ -1,7 +1,5 @@
 package com.example.saramago.vistas;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,10 +9,12 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.example.saramago.listeners.LoginListener;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.saramago.R;
+import com.example.saramago.listeners.LoginListener;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
-import com.example.saramago.utils.LeitoresJsonParser;
 import com.example.saramago.utils.LoginJsonParser;
 
 public class LoginActivity extends AppCompatActivity implements LoginListener {
@@ -88,8 +88,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         if(token != null)
         {
-
-            String token2 = token;
             guardarInfoSharedPref(token,username,api);
 
             //CODIGO PARA MUDAR DE ACTIVIDADE

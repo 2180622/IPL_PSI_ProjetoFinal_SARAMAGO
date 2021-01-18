@@ -2,7 +2,6 @@ package com.example.saramago.modelos;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,21 +11,21 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.saramago.R;
+import com.example.saramago.listeners.ConfigListener;
 import com.example.saramago.listeners.LeitoresListener;
 import com.example.saramago.listeners.ObrasListener;
 import com.example.saramago.listeners.LoginListener;
 import com.example.saramago.listeners.UserListener;
+import com.example.saramago.utils.ConfigJsonParser;
 import com.example.saramago.utils.LeitoresJsonParser;
 import com.example.saramago.utils.ObrasJsonParser;
 import com.example.saramago.utils.LoginJsonParser;
-import com.example.saramago.utils.UserJsonParser;
 import com.example.saramago.vistas.LoginActivity;
 import com.example.saramago.vistas.MenuMainActivity;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,16 +47,19 @@ public class SingletonGestorBiblioteca {
     private static final String urlAPIUsers = "/v1/user";
     private static final String urlAPILogin = "/v1/auth/login";
     private static final String urlAPIObras = "/v1/cat/obra";
+    private static final String urlAPIConfig = "/v1/config";
 
     private ObrasListener obrasListener;
     private ArrayList<Obra> obras;
     private ArrayList<Leitor> leitores;
+    private ArrayList<Config> config;
     private ArrayList<User> users;
     int  currentTime = (int)(new Date().getTime()/1000);
     private LeitoresListener leitoresListener;
     private UserListener usersListener;
 
     private LoginListener loginListener;
+    private ConfigListener configListener;
     private SaramagoBDHelper saramagoBD;
     private static RequestQueue volleyQueue = null;
     private Context context;
@@ -74,19 +76,17 @@ public class SingletonGestorBiblioteca {
         leitores = new ArrayList<>();
         users = new ArrayList<>();
         obras = new ArrayList<>();
+        config = new ArrayList<>();
         saramagoBD = new SaramagoBDHelper(context);
     }
 
     //region Leitor CRUD
-    private void gerarLeitores() {
-        // instanciar o array de leitores
-        leitores = new ArrayList<>();
-    }
 
     public ArrayList<Leitor> getLeitores(){
         leitores = saramagoBD.getAllLeitoresBD();
         return leitores;
     }
+
     public Leitor getLeitor(int id)
     {
         for(Leitor leitor: leitores)
@@ -98,9 +98,11 @@ public class SingletonGestorBiblioteca {
         }
         return null;
     }
+
     public void adicionarLeitor(Leitor leitor){
         leitores.add(leitor);
     }
+
     public void editarLeitor(Leitor leitor){
         Leitor l = getLeitor(leitor.getId());
 
@@ -120,28 +122,11 @@ public class SingletonGestorBiblioteca {
             l.setDataAtualizado(leitor.getDataAtualizado());
         }
     }
-    public void removerLeitor(int id){
-        Leitor leitor = getLeitor(id);
-        if(leitor != null){
-            leitores.remove(leitor);
-        }
-    }
-
-    public User getUser(int id){
-        for(User user: users){
-            if(user.getId()==id)
-                return user;
-        }
-        return null;
-    }
 
     public void setLeitoresListener(LeitoresListener leitoresListener) {
         this.leitoresListener = leitoresListener;
     }
 
-    public void setUserListener(UserListener userListener){
-        this.usersListener = userListener;
-    }
 
     //endregion
 
@@ -308,6 +293,29 @@ public class SingletonGestorBiblioteca {
 
     //endregion
 
+    //region BD config
+
+    public void adicionarConfigsBD(ArrayList<Config> configs)
+    {
+        saramagoBD.removerConfigBD();
+        for (Config config : configs)
+        {
+            adicionarConfigBD(config);
+        }
+    }
+
+    public void adicionarConfigBD(Config config)
+    {
+        saramagoBD.adicionarConfigBD(config);
+
+    }
+
+    public void setConfigListener(ConfigListener configListener) {
+        this.configListener = configListener;
+    }
+
+    //region BD config
+
     //region API login
 
     public void setLoginListener(LoginActivity loginActivity)
@@ -321,11 +329,9 @@ public class SingletonGestorBiblioteca {
             public void onResponse(String response) {
                 String token = LoginJsonParser.parserJsonLogin(response);
 
-                //informar a lista
                 if(loginListener != null)
                 {
                     loginListener.onValidateLogin(token, username, api);
-
                 }
             }
         }, new Response.ErrorListener() {
@@ -444,7 +450,7 @@ public class SingletonGestorBiblioteca {
     //endregion
 
     //region API users
-    public void getAllUsersAPI(final Context context){
+    /*public void getAllUsersAPI(final Context context){
         if(!UserJsonParser.isConnectionInternet(context)){
             Toast.makeText(context, R.string.semInternet, Toast.LENGTH_LONG).show();
 
@@ -474,7 +480,7 @@ public class SingletonGestorBiblioteca {
             });
             volleyQueue.add(request);
         }
-    }
+    }*/
     //endregion
 
     //region API obras
@@ -568,6 +574,41 @@ public class SingletonGestorBiblioteca {
         }
     }
 
+    //endregion
+
+    //region API config
+
+    public void getConfigAPI(final Context context){
+        if(!ConfigJsonParser.isConnectionInternet(context)){
+            Toast.makeText(context, R.string.semInternet, Toast.LENGTH_LONG).show();
+
+            if(configListener != null){
+                configListener.onRefreshConfig(saramagoBD.getAllConfigBD());
+            }
+        }else{
+            SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+            String api = sharedPreferences.getString(API, "");
+            String token = sharedPreferences.getString(TOKEN, "");
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                    api + urlAPIConfig + queryParamAuth + token, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    config = ConfigJsonParser.parserJsonConfig(response);
+                    adicionarConfigsBD(config);
+
+                    if (configListener != null) {
+                        configListener.onRefreshConfig(config);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(request);
+        }
+    }
     //endregion
 
 }

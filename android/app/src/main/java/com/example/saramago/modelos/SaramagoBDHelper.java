@@ -1,13 +1,10 @@
 package com.example.saramago.modelos;
 
-import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -182,6 +179,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     private static final String ID_CONFIG="id";
     private static final String KEY_CONFIG = "key_config";
     private static final String VALUE_CONFIG = "value_config";
+
     //endregion
 
     private final SQLiteDatabase db;
@@ -194,7 +192,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //region Create User Table
-        String createTableUser = "CREATE TABLE "+TABLE_USER+" ( "+
+        /*String createTableUser = "CREATE TABLE "+TABLE_USER+" ( "+
                 ID_USER+" INTEGER PRIMARY KEY, "+
                 USERNAME+" TEXT NOT NULL, "+
                 AUTH_KEY+" TEXT NOT NULL, "+
@@ -203,7 +201,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 STATUS+" INTEGER NOT NULL, "+
                 DATA_REGISTO+" TEXT NOT NULL, "+
                 DATA_ATUALIZADO+" TEXT NOT NULL);";
-        db.execSQL(createTableUser);
+        db.execSQL(createTableUser);*/
         //endregion
 
         //region Create LeitorUser Table
@@ -241,7 +239,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
         //endregion
 
-        //region Create Cdu Table
+        //region Create Colecao Table
 
         String createTableColecao = "CREATE TABLE " + TABLE_COLECAO + "( "+
                 ID_COLECAO + " INTEGER PRIMARY KEY, "+
@@ -296,7 +294,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         //endregion
 
         //region Create Requisicao Table
-        String createTableRequisicao = "CREATE TABLE " + TABLE_REQUISICAO + " ( "+
+        /*String createTableRequisicao = "CREATE TABLE " + TABLE_REQUISICAO + " ( "+
                 ID_REQUISICAO+" INTEGER PRIMARY KEY, "+
                 DATA_EMPRESTIMO+" TEXT NOT NULL, " +
                 ENTREGA_PREVISTA+" TEXT NOT NULL, "+
@@ -304,11 +302,11 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 RENOVACOES+" INTEGER NOT NULL, "+
                 LEITOR_ID+" INTEGER NOT NULL, "+
                 "FOREIGN KEY(LEITOR_ID) REFERENCES TABLE_LEITOR(ID_LEITOR))";
-        db.execSQL(createTableRequisicao);
+        db.execSQL(createTableRequisicao);*/
         //endregion
 
         //region Create Reserva Table
-        String createTableReserva = "CREATE TABLE " + TABLE_RESERVA + " ( "+
+        /*String createTableReserva = "CREATE TABLE " + TABLE_RESERVA + " ( "+
                 ID_RESERVA+" INTEGER PRIMARY KEY, "+
                 DATA_RESERVA+" TEXT, "+
                 ESTADO_RESERVA+" TEXT, "+
@@ -318,27 +316,27 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 EXEMPLAR_ID+" INTEGER NOT NULL, "+
                 "FOREIGN KEY(LEITOR_ID) REFERENCES TABLE_LEITOR(ID_LEITOR), " +
                 "FOREIGN KEY(EXEMPLAR_ID) REFERENCES TABLE_EXEMPLAR(ID_EXEMPLAR))";
-        db.execSQL(createTableReserva);
+        db.execSQL(createTableReserva);*/
         //endregion
 
         //region Create EstatutoExemplar Table
-        String createTableEstatutoExemplar = "CREATE TABLE " + TABLE_ESTATUTO_EXEMPLAR + " ( "+
+        /*String createTableEstatutoExemplar = "CREATE TABLE " + TABLE_ESTATUTO_EXEMPLAR + " ( "+
                 ID_ESTATUTO_EXEMPLAR+" INTEGER PRIMARY KEY, "+
                 ESTATUTO+" TEXT NOT NULL, "+
                 PRAZO+" INTEGER );";
-        db.execSQL(createTableEstatutoExemplar);
+        db.execSQL(createTableEstatutoExemplar);*/
         //endregion
 
         //region Create TipoExemplar Table
-        String createTableTipoExemplar = "CREATE TABLE " + TABLE_TIPO_EXEMPLAR + " ( "+
+        /*String createTableTipoExemplar = "CREATE TABLE " + TABLE_TIPO_EXEMPLAR + " ( "+
                 ID_TIPO_EXEMPLAR+" INTEGER PRIMARY KEY, "+
                 DESIGNACAO+" TEXT NOT NULL, "+
                 TIPO+" TEXT NOT NULL );";
-        db.execSQL(createTableTipoExemplar);
+        db.execSQL(createTableTipoExemplar);*/
         //endregion
 
         //region Create Exemplar Table
-        String createTableExemplar = "CREATE TABLE " + TABLE_EXEMPLAR + " ( "+
+        /*String createTableExemplar = "CREATE TABLE " + TABLE_EXEMPLAR + " ( "+
                 ID_EXEMPLAR+" INTEGER PRIMARY KEY, "+
                 COTA+" TEXT NOT NULL, "+
                 COD_BARRAS+" TEXT NOT NULL, "+
@@ -353,12 +351,12 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
                 //"FOREIGN KEY(ESTATUTO_EXEMPLAR_ID) REFERENCES TABLE_ESTATUTO_EXEMPLAR(ID_ESTATUTO_EXEMPLAR), " +
                 //"FOREIGN KEY(TIPO_EXEMPLAR_ID) REFERENCES TABLE_TIPO_EXEMPLAR(ID_TIPO_EXEMPLAR), " +
                 "FOREIGN KEY(OBRA_ID) REFERENCES TABLE_OBRA(ID_OBRA))";
-        db.execSQL(createTableExemplar);
+        db.execSQL(createTableExemplar);*/
         //endregion
 
         //region Create Config Table
         String createTableConfig = "CREATE TABLE " + TABLE_CONFIG + " ( "+
-                KEY_CONFIG + " TEXT NOT NULL, "+
+                KEY_CONFIG + " TEXT PRIMARY KEY, "+
                 VALUE_CONFIG + " TEXT NOT NULL ); ";
         db.execSQL(createTableConfig);
         //endregion
@@ -571,4 +569,53 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         return obras;
     }
     //endregion
+
+    //region config
+    public void removerConfigBD(){
+        this.db.delete(TABLE_CONFIG,null,null);
+    }
+
+    public void adicionarConfigBD(Config config){
+        ContentValues values=new ContentValues();
+        values.put(KEY_CONFIG, config.getKey());
+        values.put(VALUE_CONFIG, config.getValue());
+
+        this.db.insert(TABLE_CONFIG,null,values);
+    }
+
+    public ArrayList<Config> getAllConfigBD()
+    {
+        ArrayList<Config> configs =new ArrayList<>();
+        Cursor cursor=this.db.query(TABLE_CONFIG,new String[]{KEY_CONFIG, VALUE_CONFIG},
+                null,null,null,null,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Config auxConfig = new Config(cursor.getString(0), cursor.getString(1));
+
+                configs.add(auxConfig);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        return configs;
+    }
+    //endregion
+
+    public String getEntidadeBD() //FIXME
+    {
+        String entidade = null;
+        Cursor cursor = this.db.query(TABLE_OBRA,new String[]{KEY_CONFIG, VALUE_CONFIG}, KEY_CONFIG+"= entidade_designacao",null,null,null,null);
+
+        if  (cursor.moveToFirst()) {
+            do {
+                entidade = cursor.getString(cursor.getColumnIndex(VALUE_CONFIG));
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return entidade;
+
+    }
 }

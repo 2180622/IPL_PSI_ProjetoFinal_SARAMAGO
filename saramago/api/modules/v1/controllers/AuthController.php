@@ -47,15 +47,22 @@ class AuthController extends Controller
 
                 if($user->id && $user->validatePassword($post["password"]))
                 {
-                    return [
-                        "id"=>$user->id,
-                        "username"=>$user->username,
-                        "token"=>$user->getAuthKey(),
-                        "role"=> array_keys(Yii::$app->authManager->getRolesByUser($user->id))[0],
-                        "success"=> true,
-                        "status"=>'200',
-                        "saramago"=>"v".Yii::$app->version,
-                    ];
+                    if(array_keys(Yii::$app->authManager->getRolesByUser($user->id))[0] == ("admin"||"operadorChefe"||"operadorCatalogacao"||"operadorCirculacao"))
+                    {
+                        return [
+                            "id"=>$user->id,
+                            "username"=>$user->username,
+                            "token"=>$user->getAuthKey(),
+                            "role"=> array_keys(Yii::$app->authManager->getRolesByUser($user->id))[0],
+                            "success"=> true,
+                            "status"=>'200',
+                            "saramago"=>"v".Yii::$app->version,
+                        ];
+
+                    }else
+                        {
+                            throw new HttpException('403', 'Você não está autorizado a realizar essa ação.');
+                        }
                 }
             }
             else

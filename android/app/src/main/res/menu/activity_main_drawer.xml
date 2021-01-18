@@ -8,11 +8,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dashboard"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_outline_dashboard_24"
             android:title="@string/dashboard" />
         <item
             android:id="@+id/nav_pedidos"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_outline_dashboard_24"
             android:title="@string/pedidos" />
     </group>
 
@@ -21,9 +21,10 @@
         android:title="@string/Conta">
         <menu>
             <item
-                android:id="@+id/nav_logOff"
-                android:icon="@drawable/ic_launcher_foreground"
+                android:id="@+id/nav_logoff"
+                android:icon="@drawable/ic_outline_exit_to_app_24"
                 android:title="@string/terminar_sess_o" />
         </menu>
     </item>
+
 </menu>
