@@ -231,7 +231,6 @@ public class SingletonGestorBiblioteca {
                 l.setTipoLeitor_Id(leitor.getTipoLeitor_id());
             }
         }
-
     }
 
     //endregion

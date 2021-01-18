@@ -456,10 +456,9 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
             do{
                 Leitor auxLeitor =new Leitor(cursor.getInt(0),
                         cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getInt(4),cursor.getString(5),
-                        cursor.getString(6),cursor.getString(7),
-                        cursor.getString(8),cursor.getInt(9),
+                        cursor.getString(3), cursor.getInt(4),
+                        cursor.getString(5), cursor.getString(6),
+                        cursor.getString(7), cursor.getString(8),cursor.getInt(9),
                         cursor.getInt(10),cursor.getInt(11),
                         cursor.getString(12),cursor.getString(13),
                         cursor.getString(14),cursor.getString(15),

@@ -79,8 +79,6 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
                         leitor.setEmail(email.getText().toString());
                         leitor.setMail2(email2.getText().toString());
                         leitor.setDataAtualizado(date.toString());
-                        leitor.setBiblioteca_id(1);
-                        leitor.setTipoLeitor_Id(1);
 
                         SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarLeitorAPI(leitor, getApplicationContext());
                         setResult(RESULT_OK);
