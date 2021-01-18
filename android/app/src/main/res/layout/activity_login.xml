@@ -23,6 +23,7 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:ems="10"
+        android:textSize="14sp"
         android:inputType="textPersonName"
         android:text="admin" />
 
@@ -33,6 +34,7 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:ems="10"
+        android:textSize="14sp"
         android:hint="Password"
         android:inputType="textPassword"
         android:text="adminsaramago" />
@@ -44,6 +46,7 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:ems="10"
+        android:textSize="14sp"
         android:hint="API"
         android:inputType="textPersonName"
         android:text="http://10.0.2.2/IPL_PSI_ProjetoFinal2/saramago/api/web" />
@@ -76,6 +79,7 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:backgroundTint="#88BDBC"
+        android:elevation="2dp"
         android:onClick="onClickLogin"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"

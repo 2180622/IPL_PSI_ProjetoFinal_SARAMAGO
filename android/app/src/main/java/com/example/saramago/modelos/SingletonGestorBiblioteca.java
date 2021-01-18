@@ -39,7 +39,7 @@ public class SingletonGestorBiblioteca {
     private static final int ADICIONAR_BD = 1;
     private static final int EDITAR_BD =2 ;
     private static final int REMOVER_BD =3 ;
-    //private static final String urlAPI = "https://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/";
+    //private static final String urlAPI = "http://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web/";
     private static final String queryParamAuth = "?access-token=";
     private static final String urlAPILeitores = "/v1/leitor";
     private static final String urlAPILeitoresCreate = "/v1/leitor/create";
@@ -111,7 +111,8 @@ public class SingletonGestorBiblioteca {
     public void editarLeitor(Leitor leitor){
         Leitor l = getLeitor(leitor.getId());
 
-        if(leitor != null){
+        if(leitor != null)
+        {
             l.setCodBarras(leitor.getCodBarras());
             l.setNif(leitor.getNif());
             l.setDocId(leitor.getDocId());
