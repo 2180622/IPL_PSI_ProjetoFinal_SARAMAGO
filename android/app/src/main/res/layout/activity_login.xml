@@ -38,7 +38,7 @@
         android:textSize="14sp"
         android:hint="Password"
         android:inputType="textPassword"
-        android:text="adminsaramago" />
+        android:text="" />
 
     <EditText
         android:id="@+id/etApi"
@@ -50,7 +50,7 @@
         android:textSize="14sp"
         android:hint="API"
         android:inputType="textPersonName"
-        android:text="http://192.168.1.77/IPL_PSI_ProjetoFinal2/saramago/api/web" />
+        android:text="http://10.0.2.2/IPL_PSI_ProjetoFinal_SARAMAGO/saramago/api/web" />
 
     <CheckBox
         android:id="@+id/cbAPI"
