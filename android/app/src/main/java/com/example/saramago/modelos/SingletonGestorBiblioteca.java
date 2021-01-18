@@ -437,15 +437,15 @@ public class SingletonGestorBiblioteca {
         volleyQueue.add(req);
     }
 
-    public void editarLeitorAPI(final Livro livro, final Context context, final String token) {
-        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPILivros+'/'+livro.getId(), new Response.Listener<String>() {
+    public void editarLeitorAPI(final Leitor leitor, final Context context) {
+        StringRequest req = new StringRequest(Request.Method.PUT, urlAPILeitoresEdit + '/' + leitor.getId(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Livro l=LivroJsonParser.parserJsonLivro(response);
-                onUpdateListaLivrosBD(l,EDITAR_BD);
+                Leitor l=LeitoresJsonParser.parserJsonLeitor(response);
+                onUpdateListaLeitoresBD(l,EDITAR_BD);
 
-                if(livrosListener != null){
-                    livrosListener.onRefreshDetalhes();
+                if(leitoresListener != null){
+                    leitoresListener.onRefreshDetalhes();
                 }
             }
         }, new Response.ErrorListener() {
@@ -457,12 +457,23 @@ public class SingletonGestorBiblioteca {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params=new HashMap<>();
-                params.put("titulo",livro.getTitulo());
-                params.put("autor",livro.getAutor());
-                params.put("serie",livro.getSerie());
-                params.put("ano", livro.getAno()+"");
-                params.put("capa",livro.getCapa());
-                params.put("token",token);
+                params.put("nome",leitor.getNome());
+                params.put("username", leitor.getUsername());
+                params.put("codBarras",leitor.getCodBarras());
+                params.put("nif",leitor.getNif()+"");
+                params.put("docId",leitor.getDocId());
+                params.put("dataNasc",leitor.getDataNasc());
+                params.put("morada",leitor.getMorada());
+                params.put("localidade",leitor.getLocalidade());
+                params.put("codPostal",leitor.getCodPostal()+"");
+                params.put("telemovel",leitor.getTelemovel()+"");
+                params.put("telefone",leitor.getTelefone()+"");
+                params.put("email",leitor.getEmail());
+                params.put("mail2",leitor.getMail2());
+                params.put("dataRegisto",leitor.getDataRegisto());
+                params.put("dataAtualizado",leitor.getDataAtualizado());
+                params.put("Biblioteca_id",leitor.getBiblioteca_id()+"");
+                params.put("TipoLeitor_id",leitor.getTipoLeitor_Id()+"");
                 return params;
             }
         };
@@ -470,13 +481,13 @@ public class SingletonGestorBiblioteca {
     }
 
     public void removerLeitorAPI(final Leitor leitor, final Context context) {
-        StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPILivros+'/'+livro.getId(), new Response.Listener<String>() {
+        StringRequest req = new StringRequest(Request.Method.DELETE, urlAPILeitoresDelete + '/' + leitor.getId(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                onUpdateListaLivrosBD(livro,REMOVER_BD);
+                onUpdateListaLeitoresBD(leitor,REMOVER_BD);
 
-                if(livrosListener != null){
-                    livrosListener.onRefreshDetalhes();
+                if(leitoresListener != null){
+                    leitoresListener.onRefreshDetalhes();
                 }
             }
         }, new Response.ErrorListener() {

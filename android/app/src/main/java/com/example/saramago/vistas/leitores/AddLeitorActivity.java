@@ -14,6 +14,7 @@ import com.example.saramago.R;
 import com.example.saramago.modelos.Leitor;
 import com.example.saramago.modelos.SaramagoBDHelper;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.utils.LeitoresJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -60,16 +61,18 @@ public class AddLeitorActivity extends AppCompatActivity implements DatePickerDi
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                leitor = new Leitor(0, nome.getText().toString(), username.getText().toString(), codBarras.getText().toString(),
-                        Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
-                        Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()),
-                        email.getText().toString(), email2.getText().toString(), date.toString(), date.toString(), 1, 1);
+                if(LeitoresJsonParser.isConnectionInternet(getApplicationContext())){
+                    leitor = new Leitor(0, nome.getText().toString(), username.getText().toString(), codBarras.getText().toString(),
+                            Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
+                            Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()),
+                            email.getText().toString(), email2.getText().toString(), date.toString(), date.toString(), 1, 1);
 
-
-
-                SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitorAPI(leitor, getApplicationContext());
-                setResult(RESULT_OK);
-                finish();
+                    SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarLeitorAPI(leitor, getApplicationContext());
+                    setResult(RESULT_OK);
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), R.string.semInternet, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

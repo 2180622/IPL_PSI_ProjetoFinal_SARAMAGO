@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.saramago.R;
 import com.example.saramago.modelos.Leitor;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
+import com.example.saramago.utils.LeitoresJsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -56,15 +58,29 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*leitor = new Leitor(nome.getText().toString(), R.drawable.ic_undraw_male_avatar, codBarras.getText().toString(),
-                        Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
-                        Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email.getText().toString(),
-                        email2.getText().toString(), date, date, 1, 1);*/
-                
+                if(LeitoresJsonParser.isConnectionInternet(getApplicationContext())) {
+                    if (leitor != null) {
+                        leitor.setNome(nome.getText().toString());
+                        leitor.setCodBarras(nome.getText().toString());
+                        leitor.setNif(Integer.parseInt(nome.getText().toString()));
+                        leitor.setDocId(nome.getText().toString());
+                        leitor.setDataNasc(nome.getText().toString());
+                        leitor.setMorada(nome.getText().toString());
+                        leitor.setLocalidade(nome.getText().toString());
+                        leitor.setCodPostal(Integer.parseInt(nome.getText().toString()));
+                        leitor.setTelemovel(Integer.parseInt(nome.getText().toString()));
+                        leitor.setTelefone(Integer.parseInt(nome.getText().toString()));
+                        leitor.setEmail(nome.getText().toString());
+                        leitor.setMail2(nome.getText().toString());
+                        leitor.setDataAtualizado(date.toString());
 
-                SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarLeitor(leitor);
-                setResult(RESULT_OK);
-                finish();
+                        SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarLeitorAPI(leitor, getApplicationContext());
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.semInternet, Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
     }
