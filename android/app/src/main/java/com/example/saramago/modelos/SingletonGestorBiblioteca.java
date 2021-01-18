@@ -188,6 +188,21 @@ public class SingletonGestorBiblioteca {
     }
     //endregion
 
+    //region config CRUD
+
+    public Config getConfig(String key_value)
+    {
+        for(Config config: config)
+        {
+            if(config.getKey()==key_value)
+            {
+                return config;
+            }
+        }
+        return null;
+    }
+    //endregion
+
     //region BD leitor
 
     public void adicionarLeitorBD(Leitor leitor) {

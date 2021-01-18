@@ -52,11 +52,17 @@ public class Dashboard extends Fragment implements ConfigListener {
         SingletonGestorBiblioteca.getInstance(getContext()).setConfigListener(this);
         SingletonGestorBiblioteca.getInstance(getContext()).getConfigAPI(getContext());
 
+        //FIXME
+        // Passar a entidade_designacao da BD Local para a vista
+        /*Config configEntidade = SingletonGestorBiblioteca.getInstance(getContext()).getConfig("entidade_designacao");
+        String cEntidade = configEntidade.getValue();*/
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        TextView tvEntidade = view.findViewById(R.id.tv_entidade);
-        //tvEntidade.setText(saramagoBDHelper.getEntidadeBD()); //FIXME
+        //FIXME
+        /*TextView tvEntidade = view.findViewById(R.id.tv_entidade);
+        tvEntidade.setText(cEntidade);*/
 
         TextView tvOperador = view.findViewById(R.id.tv_operador);
         tvOperador.setText(String.format("@%s", username));

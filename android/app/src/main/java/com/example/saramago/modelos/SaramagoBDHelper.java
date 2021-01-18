@@ -620,21 +620,4 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
         return configs;
     }
     //endregion
-
-    public String getEntidadeBD() //FIXME
-    {
-        String entidade = null;
-        Cursor cursor = this.db.query(TABLE_OBRA,new String[]{KEY_CONFIG, VALUE_CONFIG}, KEY_CONFIG+"= entidade_designacao",null,null,null,null);
-
-        if  (cursor.moveToFirst()) {
-            do {
-                entidade = cursor.getString(cursor.getColumnIndex(VALUE_CONFIG));
-            }while (cursor.moveToNext());
-        }
-
-        cursor.close();
-
-        return entidade;
-
-    }
 }
