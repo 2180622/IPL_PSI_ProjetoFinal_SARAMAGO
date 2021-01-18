@@ -42,8 +42,8 @@ public class SingletonGestorBiblioteca {
     private static final String queryParamAuth = "?access-token=";
     private static final String urlAPILeitores = "/v1/leitor";
     private static final String urlAPILeitoresCreate = "/v1/leitor/create";
-    private static final String urlAPILeitoresEdit = "/v1/leitor/edit/";
-    private static final String urlAPILeitoresDelete = "/v1/leitor/delete/";
+    private static final String urlAPILeitoresEdit = "/v1/leitor/update";
+    private static final String urlAPILeitoresDelete = "/v1/leitor/delete";
     private static final String urlAPIObrasCreate = "/v1/cat/obra/create";
     private static final String urlAPIObrasEdit = "/v1/cat/obra/edit/";
     private static final String urlAPIUsers = "/v1/user";
@@ -213,6 +213,7 @@ public class SingletonGestorBiblioteca {
         if (l != null) {
             if (saramagoBD.editarLeitorBD(leitor)) {
                 l.setNome(leitor.getNome());
+                l.setUsername(leitor.getUsername());
                 l.setCodBarras(leitor.getCodBarras());
                 l.setNif(leitor.getNif());
                 l.setDocId(leitor.getDocId());
@@ -222,6 +223,7 @@ public class SingletonGestorBiblioteca {
                 l.setCodPostal(leitor.getCodPostal());
                 l.setTelemovel(leitor.getTelemovel());
                 l.setTelefone(leitor.getTelefone());
+                l.setEmail(leitor.getEmail());
                 l.setMail2(leitor.getMail2());
                 l.setDataRegisto(leitor.getDataRegisto());
                 l.setDataAtualizado(leitor.getDataAtualizado());
@@ -438,7 +440,10 @@ public class SingletonGestorBiblioteca {
     }
 
     public void editarLeitorAPI(final Leitor leitor, final Context context) {
-        StringRequest req = new StringRequest(Request.Method.PUT, urlAPILeitoresEdit + '/' + leitor.getId(), new Response.Listener<String>() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        String api = sharedPreferences.getString(API, "");
+        String token = sharedPreferences.getString(TOKEN, "");
+        StringRequest req = new StringRequest(Request.Method.PUT, api + urlAPILeitoresEdit + '/' + leitor.getId() + queryParamAuth + token, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Leitor l=LeitoresJsonParser.parserJsonLeitor(response);
@@ -481,6 +486,9 @@ public class SingletonGestorBiblioteca {
     }
 
     public void removerLeitorAPI(final Leitor leitor, final Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        String api = sharedPreferences.getString(API, "");
+        String token = sharedPreferences.getString(TOKEN, "");
         StringRequest req = new StringRequest(Request.Method.DELETE, urlAPILeitoresDelete + '/' + leitor.getId(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

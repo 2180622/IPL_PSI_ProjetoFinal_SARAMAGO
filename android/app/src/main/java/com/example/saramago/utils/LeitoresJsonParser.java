@@ -23,7 +23,7 @@ public class LeitoresJsonParser {
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject leitor = (JSONObject) response.get(i);
-                int id = leitor.getInt("user_id");
+                int id = leitor.getInt("id");
                 String nome = leitor.getString("nome");
                 String username = leitor.getString("username");
                 String codBarras = leitor.getString("codBarras");
@@ -61,7 +61,7 @@ public class LeitoresJsonParser {
 
         try {
             JSONObject leitor = new JSONObject(response);
-            int id = leitor.getInt("user_id");
+            int id = leitor.getInt("id");
             String nome = leitor.getString("nome");
             String username = leitor.getString("username");
             String codBarras = leitor.getString("codBarras");

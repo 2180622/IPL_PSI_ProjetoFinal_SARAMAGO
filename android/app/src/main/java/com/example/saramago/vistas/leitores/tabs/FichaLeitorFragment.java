@@ -19,11 +19,10 @@ import com.example.saramago.modelos.User;
 import com.example.saramago.vistas.leitores.EditLeitorActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import static android.app.Activity.RESULT_FIRST_USER;
-import static com.example.saramago.vistas.leitores.DetalhesLeitorActivity.ID;
 
 public class FichaLeitorFragment extends Fragment {
 
+    public static final String ID = "ID";
     private Leitor leitor;
     private User user;
     private int user_id;
@@ -61,6 +60,7 @@ public class FichaLeitorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EditLeitorActivity.class);
+                intent.putExtra(EditLeitorActivity.ID, (int) id);
                 startActivity(intent);
             }
         });

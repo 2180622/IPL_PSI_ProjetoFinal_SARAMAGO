@@ -430,7 +430,7 @@
                 android:id="@+id/et_fl_email"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:ems="10"
+                android:textSize="14sp"
                 android:inputType="textEmailAddress" />
 
         </LinearLayout>
@@ -463,8 +463,7 @@
                 android:id="@+id/et_fl_email2"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="1"
-                android:ems="10"
+                android:textSize="14sp"
                 android:inputType="textEmailAddress" />
 
         </LinearLayout>

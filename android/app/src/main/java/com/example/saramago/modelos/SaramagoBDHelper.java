@@ -449,7 +449,7 @@ public class SaramagoBDHelper extends SQLiteOpenHelper {
 
     public ArrayList<Leitor> getAllLeitoresBD(){
         ArrayList<Leitor> leitores =new ArrayList<>();
-        Cursor cursor=this.db.query(TABLE_LEITOR,new String[]{ID_LEITOR,NOME,USERNAME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID},
+        Cursor cursor=this.db.query(TABLE_LEITOR_USER,new String[]{ID_LEITOR,NOME,USERNAME,COD_BARRAS,NIF,DOC_ID,DATA_NASC,MORADA,LOCALIDADE,COD_POSTAL,TELEMOVEL,TELEFONE,EMAIL,MAIL2,DATA_REGISTO,DATA_ATUALIZADO,BIBLIOTECA_ID,TIPOLEITOR_ID},
                 null,null,null,null,null);
 
         if(cursor.moveToFirst()){

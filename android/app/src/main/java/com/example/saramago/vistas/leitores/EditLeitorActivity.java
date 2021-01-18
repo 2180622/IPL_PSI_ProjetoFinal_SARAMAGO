@@ -21,7 +21,8 @@ import java.util.Locale;
 
 public class EditLeitorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
-    private EditText nome, codBarras, nif, docId, dtaNascimento, morada, localidade, codPostal, telemovel, telefone, email, email2;
+    public static final String ID = "ID";
+    private EditText nome, username, codBarras, nif, docId, dtaNascimento, morada, localidade, codPostal, telemovel, telefone, email, email2;
     private Leitor leitor;
     private final Date date = Calendar.getInstance().getTime();
 
@@ -31,6 +32,7 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
         setContentView(R.layout.activity_edit_leitor);
 
         nome = findViewById(R.id.et_fl_nome);
+        username = findViewById(R.id.et_fl_username);
         codBarras = findViewById(R.id.et_fl_codBarras);
         nif = findViewById(R.id.et_fl_nif);
         docId = findViewById(R.id.et_fl_docId);
@@ -43,6 +45,9 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
         email = findViewById(R.id.et_fl_email);
         email2 = findViewById(R.id.et_fl_email2);
         FloatingActionButton fabSave = findViewById(R.id.fabSave);
+
+        int id = getIntent().getIntExtra(ID, -1);
+        leitor = SingletonGestorBiblioteca.getInstance(getApplicationContext()).getLeitor(id);
 
         if(leitor != null){
             carregarConteudoLeitor();
@@ -61,18 +66,21 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
                 if(LeitoresJsonParser.isConnectionInternet(getApplicationContext())) {
                     if (leitor != null) {
                         leitor.setNome(nome.getText().toString());
-                        leitor.setCodBarras(nome.getText().toString());
-                        leitor.setNif(Integer.parseInt(nome.getText().toString()));
-                        leitor.setDocId(nome.getText().toString());
-                        leitor.setDataNasc(nome.getText().toString());
-                        leitor.setMorada(nome.getText().toString());
-                        leitor.setLocalidade(nome.getText().toString());
-                        leitor.setCodPostal(Integer.parseInt(nome.getText().toString()));
-                        leitor.setTelemovel(Integer.parseInt(nome.getText().toString()));
-                        leitor.setTelefone(Integer.parseInt(nome.getText().toString()));
-                        leitor.setEmail(nome.getText().toString());
-                        leitor.setMail2(nome.getText().toString());
+                        leitor.setUsername(username.getText().toString());
+                        leitor.setCodBarras(codBarras.getText().toString());
+                        leitor.setNif(Integer.parseInt(nif.getText().toString()));
+                        leitor.setDocId(docId.getText().toString());
+                        leitor.setDataNasc(dtaNascimento.getText().toString());
+                        leitor.setMorada(morada.getText().toString());
+                        leitor.setLocalidade(localidade.getText().toString());
+                        leitor.setCodPostal(Integer.parseInt(codPostal.getText().toString()));
+                        leitor.setTelemovel(Integer.parseInt(telemovel.getText().toString()));
+                        leitor.setTelefone(Integer.parseInt(telefone.getText().toString()));
+                        leitor.setEmail(email.getText().toString());
+                        leitor.setMail2(email2.getText().toString());
                         leitor.setDataAtualizado(date.toString());
+                        leitor.setBiblioteca_id(1);
+                        leitor.setTipoLeitor_Id(1);
 
                         SingletonGestorBiblioteca.getInstance(getApplicationContext()).editarLeitorAPI(leitor, getApplicationContext());
                         setResult(RESULT_OK);
@@ -102,6 +110,7 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
 
     private void carregarConteudoLeitor(){
         nome.setText(leitor.getNome());
+        username.setText(leitor.getUsername());
         codBarras.setText(leitor.getCodBarras());
         nif.setText(leitor.getNif()+"");
         docId.setText(leitor.getDocId());
@@ -111,6 +120,7 @@ public class EditLeitorActivity extends AppCompatActivity implements DatePickerD
         codPostal.setText(leitor.getCodPostal()+"");
         telemovel.setText(leitor.getTelemovel()+"");
         telefone.setText(leitor.getTelefone()+"");
+        email.setText(leitor.getEmail());
         email2.setText(leitor.getMail2());
     }
 }
