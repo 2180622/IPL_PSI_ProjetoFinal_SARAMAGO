@@ -16,7 +16,9 @@ import java.util.Date;
 public class ObrasJsonParser {
 
     public static ArrayList<Obra> parserJsonObras(JSONArray response) {
+        int Colecao_id = 0;
         int preco = 0;
+        String resumo ="";
         ArrayList<Obra> obras = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
@@ -25,9 +27,8 @@ public class ObrasJsonParser {
                 String imgCapa = obra.getString("imgCapa");
                 int ano = obra.getInt("ano");
                 int Cdu_id = obra.getInt("Cdu_id");
-                int Colecao_id = obra.getInt("Colecao_id");
                 String titulo = obra.getString("titulo");
-                String resumo = obra.getString("resumo");
+
                 String editor = obra.getString("editor");
                 String tipoObra = obra.getString("tipoObra");
                 String descricao = obra.getString("descricao");
@@ -40,6 +41,10 @@ public class ObrasJsonParser {
                 if(obra != null) {
                     if(obra.getString("preco") == null)
                         preco = 0;
+                    if(obra.getString("Colecao_id") == null)
+                        Colecao_id = 0;
+                    if(obra.getString("resumo") == null)
+                        resumo = ""; //TODO CONTINUAR AS RESTRIÇOES QUE SAO CAMPOS NULL
                 }
 
                 Obra auxObra = new Obra(id, imgCapa, ano, preco, Cdu_id, Colecao_id, titulo, resumo, editor, tipoObra, descricao,

@@ -91,7 +91,7 @@ public class DetalhesLeitorActivity extends AppCompatActivity {
     private void dialogRemover() {
         AlertDialog.Builder builder;
         builder= new AlertDialog.Builder(this);
-        builder.setTitle("Remover Livro")
+        builder.setTitle("Remover Leitor")
                 .setMessage("Pretende mesmo remover o leitor?")
                 .setPositiveButton(R.string.respostaSim, new DialogInterface.OnClickListener() {
                     @Override
