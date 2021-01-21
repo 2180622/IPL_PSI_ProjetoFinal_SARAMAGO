@@ -33,5 +33,9 @@ use yii\widgets\DetailView;
             'attribute'=>'',
             'value'=>'Open Researcher and Contributor ID: '.$model->orcid,
         ],
+        [
+        'attribute'=>'',
+            'value'=>'Número de obras publicadas: '.$model->getObras()->count(),
+        ],
     ],
 ]) ?>

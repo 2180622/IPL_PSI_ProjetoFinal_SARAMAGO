@@ -31,6 +31,22 @@ use yii\widgets\DetailView;
             'attribute'=>'',
             'value'=>'Preço: '.$model->preco.' '.'€',
         ],
+        [
+            'attribute'=>'',
+            'value'=>function ($model) {
+
+                $autores = [];    
+
+                foreach($model->autors as $autor) {
+
+                    $autores[] = $autor->primeiroNome . ' ' . $autor->segundoNome . ' ' . $autor->apelido;
+
+                }
+
+                return 'Autoria: ' .implode(', ', $autores);
+
+            },
+        ],
 
     ],
 ]) ?>

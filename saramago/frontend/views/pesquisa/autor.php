@@ -12,7 +12,7 @@ $this->title = 'Procurar autores';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $form = ActiveForm::begin([
-    'action' => ['obra'],
+    'action' => ['autor'],
     'method' => 'get',
     'options' => ['data-pjax' => 1, 'class' => 'rapido-saramago'],
     'fieldConfig' => [

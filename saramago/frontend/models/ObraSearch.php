@@ -42,8 +42,7 @@ class ObraSearch extends Obra
      */
     public function search($params)
     {
-        $query = obra::find();
-
+        $query = obra::find()->joinWith('autors');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -67,6 +66,9 @@ class ObraSearch extends Obra
             ->orFilterWhere(['like', 'edicao', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'assuntos', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'preco', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'primeiroNome', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'segundoNome', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'apelido', $this->pesquisaGeral])
             /*->andFilterWhere(['like', 'tituloColecao', $this->colecao->tituloColecao])*/;
 
         return $dataProvider;
