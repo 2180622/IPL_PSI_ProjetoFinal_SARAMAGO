@@ -69,10 +69,6 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*obra = new Leitor(nome.getText().toString(), R.drawable.ic_undraw_male_avatar, codBarras.getText().toString(),
-                        Integer.parseInt(nif.getText().toString()), docId.getText().toString(), dtaNascimento.getText().toString(), morada.getText().toString(), localidade.getText().toString(),
-                        Integer.parseInt(codPostal.getText().toString()), Integer.parseInt(telemovel.getText().toString()), Integer.parseInt(telefone.getText().toString()), email.getText().toString(),
-                        email2.getText().toString(), date, date, 1, 1);*/
                 if(ObrasJsonParser.isConnectionInternet(getApplicationContext())) {
                     if (obra != null) {
                         obra.setTitulo(et_titulo.getText().toString());

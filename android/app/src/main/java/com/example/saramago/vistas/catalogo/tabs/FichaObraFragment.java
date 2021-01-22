@@ -78,7 +78,7 @@ public class FichaObraFragment extends Fragment {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         String api = sharedPreferences.getString(API, "");
         tv_titulo.setText(obra.getTitulo());
-        if (obra.getResumo() == "null") {
+        if (obra.getResumo() == null) {
             tv_resumo.setText("...");
         }else{
             tv_resumo.setText(obra.getResumo());
@@ -90,7 +90,7 @@ public class FichaObraFragment extends Fragment {
         tv_local.setText(obra.getLocal());
         tv_edicao.setText(obra.getEdicao());
         tv_assuntos.setText(obra.getAssuntos());
-        if (obra.getPreco() == 0) {
+        if (obra.getPreco() == -1) {
             tv_preco.setText("Sem valor atríbuido");
         }else{
             tv_preco.setText(obra.getPreco()+" €");
