@@ -5,6 +5,7 @@ use common\models\Noticias;
 use common\models\Obra;
 use common\models\Autor;
 use common\models\ObraAutor;
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -308,12 +309,13 @@ class SiteController extends Controller
         $this->layout = 'main-login';
 
         $model = new ResendVerificationEmailForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', 'Verifique o seu email e siga as instruções.');
                 return $this->goHome();
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+            Yii::$app->session->setFlash('error', 'Desculpe, houve um erro e não é possível remeter para este email.');
         }
 
         return $this->render('resendVerificationEmail', [

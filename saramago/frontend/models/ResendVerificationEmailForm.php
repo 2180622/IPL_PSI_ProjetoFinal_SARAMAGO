@@ -27,7 +27,7 @@ class ResendVerificationEmailForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_INACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => 'Não existe nenhum user com este email'
             ],
         ];
     }
@@ -47,16 +47,14 @@ class ResendVerificationEmailForm extends Model
         if ($user === null) {
             return false;
         }
+        $user->generateEmailVerificationToken();
 
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+        Yii::$app->mailer->compose('emailVerify-text', ['user' => $user])
+            ->setFrom('saramagoipl@gmail.com')
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject('Redifinir a Palavra-Passe')
             ->send();
+
+        return true;
     }
 }

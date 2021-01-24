@@ -1,7 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\ResetPasswordForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -20,13 +19,7 @@ $this->title = 'Reenviar verificação';
             <?= $form->field($model, 'email')->label('E-mail')->textInput(['autofocus' => true]) ?>
 
             <div class="form-group">
-                <?= Html::a('Enviar',
-                    Yii::$app->mailer->compose('site/resendVerificationEmail', ['resend-verification-email-form' => $form])
-                        ->setFrom('saramagoipl@gmail.com')
-                        ->setTo($form->email)
-                        ->setSubject('Repor a Palavra-Passe')
-                        ->send(),
-                    ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
             </div>
             <div class="pull-right" style="color:#999; text-align: center;">
                 <p>Não precisa? <?= Html::a('Voltar', Yii::$app->request->referrer) ?></p>

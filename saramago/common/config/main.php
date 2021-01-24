@@ -14,14 +14,7 @@ return [
         ],
         'mail' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.mailtrap.io',
-                'username' => 'fbbdf45f18fbdc',
-                'password' => 'f3eaec5b401c8e',
-                'port' => '2525',
-                'encryption' => 'tls',
-            ],
+            'viewPath' => '@common/mail',
         ],
     ],
 ];
