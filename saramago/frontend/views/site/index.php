@@ -4,17 +4,19 @@
 
 use yii\bootstrap\Button;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-$this->title = 'SARAMAGO';
+$this->title = 'Saramago';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
+<div class="rapido-saramago">
     <div class="body-content">
         <!-- SLIDESHOW -->
         <!-- TODO SLIDESHOW
             Se o slideshow tiver ativo na tab. config, aparece as últimas obras adquiquidas.
             Independemente da data de registo delas só aparece as que têm exemplares.
         -->
-        <h3>Últimas obras adquiridas</h3>
+        <h1>Últimas obras adquiridas</h1>
         <hr>
         <div id="carousel-obras" class="carousel slide" data-ride="carousel">
             <!-- indicadores -->
@@ -53,7 +55,7 @@ $this->title = 'SARAMAGO';
                                 <h3>Titulo: <?= $obra->titulo ?> (<?= $obra->ano ?>)
                                 </h3> 
                                 <?php foreach($obra->autors as $autor) { ?>                     
-                                    <p>Autor: <?= $autor->primeiroNome ?> <?= $autor->segundoNome ?> <?= $autor->apelido ?> 
+                                    <p>Autor: <?= $autor->primeiroNome ?> <?= $autor->segundoNome ?> <?= $autor->apelido ?>
                                     </p>
                                 <?php } ?>                                      
                             </div>
@@ -74,7 +76,7 @@ $this->title = 'SARAMAGO';
             <br>
             <!-- NOTICIAS -->
             <div>
-                <h3>Noticias</h3>
+                <h1>Noticias</h1>
                 <table style="width:100%;">
                     <tr>
                         <th style="width: 10%;">Autor</th>
@@ -90,17 +92,18 @@ $this->title = 'SARAMAGO';
                 </table>
             </div>
             <!--TAGS-->
-            <h3>Tags</h3>
+            <h1>Obras disponíveis em Saramago</h1>
             <hr>
             <div class="row">
                 <div class="panel-group col-lg-6">
                     <div class="panel panel-default">
                         <!-- //TODO -->
-                        <div class="panel-heading">Assuntos</div>
+                        <div class="panel-heading">Assunto</div>
                         <div class="panel-body">
                             <?php if (isset($tagsDasObras)) { ?>
                                 <?php foreach($tagsDasObras as $tag) { ?> 
-                                    <button type="button" class="btn btn-outline-light"> <?= $tag ?>  <span class="badge badge-light"> <?= $quantidadeDeLivrosNaMesmaTag[$tag] ?> </span></button>
+                                    <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]', 
+                                'pesquisaGeral'=> $tag]) ?>"><button type="button" class="btn btn-outline-light"> <?= $tag ?>  <span class="badge badge-light"> <?= $quantidadeDeLivrosNaMesmaTag[$tag] ?> </span></button></a>
                                 <?php } ?>
                             <?php } ?>
                         </div>
@@ -108,10 +111,11 @@ $this->title = 'SARAMAGO';
                 </div>
                 <div class="panel-group col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Autores</div>
+                        <div class="panel-heading">Autor</div>
                         <div class="panel-body">
                             <?php foreach ($autores as $autor) { ?>
-                                <a href="../site/autor/view/<?=$autor->id?>"><button type="button" class="btn btn-outline-light"> <?=$autor->primeiroNome .' '. $autor->segundoNome .' '. $autor->apelido ?> <span class="badge badge-light">
+                                <a href="<?= Url::toRoute(['/pesquisa/autor?AutorSearch[pesquisaGeral]', 
+                                'pesquisaGeral'=> $autor->primeiroNome .' '.$autor->segundoNome .''.$autor->apelido]) ?>"><button type="button" class="btn btn-outline-light"> <?=$autor->primeiroNome .' '. $autor->segundoNome .' '. $autor->apelido ?> <span class="badge badge-light">
                                 <?php if (isset($numeroDeObrasDoAutor[$autor->id-1])) { ?>
                                     <?= $numeroDeObrasDoAutor[$autor->id-1] ?>
                                 <?php  } ?></span></button></a>
@@ -121,11 +125,12 @@ $this->title = 'SARAMAGO';
                 </div>
                 <div class="panel-group col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Datas de publicação</div>
+                        <div class="panel-heading">Data de publicação</div>
                         <div class="panel-body">
                             <?php if (isset($anosDasObras)) { ?>
                                 <?php foreach($anosDasObras as $ano) { ?> 
-                                    <button type="button" class="btn btn-outline-light"> <?= $ano ?>  <span class="badge badge-light"> <?= $quantidadeDeLivrosDoMesmoAno[$ano]   ?> </span></button>
+                                    <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]', 
+                                'pesquisaGeral'=> $ano]) ?>"><button type="button" class="btn btn-outline-light"> <?= $ano ?>  <span class="badge badge-light"> <?= $quantidadeDeLivrosDoMesmoAno[$ano]   ?> </span></button></a>
                                 <?php } ?>
                             <?php } ?>
                         </div>

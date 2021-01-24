@@ -69,6 +69,7 @@ class ObraSearch extends Obra
             ->orFilterWhere(['like', 'primeiroNome', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'segundoNome', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'apelido', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'ano', $this->pesquisaGeral])
             /*->andFilterWhere(['like', 'tituloColecao', $this->colecao->tituloColecao])*/;
 
         return $dataProvider;

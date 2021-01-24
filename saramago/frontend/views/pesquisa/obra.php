@@ -8,29 +8,33 @@ use yii\widgets\ListView;
 /* @var $this yii\web\View */
 /* @var $model app\models\ObraSearch */
 /* @var $form yii\widgets\ActiveForm */
-$this->title = 'Procurar obras';
+$this->title = 'Encontrar obras';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $form = ActiveForm::begin([
-    'action' => ['obra'],
-    'method' => 'get',
-    'options' => ['data-pjax' => 1, 'class' => 'rapido-saramago'],
-    'fieldConfig' => [
-        'template' => "{input}",
-    ],
-]); ?>
 
-        <h1><?= Html::encode($this->title) ?></h1>
-    <!--<nobr><?= $form->field($model, 'titulo')->textInput(['placeholder' => 'Titulo da obra']) ?>-->
+<div class="rapido-pesquisa">
+    <?php $form = ActiveForm::begin([
+        'action' => ['obra'],
+        'method' => 'get',
+        'options' => ['data-pjax' => 1, 'class' => 'rapido-pesquisa'],
+        'fieldConfig' => [
+            'template' => "{input}",
+        ],
+    ]); ?>
 
-    <nobr>
-        <?= $form->field($searchModel, 'pesquisaGeral')->textInput(['placeholder' => 'O que procura?'])  ?>
-        <?= Html::submitButton(Yii::t('app', 'Pesquisar'), ['class' => 'btn btn-warning']) ?>
-    </nobr>
+            <h1><?= Html::encode($this->title) ?></h1>
 
-<?php ActiveForm::end(); ?>
+        <nobr>
+            <?= $form->field($searchModel, 'pesquisaGeral')->textInput(['placeholder' => 'O que procura?'])  ?>
+            <?= Html::submitButton(Yii::t('app', 'Pesquisar'), ['class' => 'btn btn-warning']) ?>
+        </nobr>
 
-<?= ListView::widget([
-    'dataProvider' => $dataProvider,
-    'itemView' => '_pesquisaobra',
-]); ?>
+    <?php ActiveForm::end(); ?>
+
+    <br>
+
+    <?= ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_pesquisaobra',
+    ]); ?>
+</div>

@@ -57,10 +57,10 @@ class AutorSearch extends Autor
             return $dataProvider;
         }
 
-
         $query->orFilterWhere(['like', 'primeiroNome', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'segundoNome', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'apelido', $this->pesquisaGeral])
+            ->orFilterWhere(['like', "concat(primeiroNome,' ',segundoNome,'',apelido)", $this->pesquisaGeral])
             ->orFilterWhere(['like', 'tipo', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'bibliografia', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'nacionalidade', $this->pesquisaGeral])

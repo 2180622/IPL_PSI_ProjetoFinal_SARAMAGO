@@ -42,11 +42,17 @@ use yii\widgets\DetailView;
                     $autores[] = $autor->primeiroNome . ' ' . $autor->segundoNome . ' ' . $autor->apelido;
 
                 }
-
+                if (implode(', ', $autores) == "") {
+                    return 'Autoria: ---';
+                }
                 return 'Autoria: ' .implode(', ', $autores);
 
             },
         ],
+        [
+            'attribute'=>'',
+            'value'=>'Ano: '.$model->ano,
+        ]
 
     ],
 ]) ?>
