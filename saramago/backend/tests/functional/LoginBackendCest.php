@@ -59,13 +59,13 @@ class LoginBackendCest
     public function loginFailPassword(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('admin', 'ov7to87tvo87'));
-        $I->seeValidationError('Incorrect username or password.');
+        $I->seeValidationError('Username ou password incorreta.');
     }
 
     public function loginFailUser(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('iugkhfy', 'ov7to87tvo87'));
-        $I->seeValidationError('Incorrect username or password.');
+        $I->seeValidationError('Username ou password incorreta.');
     }
 
 }
