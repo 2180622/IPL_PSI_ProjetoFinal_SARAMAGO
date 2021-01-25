@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Exemplar;
+use common\models\ObraAutor;
 
 /**
- * ExemplarSearch represents the model behind the search form of `common\models\Exemplar`.
+ * ObraAutorSearch represents the model behind the search form of `common\models\ObraAutor`.
  */
-class ExemplarSearch extends Exemplar
+class ObraAutorSearch extends ObraAutor
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class ExemplarSearch extends Exemplar
     public function rules()
     {
         return [
-            [['id', 'suplemento', 'Biblioteca_id', 'EstatutoExemplar_id', 'TipoExemplar_id', 'Obra_id'], 'integer'],
-            [['cota', 'codBarras', 'estado', 'notaInterna'], 'safe'],
+            [['Obra_id', 'Autor_id'], 'integer'],
         ];
     }
 
@@ -40,15 +39,15 @@ class ExemplarSearch extends Exemplar
      */
     public function search($params)
     {
-        $query = Exemplar::find();
-
-        // add conditions that should always apply here
+        $query = ObraAutor::find();
 
         $id = $params['id'];
         if(isset($id))
         {
             $query = $query->where(['Obra_id' => $id]);
         }
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,18 +63,9 @@ class ExemplarSearch extends Exemplar
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'suplemento' => $this->suplemento,
-            'Biblioteca_id' => $this->Biblioteca_id,
-            'EstatutoExemplar_id' => $this->EstatutoExemplar_id,
-            'TipoExemplar_id' => $this->TipoExemplar_id,
             'Obra_id' => $this->Obra_id,
+            'Autor_id' => $this->Autor_id,
         ]);
-
-        $query->andFilterWhere(['like', 'cota', $this->cota])
-            ->andFilterWhere(['like', 'codBarras', $this->codBarras])
-            ->andFilterWhere(['like', 'estado', $this->estado])
-            ->andFilterWhere(['like', 'notaInterna', $this->notaInterna]);
 
         return $dataProvider;
     }

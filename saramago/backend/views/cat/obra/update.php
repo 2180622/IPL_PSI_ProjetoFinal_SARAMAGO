@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     if ($scenario == 'materialAv')
     {
-        echo $this->render('_formMonografia/_form', ['model' => $model, 'cduAll' => $cduAll, 'colecaoAll' => $colecaoAll]);
+        echo $this->render('_formMaterialav/_form', ['model' => $model, 'cduAll' => $cduAll, 'colecaoAll' => $colecaoAll]);
 
     }elseif ($scenario == 'monografia')
     {

@@ -47,6 +47,7 @@ return [
             'rules' => [
                 '<controller:\w+>/<action:\w+>/<id:\w+>' => '<controller>/<action>',
                 //catalogação
+                'cat'=>'cat/index',
                 //circulação
                 //leitores
                 'leitor'=>'leitor/index',

@@ -109,7 +109,7 @@ $this->title = 'SARAMAGO';
                         <div class="card-body">
                             <h3 class="card-title">Administração</h3>
                             <p class="card-text">
-                                Gestão do Saramago    .
+                                Gestão do Saramago.
                             </p>
                         </div>
                     </div>

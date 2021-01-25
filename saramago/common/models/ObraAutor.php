@@ -31,9 +31,9 @@ class ObraAutor extends \yii\db\ActiveRecord
         return [
             [['Obra_id', 'Autor_id'], 'required'],
             [['Obra_id', 'Autor_id'], 'integer'],
-            [['Obra_id', 'Autor_id'], 'unique', 'targetAttribute' => ['Obra_id', 'Autor_id']],
-            [['Autor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Autor::className(), 'targetAttribute' => ['Autor_id' => 'id']],
-            [['Obra_id'], 'exist', 'skipOnError' => true, 'targetClass' => Obra::className(), 'targetAttribute' => ['Obra_id' => 'id']],
+            [['Obra_id', 'Autor_id'], 'unique', 'targetAttribute' => ['Obra_id', 'Autor_id'], 'message' => 'Autor já associado a obra'],
+            [['Autor_id'], 'exist', 'skipOnError' => false, 'targetClass' => Autor::className(), 'targetAttribute' => ['Autor_id' => 'id']],
+            [['Obra_id'], 'exist', 'skipOnError' => false, 'targetClass' => Obra::className(), 'targetAttribute' => ['Obra_id' => 'id']],
         ];
     }
 
@@ -43,8 +43,8 @@ class ObraAutor extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Obra_id' => 'Obra ID',
-            'Autor_id' => 'Autor ID',
+            'Obra_id' => 'Obra',
+            'Autor_id' => 'Autor',
         ];
     }
 

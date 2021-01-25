@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ExemplarSearch */
+/* @var $model app\models\ColecaoSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="exemplar-search">
+<div class="colecao-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -20,23 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'cota') ?>
-
-    <?= $form->field($model, 'codBarras') ?>
-
-    <?= $form->field($model, 'suplemento') ?>
-
-    <?= $form->field($model, 'estado') ?>
-
-    <?php // echo $form->field($model, 'notaInterna') ?>
-
-    <?php // echo $form->field($model, 'Biblioteca_id') ?>
-
-    <?php // echo $form->field($model, 'EstatutoExemplar_id') ?>
-
-    <?php // echo $form->field($model, 'TipoExemplar_id') ?>
-
-    <?php // echo $form->field($model, 'Obra_id') ?>
+    <?= $form->field($model, 'tituloColecao') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

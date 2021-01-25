@@ -1,6 +1,7 @@
 <?php
 
 use dosamigos\ckeditor\CKEditor;
+use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
@@ -24,14 +25,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'bibliografia')->widget(CKEditor::className(), ['options' => ['rows' => 6, 'id' => $model->id], 'preset' => 'basic']) ?>
 
-    <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
+    <?= $form->field($model, 'dataNasc')->textInput()->widget(DateTimePicker::className(),
+            ['convertFormat' => true, 'type' => DateTimePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true, 'format' => 'yyyy-M-dd']]);?>
 
-    <?= $form->field($model, 'nacionalidade')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nacionalidade')->dropDownList(\backend\models\AutorForm::NACIONALIDADE) ?>
 
-    <?= $form->field($model, 'orcid')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'orcid')->textInput(['maxlength' => true, 'pattern'=>'[0-9]{16}'])->hint("Open Researcher and Contributor ID <br>Formato: 0123456789012345") ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

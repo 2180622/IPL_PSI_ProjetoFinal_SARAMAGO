@@ -7,10 +7,14 @@ use common\models\Materialav;
 use common\models\Monografia;
 use common\models\Obra;
 use common\models\Pubperiodica;
+use Yii;
+use yii\base\Model;
 use yii\helpers\Url;
+use DateTime;
+use yii\web\UploadedFile;
 
 
-class ObraForm extends Obra
+class ObraUpdateForm extends Obra
 {
     //Base
     public $id, $imgCapa, $titulo, $resumo, $editor, $ano, $tipoObra, $descricao, $local, $edicao, $assuntos, $preco, $dataAtualizado, $Cdu_id, $Colecao_id;
@@ -31,7 +35,7 @@ class ObraForm extends Obra
         return [
             self::MONOGRAFIA => [
                 //base
-                'id','imageFile','imgCapa', 'titulo', 'resumo', 'editor', 'ano', 'tipoObra', 'descricao', 'local', 'edicao', 'assuntos', 'preco', 'dataAtualizado', 'Cdu_id','Colecao_id',
+                'id',['imageFile', 'safe'],'imgCapa', 'titulo', 'resumo', 'editor', 'ano', 'tipoObra', 'descricao', 'local', 'edicao', 'assuntos', 'preco', 'dataAtualizado', 'Cdu_id','Colecao_id',
                 //extra
                 'volume','paginas','isbn','Obra_id',
 
@@ -175,17 +179,66 @@ class ObraForm extends Obra
     }
 
     /**
-     * @return false|int
+     * ObraUpdateForm constructor.
+     * @param $id
      */
-    public function create()
+    public function __construct($id)
     {
+        $obra = $this->findModel($id);
 
+        $this->id = $obra->id;
+        $this->imgCapa = $obra->imgCapa;
+        $this->imageFile = $obra->imgCapa;
+        $this->titulo = $obra->titulo;
+        $this->resumo = $obra->resumo;
+        $this->editor = $obra->editor;
+
+        $this->ano = $obra->ano;
+        $this->tipoObra = $obra->tipoObra;
+        $this->descricao = $obra->descricao;
+
+        $this->local = $obra->local;
+        $this->edicao = $obra->edicao;
+        $this->assuntos = $obra->assuntos;
+        $this->preco = $obra->preco;
+        $this->Cdu_id = $obra->Cdu_id;
+        $this->Colecao_id = $obra->Colecao_id;
+
+        if($obra->tipoObra == self::MONOGRAFIA)
+        {
+            $monografia = Monografia::findOne(['Obra_id'=>$obra->id]);
+            $this->paginas = $monografia->paginas;
+            $this->volume = $monografia->volume;
+            $this->isbn = $monografia->isbn;
+
+        }
+        elseif($obra->tipoObra == self::MATERIALAV)
+        {
+            $materialAv = Materialav::findOne(['Obra_id'=>$obra->id]);
+            $this->duracao = $materialAv->duracao;
+            $this->ean = $materialAv->ean;
+        }
+        elseif ($obra->tipoObra == self::PUBPERIODICA)
+        {
+            $pubPeriodica = Pubperiodica::findOne(['Obra_id'=>$obra->id]);
+            $this->volume = $pubPeriodica->volume;
+            $this->serie = $pubPeriodica->serie;
+            $this->numero = $pubPeriodica->numero;
+            $this->ISSN = $pubPeriodica->ISSN;
+
+        }
+    }
+
+    /**
+     * @return false
+     */
+    public function updateObra()
+    {
         if($this->validate())
         {
-            $obra = new Obra();
+            $obra = Obra::findOne($this->id);
 
             $obra->titulo = $this->titulo;
-
             $obra->resumo = $this->resumo;
             $obra->editor = $this->editor;
 
@@ -198,7 +251,7 @@ class ObraForm extends Obra
             $obra->assuntos = $this->assuntos;
             $obra->preco = $this->preco;
 
-            $obra->dataAtualizado = date('y-m-d h:m');
+            $obra->dataAtualizado = date('y-m-d H:i:s');
 
             $obra->Cdu_id = $this->Cdu_id;
             $obra->Colecao_id = $this->Colecao_id;
@@ -209,35 +262,40 @@ class ObraForm extends Obra
                 $this->imgCapa = 'obra-'.md5('saramago-obra'.rand('1', '100').$this->titulo);
                 $this->imageFile->saveAs(Url::to('img/' . $this->imgCapa . '.' . $this->imageFile->extension));
                 $obra->imgCapa = $this->imgCapa. '.' . $this->imageFile->extension;
-            }
+            }else
+                {
+                    if($this->imgCapa != null)
+                    {
+                        unlink(Url::to('img/' . $this->imgCapa));
+                        $obra->imgCapa = null;
+                    }
+                }
 
             $obra->save();
 
             if($obra->tipoObra == self::MONOGRAFIA)
             {
-                $monografia = new Monografia();
-
+                $monografia = Monografia::find()->where('Obra_id='.$obra->id)->one();
                 $monografia->paginas = $this->paginas;
                 $monografia->volume = $this->volume;
                 $monografia->isbn = $this->isbn;
-                $monografia->Obra_id = $obra->id;
 
                 $monografia->save();
 
-            }elseif($obra->tipoObra == self::MATERIALAV)
+            }
+            elseif($obra->tipoObra == self::MATERIALAV)
             {
-                $materialAv = new Materialav();
-
+                $materialAv = Materialav::find()->where('Obra_id='.$obra->id)->one();
                 $materialAv->duracao = $this->duracao;
                 $materialAv->ean = $this->ean;
                 $materialAv->Obra_id = $obra->id;
 
                 $materialAv->save();
 
-            }elseif ($obra->tipoObra == self::PUBPERIODICA)
+            }
+            elseif ($obra->tipoObra == self::PUBPERIODICA)
             {
-                $pubPeriodica = new Pubperiodica();
-
+                $pubPeriodica = Pubperiodica::find()->where('Obra_id='.$obra->id)->one();
                 $pubPeriodica->volume = $this->volume;
                 $pubPeriodica->serie = $this->serie;
                 $pubPeriodica->numero = $this->numero;
@@ -245,15 +303,12 @@ class ObraForm extends Obra
                 $pubPeriodica->Obra_id = $obra->id;
 
                 $pubPeriodica->save();
-
             }
 
-            return $obra->id;
+            return true;
+        }
+        else {return false;}
 
-        }else
-            {
-                return false;
-            }
     }
 
     /**
@@ -266,4 +321,6 @@ class ObraForm extends Obra
             return $model;
         }
     }
+
+
 }

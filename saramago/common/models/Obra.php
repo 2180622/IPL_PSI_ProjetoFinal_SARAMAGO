@@ -138,7 +138,7 @@ class Obra extends \yii\db\ActiveRecord
      */
     public function getMaterialavs()
     {
-        return $this->hasMany(Materialav::className(), ['Obra_id' => 'id']);
+        return $this->hasOne(Materialav::className(), ['Obra_id' => 'id']);
     }
 
     /**
@@ -148,7 +148,7 @@ class Obra extends \yii\db\ActiveRecord
      */
     public function getMonografias()
     {
-        return $this->hasMany(Monografia::className(), ['Obra_id' => 'id']);
+        return $this->hasOne(Monografia::className(), ['Obra_id' => 'id']);
     }
 
     /**
@@ -198,7 +198,7 @@ class Obra extends \yii\db\ActiveRecord
      */
     public function getPubperiodicas()
     {
-        return $this->hasMany(Pubperiodica::className(), ['Obra_id' => 'id']);
+        return $this->hasOne(Pubperiodica::className(), ['Obra_id' => 'id']);
     }
 
     /**

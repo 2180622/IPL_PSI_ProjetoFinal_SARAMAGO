@@ -34,7 +34,7 @@ class Monografia extends \yii\db\ActiveRecord
             [['paginas', 'isbn', 'Obra_id'], 'required'],
             [['paginas', 'isbn', 'Obra_id'], 'integer'],
             [['volume'], 'string', 'max' => 45],
-            [['Obra_id'], 'exist', 'skipOnError' => true, 'targetClass' => Obra::className(), 'targetAttribute' => ['Obra_id' => 'id']],
+            [['Obra_id'], 'exist', 'skipOnError' => false, 'targetClass' => Obra::className(), 'targetAttribute' => ['Obra_id' => 'id']],
         ];
     }
 

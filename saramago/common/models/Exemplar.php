@@ -70,9 +70,9 @@ class Exemplar extends \yii\db\ActiveRecord
             'suplemento' => 'Exemplar suplemento da obra',
             'estado' => 'Estado do exemplar',
             'notaInterna' => 'Nota interna referente ao exemplar',
-            'Biblioteca_id' => 'Chave estrangeira',
-            'EstatutoExemplar_id' => 'Chave estrangeira',
-            'TipoExemplar_id' => 'Chave estrangeira',
+            'Biblioteca_id' => 'Biblioteca',
+            'EstatutoExemplar_id' => 'Estatuto',
+            'TipoExemplar_id' => 'Tipo',
             'Obra_id' => 'Obra ID',
         ];
     }

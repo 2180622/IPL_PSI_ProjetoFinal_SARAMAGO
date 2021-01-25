@@ -15,7 +15,6 @@ use Yii;
  */
 class Estatutoexemplar extends \yii\db\ActiveRecord
 {
-
     const ID_NORMAL = 1;
     const ID_CURTO = 2;
     const ID_DIARIO = 3;
@@ -25,6 +24,13 @@ class Estatutoexemplar extends \yii\db\ActiveRecord
     const PRAZO_CURTO = 3;
     const PRAZO_DIARIO = 1;
     const PRAZO_NREQ = 0;
+
+    const EST_EXEMPLAR = [
+        self::ID_NORMAL=>'Normal',
+        self::ID_CURTO => 'Curto',
+        self::ID_DIARIO =>'Diário',
+        self::ID_NREQ =>'Não Requisitável',
+    ];
 
     /**
      * {@inheritdoc}

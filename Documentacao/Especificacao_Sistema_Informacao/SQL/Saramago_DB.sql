@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
   `cota` VARCHAR(45) NOT NULL COMMENT 'Cota',
   `codBarras` VARCHAR(45) NOT NULL COMMENT 'Código de Barras',
   `suplemento` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Exemplar suplemento da obra',
-  `estado` ENUM('arrumacao', 'estante', 'quarentena', 'perdido', 'reservado', 'nd') NOT NULL COMMENT 'Estado do exemplar',
+  `estado` ENUM('arrumacao', 'estante', 'emprestado','quarentena', 'perdido', 'reservado','transferecia', 'nd') NOT NULL COMMENT 'Estado do exemplar',
   `notaInterna` VARCHAR(45) NULL COMMENT 'Nota interna referente ao exemplar',
   `Biblioteca_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `EstatutoExemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',

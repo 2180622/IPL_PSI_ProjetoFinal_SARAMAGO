@@ -12,12 +12,13 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\obra */
+/* @var $model common\models\materialav */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="obra-form">
 
-    <?php $form = ActiveForm::begin(['id'=>'obra-form']); ?>
+    <?php $form = ActiveForm::begin(['id'=>'obra-form', 'options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?php
 
@@ -52,9 +53,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'editor')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ano')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'ano')->textInput(['maxlength' => true, 'pattern'=>'[0-9]{4}']) ?>
 
-    <?= $form->field($model, 'tipoObra')->dropDownList([ 'materialAv' => 'MaterialAv', 'monografia' => 'Monografia', 'pubPeriodica' => 'PubPeriodica', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tipoObra')->hiddenInput(['value'=> 'materialAv'])->label(false) ?>
 
     <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
 
@@ -64,16 +65,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'assuntos')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'preco')->textInput() ?>
-
-    <?= $form->field($model, 'dataRegisto')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
+    <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Cdu_id')->dropDownList($cduAll,['prompt'=>'Selecione...'])->label('Código Decimal Universal') ?>
 
-    <?= $form->field($model, 'Colecao_id')->dropDownList($colecaoAll,['prompt'=>'Selecione...'])->label('Coleção') ?>
+    <?= $form->field($model, 'Colecao_id')->dropDownList($colecaoAll,['prompt'=>'Nenhuma'])->label('Coleção') ?>
+
+    <?= $form->field($model, 'duracao')->textInput(['maxlength' => true])?>
+
+    <?= $form->field($model, 'ean')->textInput(['maxlength' => true])?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

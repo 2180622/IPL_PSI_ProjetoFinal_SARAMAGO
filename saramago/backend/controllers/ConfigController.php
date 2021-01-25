@@ -1437,5 +1437,4 @@ class ConfigController extends Controller
 
     #endregion
 
-
 }
