@@ -223,7 +223,7 @@ class ConfigController extends Controller
             $model->reset($id);
             Yii::$app->session->setFlash('success', "<strong>Informação:</strong> " . $model->info. " foi reposto.");
 
-            return $this->redirect(['entidade/index']);
+            return $this->redirect(['entidade']);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
@@ -353,13 +353,12 @@ class ConfigController extends Controller
     }
 
     public function actionPostosView($id){
-        if ((Yii::$app->user->can('verPostosTrabalho'))) {
-            //FIXME
+        if ((Yii::$app->user->can('verPostosTrabalho')))
+        {
             if (($model = Postotrabalho::findOne($id)) !== null) {
                 return $this->renderAjax('postos/view', ['model' => $model]);
             }
 
-            return 1;
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
