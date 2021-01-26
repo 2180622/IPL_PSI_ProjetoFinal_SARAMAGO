@@ -179,7 +179,6 @@ class ObraForm extends Obra
      */
     public function create()
     {
-
         if($this->validate())
         {
             $obra = new Obra();

@@ -193,8 +193,8 @@ class CatController extends Controller
      */
     public function actionObraCreate($scenario)
     {
-        if ((Yii::$app->user->can('inserirObras'))) {
-
+        if ((Yii::$app->user->can('inserirObras')))
+        {
             if($scenario == 'monografia')
             {
                 $model = new ObraForm(['scenario' => ObraForm::MONOGRAFIA]);
@@ -211,8 +211,8 @@ class CatController extends Controller
             $cduAll = ArrayHelper::map(Cdu::find()->all(),'id','designacao','codCdu',['enctype' => 'multipart/form-data']);
             $colecaoAll = ArrayHelper::map(Colecao::find()->all(),'id','tituloColecao',['enctype' => 'multipart/form-data']);
 
-            if($model->load(Yii::$app->request->post())) {
-
+            if($model->load(Yii::$app->request->post()))
+            {
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
                 if($model->create()) {
@@ -220,6 +220,7 @@ class CatController extends Controller
                     Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A obra "' . $model->titulo . '" foi adicionada.');
 
                     return $this->redirect(['index']);
+
                 }else
                     {
                         Yii::$app->session->setFlash('danger', "<strong>Informação:</strong> Ocorreu um erro ao adicionar uma obra, tente de novo.");
@@ -603,7 +604,12 @@ class CatController extends Controller
         {
             $model = new AutorForm();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save())
+            if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $model->validate())
+            {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+            elseif ($model->load(Yii::$app->request->post()) && $model->save())
             {
                 $autor = $model->primeiroNome.' '.$model->segundoNome.' '.$model->apelido;
                 Yii::$app->session->setFlash('success', '<strong>Informação:</strong> O autor "'.$autor.'" foi adicionado com sucesso.');
@@ -719,7 +725,7 @@ class CatController extends Controller
         {
             Yii::$app->session->setFlash('success',
                 '<strong>Informação:</strong> A coleção "'.$model->tituloColecao.'" foi adicionada com sucesso.');
-            return $this->redirect(['cat', 'id' => $model->id]);
+            return $this->redirect(['cat/index']);
         }
 
         return $this->renderAjax('colecao/create', ['model' => $model,]);
@@ -740,7 +746,7 @@ class CatController extends Controller
         {
             Yii::$app->session->setFlash('success',
                 '<strong>Informação:</strong> A coleção "'.$model->tituloColecao.'" foi atualizada com sucesso.');
-            return $this->redirect(['cat', 'id' => $model->id]);
+            return $this->redirect(['cat/index']);
         }
 
         return $this->renderAjax('colecao/update', ['model' => $model,]);
@@ -762,16 +768,16 @@ class CatController extends Controller
             if($this->findModelColecao($id)->delete())
             {
                 Yii::$app->session->setFlash('success','<strong>Informação:</strong> A coleção "'.$model->tituloColecao.'" foi apagada.');
-                return $this->redirect(['index']);
+                return $this->redirect(['cat/index']);
             }
 
         }else
             {
                 Yii::$app->session->setFlash('warning','<strong>Informação:</strong> Só é possivel apagar coleções sem obras agragadas<hr>Coleção: "'.$model->tituloColecao.'".'.'<br>Obras Agregadas: '.$model->getObras()->count());
-                return $this->redirect(['index']);
+                return $this->redirect(['cat/index']);
             }
 
-        return $this->redirect(['cat']);
+        return $this->redirect(['cat/index']);
     }
 
     /**

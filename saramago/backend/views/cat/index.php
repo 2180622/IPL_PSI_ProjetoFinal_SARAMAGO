@@ -191,6 +191,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'segundoNome',
                                     'apelido',
                                     [
+                                        'attribute' => 'nacionalidade',
+                                        'label' => 'País',
+                                        'headerOptions' => ['width' => '80'],
+                                        'filter' => \backend\models\AutorForm::NACIONALIDADE,
+                                        'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
+
+                                    ],
+                                    [
                                         'attribute' => 'tipo',
                                         'label' => 'Tipo',
                                         'filter' => ['individual'=>'Individual','coletivo'=>'Coletivo'],
@@ -207,12 +215,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'format' => 'html',
                                         'value' => function ($model)
                                         {
-                                            $p1 = substr($model->orcid, 0, 4);
-                                            $p2 = substr($model->orcid, 4, 4);
-                                            $p3 = substr($model->orcid, 8, 4);
-                                            $p4 = substr($model->orcid, 12, 4);
-                                            $orcid = $p1.'-'.$p2.'-'.$p3.'-'.$p4;
-                                            return Html::a($orcid.' '.FAS::icon('external-link-alt')->size(FAS::SIZE_EXTRA_SMALL), 'https://orcid.org/'.$orcid);
+                                            if($model->orcid != null)
+                                            {
+                                                $p1 = substr($model->orcid, 0, 4);
+                                                $p2 = substr($model->orcid, 4, 4);
+                                                $p3 = substr($model->orcid, 8, 4);
+                                                $p4 = substr($model->orcid, 12, 4);
+                                                $orcid = $p1.'-'.$p2.'-'.$p3.'-'.$p4;
+                                                return Html::a($orcid.' '.FAS::icon('external-link-alt')->size(FAS::SIZE_EXTRA_SMALL), 'https://orcid.org/'.$orcid);
+                                            }
+
                                         }
 
                                     ],

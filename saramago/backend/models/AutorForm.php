@@ -1,12 +1,7 @@
 <?php
 namespace backend\models;
 
-use Yii;
-use yii\base\Model;
 use common\models\Autor;
-use DateTime;
-use yii\helpers\VarDumper;
-use yii\web\NotFoundHttpException;
 
 /**
  * AutorCreate form

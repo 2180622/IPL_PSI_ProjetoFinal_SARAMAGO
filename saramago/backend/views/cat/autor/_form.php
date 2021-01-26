@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'dataNasc')->textInput()->widget(DateTimePicker::className(),
             ['convertFormat' => true, 'type' => DateTimePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true, 'format' => 'yyyy-M-dd']]);?>
 
-    <?= $form->field($model, 'nacionalidade')->dropDownList(\backend\models\AutorForm::NACIONALIDADE) ?>
+    <?= $form->field($model, 'nacionalidade')->dropDownList(\backend\models\AutorForm::NACIONALIDADE,['prompt'=>'Nenhuma'] ) ?>
 
     <?= $form->field($model, 'orcid')->textInput(['maxlength' => true, 'pattern'=>'[0-9]{16}'])->hint("Open Researcher and Contributor ID <br>Formato: 0123456789012345") ?>
 
