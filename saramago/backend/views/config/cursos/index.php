@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=>'Ações',
-                'headerOptions' => ['width' => '140px'],
+                'headerOptions' => ['width' => '150'],
                 'template' => '{view} {update} {delete}',
                 'buttons' =>[
                     'view' => function ($url,$model,$id){return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
