@@ -110,9 +110,11 @@ class LeitorForm extends Leitor
 
             ['Biblioteca_id', 'trim'],
             ['Biblioteca_id', 'integer'],
+            ['Biblioteca_id', 'required'],
 
             ['TipoLeitor_id', 'trim'],
             ['TipoLeitor_id', 'integer'],
+            ['TipoLeitor_id', 'required'],
         ];
     }
 
@@ -137,8 +139,8 @@ class LeitorForm extends Leitor
             'notaInterna' => 'Nota interna referente ao leitor',
             'dataRegisto' => 'Data Registado',
             'dataAtualizado' => 'Data Atualizado',
-            'Biblioteca_id' => 'Chave estrangeira',
-            'TipoLeitor_id' => 'Chave estrangeira',
+            'Biblioteca_id' => 'Biblioteca',
+            'TipoLeitor_id' => 'Tipo de Leitor',
             'user_id' => 'User ID',
         ];
     }

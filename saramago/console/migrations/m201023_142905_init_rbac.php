@@ -742,8 +742,6 @@ class m201023_142905_init_rbac extends Migration
         $admin->description = "Administrador";
         //$auth->addChild($admin, $createPost);
 
-
-
         // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
         // usually implemented in your User model.
         $auth->assign($leitorAluno, 7);
