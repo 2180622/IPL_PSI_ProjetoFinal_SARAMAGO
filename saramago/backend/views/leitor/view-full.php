@@ -27,16 +27,17 @@ $this->params['breadcrumbs'][] = $this->title;
             echo'<p>Estatuto: '.$model->tipoEstatuto($model->id).'</p>';
             if($model->tipoLeitor->tipo == 'aluno')
             {
-                $aluno = Aluno::find()->where('Leitor_id = '. $model->id)->one();
-
-                echo'<p>Número: '. $aluno->numero .'</p>';
-                //echo'<p>Curso: '.$aluno->curso->nome.'</p>';
+                echo '<p>Número: '. $model->alunos->numero .'</p>';
+                if($model->alunos->curso != null)
+                {
+                    echo '<p>Curso: '.$model->alunos->curso->nome.' ('.$model->alunos->curso->CodCurso.')'.'</p>';
+                }
             }
-            elseif ($model->tipoLeitor->tipo == 'Docente' || $model->tipoLeitor->tipo == 'Funcionário')
+            elseif ($model->tipoLeitor->tipo == 'docente' || $leitor->tipoLeitor->tipo == 'funcionário')
             {
-                echo'<p>Departamento: '.$model->funcionarios->departamento.'</p>';
+                '<p>Departamento: '.$model->funcionarios->departamento.'</p>';
             }
-            echo'<p>Biblioteca: '.$model->biblioteca->nome.'</p>';
+            echo '<p>Biblioteca: '.$model->biblioteca->nome.' ('.$model->biblioteca->codBiblioteca.')'.'</p>';
             echo'<p>Data Registado: '.Yii::$app->formatter->asDatetime($model->dataRegisto).'</p>';
             echo'<p>Data Atualizado: '.Yii::$app->formatter->asDatetime($model->dataAtualizado).'</p>';
             ?>

@@ -108,7 +108,7 @@ class Leitor extends \yii\db\ActiveRecord
      */
     public function getAlunos()
     {
-        return $this->hasMany(Aluno::className(), ['Leitor_id' => 'id']);
+        return $this->hasOne(Aluno::className(), ['Leitor_id' => 'id']);
     }
 
     /**
@@ -128,7 +128,7 @@ class Leitor extends \yii\db\ActiveRecord
      */
     public function getFuncionarios()
     {
-        return $this->hasMany(Funcionario::className(), ['Leitor_id' => 'id']);
+        return $this->hasOne(Funcionario::className(), ['Leitor_id' => 'id']);
     }
 
     /**
