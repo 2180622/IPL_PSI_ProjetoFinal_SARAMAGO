@@ -5,6 +5,7 @@ namespace backend\controllers;
 use app\models\LeitorSearch;
 use app\models\LeitorUpdate;
 use common\models\Biblioteca;
+use common\models\Curso;
 use common\models\Tipoleitor;
 use common\models\User;
 use backend\models\LeitorForm;
@@ -131,6 +132,7 @@ class LeitorController extends Controller
 
             $listaBibliotecas = Biblioteca::find()->all();
             $listaTiposLeitors = Tipoleitor::find()->all();
+            $listaCursos = Curso::find()->all();
 
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
             {
@@ -145,6 +147,7 @@ class LeitorController extends Controller
                 'model'=>$model,
                 'listaBibliotecas'=>$listaBibliotecas,
                 'listaTiposLeitors'=>$listaTiposLeitors,
+                'listaCursos' => $listaCursos,
             ]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');

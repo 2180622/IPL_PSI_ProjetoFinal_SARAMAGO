@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             if($model->tipoLeitor->tipo == 'aluno')
             {
                 $aluno = Aluno::find()->where('Leitor_id = '. $model->id)->one();
+
                 echo'<p>Número: '. $aluno->numero .'</p>';
                 //echo'<p>Curso: '.$aluno->curso->nome.'</p>';
             }

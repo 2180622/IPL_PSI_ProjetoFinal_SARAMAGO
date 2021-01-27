@@ -36,6 +36,7 @@ class LeitorForm extends Leitor
     public $notaInterna;
     public $Biblioteca_id;
     public $TipoLeitor_id;
+    public $Curso_id;
 
     /**
      * {@inheritdoc}
@@ -69,6 +70,8 @@ class LeitorForm extends Leitor
 
             ['numero', 'trim'],
             ['numero', 'integer'],
+            ['numero', 'required'],
+            ['numero', 'unique', 'targetClass' => '\common\models\Aluno', 'message' => 'Número já se encontra em uso.'],
 
             ['nif', 'required'],
             ['nif', 'string', 'min' => 9, 'max' => 9],
@@ -115,6 +118,9 @@ class LeitorForm extends Leitor
             ['TipoLeitor_id', 'trim'],
             ['TipoLeitor_id', 'integer'],
             ['TipoLeitor_id', 'required'],
+
+            ['Curso_id', 'trim'],
+            ['Curso_id', 'integer'],
         ];
     }
 
@@ -182,19 +188,20 @@ class LeitorForm extends Leitor
             $leitor->user_id = $user->getId();
 
             if ($leitor->tipoLeitor->tipo == "aluno") {
+                $leitor->save();
                 $aluno = new Aluno();
                 $aluno->numero = $this->numero;
-                $leitor->save();
                 $aluno->Leitor_id = $leitor->id;
+                $aluno->Curso_id = $this->Curso_id;
                 $aluno->save();
 
                 $leitorAlunoRole = $auth->getRole('leitorAluno');
                 $auth->assign($leitorAlunoRole, $leitor->user_id);
 
             } elseif ($leitor->tipoLeitor->tipo == "docente") {
+                $leitor->save();
                 $funcionario = New Funcionario();
                 $funcionario->departamento = $this->departamento;
-                $leitor->save();
                 $funcionario->Leitor_id = $leitor->id;
                 $funcionario->save();
 
@@ -202,9 +209,9 @@ class LeitorForm extends Leitor
                 $auth->assign($leitorDocenteRole, $leitor->user_id);
 
             } elseif ($leitor->tipoLeitor->tipo == "funcionario") {
+                $leitor->save();
                 $funcionario = New Funcionario();
                 $funcionario->departamento = $this->departamento;
-                $leitor->save();
                 $funcionario->Leitor_id = $leitor->id;
                 $funcionario->save();
 
