@@ -1,23 +1,23 @@
-    <?php
+<?php
 
-    use rmrevin\yii\fontawesome\FAS;
-    use yii\bootstrap\Modal;
-    use yii\helpers\Html;
+use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap\Modal;
+use yii\helpers\Html;
 use yii\grid\GridView;
-    use yii\helpers\Url;
-    use yii\widgets\Pjax;
+use yii\helpers\Url;
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Reservas';
+$this->title = 'Reserva de postos de trabalho';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="reserva-index">
+<div class="posto">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Reserva', ['create'], ['class' => 'btn btn-create']) ?>
+        <?= Html::a('Nova reserva', ['posto-create'], ['class' => 'btn btn-create']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [   'label'=>'Data de Reserva',
+            [   'label'=>'Data de reserva',
                 'attribute' => 'dataReserva',
             ],
-            [   'label'=>'Estado da Reserva',
+            [   'label'=>'Estado da reserva',
                 'attribute'=>'estadoReserva',
             ],
-            [   'label'=>'dataFecho',
+            [   'label'=>'Data de fecho',
                 'attribute'=>'dataFecho',
             ],
             [   'label'=>'Nota',
@@ -40,13 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [   'label'=>'Leitor Associado',
                 'attribute'=>'Leitor_id',
-                'value'=>function($reserva){
-                            echo $reserva->leitor->nome;},
+                'value'=>function($reservasPosto){
+                            echo $reservaPosto->leitor->nome;},
             ],
-            [   'label'=>'Exemplar Reservado',
-                'attribute'=>'Exemplar_id',
-                'value'=>function($reserva){
-                            echo $reserva->exemplar->cota;},
+            [   'label'=>'Posto Reservado',
+                'attribute'=>'PostoTrabalho_id',
+                'value'=>function($reservasPosto){
+                            echo $reservaPosto->postotrabalho->designacao;},
             ],
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ações',
@@ -56,16 +56,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         //$btn_id='modalButtonView'.$id; return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
                         //      ['value'=>Url::to(['bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm modal-view-btn','id'=>$btn_id]);
                         return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                            ['value'=>Url::to(['view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
+                            ['value'=>Url::to(['posto-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
                     },
                     'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                        ['value'=>Url::to(['update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
+                        ['value'=>Url::to(['posto-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
                     },
                     'delete' => function ($url,$model,$id) {
                         return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['delete', 'id' => $id]),
+                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['posto-delete', 'id' => $id]),
                             ['data' =>
-                                ['confirm' => 'Tem a certeza de que pretende fechar a reserva ?', 'method' => 'post']
+                                ['confirm' => 'Tem a certeza de que pretende fechar a reserva de posto?', 'method' => 'post']
                             ]);
                     },
                 ],
@@ -85,11 +85,11 @@ $this->params['breadcrumbs'][] = $this->title;
         });
     ");
 
-    foreach ($reservas as $reserva){
+    foreach ($reservasPosto as $reservaPosto){
     $this->registerJs("
     $(function () {
-        $('#modalButtonView".$reserva->id."').click(function (){
-            $('#modalView".$reserva->id."').modal('show')
+        $('#modalButtonView".$reservaPosto->id."').click(function (){
+            $('#modalView".$reservaPosto->id."').modal('show')
                 .find('#modalContent')
                 .load($(this).attr('value'))
         })
@@ -97,16 +97,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     $(function () {
-        $('#modalButtonUpdate".$reserva->id."').click(function (){
-            $('#modalUpdate".$reserva->id."').modal('show')
+        $('#modalButtonUpdate".$reservaPosto->id."').click(function (){
+            $('#modalUpdate".$reservaPosto->id."').modal('show')
                 .find('#modalContent')
                 .load($(this).attr('value'))
         })
     });
 
     $(function () {
-        $('#modalButtonDelete".$reserva->id."').click(function (){
-            $('#modalDelete".$reserva->id."').modal('show')
+        $('#modalButtonDelete".$reservaPosto->id."').click(function (){
+            $('#modalDelete".$reservaPosto->id."').modal('show')
                 .find('#modalContent')
                 .load($(this).attr('value'))
         })
@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     Modal::begin([
-    'header' => '<h3>Nova Reserva</h3>',
+    'header' => '<h3>Nova reserva de posto</h3>',
     'id' => 'modalCreate',
     'size' => 'modal-lg',
     'clientOptions' => ['backdrop' => 'static']
@@ -124,11 +124,11 @@ $this->params['breadcrumbs'][] = $this->title;
     Modal::end();
     ?>
 
-    <?php foreach ($reservas as $reserva){
+    <?php foreach ($reservasPosto as $reservaPosto){
 
         Modal::begin([
             'header' => '<h3>Leitor</h3>',
-            'id' => 'modalView'.$reserva->id,
+            'id' => 'modalView'.$reservaPosto->id,
             //'options' => ['class'=>'fade modal modalButtonView modal-v-'.$bibliotecasModel->id],
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']
@@ -147,6 +147,4 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     ?>
-</div>
-    </div>
 </div>

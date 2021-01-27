@@ -77,8 +77,7 @@ AppAsset::register($this);
         //['label' => 'About', 'url' => ['/site/about']],
         //['label' => 'Contact', 'url' => ['/site/contact']],
 
-        //TODO Pesquisa
-        ['label' => 'Pesquisa', 'url' => ['\index'],
+        ['label' => 'Pesquisar', 'url' => ['\index'],
          'items' =>[
                  ['label' =>'Obras', 'url' =>['/pesquisa/obra']],
                  ['label' =>'Autores', 'url' =>['/pesquisa/autor']],
@@ -86,7 +85,12 @@ AppAsset::register($this);
          ],
         ],
         [
-            'label' => 'Reserva', 'url'=>['/reserva/index'],
+            'label' => 'Reservar', 'url'=>['\index'],
+            'items' =>[
+                 ['label' =>'Postos de trabalho', 'url' =>['/reserva/posto']],
+                 ['label' =>'Exemplares', 'url' =>['/reserva/exemplar']],
+
+         ],
         ]
     ];
     if (Yii::$app->user->isGuest) {

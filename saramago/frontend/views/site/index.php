@@ -91,6 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                 </table>
             </div>
+            <hr>
             <!--TAGS-->
             <h1>Obras disponíveis em Saramago</h1>
             <hr>

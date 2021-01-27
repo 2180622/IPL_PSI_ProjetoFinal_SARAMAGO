@@ -7,20 +7,20 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Reserva */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Reservas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Reservas', 'url' => ['posto']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="reserva-view">
+<div class="posto-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Update', ['post-update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['post-delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Pretende apagar esta reserva de posto?',
                 'method' => 'post',
             ],
         ]) ?>

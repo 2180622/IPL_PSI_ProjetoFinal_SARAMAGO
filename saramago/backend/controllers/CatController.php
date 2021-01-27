@@ -18,6 +18,7 @@ use common\models\Monografia;
 use common\models\Obra;
 use common\models\ObraAutor;
 use common\models\Pubperiodica;
+use common\models\PostoTrabalho;
 use common\models\Tipoexemplar;
 use common\models\Biblioteca;
 use common\models\Estatutoexemplar;
