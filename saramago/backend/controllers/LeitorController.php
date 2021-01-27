@@ -74,7 +74,7 @@ class LeitorController extends Controller
         if ((Yii::$app->user->can('acessoLeitores'))) {
             $searchLeitor = new LeitorSearch();
             $leitores = Leitor::find()->all();
-            $tiposLeitorAll = ArrayHelper::map(Tipoleitor::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
+            $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->select(["id, concat(nome,' (',codBiblioteca,')') as Biblioteca "])->asArray()->all(),'id','Biblioteca',['enctype' => 'multipart/form-data']);
             $dataProvider = $searchLeitor->search(Yii::$app->request->queryParams);
             $bibliotecasCount = Biblioteca::find()->count();
             $tiposLeitoresCount = Tipoleitor::find()->count();
@@ -86,7 +86,8 @@ class LeitorController extends Controller
                 'leitores' => $leitores,
                 'dataProvider'=>$dataProvider,
                 'tiposLeitoresCount'=>$tiposLeitoresCount,
-                'bibliotecasCount'=>$bibliotecasCount,]);
+                'bibliotecasCount'=>$bibliotecasCount,
+                'bibliotecaAll'=>$bibliotecaAll]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }

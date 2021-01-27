@@ -98,6 +98,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'label' => 'Biblioteca',
                             'attribute' => 'Biblioteca_id',
+                            'filter' => $bibliotecaAll,
+                            'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
                             'value' => function ($leitores) { return '' . $leitores->biblioteca->nome;
                             },
                         ],
