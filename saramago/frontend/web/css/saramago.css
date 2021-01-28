@@ -92,7 +92,6 @@
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     border-radius: 5px;
     font-size: 18px;
-    border: 1px solid black;
 }
 
 
@@ -101,7 +100,16 @@
     padding: 5px;
     border-radius: 5px;
     font-size: 18px;
-    background-color:#fafafa;
+    background-color:#ddd;
+    width: 100%;
+}
+
+.rapido-saramago .panel-heading    {
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color:#ccc;
     width: 100%;
 }
 
@@ -208,7 +216,7 @@
 
 .rapido-pesquisa table {
     border-collapse: separate !important;
-    background-color: #eee;
+    background-color: #ddd;
     margin-top: 1%;
     margin-left: 1%;
     margin-bottom: 2%;

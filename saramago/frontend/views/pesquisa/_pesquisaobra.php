@@ -29,7 +29,9 @@ use yii\widgets\DetailView;
         ],
         [
             'attribute'=>'',
-            'value'=>'Preço: '.$model->preco.' '.'€',
+            //'value'=>$model->imgCapa,
+            'value'=>Html::a('Fazer reserva', url::toRoute('reserva/exemplarcreate')),
+            'format' => 'raw',
         ],
         [
             'attribute'=>'',
