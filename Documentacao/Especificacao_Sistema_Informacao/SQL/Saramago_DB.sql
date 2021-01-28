@@ -483,9 +483,9 @@ DROP TABLE IF EXISTS `yii2saramago`.`Reserva` ;
 
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`Reserva` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
-  `dataReserva` DATETIME NULL DEFAULT NULL COMMENT 'Data da reserva',
+  `dataReserva` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data da reserva',
   `estadoReserva` ENUM('reservado', 'cancelado', 'concluido') NULL DEFAULT 'reservado' COMMENT 'Estado da reserva',
-  `dataFecho` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data de fecho',
+  `dataFecho` DATETIME NULL COMMENT 'Data de fecho',
   `notaReserva` MEDIUMTEXT NULL DEFAULT NULL COMMENT 'Nota da reserva',
   `Leitor_id` INT NOT NULL COMMENT 'Chave estrangeiro',
   `Exemplar_id` INT NOT NULL COMMENT 'Chave estrangeiro',
