@@ -47,7 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['value' => 'leitor/create', 'class' => 'btn btn-alt','id' => 'modalButtonCreate']) ?>
             </div>
             <div class="menu-table-saramago">
-
                 <?php Pjax::begin(); ?>
                 <?php
                 echo GridView::widget([
@@ -114,15 +113,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'view' => function ($url, $model, $id) {
                                     return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
                                         ['value' => Url::to(['view', 'id' => $id]), 'class' => 'btn btn-primary btn-sm', 'id' => 'modalButtonView' . $id]);
-                                },
+                                    },
                                 'update' => function ($url, $model, $id) {
-                                    return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                                        ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
-                                },
+                                        return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
+                                            ['value' => Url::to(['update', 'id' => $id]), 'class' => 'btn btn-warning btn-sm', 'id' => 'modalButtonUpdate' . $id]);
+                                    },
+                                ],
                             ],
                         ],
-                    ],
-                ]);
+                    ]);
+                //}
     ?>
 
     <?php

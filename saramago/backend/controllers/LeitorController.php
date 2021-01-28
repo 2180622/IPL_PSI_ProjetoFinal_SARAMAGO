@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\models\LeitorSearch;
 use app\models\LeitorUpdate;
+use common\models\Aluno;
 use common\models\Biblioteca;
 use common\models\Curso;
 use common\models\Tipoleitor;
@@ -168,6 +169,7 @@ class LeitorController extends Controller
 
             $listaBibliotecas = Biblioteca::find()->all();
             $listaTiposLeitors = Tipoleitor::find()->all();
+            $listaCursos = Curso::find()->all();
 
             if ($model->load(Yii::$app->request->post()) && $model->update()) {
                 Yii::$app->session->setFlash('success', "O Leitor foi editado com sucesso.");
@@ -179,6 +181,7 @@ class LeitorController extends Controller
                 'model' => $model,
                 'listaBibliotecas'=>$listaBibliotecas,
                 'listaTiposLeitors'=>$listaTiposLeitors,
+                'listaCursos' => $listaCursos,
             ]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
@@ -213,11 +216,13 @@ class LeitorController extends Controller
     {
         if ((Yii::$app->user->can('acessoLeitores'))) {
             $leitor = $this->findModel($id);
+            //$aluno = Aluno::find()->where('Leitor_id = '. $leitor->id)->one();
             $user = User::findOne($leitor->user_id);
             $user->status = 9;
 
             $user->save();
-            $leitor->delete();
+            //$aluno->delete();
+            //$leitor->delete();
 
             Yii::$app->session->setFlash('success', "O Leitor foi eliminado com sucesso.");
             return $this->redirect(['index']);

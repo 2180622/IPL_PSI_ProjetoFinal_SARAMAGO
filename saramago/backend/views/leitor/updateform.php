@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Curso;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
@@ -18,6 +19,9 @@ use yii\widgets\ActiveForm;
 
     $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id',
         'estatuto','tipo', ['enctype' => 'multipart/form-data']);
+
+    $listasCursos = ArrayHelper::map(Curso::find()->select(["id, concat(nome, ' ', ' (',CodCurso,')') as Curso"])->asArray()->all(),
+        'id', 'Curso',['enctype' => 'multipart/form-data']);
 
     $form = ActiveForm::begin(['id'=>'updateform']); ?>
 
@@ -52,8 +56,9 @@ use yii\widgets\ActiveForm;
     <div id="departamento" hidden>
         <?= $form->field($model, 'departamento')->textInput(['maxlength' => true])->label('Departamento'); ?>
     </div>
-    <div id="numero" hidden>
+    <div id="aluno" hidden>
         <?= $form->field($model, 'numero')->textInput(['maxlength' => 11])->label('Número de Aluno'); ?>
+        <?= $form->field($model, 'Curso_id')->dropDownList($listasCursos, ['prompt' => 'Nenhum'])->label('Curso'); ?>
     </div>
 
     <div class="form-group">
@@ -69,17 +74,17 @@ use yii\widgets\ActiveForm;
                     var label = $('option:selected', this).closest('optgroup').attr('label');
                     console.log(label);
                     if( label == 'aluno' ) {
-                        $('#numero').show();
+                        $('#aluno').show();
                         $('#departamento').hide();
                     }else if(label == 'docente' || label == 'funcionario') {
                         $('#departamento').show();
-                        $('#numero').hide();
+                        $('#aluno').hide();
                     }else if(label == 'externo'){
                         $('#departamento').hide();
-                        $('#numero').hide();
+                        $('#aluno').hide();
                     }else{
                         $('#departamento').hide();
-                        $('#numero').hide();                        
+                        $('#aluno').hide();                        
                     }
                 });
             });

@@ -36,6 +36,7 @@ class LeitorUpdate extends Model
     public $Biblioteca_id;
     public $TipoLeitor_id;
     public $user_id;
+    public $Curso_id;
 
     /**
      * {@inheritdoc}
@@ -119,6 +120,9 @@ class LeitorUpdate extends Model
 
             ['user_id', 'trim'],
             ['user_id', 'integer'],
+
+            ['Curso_id', 'trim'],
+            ['Curso_id', 'integer'],
         ];
     }
 
@@ -174,6 +178,7 @@ class LeitorUpdate extends Model
                 $userUpdated->save();
                 $leitorUpdated->save();
                 $aluno->Leitor_id = $leitor->id;
+                $aluno->Curso_id = $this->Curso_id;
                 $aluno->save();
 
             } elseif ($leitorUpdated->tipoLeitor->tipo == "docente") {
@@ -237,6 +242,7 @@ class LeitorUpdate extends Model
                 $userUpdated->save();
                 $leitorUpdated->save();
                 $aluno->Leitor_id = $leitorUpdated->id;
+                $aluno->Curso_id = $this->Curso_id;
                 $aluno->save();
                 $funcionario->delete();
 
@@ -296,6 +302,7 @@ class LeitorUpdate extends Model
                 $userUpdated->save();
                 $leitorUpdated->save();
                 $aluno->Leitor_id = $leitorUpdated->id;
+                $aluno->Curso_id = $this->Curso_id;
                 $aluno->save();
                 $funcionario->delete();
 
@@ -353,6 +360,7 @@ class LeitorUpdate extends Model
                 $userUpdated->save();
                 $leitorUpdated->save();
                 $aluno->Leitor_id = $leitorUpdated->id;
+                $aluno->Curso_id = $this->Curso_id;
                 $aluno->save();
 
                 $auth->revokeAll($leitorUpdated->user_id);

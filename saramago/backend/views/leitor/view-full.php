@@ -44,36 +44,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
         <div class="menu-nav-saramago">
-            <?= Html::button(FAS::icon('pencil-alt') . ' Editar', ['value' => 'leitor/update', 'class' => 'btn btn-alt', 'id' => 'modalButtonUpdate']) ?>
+            <?= //tml::button(FAS::icon('pencil-alt') . ' Editar', ['value' => 'leitor/update', 'class' => 'btn btn-alt', 'id' => 'modalButtonUpdate'])
+                Html::button(FAS::icon('pencil-alt'). 'Editar',
+                    ['value' => Url::to(['update', 'id' => $model->id]), 'class' => 'btn btn-alt', 'id' => 'modalButtonUpdate' . $model->id]);?>
+
             <?= Html::a(Html::button(FAS::icon('trash-alt').' Eliminar', ['class' => 'btn btn-alt ']), Url::to(['delete', 'id' => $model->id]),
                 ['data' =>
                     ['confirm' => 'Tem a certeza de que pretende apagar o leitor ' . $model->nome . '?', 'method' => 'post']
                 ]); ?>
 
-            <?= ButtonDropdown::widget([
-                'label' => FAS::icon('user-cog') . ' Opções',
-                'encodeLabel' => false,
-                'options' => ['class' => 'btn btn-alt dropdown-toggle'],
-                'dropdown' => [
-                    'encodeLabels' => false,
-                    'options' => ['class' => 'dropdown-menu-right'],
-                    'items' => [
-                        [
-                            'label' => FAS::icon('key') . ' Repor Password',
-                            'options' => ['class' => 'btn btn-secondary', 'id' => 'modalButtonPswReset'],
-                        ],
-                        [
-                            //FIXME 
-                            'label' => FAS::icon('trash-alt') . ' Eliminar Autor',
-                            'options' => ['value' => 'leitor/repor',
-                                'class' => 'btn btn-secondary',
-
-                            ],
-                        ],
-                    ],
-                ],
-            ]);
-            ?>
+            <?= Html::a(Html::button(FAS::icon('key').' Repor Password', ['class' => 'btn btn-alt ']), Url::to(['repor-password', 'id' => $model->id]),
+                    ['data' =>
+                        ['confirm' => 'Tem a certeza de que pretende repôr a password do leitor ' . $model->nome . '?', 'method' => 'post']
+                    ]);?>
         </div>
         <div class="menu-table-saramago">
             <?php
@@ -166,30 +149,34 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $this->registerJs(/** @lang JavaScript */"
         $(function () {
-            $('#modalButtonPswReset').click(function (){
-                $('#modalReset').modal('show')
+            $('#modalButtonUpdate" . $model->id . "').click(function (){
+                $('#modalUpdate" . $model->id . "').modal('show')
                     .find('#modalContent')
                     .load($(this).attr('value'))
-            });
-        })
+            })
+        });
     ");
     ?>
     <?php
         Modal::begin([
             'header' => '<h4>'.$model->nome.'</h4>',
-            'id' => 'modalReset',
+            'id' => 'modalUpdate' . $model->id,
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']
         ]);
-        echo    '<div id="modalContent">
-                    Tem a certeza que pretende repôr a sua password?
+        echo '<div id="modalContent"><div style="text-align:center">'. FAS::icon('spinner')->size(FAS::SIZE_7X)->spin().'</div></div>';
+
+
+
+            /*'<div id="modalContent">
+                    Tem a certeza que pretende repôr a password do utilizador?
                     <div style="text-align:left">'.
                         Html::a(Html::button('Sim', ['class' => 'btn btn-alt']), Url::to(['repor-password', 'id' => $model->id])).
                     '</div>
                     <div style="text-align:left">
                         
                     </div>
-                </div>';
+                </div>';*/
 
         Modal::end();
     ?>
