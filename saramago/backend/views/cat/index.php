@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
             ?>
             <?= Html::button(FAS::icon('plus') . ' Adicionar Coleção',
-                ['value' => 'cat/colecao-create',  'class' => 'btn btn-alt','id' => 'modalButtonColecaoCreate']) ?>
+                ['value' => 'cat/colecao-create',  'class' => 'btn btn-alt pull-right','id' => 'modalButtonColecaoCreate']) ?>
         </div>
         <div class="menu-table-saramago">
             <?php Pjax::begin(); ?>

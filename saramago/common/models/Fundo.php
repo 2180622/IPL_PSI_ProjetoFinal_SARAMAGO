@@ -29,11 +29,10 @@ class Fundo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'designacao', 'Exemplar_id'], 'required'],
-            [['id', 'Exemplar_id'], 'integer'],
+            [['id', 'designacao'], 'required'],
+            [['id'], 'integer'],
             [['designacao'], 'string', 'max' => 255],
             [['id'], 'unique'],
-            [['Exemplar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Exemplar::className(), 'targetAttribute' => ['Exemplar_id' => 'id']],
         ];
     }
 
@@ -45,18 +44,17 @@ class Fundo extends \yii\db\ActiveRecord
         return [
             'id' => 'Chave primária',
             'designacao' => 'Designacao',
-            'Exemplar_id' => 'Chave estrangeira',
         ];
     }
 
     /**
-     * Gets query for [[Exemplar]].
+     * Gets query for [[Exemplars]].
      *
      * @return \yii\db\ActiveQuery|ExemplarQuery
      */
-    public function getExemplar()
+    public function getExemplars()
     {
-        return $this->hasOne(Exemplar::className(), ['id' => 'Exemplar_id']);
+        return $this->hasMany(Exemplar::className(), ['Fundo_id' => 'id']);
     }
 
     /**

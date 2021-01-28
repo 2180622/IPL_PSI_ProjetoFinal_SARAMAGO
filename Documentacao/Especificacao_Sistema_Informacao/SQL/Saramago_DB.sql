@@ -181,12 +181,14 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
   `EstatutoExemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `TipoExemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
   `Obra_id` INT NOT NULL,
+  `Fundo_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Exemplar_Biblioteca1_idx` (`Biblioteca_id` ASC),
   INDEX `fk_Exemplar_EstatutoExemplar1_idx` (`EstatutoExemplar_id` ASC),
   INDEX `fk_Exemplar_TipoExemplar1_idx` (`TipoExemplar_id` ASC),
   INDEX `fk_Exemplar_Obra1_idx` (`Obra_id` ASC),
   UNIQUE INDEX `codBarras_UNIQUE` (`codBarras` ASC),
+  INDEX `fk_Exemplar_Fundo1_idx` (`Fundo_id` ASC),
   CONSTRAINT `fk_Exemplar_Biblioteca1`
     FOREIGN KEY (`Biblioteca_id`)
     REFERENCES `yii2saramago`.`Biblioteca` (`id`)
@@ -206,10 +208,14 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Exemplar` (
     FOREIGN KEY (`Obra_id`)
     REFERENCES `yii2saramago`.`Obra` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Exemplar_Fundo1`
+    FOREIGN KEY (`Fundo_id`)
+    REFERENCES `yii2saramago`.`Fundo` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 -- -----------------------------------------------------
 -- Table `yii2saramago`.`TipoLeitor`
@@ -452,11 +458,18 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Requisicao` (
   `dataDevolucao` DATETIME NULL DEFAULT NULL COMMENT 'Data de devolução',
   `Renovacoes` TINYINT(1) NOT NULL DEFAULT '0' COMMENT 'Renovações realizadas',
   `Leitor_id` INT NOT NULL,
+  `Exemplar_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Requisicao_Leitor1_idx` (`Leitor_id` ASC),
+  INDEX `fk_Requisicao_Exemplar1_idx` (`Exemplar_id` ASC),
   CONSTRAINT `fk_Requisicao_Leitor1`
     FOREIGN KEY (`Leitor_id`)
     REFERENCES `yii2saramago`.`Leitor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Requisicao_Exemplar1`
+    FOREIGN KEY (`Exemplar_id`)
+    REFERENCES `yii2saramago`.`Exemplar` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -671,14 +684,7 @@ DROP TABLE IF EXISTS `yii2saramago`.`Fundo` ;
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`Fundo` (
   `id` INT NOT NULL COMMENT 'Chave primária',
   `designacao` VARCHAR(255) NOT NULL,
-  `Exemplar_id` INT NOT NULL COMMENT 'Chave estrangeira',
-  PRIMARY KEY (`id`),
-  INDEX `fk_Fundo_Exemplar1_idx` (`Exemplar_id` ASC),
-  CONSTRAINT `fk_Fundo_Exemplar1`
-    FOREIGN KEY (`Exemplar_id`)
-    REFERENCES `yii2saramago`.`Exemplar` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -827,32 +833,6 @@ CREATE TABLE IF NOT EXISTS `yii2saramago`.`Autor_Analitico` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `yii2saramago`.`Requisicao_Exemplar`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `yii2saramago`.`Requisicao_Exemplar` ;
-
-CREATE TABLE IF NOT EXISTS `yii2saramago`.`Requisicao_Exemplar` (
-  `Requisicao_id` INT NOT NULL,
-  `Exemplar_id` INT NOT NULL,
-  PRIMARY KEY (`Requisicao_id`, `Exemplar_id`),
-  INDEX `fk_Requisicao_has_Exemplar_Exemplar1_idx` (`Exemplar_id` ASC),
-  INDEX `fk_Requisicao_has_Exemplar_Requisicao1_idx` (`Requisicao_id` ASC),
-  CONSTRAINT `fk_Requisicao_has_Exemplar_Requisicao1`
-    FOREIGN KEY (`Requisicao_id`)
-    REFERENCES `yii2saramago`.`Requisicao` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Requisicao_has_Exemplar_Exemplar1`
-    FOREIGN KEY (`Exemplar_id`)
-    REFERENCES `yii2saramago`.`Exemplar` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
 
 -- -----------------------------------------------------
 -- Table `yii2saramago`.`LeituraRecomendada_Uc`

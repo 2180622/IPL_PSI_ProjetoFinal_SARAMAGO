@@ -28,6 +28,8 @@ $this->params['breadcrumbs'][] = 'Modificar';
 
     <?= $form->field($model, 'notaInterna')->textInput(['maxlength' => true])->label('Nota Interna') ?>
 
+    <?= $form->field($model, 'Fundo_id')->dropDownList($fundoAll,['prompt'=>'Nenhum'])->label('Fundo') ?>
+
     <?= $form->field($model, 'Biblioteca_id')->dropDownList($bibliotecaAll, ['prompt' => 'Selecione...'])->label('Biblioteca') ?>
 
     <?= $form->field($model, 'EstatutoExemplar_id')->dropDownList($estatutoexemplarAll,['prompt' => 'Selecione...']) ?>

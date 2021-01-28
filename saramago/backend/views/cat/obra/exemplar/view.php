@@ -52,6 +52,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
+                'label' => 'Fundo',
+                'attribute' => 'Fundo_id',
+                'value' => function ($model)
+                {
+                   if($model->fundo != null) {return $model->fundo->designacao;}
+                }
+            ],
+            [
                 'label' => 'Biblioteca',
                 'attribute' => 'Biblioteca_id',
                 'value' => function ($model)

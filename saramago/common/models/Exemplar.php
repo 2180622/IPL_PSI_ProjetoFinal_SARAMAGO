@@ -17,13 +17,14 @@ use Yii;
  * @property int $EstatutoExemplar_id Chave estrangeira
  * @property int $TipoExemplar_id Chave estrangeira
  * @property int $Obra_id
+ * @property int|null $Fundo_id
  *
  * @property Consultatreal[] $consultatreals
  * @property Biblioteca $biblioteca
  * @property Estatutoexemplar $estatutoExemplar
  * @property Obra $obra
  * @property Tipoexemplar $tipoExemplar
- * @property Fundo[] $fundos
+ * @property Fundo $fundo
  * @property RequisicaoExemplar[] $requisicaoExemplars
  * @property Requisicao[] $requisicaos
  * @property Reserva[] $reservas
@@ -55,6 +56,7 @@ class Exemplar extends \yii\db\ActiveRecord
             [['EstatutoExemplar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estatutoexemplar::className(), 'targetAttribute' => ['EstatutoExemplar_id' => 'id']],
             [['Obra_id'], 'exist', 'skipOnError' => true, 'targetClass' => Obra::className(), 'targetAttribute' => ['Obra_id' => 'id']],
             [['TipoExemplar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoexemplar::className(), 'targetAttribute' => ['TipoExemplar_id' => 'id']],
+            [['Fundo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fundo::className(), 'targetAttribute' => ['Fundo_id' => 'id']],
         ];
     }
 
@@ -73,7 +75,8 @@ class Exemplar extends \yii\db\ActiveRecord
             'Biblioteca_id' => 'Biblioteca',
             'EstatutoExemplar_id' => 'Estatuto',
             'TipoExemplar_id' => 'Tipo',
-            'Obra_id' => 'Obra ID',
+            'Obra_id' => 'Obra',
+            'Fundo_id' => 'Fundo',
         ];
     }
 
@@ -128,23 +131,13 @@ class Exemplar extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Fundos]].
+     * Gets query for [[Fundo]].
      *
      * @return \yii\db\ActiveQuery|FundoQuery
      */
-    public function getFundos()
+    public function getFundo()
     {
-        return $this->hasMany(Fundo::className(), ['Exemplar_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[RequisicaoExemplars]].
-     *
-     * @return \yii\db\ActiveQuery|RequisicaoExemplarQuery
-     */
-    public function getRequisicaoExemplars()
-    {
-        return $this->hasMany(RequisicaoExemplar::className(), ['Exemplar_id' => 'id']);
+        return $this->hasOne(Fundo::className(), ['id' => 'Fundo_id']);
     }
 
     /**

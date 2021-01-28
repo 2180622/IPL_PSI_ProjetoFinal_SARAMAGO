@@ -13,6 +13,7 @@ use common\models\Autor;
 use common\models\Cdu;
 use common\models\Colecao;
 use common\models\Exemplar;
+use common\models\Fundo;
 use common\models\Materialav;
 use common\models\Monografia;
 use common\models\Obra;
@@ -460,6 +461,7 @@ class CatController extends Controller
             $estatutoexemplarAll = ArrayHelper::map(Estatutoexemplar::find()->all(),'id','estatuto',['enctype' => 'multipart/form-data']);
             $tipoexemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
             $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->all(),'id','nome',['enctype' => 'multipart/form-data']);
+            $fundoAll = ArrayHelper::map(Fundo::find()->all(),'id','designacao',['enctype' => 'multipart/form-data']);
 
             $exemplarCount = Exemplar::find()->count();
             if($exemplarCount == null) {$exemplarCount = 1;}
@@ -472,7 +474,7 @@ class CatController extends Controller
             }
             return $this->renderAjax('obra/exemplar/create',
                 ['model' => $model, 'bibliotecaAll' => $bibliotecaAll, 'tipoexemplarAll' => $tipoexemplarAll,
-                    'estatutoexemplarAll' => $estatutoexemplarAll,
+                    'estatutoexemplarAll' => $estatutoexemplarAll,'fundoAll'=>$fundoAll,
                     'idObra'=>$idObra,'tipoObra'=>$tipoObra, 'exemplarCount'=> $exemplarCount]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
@@ -494,6 +496,7 @@ class CatController extends Controller
             $estatutoexemplarAll = ArrayHelper::map(Estatutoexemplar::find()->all(),'id','estatuto',['enctype' => 'multipart/form-data']);
             $tipoexemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
             $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->all(),'id','nome',['enctype' => 'multipart/form-data']);
+            $fundoAll = ArrayHelper::map(Fundo::find()->all(),'id','designacao',['enctype' => 'multipart/form-data']);
 
             if ($model->load(Yii::$app->request->post()) && $model->save())
             {
@@ -504,7 +507,7 @@ class CatController extends Controller
 
             return $this->renderAjax('obra/exemplar/update',
                 ['model' => $model, 'bibliotecaAll' => $bibliotecaAll,
-                    'tipoexemplarAll' => $tipoexemplarAll, 'tipoObra'=>$tipoObra,
+                    'tipoexemplarAll' => $tipoexemplarAll, 'tipoObra'=>$tipoObra,'fundoAll'=>$fundoAll,
                     'estatutoexemplarAll' => $estatutoexemplarAll]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');

@@ -13,10 +13,10 @@ use Yii;
  * @property string|null $dataDevolucao Data de devolução
  * @property int $Renovacoes Renovações realizadas
  * @property int $Leitor_id
+ * @property int $Exemplar_id
  *
+ * @property Exemplar $exemplar
  * @property Leitor $leitor
- * @property RequisicaoExemplar[] $requisicaoExemplars
- * @property Exemplar[] $exemplars
  */
 class Requisicao extends \yii\db\ActiveRecord
 {
@@ -35,8 +35,9 @@ class Requisicao extends \yii\db\ActiveRecord
     {
         return [
             [['dataEmprestimo', 'entregaPrevista', 'dataDevolucao'], 'safe'],
-            [['entregaPrevista', 'Leitor_id'], 'required'],
-            [['Renovacoes', 'Leitor_id'], 'integer'],
+            [['entregaPrevista', 'Leitor_id', 'Exemplar_id'], 'required'],
+            [['Renovacoes', 'Leitor_id', 'Exemplar_id'], 'integer'],
+            [['Exemplar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Exemplar::className(), 'targetAttribute' => ['Exemplar_id' => 'id']],
             [['Leitor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Leitor::className(), 'targetAttribute' => ['Leitor_id' => 'id']],
         ];
     }
@@ -53,6 +54,7 @@ class Requisicao extends \yii\db\ActiveRecord
             'dataDevolucao' => 'Data de devolução',
             'Renovacoes' => 'Renovações realizadas',
             'Leitor_id' => 'Leitor ID',
+            'Exemplar_id' => 'Exemplar ID',
         ];
     }
 
@@ -67,13 +69,13 @@ class Requisicao extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[RequisicaoExemplars]].
+     * Gets query for [[Exemplar]].
      *
-     * @return \yii\db\ActiveQuery|RequisicaoExemplarQuery
+     * @return \yii\db\ActiveQuery|ExemplarQuery
      */
-    public function getRequisicaoExemplars()
+    public function getExemplar()
     {
-        return $this->hasMany(RequisicaoExemplar::className(), ['Requisicao_id' => 'id']);
+        return $this->hasOne(Exemplar::className(), ['id' => 'Exemplar_id']);
     }
 
     /**
