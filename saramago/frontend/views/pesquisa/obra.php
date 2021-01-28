@@ -36,5 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_pesquisaobra',
+        'itemOptions' => [
+        'class' => 'item-class',
+        ],
+        'options' => ['class' => 'parent-class'],    
+        'layout' => "<div class='parent-class'>{items}</div>"
     ]); ?>
 </div>

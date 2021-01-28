@@ -17,9 +17,15 @@
 /* endregion MAIN */
 
 /* region INDEX */
+.carousel-inner {
+    margin-top: 2% !important;
+    height: 300px !important;
+    width: 200px !important;
+ }
 
 .carousel .item {
-  height: 300px;
+    height: 300px;
+    width:  200px;
 }
 
 .item img {
@@ -42,14 +48,44 @@
     width: 100%;
 }
 
+.rapido-saramago div { 
+    text-align: -webkit-center;
+ }
+
 .rapido-saramago table {
-    border-collapse: separate !important;
-    margin-top: 1%;
-    margin-left: 1%;
-    margin-bottom: 1%;
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    padding: 5px;
     border-radius: 5px;
-    border: 2px solid black;
-    width: 98%;
+    font-size: 18px;
+    background-color:#fafafa;
+    width: 100%;
+
+}
+
+.rapido-saramago li {
+    background-color:#ddddff;
+}
+
+.rapido-saramago th {
+    border-collapse: separate !important;
+    border-radius: 5px;
+    background-color:#eeeeee;
+    height: 100%;
+}
+
+.rapido-saramago td {
+    border-collapse: separate !important;
+    border-radius: 5px;
+    background-color:#eeeeee;
+    height: 100%;
+
+}
+
+.contrast-text{
+    width: 90%;
+    height: 90%;
+    background-color: rgba(5, 5, 5, 0.3);
+    border-radius:5px;
 }
 
 .rapido-saramago img {
@@ -65,7 +101,7 @@
     padding: 5px;
     border-radius: 5px;
     font-size: 18px;
-    border: 1px solid black;
+    background-color:#fafafa;
     width: 100%;
 }
 
@@ -158,7 +194,7 @@
 
 /* endregion */
 
-/* region CONTAINER rapido-saramago */
+/* region CONTAINER pesquisa-saramago */
 
 
 .rapido-pesquisa #w1 {
@@ -177,9 +213,20 @@
     margin-left: 1%;
     margin-bottom: 2%;
     border-radius: 5px;
-    border: 2px solid black;
+    border: 1px solid black;
     width: 98%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
 }
+
+div.rapido-pesquisa {
+    height: 600px;
+    overflow-y: auto;
+}
+
 
 .rapido-pesquisa img {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
@@ -197,6 +244,7 @@
     border-radius: 5px;
     font-size: 18px;
 }
+
 
 .rapido-pesquisa .panel-default    {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
@@ -243,3 +291,16 @@
 }
 
 /* endregion */
+
+
+.item-class{
+  width: 49%;
+  //border:1px solid red;
+  margin-bottom:2px;
+  margin-right:2px;
+}
+.parent-class{
+  width:100%;
+  display:flex;
+  flex-wrap:wrap ;
+}

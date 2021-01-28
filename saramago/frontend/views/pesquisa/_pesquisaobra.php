@@ -7,12 +7,12 @@ use yii\widgets\DetailView;
 ?>
 <?= DetailView::widget([
     'model' => $model,
-    'options' => ['class' => 'rapido-saramago'],
+    'options' => ['class' => 'pesquisa-saramago'],
     'attributes' => [
         [
             'attribute'=>'',
             //'value'=>$model->imgCapa,
-            'value'=>Html::a(Html::img('@web/img/' . $model->imgCapa, ['width'=>'192', 'height' => "256"]), $model->imgCapa),
+            'value'=>Html::a(Html::img('@web/img/' . $model->imgCapa, ['width'=>'192', 'height' => "256"]), '@web/img/' . $model->imgCapa),
             'format' => 'raw',
         ],
         [

@@ -85,13 +85,11 @@ AppAsset::register($this);
          ],
         ],
         [
-            'label' => 'Reservar', 'url'=>['\index'],
-            'items' =>[
-                 ['label' =>'Postos de trabalho', 'url' =>['/reserva/posto']],
-                 ['label' =>'Exemplares', 'url' =>['/reserva/exemplar']],
-
+            'label' => 'Reservar exemplar', 'url'=>['/reserva/exemplar'],
          ],
-        ]
+         [
+            'label' => 'Reservar posto de trabalho', 'url'=>['/reserva/posto'],
+         ],
     ];
     if (Yii::$app->user->isGuest) {
         //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

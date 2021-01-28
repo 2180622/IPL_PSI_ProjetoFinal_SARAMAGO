@@ -21,7 +21,7 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'lugar')->label('Numero de lugares necessários') ?>
 
-    <?= $form->field($model, 'Leitor_id')->hiddenInput(['value'=> $idDoLeitor])->label(false) ?>
+    <?= $form->field($model, 'Leitor_id')->hiddenInput(['value'=> $idDoLeitor->id])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

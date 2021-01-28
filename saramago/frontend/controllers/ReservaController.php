@@ -131,10 +131,10 @@ class ReservaController extends Controller
             $model = new ReservasPosto();
 
             $idDoUserLoggado = Yii::$app->user->id;
-            $idDoLeitor = Leitor::find()->where(['user_id' => $idDoUserLoggado])->one()->id;
+            $idDoLeitor = Leitor::find()->where(['user_id' => $idDoUserLoggado])->one();
 
             if ($idDoLeitor === null) {
-                throw new ForbiddenHttpException ('Esta área é para apenas os leitores Saramago efetuarem reservas');
+                throw new ForbiddenHttpException ('Esta área serve para apenas os leitores Saramago efetuarem reservas');
             }
 
             $postoTrabalhoAll = ArrayHelper::map(PostoTrabalho::find()->all(),'id','designacao',['enctype' => 'multipart/form-data']);
