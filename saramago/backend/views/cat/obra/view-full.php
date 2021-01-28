@@ -33,22 +33,22 @@ $this->params['breadcrumbs'][] = $this->title;
             {
                 echo '<p>Tipo de Obra: Material Audio-Visual</p>';
                 echo '<p> Duração: '.$model->materialavs->duracao.' min.</p>';
-                echo '<p> EAN: '.$model->materialavs->duracao.'</p>';
+                echo '<p> EAN: '.$model->materialavs->ean.'</p>';
             }
             if($model->tipoObra == "monografia")
             {
                 echo '<p>Tipo de Obra: Monografia</p>';
                 echo '<p> Volume: '.$model->monografias->volume.'</p>';
                 echo '<p> Páginas: '.$model->monografias->paginas.'</p>';
-                echo '<p> ISBN: '.$model->materialavs->duracao.'</p>';
+                echo '<p> ISBN: '.$model->monografias->ISBN.'</p>';
             }
             elseif($model->tipoObra == "pubPeriodica")
             {
                 echo '<p>Tipo de Obra: Publicação Periódica</p>';
-                echo '<p> Volume: '.$model->monografias->volume.'</p>';
-                echo '<p> Série: '.$model->monografias->serie.'</p>';
-                echo '<p> Número: '.$model->materialavs->duracao.'</p>';
-                echo '<p> Número: '.$model->materialavs->ISNN.'</p>';
+                echo '<p> Volume: '.$model->pubperiodicas->volume.'</p>';
+                echo '<p> Série: '.$model->pubperiodicas->serie.'</p>';
+                echo '<p> Número: '.$model->pubperiodicas->duracao.'</p>';
+                echo '<p> ISNN: '.$model->pubperiodicas->ISNN.'</p>';
             }
 
             echo'<p>Ano: '.$model->ano.'</p><br>';

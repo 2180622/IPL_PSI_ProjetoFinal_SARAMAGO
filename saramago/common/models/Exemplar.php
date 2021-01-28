@@ -25,7 +25,6 @@ use Yii;
  * @property Obra $obra
  * @property Tipoexemplar $tipoExemplar
  * @property Fundo $fundo
- * @property RequisicaoExemplar[] $requisicaoExemplars
  * @property Requisicao[] $requisicaos
  * @property Reserva[] $reservas
  */
