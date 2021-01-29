@@ -20,7 +20,7 @@ $this->title = 'Saramago';
             Independemente da data de registo delas só aparece as que têm exemplares.
         -->
         <div class="col-lg-6">
-            <h1>Últimas obras adquiridas</h1>
+            <h3>Últimas obras adquiridas</h3>
             <div id="carousel-obras" class="panel panel-default carousel slide col-lg-12" style="" data-ride="carousel">
                 
                 <!-- indicadores -->
@@ -84,7 +84,7 @@ $this->title = 'Saramago';
             </div>
         </div>
         <div class="col-lg-6">
-            <h1>Notícias</h1>
+            <h3>Notícias</h3>
             <div id="carousel-noticias" class="panel panel-default carousel col-lg-12" style="" data-ride="carousel">
                 
                 <!-- indicadores -->
@@ -131,7 +131,7 @@ $this->title = 'Saramago';
         </div>
 
         <div class="col-lg-12">
-            <h1>Obras disponíveis</h1>
+            <h3>Obras disponíveis</h3>
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <!-- //TODO -->

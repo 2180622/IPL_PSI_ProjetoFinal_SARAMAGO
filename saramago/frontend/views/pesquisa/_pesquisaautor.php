@@ -20,6 +20,7 @@ use yii\widgets\DetailView;
         [
             'attribute'=>'',
             'value'=>'Bibliografia: '.$model->bibliografia,
+            'format'=>'html',
         ],
         [
             'attribute'=>'',

@@ -26,6 +26,7 @@ use yii\widgets\DetailView;
         [
             'attribute'=>'',
             'value'=>'Resumo: '.$model->resumo,
+            'format'=>'html',
         ],
         [
             'attribute'=>'',

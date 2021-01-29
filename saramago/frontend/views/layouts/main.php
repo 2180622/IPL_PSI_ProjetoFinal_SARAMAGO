@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use rmrevin\yii\fontawesome\FAS;
 use common\models\Entidade;
 use common\models\Logotipos;
 use yii\helpers\Html;
@@ -77,32 +78,48 @@ AppAsset::register($this);
         //['label' => 'About', 'url' => ['/site/about']],
         //['label' => 'Contact', 'url' => ['/site/contact']],
 
-        ['label' => 'Pesquisar', 'url' => ['\index'],
-         'items' =>[
-                 ['label' =>'Obras', 'url' =>['/pesquisa/obra']],
-                 ['label' =>'Autores', 'url' =>['/pesquisa/autor']],
+        [
+            'label' => FAS::icon('search'). ' Pesquisar', 'url' => ['\index'],
+            'encode' => false,
+            'items' =>[
+                     ['label' =>'Obras', 'url' =>['/pesquisa/obra']],
+                     ['label' =>'Autores', 'url' =>['/pesquisa/autor']],
 
          ],
         ],
         [
-            'label' => 'Reservar exemplar', 'url'=>['/reserva/exemplar'],
+            'label' => FAS::icon('book'). ' Reservar exemplar', 'url'=>['/reserva/exemplar'],
+            'encode'=> false,
          ],
          [
-            'label' => 'Reservar posto de trabalho', 'url'=>['/reserva/posto'],
+            'label' => FAS::icon('book-reader'). ' Reservar posto', 'url'=>['/reserva/posto'],
+            'encode'=> false,
          ],
     ];
     if (Yii::$app->user->isGuest) {
         //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        $menuItems[] = [
+            'label' => FAS::icon('user-circle') .' '. Yii::$app->user->identity->username,
+            'encode'=> false,
+            'items' => [
+                [
+                    'label'=> FAS::icon('sign-out-alt').' Logout',
+                    'url'=>['/site/logout'],
+                    'linkOptions' => ['data-method' => 'post'],
+                    'encode'=> false,
+
+                ],
+                '<li class="divider"></li>',
+                '<li class="dropdown-header">Conta</li>',
+                [
+                    'label' => FAS::icon('user-cog').' Conta',
+                    'url' => ['/conta/password'],
+                    'encode'=> false,
+                ],
+            ]
+        ];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
