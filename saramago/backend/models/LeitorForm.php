@@ -163,7 +163,8 @@ class LeitorForm extends Leitor
             $user->username = $this->username; //FIXME
             $user->email = $this->email;
             $user->generateAuthKey();
-            $user->status = 10;
+            $user->generateEmailVerificationToken();
+            $user->status = 9;
 
             $leitor = new Leitor();
             $leitor->mail2 = $this->mail2;
@@ -238,19 +239,6 @@ class LeitorForm extends Leitor
      * @param User $user user model to with email should be send
      * @return bool whether the email was sent
      */
-    protected function sendEmail($user)
-    {
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
-    }
 
     public function generateRandomString($length = 13) {
     $characters = '0123456789';
@@ -269,5 +257,25 @@ class LeitorForm extends Leitor
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function sendEmail(){
+
+        $user = User::findOne([
+            'email' => $this->email,
+            'status' => User::STATUS_INACTIVE
+        ]);
+
+        if ($user === null) {
+            return false;
+        }
+
+        Yii::$app->mailer->compose('emailVerify-text', ['user' => $user])
+            ->setFrom('saramagoipl@gmail.com')
+            ->setTo($this->email)
+            ->setSubject('Confirmar email')
+            ->send();
+
+        return true;
     }
 }

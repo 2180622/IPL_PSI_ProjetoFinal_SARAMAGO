@@ -1,7 +1,10 @@
 <?php
 namespace backend\controllers;
 
+use common\models\VerifyEmailForm;
 use Yii;
+use yii\base\InvalidArgumentException;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -108,6 +111,27 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
+        return $this->goHome();
+    }
+
+
+    public function actionVerifyEmail($token)
+    {
+        //$this->layout = 'main-login';
+
+        try {
+            $model = new VerifyEmailForm($token);
+        } catch (InvalidArgumentException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+        if ($user = $model->verifyEmail()) {
+            if (Yii::$app->user->login($user)) {
+                Yii::$app->session->setFlash('success', 'O email foi confirmado!');
+                return $this->goHome();
+            }
+        }
+
+        Yii::$app->session->setFlash('error', 'Impossível verificar a conta com o token fornecido.');
         return $this->goHome();
     }
 }

@@ -37,22 +37,24 @@ class ResendVerificationEmailForm extends Model
      *
      * @return bool whether the email was sent
      */
-    public function sendEmail()
+    public function sendEmail() //envia email quando o utilizador pede reenvio de email de confirmação
     {
         $user = User::findOne([
             'email' => $this->email,
             'status' => User::STATUS_INACTIVE
         ]);
 
+        $user->generateEmailVerificationToken();
+        $user->save();
+
         if ($user === null) {
             return false;
         }
-        $user->generateEmailVerificationToken();
 
-        Yii::$app->mailer->compose('emailVerify-text', ['user' => $user])
+        Yii::$app->mailer->compose('resendEmailVerify-text', ['user' => $user])
             ->setFrom('saramagoipl@gmail.com')
             ->setTo($this->email)
-            ->setSubject('Redifinir a Palavra-Passe')
+            ->setSubject('Confirmar email')
             ->send();
 
         return true;
