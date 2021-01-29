@@ -12,9 +12,5 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'mail' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@common/mail',
-        ],
     ],
 ];

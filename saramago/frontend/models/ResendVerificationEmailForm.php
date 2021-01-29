@@ -44,9 +44,6 @@ class ResendVerificationEmailForm extends Model
             'status' => User::STATUS_INACTIVE
         ]);
 
-        $user->generateEmailVerificationToken();
-        $user->save();
-
         if ($user === null) {
             return false;
         }
