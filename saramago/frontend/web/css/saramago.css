@@ -3,7 +3,7 @@
 .breadcrumb,
 .breadcrumb a {
     font-family: "Geometr415 Lt BT Lite", sans-serif;
-    background-color: #254E58;
+    background-color: #aaaaaa;
     color: #ffffff;
 }
 
@@ -16,23 +16,32 @@
 
 /* endregion MAIN */
 
-/* region INDEX */
+/* region Carousel */
 .carousel-inner {
-    margin-top: 2% !important;
-    height: 300px !important;
-    width: 200px !important;
- }
 
-.carousel .item {
+}
+
+.carousel item {
     height: 300px;
     width:  200px;
 }
 
+.carousel news {
+    height: 100%;
+    width: 100%;
+}
+
 .item img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 300px;
+    position: all !important;
+    min-width: 200px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
+    max-width: 200px !important;
+    border-top: 1px solid #aaaaaa;
+    border-left: 1px solid #aaaaaa;
+    border-right: 10px solid #eeeeee;
+    border-bottom: 5px solid #eeeeee;
+    border-radius: 3px 19px 14px 3px !important;
 }
 /* endregion */
 
@@ -52,6 +61,18 @@
     text-align: -webkit-center;
  }
 
+.rapido-saramago .item-noticia {
+    margin: 30px;
+    position: relative;
+    resize: vertical;
+    overflow: auto;
+    height:200px;
+}
+
+.rapido-saramago .noticia {
+    height: 352.6px;
+}
+
 .rapido-saramago table {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     padding: 5px;
@@ -62,8 +83,24 @@
 
 }
 
+.rapido-saramago .bookgraphic {
+    -moz-transform: scale(0.8) skew(10deg, -10deg);
+-webkit-transform: scale(0.8) skew(10deg, -10deg);
+-o-transform: scale(0.8) skew(10deg, -10deg);
+-ms-transform: scale(0.8) skew(10deg, -10deg);
+transform: scale(0.8) skew(10deg, -10deg);
+}
+
+.rapido-saramago .bookgraphic-text {
+    -moz-transform: scale(0.8) translate(10px, 0px) skew(10deg, -10deg);
+    -webkit-transform: scale(0.8) translate(10px, 0px) skew(10deg, -10deg);
+    -o-transform: scale(0.8) translate(10px, 0px) skew(10deg, -10deg);
+    -ms-transform: scale(0.8) translate(10px, 0px) skew(10deg, -10deg);
+    transform: scale(0.8) translate(10px, 0px) skew(10deg, -10deg);
+}
+
 .rapido-saramago li {
-    background-color:#ddddff;
+    background-color:#999;
 }
 
 .rapido-saramago th {
@@ -81,17 +118,47 @@
 
 }
 
-.contrast-text{
-    width: 90%;
-    height: 90%;
-    background-color: rgba(5, 5, 5, 0.3);
-    border-radius:5px;
+.rapido-saramago .obras-disponiveis {
+    height: 80px;
+    overflow-y: scroll;
+}
+
+/* Esconder scrollbar mas manter a sua funcionalidade */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.rapido-saramago .obras-disponiveis::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.rapido-saramago .obras-disponiveis{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .rapido-saramago img {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
     border-radius: 5px;
     font-size: 18px;
+}
+
+.rapido-saramago .container {
+  font-family: "Geometric 415 Lt BT Lite", sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  padding: 20px;
+  transform: translateY(-50%);
+  resize: vertical;
+  overflow: auto;
+}
+
+.rapido-saramago .vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 
@@ -113,6 +180,9 @@
     width: 100%;
 }
 
+.rapido-saramago h3 {
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+}
 
 .rapido-saramago h1 {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
@@ -217,17 +287,30 @@
 .rapido-pesquisa table {
     border-collapse: separate !important;
     background-color: #ddd;
+    height: 600px;
     margin-top: 1%;
     margin-left: 1%;
-    margin-bottom: 2%;
+    margin-right: 1%;
+    margin-bottom: 1%;
     border-radius: 5px;
     border: 1px solid black;
-    width: 98%;
-    overflow: hidden;
+    overflow-y: scroll;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
+}
+
+/* Esconder scrollbar mas manter a sua funcionalidade */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.rapido-pesquisa table::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.rapido-pesquisa table{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 div.rapido-pesquisa {
@@ -240,7 +323,7 @@ div.rapido-pesquisa {
     margin-left: 5px;
     border-radius: 5px;
     font-size: 18px;
-    border: 1px solid black;
+    border: 2px solid black;
 }
 
 .rapido-pesquisa td {
@@ -251,6 +334,11 @@ div.rapido-pesquisa {
     font-size: 18px;
 }
 
+
+.rapido-pesquisa p {
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    font-size: 18px;
+}
 
 .rapido-pesquisa .panel-default    {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
@@ -310,3 +398,22 @@ div.rapido-pesquisa {
   display:flex;
   flex-wrap:wrap ;
 }
+
+    ul, ol {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+.contrast-text {
+    width: fit-content;
+    height: fit-content;
+    background-color: rgba(5, 5, 5, 0.3);
+    border-radius: 5px;
+    padding: 4px;
+}
+
+
+.carousel-indicators {
+    bottom: 0px;
+}
+

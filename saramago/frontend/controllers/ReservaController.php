@@ -6,6 +6,7 @@ use Yii;
 use common\models\Reserva;
 use common\models\ReservasPosto;
 use common\models\PostoTrabalho;
+use common\models\Obra;
 use common\models\Leitor;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -37,6 +38,7 @@ class ReservaController extends Controller
                         'actions' => ['logout', 'index',
                             'posto', 'posto-create', 'posto-update', 'posto-delete', 'posto-view',
                             'exemplar', 'exemplar-create', 'exemplar-update', 'exemplar-delete', 'exemplar-view',
+                            'obrafull',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -50,6 +52,15 @@ class ReservaController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionObrafull($id) {
+        if ((Yii::$app->user->can('acessoFrontend'))) {
+            return $this->render('obrafull', [
+                'model' => $this->findObraModel($id),
+            ]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
 
     /**
@@ -260,5 +271,14 @@ class ReservaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findObraModel ($id)
+    {
+        if (($model = Obra::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('A obra que tentou aceder encontra-se indisponível');
     }
 }

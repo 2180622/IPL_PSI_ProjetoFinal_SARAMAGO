@@ -21,7 +21,7 @@ $this->title = 'Saramago';
         -->
         <div class="col-lg-6">
             <h3>Últimas obras adquiridas</h3>
-            <div id="carousel-obras" class="panel panel-default carousel slide col-lg-12" style="" data-ride="carousel">
+            <div id="carousel-obras" class="panel panel-default carousel slide col-lg-12" style="padding-top: 20px;" data-ride="carousel">
                 
                 <!-- indicadores -->
                 <ol class="carousel-indicators">
@@ -34,58 +34,51 @@ $this->title = 'Saramago';
                     } ?>
                 </ol>
                 <!-- Wrapper for slides -->
-                <div class="carousel-inner" id="obra">
+                <div class="carousel-inner">
                     <?php if (isset($obrasRecentementeAdquiridas)) { ?>
                         <?php $primeiro = true; ?>
                         <?php foreach ($obrasRecentementeAdquiridas as $obra) { ?>
                             <?php if ($primeiro == true) { ?>
                                 <div class="item active">
-                                    <?= Html::img('@web/img/' . $obra->imgCapa, ['width' => '100%', 'alt' => $obra->titulo . ' (' . $obra->ano . ')']) ?>
+                                    <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]', 'pesquisaGeral' => $obra->titulo]) ?>">
+                                    <?= Html::img('@web/img/' . $obra->imgCapa, ['width' => '100%', 'class' => 'bookgraphic']) ?>
+                                    </a>
                                     <div class="carousel-caption">
-                                        <h3 class="contrast-text"><?= $obra->titulo ?> (<?= $obra->ano ?>)
-                                        </h3>
+                                        <h4 class="contrast-text bookgraphic-text"><?= $obra->titulo ?> (<?= $obra->ano ?>)
+                                        </h4>
                                         <?php foreach ($obra->autors as $autor) { ?>
-                                            <p class="contrast-text">
+                                            <h5 class="contrast-text bookgraphic-text">
                                                 Autor: <?= $autor->primeiroNome ?> <?= $autor->segundoNome ?> <?= $autor->apelido ?>
-                                            </p>
+                                            </h5>
                                         <?php } ?>
                                     </div>
                                 </div>
                                 <?php $primeiro = false; ?>
                             <?php } else { ?>
                                 <div class="item">
-                                    <?= Html::img('@web/img/' . $obra->imgCapa, ['width' => '100%', 'alt' => $obra->titulo . ' (' . $obra->ano . ')']) ?>
+                                    <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]', 'pesquisaGeral' => $obra->titulo]) ?>">
+                                    <?= Html::img('@web/img/' . $obra->imgCapa, ['width' => '100%', 'class' => 'bookgraphic']) ?>
+                                    </a>
                                     <div class="carousel-caption">
-                                        <h3 class="contrast-text"><?= $obra->titulo ?> (<?= $obra->ano ?>)
-                                        </h3>
+                                        <h4 class="contrast-text bookgraphic-text"><?= $obra->titulo ?> (<?= $obra->ano ?>)
+                                        </h4>
                                         <?php foreach ($obra->autors as $autor) { ?>
-                                            <p class="contrast-text">
+                                            <h5 class="contrast-text bookgraphic-text">
                                                 Autor: <?= $autor->primeiroNome ?> <?= $autor->segundoNome ?> <?= $autor->apelido ?>
-                                            </p>
+                                            </h5>
                                         <?php } ?>
                                     </div>
                                 </div>
                             <?php } ?>
                         <?php } ?>
                     <?php } ?>
-                    <!-- Controldores / esquerda e direita -->
-                    <a class="left carousel-control" href="#carousel-obras" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Anterior</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-obras" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Próximo</span>
-                    </a>
                 </div>
                 <br>
-                <!-- NOTICIAS -->
-
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6" style="margin-bottom: 20px">
             <h3>Notícias</h3>
-            <div id="carousel-noticias" class="panel panel-default carousel col-lg-12" style="" data-ride="carousel">
+            <div id="carousel-noticias" class="panel panel-default noticia carousel col-lg-12" style="" data-ride="carousel">
                 
                 <!-- indicadores -->
                 <ol class="carousel-indicators">
@@ -103,20 +96,20 @@ $this->title = 'Saramago';
                         <?php $primeiro = true; ?>
                         <?php foreach ($noticias as $noticia) { ?>
                             <?php if ($primeiro == true) { ?>
-                                <div class="item active">
-                                    <div class="carousel-caption">
-                                        <h3><?= $noticia->autor ?>
-                                        </h3>
-                                        <h4><?= $noticia->conteudo ?></h4>
+                                <div class="item item-noticia active">
+                                    <div class="panel" style="background-color: rgb(239, 239, 239)">
+                                        <h4><?= $noticia->autor ?>
+                                        </h4>
+                                        <h5><?= $noticia->conteudo ?></h5>
                                     </div>
                                 </div>
                                 <?php $primeiro = false; ?>
                             <?php } else { ?>
-                                <div class="item">
-                                    <div class="carousel-caption">
-                                        <h3><?= $noticia->autor ?>
-                                        </h3>
-                                        <h4><?= $noticia->conteudo ?></h4>
+                                <div class="item item-noticia">
+                                    <div class="panel" style="background-color: rgb(239, 239, 239)">
+                                        <h4><?= $noticia->autor ?>
+                                        </h4>
+                                        <h5><?= $noticia->conteudo ?></h5>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -125,64 +118,58 @@ $this->title = 'Saramago';
                     <!-- Controldores / esquerda e direita -->
                 </div>
                 <br>
-                <!-- NOTICIAS -->
-
             </div>
         </div>
-
-        <div class="col-lg-12">
-            <h3>Obras disponíveis</h3>
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <!-- //TODO -->
-                    <div class="panel-heading">Assuntos</div>
-                    <div class="panel-body">
-                        <?php if (isset($tagsDasObras)) { ?>
-                            <?php foreach ($tagsDasObras as $tag) { ?>
-                                <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]',
-                                    'pesquisaGeral' => $tag]) ?>">
-                                    <button type="button" class="btn btn-outline-light"> <?= $tag ?> <span
-                                                class="badge badge-light"> <?= $quantidadeDeLivrosNaMesmaTag[$tag] ?> </span>
-                                    </button>
-                                </a>
-                            <?php } ?>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-group col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Autores</div>
-                    <div class="panel-body">
-                        <?php foreach ($autores as $autor) { ?>
-                            <a href="<?= Url::toRoute(['/pesquisa/autor?AutorSearch[pesquisaGeral]',
-                                'pesquisaGeral' => $autor->primeiroNome . ' ' . $autor->segundoNome . '' . $autor->apelido]) ?>">
-                                <button type="button"
-                                        class="btn btn-outline-light"> <?= $autor->primeiroNome . ' ' . $autor->segundoNome . ' ' . $autor->apelido ?>
-                                    <span class="badge badge-light">
-                                <?php if (isset($numeroDeObrasDoAutor[$autor->id - 1])) { ?>
-                                    <?= $numeroDeObrasDoAutor[$autor->id - 1] ?>
-                                <?php } ?></span></button>
+        <h3>Obras disponíveis listadas por...</h3>
+        <div class="panel-group col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Assuntos</div>
+                <div class="panel-body obras-disponiveis">
+                    <?php if (isset($tagsDasObras)) { ?>
+                        <?php foreach ($tagsDasObras as $tag) { ?>
+                            <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]',
+                                'pesquisaGeral' => $tag]) ?>">
+                                <button type="button" class="btn btn-outline-light"> <?= $tag ?> <span
+                                            class="badge badge-light"> <?= $quantidadeDeLivrosNaMesmaTag[$tag] ?> </span>
+                                </button>
                             </a>
                         <?php } ?>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
-            <div class="panel-group col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Datas de publicação</div>
-                    <div class="panel-body">
-                        <?php if (isset($anosDasObras)) { ?>
-                            <?php foreach ($anosDasObras as $ano) { ?>
-                                <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]',
-                                    'pesquisaGeral' => $ano]) ?>">
-                                    <button type="button" class="btn btn-outline-light"> <?= $ano ?> <span
-                                                class="badge badge-light"> <?= $quantidadeDeLivrosDoMesmoAno[$ano] ?> </span>
-                                    </button>
-                                </a>
-                            <?php } ?>
+        </div>
+        <div class="panel-group col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Autores</div>
+                <div class="panel-body obras-disponiveis">
+                    <?php foreach ($autores as $autor) { ?>
+                        <a href="<?= Url::toRoute(['/pesquisa/autor?AutorSearch[pesquisaGeral]',
+                            'pesquisaGeral' => $autor->primeiroNome . ' ' . $autor->segundoNome . '' . $autor->apelido]) ?>">
+                            <button type="button"
+                                    class="btn btn-outline-light"> <?= $autor->primeiroNome . ' ' . $autor->segundoNome . ' ' . $autor->apelido ?>
+                                <span class="badge badge-light">
+                            <?php if (isset($numeroDeObrasDoAutor[$autor->id - 1])) { ?>
+                                <?= $numeroDeObrasDoAutor[$autor->id - 1] ?>
+                            <?php } ?></span></button>
+                        </a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Datas de publicação</div>
+                <div class="panel-body obras-disponiveis">
+                    <?php if (isset($anosDasObras)) { ?>
+                        <?php foreach ($anosDasObras as $ano) { ?>
+                            <a href="<?= Url::toRoute(['/pesquisa/obra?ObraSearch[pesquisaGeral]',
+                                'pesquisaGeral' => $ano]) ?>">
+                                <button type="button" class="btn btn-outline-light"> <?= $ano ?> <span
+                                            class="badge badge-light"> <?= $quantidadeDeLivrosDoMesmoAno[$ano] ?> </span>
+                                </button>
+                            </a>
                         <?php } ?>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

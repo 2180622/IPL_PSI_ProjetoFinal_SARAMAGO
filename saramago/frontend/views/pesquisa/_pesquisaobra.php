@@ -30,12 +30,6 @@ use yii\widgets\DetailView;
         ],
         [
             'attribute'=>'',
-            //'value'=>$model->imgCapa,
-            'value'=>Html::a('Fazer reserva', url::toRoute('reserva/exemplarcreate')),
-            'format' => 'raw',
-        ],
-        [
-            'attribute'=>'',
             'value'=>function ($model) {
 
                 $autores = [];    
@@ -55,7 +49,13 @@ use yii\widgets\DetailView;
         [
             'attribute'=>'',
             'value'=>'Ano: '.$model->ano,
-        ]
+        ],
+        [
+            'attribute'=>'',
+            //'value'=>$model->imgCapa,
+            'value'=>Html::a('Fazer reserva', url::toRoute(['reserva/obrafull', 'id' => $model->id])),
+            'format' => 'raw',
+        ],
 
     ],
 ]) ?>
