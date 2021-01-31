@@ -682,7 +682,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `yii2saramago`.`Fundo` ;
 
 CREATE TABLE IF NOT EXISTS `yii2saramago`.`Fundo` (
-  `id` INT NOT NULL COMMENT 'Chave primária',
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
   `designacao` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
