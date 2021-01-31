@@ -3,6 +3,10 @@
 namespace frontend\controllers;
 
 use Yii;
+use app\models\ExemplarSearch;
+use common\models\Biblioteca;
+use common\models\Tipoexemplar;
+use common\models\Exemplar;
 use common\models\Reserva;
 use common\models\ReservasPosto;
 use common\models\PostoTrabalho;
@@ -56,8 +60,18 @@ class ReservaController extends Controller
 
     public function actionObrafull($id) {
         if ((Yii::$app->user->can('acessoFrontend'))) {
+
+            $tipoExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
+            $bibliotecaAll = ArrayHelper::map(Biblioteca::find()->all(),'id','nome',['enctype' => 'multipart/form-data']);
+
+            $searchModelExemplar = new ExemplarSearch();
+            $dataProviderExemplar = $searchModelExemplar->search(Yii::$app->request->queryParams);
+
             return $this->render('obrafull', [
                 'model' => $this->findObraModel($id),
+                'dataProviderExemplar' => $dataProviderExemplar, 'searchModelExemplar' => $searchModelExemplar,
+                'tipoExemplarAll' => $tipoExemplarAll,
+                'bibliotecaAll' => $bibliotecaAll,
             ]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    

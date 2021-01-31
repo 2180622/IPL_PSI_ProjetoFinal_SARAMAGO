@@ -10,7 +10,7 @@ $this->title = 'Saramago';
 ?>
 <div class="rapido-saramago">
     <div class="center-block">
-        <?= Html::img('@web/res/logo-saramago.png',['height' => '100px', 'alt'=> 'Saramago']) ?>
+        <?= Html::img('@web/res/logo-saramago.png',['height' => '75px', 'alt'=> 'Saramago']) ?>
     </div>
 
     <div class="body-content">

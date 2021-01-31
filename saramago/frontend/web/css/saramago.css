@@ -78,17 +78,18 @@
     padding: 5px;
     border-radius: 5px;
     font-size: 18px;
-    background-color:#fafafa;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(228,228,228,1) 86%, rgba(255,255,255,1) 100%);
     width: 100%;
 
 }
 
 .rapido-saramago .bookgraphic {
     -moz-transform: scale(0.8) skew(10deg, -10deg);
--webkit-transform: scale(0.8) skew(10deg, -10deg);
--o-transform: scale(0.8) skew(10deg, -10deg);
--ms-transform: scale(0.8) skew(10deg, -10deg);
-transform: scale(0.8) skew(10deg, -10deg);
+    -webkit-transform: scale(0.8) skew(10deg, -10deg);
+    -o-transform: scale(0.8) skew(10deg, -10deg);
+    -ms-transform: scale(0.8) skew(10deg, -10deg);
+    transform: scale(0.8) skew(10deg, -10deg);
 }
 
 .rapido-saramago .bookgraphic-text {
@@ -106,14 +107,16 @@ transform: scale(0.8) skew(10deg, -10deg);
 .rapido-saramago th {
     border-collapse: separate !important;
     border-radius: 5px;
-    background-color:#eeeeee;
+    background: rgb(242,242,242);
+    background: linear-gradient(180deg, rgba(242,242,242,1) 0%, rgba(205,205,205,1) 80%, rgba(232,232,232,1) 100%);
     height: 100%;
 }
 
 .rapido-saramago td {
     border-collapse: separate !important;
     border-radius: 5px;
-    background-color:#eeeeee;
+    background: rgb(242,242,242);
+    background: linear-gradient(180deg, rgba(242,242,242,1) 0%, rgba(205,205,205,1) 80%, rgba(232,232,232,1) 100%);
     height: 100%;
 
 }
@@ -167,7 +170,8 @@ transform: scale(0.8) skew(10deg, -10deg);
     padding: 5px;
     border-radius: 5px;
     font-size: 18px;
-    background-color:#ddd;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241,245,244,1) 90%, rgba(211,255,255,1) 100%);
     width: 100%;
 }
 
@@ -176,7 +180,8 @@ transform: scale(0.8) skew(10deg, -10deg);
     padding: 5px;
     border-radius: 5px;
     font-size: 18px;
-    background-color:#ccc;
+    background: rgb(226,226,226);
+    background: linear-gradient(180deg, rgba(226,226,226,1) 0%, rgba(247,247,247,1) 100%);
     width: 100%;
 }
 
@@ -286,7 +291,8 @@ transform: scale(0.8) skew(10deg, -10deg);
 
 .rapido-pesquisa table {
     border-collapse: separate !important;
-    background-color: #ddd;
+    background: rgb(247,247,247);
+    background: linear-gradient(180deg, rgba(247,247,247,1) 0%, rgba(247,247,247,1) 100%);
     height: 600px;
     margin-top: 1%;
     margin-left: 1%;
@@ -323,7 +329,7 @@ div.rapido-pesquisa {
     margin-left: 5px;
     border-radius: 5px;
     font-size: 18px;
-    border: 2px solid black;
+    border: 1px solid black;
 }
 
 .rapido-pesquisa td {
@@ -399,10 +405,10 @@ div.rapido-pesquisa {
   flex-wrap:wrap ;
 }
 
-    ul, ol {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 
 .contrast-text {
     width: fit-content;
@@ -417,3 +423,6 @@ div.rapido-pesquisa {
     bottom: 0px;
 }
 
+.rapido-pesquisa-table {
+    height: 100%;
+}
