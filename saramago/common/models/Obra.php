@@ -302,7 +302,7 @@ class Obra extends \yii\db\ActiveRecord
         
         $palavras = explode(', ', $frase);
         foreach ($palavras as $palavra) {
-            $palavra = preg_replace("#[^a-zA-Z\-]#", "", $palavra);
+            $palavra = preg_replace("/[^a-z0-9áàâãéèêíïóôõöúçñ]+/i", "", $palavra);
             if (isset($contagem[$palavra])) {
                 $contagem[$palavra] += 1;
             }

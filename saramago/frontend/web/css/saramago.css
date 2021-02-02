@@ -62,11 +62,11 @@
  }
 
 .rapido-saramago .item-noticia {
-    margin: 30px;
+    margin: 50px;
     position: relative;
     resize: vertical;
     overflow: auto;
-    height:200px;
+    height:250px;
 }
 
 .rapido-saramago .noticia {
@@ -425,4 +425,29 @@ ul, ol {
 
 .rapido-pesquisa-table {
     height: 100%;
+}
+
+.normal-scroll {
+    overflow-x: scroll;
+}
+
+.hidden-scroll {
+    overflow-x: scroll;
+}
+
+/* Esconder scrollbar mas manter a sua funcionalidade */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hidden-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hidden-scroll{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.menu-info-saramago img {
+    margin-bottom: 20px;
+    border-radius: 30px;
 }

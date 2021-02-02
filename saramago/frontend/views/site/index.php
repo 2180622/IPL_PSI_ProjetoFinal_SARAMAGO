@@ -85,8 +85,11 @@ $this->title = 'Saramago';
                     <?php $counterNoticias = 0;
                     if (isset($noticias)) {
                         foreach ($noticias as $noticia) { ?>
-                            <li data-target="#carousel-noticias" data-slide-to="<?=$counterNoticias?>"></li>
-                            <?php $counterNoticias++;
+                            <?php if (date('Y-m-d H:i:s') > $noticia->dataVisivel && date('Y-m-d H:i:s') < $noticia->dataExpiracao 
+                            && $noticia->interface == "opac" || $noticia->interface == "todas") { ?>
+                                <li data-target="#carousel-noticias" data-slide-to="<?=$counterNoticias?>"></li>
+                                <?php $counterNoticias++;
+                            }
                         }
                     } ?>
                 </ol>
@@ -95,23 +98,28 @@ $this->title = 'Saramago';
                     <?php if (isset($noticias)) { ?>
                         <?php $primeiro = true; ?>
                         <?php foreach ($noticias as $noticia) { ?>
-                            <?php if ($primeiro == true) { ?>
-                                <div class="item item-noticia active">
-                                    <div class="panel" style="background-color: rgb(239, 239, 239)">
-                                        <h4><?= $noticia->autor ?>
-                                        </h4>
-                                        <h5><?= $noticia->conteudo ?></h5>
+                            <?php if (date('Y-m-d H:i:s') > $noticia->dataVisivel && date('Y-m-d H:i:s') < $noticia->dataExpiracao 
+                            && $noticia->interface == "opac" || $noticia->interface == "todas") { ?>
+                                <?php if ($primeiro == true) { ?>
+                                    <div class="item item-noticia active">
+                                        <div class="panel" style="background-color: rgb(239, 239, 239)">
+                                            <h4><?= $noticia->assunto ?> </h4>
+                                            <h5><?= $noticia->conteudo ?> </h5>
+                                            <div class="col-lg-6" style="text-align: left; font-size: 14px;"><?= $noticia->autor ?> </div>
+                                            <div class="col-lg-6" style="text-align: right; font-size: 14px;"><?= $noticia->dataVisivel ?> </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <?php $primeiro = false; ?>
-                            <?php } else { ?>
-                                <div class="item item-noticia">
-                                    <div class="panel" style="background-color: rgb(239, 239, 239)">
-                                        <h4><?= $noticia->autor ?>
-                                        </h4>
-                                        <h5><?= $noticia->conteudo ?></h5>
+                                    <?php $primeiro = false; ?>
+                                <?php } else { ?>
+                                    <div class="item item-noticia">
+                                        <div class="panel" style="background-color: rgb(239, 239, 239)">
+                                            <h4><?= $noticia->assunto ?> </h4>
+                                            <h5><?= $noticia->conteudo ?> </h5>
+                                            <div class="col-lg-6" style="text-align: left; font-size: 14px;"><?= $noticia->autor ?> </div>
+                                            <div class="col-lg-6" style="text-align: right; font-size: 14px;"><?= $noticia->dataVisivel ?> </div>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                             <?php } ?>
                         <?php } ?>
                     <?php } ?>
