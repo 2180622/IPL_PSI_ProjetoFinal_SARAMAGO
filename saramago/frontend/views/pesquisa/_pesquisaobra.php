@@ -53,7 +53,7 @@ use yii\widgets\DetailView;
         [
             'attribute'=>'',
             //'value'=>$model->imgCapa,
-            'value'=>Html::a('Fazer reserva', url::toRoute(['reserva/obrafull', 'id' => $model->id])),
+            'value'=>Html::a('Fazer reserva', url::toRoute(['reserva/obra-full', 'id' => $model->id])),
             'format' => 'raw',
         ],
 

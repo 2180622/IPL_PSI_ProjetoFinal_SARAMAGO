@@ -15,7 +15,7 @@ use yii\widgets\DetailView;
 $this->title = $model->titulo . ' ('. $model->ano .')';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="obrafull">
+<div class="obra-full">
     <div> 
         <h1><?= Html::encode($this->title) ?></h1>
 
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo '<p> Tipo: Monografia</p>';
                 echo '<p> Volume: '.$model->monografias->volume.'</p>';
                 echo '<p> Páginas: '.$model->monografias->paginas.'</p>';
-                echo '<p> ISBN: '.$model->monografias->ISBN.'</p>';
+                echo '<p> ISBN: '.$model->monografias->isbn.'</p>';
             }
             elseif($model->tipoObra == "pubPeriodica")
             {
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
 
         </div>
-        <div class="normal-scroll col-lg-auto">
+        <div class="hidden-scroll col-lg-auto">
         <?php 
             echo Tabs::widget([
                 'items' => [
@@ -116,12 +116,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'template' => '{pedir}',
                                     'buttons' => [
                                         'pedir' => function ($url, $model, $id) {
-                                            return Html::a(Html::button(FAS::icon('running')->size(FAS::SIZE_LG),
-                                                ['class' => 'btn btn-success btn-sm inline']), Url::to(['exemplar-pedir', 'id' => $id]),
-                                                ['data' =>
-                                                    ['confirm' => "Está prestes a enviar um pedido de levantamento do exemplar:\n\nCota: " . $model->cota .
-                                                        "\nCód.Barras: ".$model->codBarras."\nObra: ".$model->obra->titulo ." (".$model->obra->ano.')'."\n\nPretende prosseguir?", 'method' => 'post']
-                                                ]);
+                                            if ($model->estado == 'emprestado' || $model->estado =='reservado' || $model->estado == 'transferecia') {
+                                                return Html::a(Html::button(FAS::icon('hand-holding')->size(FAS::SIZE_LG),
+                                                    ['class' => 'btn btn-info btn-sm inline']), Url::to(['exemplar-reserva', 'id' => $model->id]),
+                                                    ['data' =>
+                                                        ['confirm' => "Está prestes a enviar um pedido de reserva do exemplar:\n\nCota: " . $model->cota .
+                                                            "\nCód.Barras: ".$model->codBarras."\nObra: ".$model->obra->titulo ." (".$model->obra->ano.')'."\n\nPretende prosseguir?", 'method' => 'post']
+                                                    ]);
+                                            }
+                                            else {
+                                                return '--';
+                                            }
                                         },
                                     ],
                                 ],
@@ -164,7 +169,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return $model->fundo->designacao;
                                         }
                                         else {
-                                            return 'Indisponível';
+                                            return '--';
                                         }
                                     },
                                     'filter' => ['normal' => 'Normal', 'curto' => 'Curto', 'diario' => 'Diário', 'nreq' => 'Não Requisitável'],
@@ -172,7 +177,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'headerOptions' => ['width' => '200'],
                                 ],
                                 [
-                                    'label' => 'Suplemento?',
+                                    'label' => 'Suplemento',
                                     'attribute' => 'suplemento',
                                     'format'=>['boolean',['0' => 'Não', '1' => 'Sim']],
                                     'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Ambos'],

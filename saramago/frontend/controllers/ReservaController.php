@@ -41,8 +41,8 @@ class ReservaController extends Controller
                     [
                         'actions' => ['logout', 'index',
                             'posto', 'posto-create', 'posto-update', 'posto-delete', 'posto-view',
-                            'exemplar', 'exemplar-create', 'exemplar-update', 'exemplar-delete', 'exemplar-view',
-                            'obrafull',
+                            'exemplar', 'exemplar-create', 'exemplar-update', 'exemplar-delete', 'exemplar-view', 'exemplar-reserva',
+                            'obra-full',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -58,7 +58,7 @@ class ReservaController extends Controller
         ];
     }
 
-    public function actionObrafull($id) {
+    public function actionObraFull($id) {
         if ((Yii::$app->user->can('acessoFrontend'))) {
 
             $tipoExemplarAll = ArrayHelper::map(Tipoexemplar::find()->all(),'id','designacao','tipo',['enctype' => 'multipart/form-data']);
@@ -67,7 +67,7 @@ class ReservaController extends Controller
             $searchModelExemplar = new ExemplarSearch();
             $dataProviderExemplar = $searchModelExemplar->search(Yii::$app->request->queryParams);
 
-            return $this->render('obrafull', [
+            return $this->render('obra-full', [
                 'model' => $this->findObraModel($id),
                 'dataProviderExemplar' => $dataProviderExemplar, 'searchModelExemplar' => $searchModelExemplar,
                 'tipoExemplarAll' => $tipoExemplarAll,
@@ -76,6 +76,33 @@ class ReservaController extends Controller
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
+
+    public function actionExemplarReserva($id)
+    {
+        if ((Yii::$app->user->can('acessoFrontend'))) {
+            $model = new Reserva();
+
+            $idDoUserLoggado = Yii::$app->user->id;
+            $idDoLeitor = Leitor::find()->where(['user_id' => $idDoUserLoggado])->one();
+
+            if ($idDoLeitor === null) {
+                throw new ForbiddenHttpException ('Esta área serve para apenas os leitores Saramago efetuarem reservas');
+            }
+
+            $model->Leitor_id = $idDoLeitor->id;
+            $model->Exemplar_id = $id;
+
+            var_dump($model->exemplar->obra->titulo); die();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A reserva da obra "'.$model->exemplar->obra->titulo.'" foi adicionada com sucesso.');
+                return $this->redirect(['obra-full', 'id' => $model->exemplar->obra->id]);
+            }
+
+            return $this->redirect(['obra-full', 'id' => $model->exemplar->obra->id]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
+    }
+
 
     /**
      * Lists all Reserva models.

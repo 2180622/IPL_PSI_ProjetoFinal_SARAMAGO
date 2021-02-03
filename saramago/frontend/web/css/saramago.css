@@ -171,7 +171,7 @@
     border-radius: 5px;
     font-size: 18px;
     background: rgb(255,255,255);
-    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241,245,244,1) 90%, rgba(211,255,255,1) 100%);
+    background: radial-gradient(circle, rgba(244,255,255,1) 0%, rgba(241,245,244,1) 0%, rgba(233,255,255,1) 100%);
     width: 100%;
 }
 
