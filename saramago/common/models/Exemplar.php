@@ -30,6 +30,26 @@ use Yii;
  */
 class Exemplar extends \yii\db\ActiveRecord
 {
+    const ESTADO_ARRUMACAO = 'arrumacao';
+    const ESTADO_ESTANTE = 'estante';
+    const ESTADO_QUARENTENA = 'quarentena';
+    const ESTADO_PERDIDO = 'perdido';
+    const ESTADO_RESERVADO = 'reservado';
+    const ESTADO_EMPRESTADO = 'emprestado';
+    const ESTADO_TRANSFERENCIA = 'transferencia';
+    const ESTADO_ND = 'nd';
+
+    const ESTADO = [
+        self::ESTADO_ARRUMACAO => 'Em Arrumação...',
+        self::ESTADO_ESTANTE =>'Na Estante',
+        self::ESTADO_QUARENTENA,
+        self::ESTADO_PERDIDO =>'Perdido',
+        self::ESTADO_RESERVADO=>'Reservado',
+        self::ESTADO_EMPRESTADO =>'Emprestado',
+        self::ESTADO_TRANSFERENCIA =>'Transferência',
+        self::ESTADO_ND =>'Não Disponível'
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -146,7 +166,7 @@ class Exemplar extends \yii\db\ActiveRecord
      */
     public function getRequisicaos()
     {
-        return $this->hasMany(Requisicao::className(), ['id' => 'Requisicao_id'])->viaTable('requisicao_exemplar', ['Exemplar_id' => 'id']);
+        return $this->hasMany(Requisicao::className(), ['Exemplar_id' => 'id']);
     }
 
     /**
