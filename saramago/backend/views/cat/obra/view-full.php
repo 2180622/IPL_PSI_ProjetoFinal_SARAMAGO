@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Estatutoexemplar;
+use common\models\Exemplar;
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
@@ -26,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
             {
                 echo Html::img('@web/img/' . $model->imgCapa,['width' => '100%', 'alt'=> $model->titulo . ' ('. $model->ano .')']);
             }
-
             echo'<h4>'.$model->titulo.' <small class="text-muted"> ('.$model->ano.')</small></h4><hr>';
 
             if($model->tipoObra == "materialAv")
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo '<p>Tipo de Obra: Monografia</p>';
                 echo '<p> Volume: '.$model->monografias->volume.'</p>';
                 echo '<p> Páginas: '.$model->monografias->paginas.'</p>';
-                echo '<p> ISBN: '.$model->monografias->ISBN.'</p>';
+                echo '<p> ISBN: '.$model->monografias->isbn.'</p>';
             }
             elseif($model->tipoObra == "pubPeriodica")
             {
@@ -223,19 +223,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                         },
                                         'filter' => Estatutoexemplar::EST_EXEMPLAR,
                                         'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
-                                        'headerOptions' => ['width' => '200'],
+                                        'headerOptions' => ['width' => '150'],
                                     ],
-                                    //FIXME FUNDO - Exemplar é que recebe o fundo_id / não o contrario
-                                    /*[
+                                    //FIXME FUNDO - Implementar o fundo_id
+                                    [
                                         'label' => 'Fundo',
                                         'attribute' => 'Fundo_id',
                                         'value' => function ($model) {
-                                            return $model->fundos->designacao;
+                                            if($model->fundo != null){return $model->fundo->designacao;}
                                         },
-                                        'filter' => ['normal' => 'Normal', 'curto' => 'Curto', 'diario' => 'Diário', 'nreq' => 'Não Requisitável'],
+                                        //'filter' => ['normal' => 'Normal', 'curto' => 'Curto', 'diario' => 'Diário', 'nreq' => 'Não Requisitável'],
                                         'filterInputOptions' => ['class' => 'form-control', 'id' => null, 'prompt' => 'Todos'],
                                         'headerOptions' => ['width' => '200'],
-                                    ],*/
+                                    ],
                                     [
                                         'label' => 'Suplemento?',
                                         'attribute' => 'suplemento',
@@ -271,16 +271,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                           elseif($model->estado == 'transferecia'){return '<h4><span class="label label-info">Transferência</span></h4>';}
                                           elseif($model->estado == 'nd'){return '<h4><span class="label label-danger">Não Disponível</span></h4>';}
                                         },
-                                        'filter' => [
-                                            'arrumacao' => 'Em Arrumação...',
-                                            'estante'=>'Na Estante',
-                                            'quarentena'=>'Quarentena',
-                                            'perdido'=>'Perdido',
-                                            'reservado'=>'Reservado',
-                                            'emprestado'=>'Emprestado',
-                                            'transferencia'=>'Transferência',
-                                            'nd'=>'Não Disponível',
-                                        ],
+                                        'filter' => Exemplar::ESTADO,
                                         'headerOptions' => ['width' => '100'],
                                     ],
                                     ['class' => 'yii\grid\ActionColumn',
