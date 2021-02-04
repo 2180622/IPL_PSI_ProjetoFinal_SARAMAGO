@@ -23,6 +23,8 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'Leitor_id')->hiddenInput(['value'=> $idDoLeitor->id])->label(false) ?>
 
+    <?= $form->field($model, 'operador')->hiddenInput(['value'=> ""])->label(false) ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

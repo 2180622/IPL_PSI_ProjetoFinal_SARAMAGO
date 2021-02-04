@@ -12,20 +12,20 @@ use yii\widgets\Pjax;
 $this->title = 'Reservas de exemplares';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="exemplar">
+<div class="exemplar saramago-table fast-font">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Nova reserva', ['exemplar-create'], ['class' => 'btn btn-create']) ?>
+        <?= Html::a('Nova reserva de exemplar', [url::to('pesquisa/obra')], ['class' => 'button-saramago btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $reservaSearchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             [   'label'=>'Data de reserva',
                 'attribute' => 'dataReserva',
             ],
@@ -38,37 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [   'label'=>'Nota',
                 'attribute'=>'notaReserva',
             ],
-            [   'label'=>'Leitor Associado',
-                'attribute'=>'Leitor_id',
-                'value'=>function($reservaExemplar){
-                            echo $reservaExemplar->leitor->nome;},
-            ],
-            [   'label'=>'Exemplar Reservado',
+            [   'label'=>'Cota do exemplar',
                 'attribute'=>'Exemplar_id',
-                'value'=>function($reservaExemplar){
-                            echo $reservaExemplar->exemplar->cota;},
-            ],
-            ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Ações',
-                'template' => '{view} {update} {delete}',
-                'buttons' => [
-                    'view' => function ($url,$model,$id){
-                        //$btn_id='modalButtonView'.$id; return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                        //      ['value'=>Url::to(['bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm modal-view-btn','id'=>$btn_id]);
-                        return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                            ['value'=>Url::to(['exemplar-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
-                    },
-                    'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                        ['value'=>Url::to(['exemplar-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
-                    },
-                    'delete' => function ($url,$model,$id) {
-                        return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
-                            ['class' => 'btn btn-danger btn-sm inline']), Url::to(['exemplar-delete', 'id' => $id]),
-                            ['data' =>
-                                ['confirm' => 'Tem a certeza de que pretende fechar a reserva ?', 'method' => 'post']
-                            ]);
-                    },
-                ],
+                'value'=>function($model){
+                            return $model->exemplar->cota;},
             ],
         ],
     ]); ?>
@@ -89,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $this->registerJs("
     $(function () {
         $('#modalButtonView".$reservaExemplar->id."').click(function (){
-            $('#modalView".$reserva->id."').modal('show')
+            $('#modalView".$reservaExemplar->id."').modal('show')
                 .find('#modalContent')
                 .load($(this).attr('value'))
         })

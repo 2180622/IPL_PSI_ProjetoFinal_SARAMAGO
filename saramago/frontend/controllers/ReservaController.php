@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\ExemplarSearch;
+use common\models\ReservaSearch;
+use common\models\ReservaspostoSearch;
 use common\models\Biblioteca;
 use common\models\Tipoexemplar;
 use common\models\Exemplar;
@@ -92,8 +94,8 @@ class ReservaController extends Controller
             $model->Leitor_id = $idDoLeitor->id;
             $model->Exemplar_id = $id;
 
-            var_dump($model->exemplar->obra->titulo); die();
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            var_dump($model->load(Yii::$app->request->post())); die();
+            if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
                 Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A reserva da obra "'.$model->exemplar->obra->titulo.'" foi adicionada com sucesso.');
                 return $this->redirect(['obra-full', 'id' => $model->exemplar->obra->id]);
             }
@@ -111,15 +113,25 @@ class ReservaController extends Controller
     public function actionPosto()
     {
         if ((Yii::$app->user->can('acessoFrontend'))) {
-            $dataProvider = new ActiveDataProvider([
-                'query' => ReservasPosto::find(),
-            ]);
-            $reservasPosto = ReservasPosto::find()->all();
+
+            $idDoUserLoggado = Yii::$app->user->id;
+            $idDoLeitor = Leitor::find()->where(['user_id' => $idDoUserLoggado])->one();
+
+            if ($idDoLeitor === null) {
+                throw new ForbiddenHttpException ('Esta área serve para apenas os leitores Saramago efetuarem reservas');
+            }
+
+            $reservasPosto = ReservasPosto::find()->where(['Leitor_id' => $idDoLeitor->id])->all();
+            
+            $reservasPostoSearchModel = new ReservaspostoSearch();
+            $dataProvider = $reservasPostoSearchModel->search(Yii::$app->request->queryParams);
+
             $postoTrabalhoAll = ArrayHelper::map(PostoTrabalho::find()->all(),'id','designacao',['enctype' => 'multipart/form-data']);
 
             return $this->render('posto', [
                 'dataProvider' => $dataProvider,
                 'reservasPosto' => $reservasPosto,
+                'reservasPostoSearchModel' => $reservasPostoSearchModel,
                 'postoTrabalhoAll' => $postoTrabalhoAll, 
             ]);
         }
@@ -129,13 +141,24 @@ class ReservaController extends Controller
     public function actionExemplar()
     {
         if ((Yii::$app->user->can('acessoFrontend'))) {
-            $dataProvider = new ActiveDataProvider([
-                'query' => Reserva::find(),
-            ]);
-            $reservasExemplar = Reserva::find()->all();
+
+            $idDoUserLoggado = Yii::$app->user->id;
+            $idDoLeitor = Leitor::find()->where(['user_id' => $idDoUserLoggado])->one();
+
+            if ($idDoLeitor === null) {
+                throw new ForbiddenHttpException ('Esta área serve para apenas os leitores Saramago efetuarem reservas');
+            }
+
+            $reservasExemplar = Reserva::find()->where(['Leitor_id' => $idDoLeitor->id])->all();
+            
+            $reservaSearchModel = new ReservaSearch();
+            $dataProvider = $reservaSearchModel->search(Yii::$app->request->queryParams);
+
+            
 
             return $this->render('exemplar', [
                 'dataProvider' => $dataProvider,
+                'reservaSearchModel' => $reservaSearchModel,
                 'reservasExemplar'=>$reservasExemplar,
             ]);
         }
@@ -152,8 +175,8 @@ class ReservaController extends Controller
     public function actionPostoView($id)
     {
         if ((Yii::$app->user->can('acessoFrontend'))) {
-            return $this->render('postoview', [
-                'model' => $this->findModel($id),
+            return $this->renderAjax('postoview', [
+                'model' => $this->findPostoModel($id),
             ]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
@@ -163,8 +186,8 @@ class ReservaController extends Controller
     public function actionExemplarView($id)
     {
         if ((Yii::$app->user->can('acessoFrontend'))) {
-            return $this->render('exemplarview', [
-                'model' => $this->findModel($id),
+            return $this->renderAjax('exemplarview', [
+                'model' => $this->findExemplarModel($id),
             ]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');  
@@ -190,7 +213,7 @@ class ReservaController extends Controller
             }
 
             $postoTrabalhoAll = ArrayHelper::map(PostoTrabalho::find()->all(),'id','designacao',['enctype' => 'multipart/form-data']);
-
+            $model->load(Yii::$app->request->post());
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -213,7 +236,7 @@ class ReservaController extends Controller
            //) var_dump($exemplarDaObraAll);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['reserva']);
             }
 
             return $this->render('exemplarcreate', [

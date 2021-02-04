@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form ActiveForm */
 $this->title = 'Saramago';
 ?>
-<div class="pesquisa-saramago">
+<div class="pesquisa-saramago fast-font">
     <div class="body-content">
 		<div class="conta-password-form">
 

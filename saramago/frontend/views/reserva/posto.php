@@ -12,60 +12,46 @@ use yii\widgets\Pjax;
 $this->title = 'Reserva de postos de trabalho';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="posto">
+<div class="posto saramago-table fast-font">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Nova reserva', ['posto-create'], ['class' => 'btn btn-create']) ?>
+        <?= Html::a('Nova reserva de posto', ['posto-create'], ['class' => 'button-saramago btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $reservasPostoSearchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             [   'label'=>'Data de reserva',
                 'attribute' => 'dataReserva',
             ],
             [   'label'=>'Estado da reserva',
                 'attribute'=>'estadoReserva',
             ],
-            [   'label'=>'Data de fecho',
-                'attribute'=>'dataFecho',
+            [   'label'=>'Lugar referente',
+                'attribute'=>'lugar',
             ],
-            [   'label'=>'Nota',
-                'attribute'=>'notaReserva',
-            ],
-            [   'label'=>'Leitor Associado',
-                'attribute'=>'Leitor_id',
-                'value'=>function($reservasPosto){
-                            echo $reservaPosto->leitor->nome;},
+            [   'label'=>'Notas',
+                'attribute' => 'notaOpac',
             ],
             [   'label'=>'Posto Reservado',
                 'attribute'=>'PostoTrabalho_id',
                 'value'=>function($reservasPosto){
-                            echo $reservaPosto->postotrabalho->designacao;},
+                            return $reservasPosto->postoTrabalho->designacao;},
             ],
             ['class' => 'yii\grid\ActionColumn',
                 'header'=>'Ações',
-                'template' => '{view} {update} {delete}',
+                'template' => '{delete}',
                 'buttons' => [
-                    'view' => function ($url,$model,$id){
-                        //$btn_id='modalButtonView'.$id; return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                        //      ['value'=>Url::to(['bibliotecas-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm modal-view-btn','id'=>$btn_id]);
-                        return Html::button(FAS::icon('eye')->size(FAS::SIZE_LG),
-                            ['value'=>Url::to(['posto-view','id'=>$id]), 'class' => 'btn btn-primary btn-sm','id'=>'modalButtonView'.$id]);
-                    },
-                    'update' => function ($url,$model,$id){return Html::button(FAS::icon('pencil-alt')->size(FAS::SIZE_LG),
-                        ['value'=>Url::to(['posto-update','id'=>$id]), 'class' => 'btn btn-warning btn-sm','id'=>'modalButtonUpdate'.$id]);
-                    },
                     'delete' => function ($url,$model,$id) {
                         return Html::a(Html::button(FAS::icon('trash-alt')->size(FAS::SIZE_LG),
                             ['class' => 'btn btn-danger btn-sm inline']), Url::to(['posto-delete', 'id' => $id]),
                             ['data' =>
-                                ['confirm' => 'Tem a certeza de que pretende fechar a reserva de posto?', 'method' => 'post']
+                                ['confirm' => 'Tem a certeza de que pretende cancelar a reserva de posto?', 'method' => 'post']
                             ]);
                     },
                 ],
@@ -138,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         Modal::begin([
             'headerOptions' => ['id' => 'modalHeader'],
-            'id' => 'modalUpdate'.$reserva->id,
+            'id' => 'modalUpdate'.$reservaPosto->id,
             'size' => 'modal-lg',
             'clientOptions' => ['backdrop' => 'static']
         ]);

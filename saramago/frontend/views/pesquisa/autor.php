@@ -8,8 +8,8 @@ use yii\widgets\ListView;
 /* @var $this yii\web\View */
 /* @var $model app\models\ObraSearch */
 /* @var $form yii\widgets\ActiveForm */
-$this->title = 'Encontrar autor';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Autores';
+$this->params['breadcrumbs'][] = 'Pesquisar autores';
 ?>
 
 <div class="rapido-pesquisa">

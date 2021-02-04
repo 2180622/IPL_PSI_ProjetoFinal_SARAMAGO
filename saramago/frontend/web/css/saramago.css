@@ -3,8 +3,9 @@
 .breadcrumb,
 .breadcrumb a {
     font-family: "Geometr415 Lt BT Lite", sans-serif;
-    background-color: #aaaaaa;
-    color: #ffffff;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(228,228,228,1) 86%, rgba(255,255,255,1) 100%);
+    color: #111;
 }
 
 .main-login {
@@ -319,9 +320,15 @@
   scrollbar-width: none;  /* Firefox */
 }
 
-div.rapido-pesquisa {
+.saramago-table table {
+    border-collapse: separate !important;
+    background: rgb(247,247,247);
+    background: linear-gradient(
+180deg
+, rgba(247,247,247,1) 0%, rgba(200,235,247,1) 100%);
+    border-radius: 5px;
+    border: 1px solid black;
 }
-
 
 .rapido-pesquisa img {
     font-family: "Geometric 415 Lt BT Lite", sans-serif;
@@ -330,6 +337,7 @@ div.rapido-pesquisa {
     border-radius: 5px;
     font-size: 18px;
     border: 1px solid black;
+    background-image: url('../../web/res/book-placeholder.png');
 }
 
 .rapido-pesquisa td {
@@ -392,14 +400,19 @@ div.rapido-pesquisa {
 
 /* endregion */
 
+.item-class .button-saramago{
+    width: 300px;
+}
 
 .item-class{
-  width: 49%;
+  width: 49.9%;
   //border:1px solid red;
-  margin-bottom:2px;
-  margin-right:2px;
 }
 .parent-class{
+    background: rgb(247,247,247);
+    background: linear-gradient(
+180deg
+, rgba(220,245,247,1) 0%, rgba(200,249,242,1) 100%);
   width:100%;
   display:flex;
   flex-wrap:wrap ;
@@ -450,4 +463,25 @@ ul, ol {
 .menu-info-saramago img {
     margin-bottom: 20px;
     border-radius: 30px;
+}
+
+.button-saramago {
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    background: #ffffff;
+    color: black;
+    font-size: 18px;
+    border: 1px solid black;
+    width: 100%;
+    transition-duration: 0.4s;
+}
+
+.button-saramago form button:hover {
+    background-color: #254E58;
+    color: #ffffff;
+}
+
+.fast-font {
+    font-family: "Geometric 415 Lt BT Lite", sans-serif;
 }

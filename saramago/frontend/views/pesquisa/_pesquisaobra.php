@@ -53,7 +53,7 @@ use yii\widgets\DetailView;
         [
             'attribute'=>'',
             //'value'=>$model->imgCapa,
-            'value'=>Html::a('Fazer reserva', url::toRoute(['reserva/obra-full', 'id' => $model->id])),
+            'value'=>Html::a('Verificar disponibilidade', url::toRoute(['reserva/obra-full', 'id' => $model->id]), ['class' => 'button-saramago btn btn-success']),
             'format' => 'raw',
         ],
 

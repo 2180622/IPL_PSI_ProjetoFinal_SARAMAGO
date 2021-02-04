@@ -33,7 +33,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap fast-font">
     <?php
     /* (1) Se tiver logotipo
      * (2) Se não tiver logotipo e tiver a designacao da entidade definida
@@ -88,11 +88,11 @@ AppAsset::register($this);
          ],
         ],
         [
-            'label' => FAS::icon('book'). ' Reservar exemplar', 'url'=>['/reserva/exemplar'],
+            'label' => FAS::icon('book'). ' Reservas de exemplares', 'url'=>['/reserva/exemplar'],
             'encode'=> false,
          ],
          [
-            'label' => FAS::icon('book-reader'). ' Reservar posto', 'url'=>['/reserva/posto'],
+            'label' => FAS::icon('book-reader'). ' Reservas de postos', 'url'=>['/reserva/posto'],
             'encode'=> false,
          ],
     ];

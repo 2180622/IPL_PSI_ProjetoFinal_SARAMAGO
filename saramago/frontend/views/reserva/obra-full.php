@@ -13,9 +13,10 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->titulo . ' ('. $model->ano .')';
+$this->params['breadcrumbs'][] = ['label' => 'Pesquisar obras', 'url' => ['pesquisa/obra']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="obra-full">
+<div class="obra-full saramago-table">
     <div> 
         <h1><?= Html::encode($this->title) ?></h1>
 
@@ -56,52 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php 
             echo Tabs::widget([
                 'items' => [
-                    //region Ficha da Obra
-                        [
-                            'label' => 'Ficha da obra',
-                            'content' => DetailView::widget([
-                                'model' => $model,
-                                'attributes' => [
-                                    'titulo',
-                                    [
-                                        'attribute' => 'resumo',
-                                        'label' => 'Resumo',
-                                        'format' => 'html',
-                                    ],
-                                    'editor',
-                                    'ano',
-                                    [
-                                        'attribute' => 'tipoObra',
-                                        'label' => 'Tipo de Obra',
-                                        'value'=> function ($model, $value)
-                                        {
-                                            if($model->tipoObra == "materialAv") {return 'Material Audio-Visual';}
-                                            if($model->tipoObra == "monografia") {return 'Monografia';}
-                                            elseif($model->tipoObra == "pubPeriodica") {return 'Publicação Periódica';}
-                                        }
-                                    ],
-                                    [
-                                        'attribute' => 'descricao',
-                                        'label' => 'Descrição',
-                                    ],
-                                    'local',
-                                    'edicao',
-                                    'assuntos',
-                                    [
-                                        'label'=>'CDU',
-                                        'attribute'=>'Cdu_id',
-                                        'value' => function ($model) { return $model->cdu->codCdu.' ('. $model->cdu->designacao.')';}
-                                    ],
-                                    [
-                                        'label'=>'Coleção',
-                                        'attribute'=>'Colecao_id',
-                                        'value' => function ($model) {
-                                            if($model->colecao != null) {return $model->colecao->tituloColecao;}}
-                                    ],
-                                ],
-                            ]),
-                        ],
-                        //endregion
+                          //exemplares region
                     [
                         'label' => 'Exemplares '. Html::tag('span', $model->getExemplars()->count(), ['class'=>'badge badge-light']),
                         'encode'=> false,
@@ -109,6 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'content'=> GridView::widget([
                             'dataProvider' => $dataProviderExemplar,
                             'filterModel' => $searchModelExemplar,
+                            'options' => ['style' => 'table-layout:fixed;'],
                             'columns' => [
                                 ['class' => 'yii\grid\ActionColumn',
                                     'header' => 'Pedir',
@@ -125,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                             }
                                             else {
-                                                return '--';
+                                                return '';
                                             }
                                         },
                                     ],
@@ -169,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return $model->fundo->designacao;
                                         }
                                         else {
-                                            return '--';
+                                            return '';
                                         }
                                     },
                                     'filter' => ['normal' => 'Normal', 'curto' => 'Curto', 'diario' => 'Diário', 'nreq' => 'Não Requisitável'],
@@ -228,6 +185,53 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
 
                                 //endregion
+                    //region Ficha da Obra
+                        [
+                            'label' => 'Ficha da obra',
+                            'content' => DetailView::widget([
+                                'model' => $model,
+                                'attributes' => [
+                                    'titulo',
+                                    [
+                                        'attribute' => 'resumo',
+                                        'label' => 'Resumo',
+                                        'format' => 'html',
+                                    ],
+                                    'editor',
+                                    'ano',
+                                    [
+                                        'attribute' => 'tipoObra',
+                                        'label' => 'Tipo de Obra',
+                                        'value'=> function ($model, $value)
+                                        {
+                                            if($model->tipoObra == "materialAv") {return 'Material Audio-Visual';}
+                                            if($model->tipoObra == "monografia") {return 'Monografia';}
+                                            elseif($model->tipoObra == "pubPeriodica") {return 'Publicação Periódica';}
+                                        }
+                                    ],
+                                    [
+                                        'attribute' => 'descricao',
+                                        'label' => 'Descrição',
+                                    ],
+                                    'local',
+                                    'edicao',
+                                    'assuntos',
+                                    [
+                                        'label'=>'CDU',
+                                        'attribute'=>'Cdu_id',
+                                        'value' => function ($model) { return $model->cdu->codCdu.' ('. $model->cdu->designacao.')';}
+                                    ],
+                                    [
+                                        'label'=>'Coleção',
+                                        'attribute'=>'Colecao_id',
+                                        'value' => function ($model) {
+                                            if($model->colecao != null) {return $model->colecao->tituloColecao;}}
+                                    ],
+                                ],
+                            ]),
+                        ],
+                        //endregion
+
                 ],
             ]);
         ?>

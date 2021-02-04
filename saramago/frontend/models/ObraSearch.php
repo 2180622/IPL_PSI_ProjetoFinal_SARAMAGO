@@ -57,19 +57,19 @@ class ObraSearch extends Obra
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'titulo', $this->pesquisaGeral])
+        $query->orFilterWhere(['like', 'titulo', $this->pesquisaGeral, false])
             ->orFilterWhere(['like', 'resumo', $this->pesquisaGeral])
-            ->orFilterWhere(['like', 'editor', $this->pesquisaGeral])
-            ->orFilterWhere(['like', 'tipoObra', $this->pesquisaGeral])
-            ->orFilterWhere(['like', 'descricao', $this->pesquisaGeral])
-            ->orFilterWhere(['like', 'local', $this->pesquisaGeral])
-            ->orFilterWhere(['like', 'edicao', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'editor', $this->pesquisaGeral, false])
+            ->orFilterWhere(['like', 'tipoObra', $this->pesquisaGeral, false])
+            ->orFilterWhere(['like', 'descricao', $this->pesquisaGeral, false])
+            ->orFilterWhere(['like', 'local', $this->pesquisaGeral, false])
+            ->orFilterWhere(['like', 'edicao', $this->pesquisaGeral, false])
             ->orFilterWhere(['like', 'assuntos', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'preco', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'primeiroNome', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'segundoNome', $this->pesquisaGeral])
             ->orFilterWhere(['like', 'apelido', $this->pesquisaGeral])
-            ->orFilterWhere(['like', 'ano', $this->pesquisaGeral])
+            ->orFilterWhere(['like', 'ano', $this->pesquisaGeral, false])
             /*->andFilterWhere(['like', 'tituloColecao', $this->colecao->tituloColecao])*/;
 
         return $dataProvider;
