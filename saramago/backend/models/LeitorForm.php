@@ -38,6 +38,31 @@ class LeitorForm extends Leitor
     public $TipoLeitor_id;
     public $Curso_id;
 
+    const ALUNO = 'aluno';
+    const DOCENTE = 'docente';
+    const EXTERNO = 'externo';
+
+    public function scenarios()
+    {
+        return [
+        self::ALUNO => [
+
+            'id','username','email', 'mail2', 'nome', 'nif', 'dataNasc', 'docId', 'morada', 'localidade', 'codPostal', 'telemovel', 'telefone', 'notaInterna', 'Biblioteca_id','TipoLeitor_id', 'numero', 'Curso_id',
+
+        ],
+        self::DOCENTE => [
+
+            'id','username','email', 'mail2', 'nome', 'nif', 'dataNasc', 'docId', 'morada', 'localidade', 'codPostal', 'telemovel', 'telefone', 'notaInterna', 'Biblioteca_id','TipoLeitor_id', 'departamento',
+
+        ],
+        self::EXTERNO => [
+
+            'id','username','email', 'mail2', 'nome', 'nif', 'dataNasc', 'docId', 'morada', 'localidade', 'codPostal', 'telemovel', 'telefone', 'notaInterna', 'Biblioteca_id','TipoLeitor_id',
+
+        ],
+    ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -70,7 +95,6 @@ class LeitorForm extends Leitor
 
             ['numero', 'trim'],
             ['numero', 'integer'],
-            ['numero', 'required'],
             ['numero', 'unique', 'targetClass' => '\common\models\Aluno', 'message' => 'Número já se encontra em uso.'],
 
             ['nif', 'required'],

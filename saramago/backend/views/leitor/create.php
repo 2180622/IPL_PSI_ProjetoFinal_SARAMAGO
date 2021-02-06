@@ -10,9 +10,19 @@ $this->params['breadcrumbs'][] = ['label' => 'Leitores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="leitor-create">
-    <?= $this->render('_form', [   'model'=>$model,
-                                        'listaBibliotecas'=>$listaBibliotecas,
-                                        'listaTiposLeitors'=>$listaTiposLeitors,
-                                        'listaCursos' => $listaCursos,
-                                    ]) ?>
+    <?php
+
+    if($scenario == 'aluno'){
+
+        echo $this->render('_formAluno/_form', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas, 'listaCursos' => $listaCursos]);
+
+    }elseif($scenario == 'docente') {
+
+        echo $this->render('_formDocente/_form', ['model' => $model, 'listaBibliotecas' => $listaBibliotecas]);
+
+    }elseif ($scenario == 'externo'){
+
+        echo $this->render('_formExterno/_form', ['model'=>$model, 'listaBibliotecas'=>$listaBibliotecas]);
+    }
+     ?>
 </div>

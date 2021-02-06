@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Curso;
+use common\models\Tipoleitor;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
@@ -17,10 +18,7 @@ use yii\widgets\ActiveForm;
 
     $listasBiblioteca = ArrayHelper::map($listaBibliotecas,'id','nome',['enctype' => 'multipart/form-data']);
 
-    $listasTipoLeitor = ArrayHelper::map($listaTiposLeitors,'id','estatuto','tipo', ['enctype' => 'multipart/form-data']);
-
-    $listasCursos = ArrayHelper::map(Curso::find()->select(["id, concat(nome, ' ', ' (',CodCurso,')') as Curso"])->asArray()->all(),
-        'id', 'Curso',['enctype' => 'multipart/form-data']);
+    $listasTipoLeitor = ArrayHelper::map(Tipoleitor::find()->where(['tipo' => 'docente'])->all(),'id','estatuto','tipo', ['enctype' => 'multipart/form-data']);
 
     $form = ActiveForm::begin(['id'=>'_form']); ?>
 
@@ -54,43 +52,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'TipoLeitor_id')->dropDownList($listasTipoLeitor, ['prompt' => 'Selecione...'])->label('Tipo de Leitor') ?>
 
-    <div id="departamento" hidden>
     <?= $form->field($model, 'departamento')->textInput(['maxlength' => true])->label('Departamento'); ?>
-    </div>
-    <div id="aluno" hidden>
-    <?= $form->field($model, 'numero')->textInput(['maxlength' => 11])->label('Número de Aluno'); ?>
-    <?= $form->field($model, 'Curso_id')->dropDownList($listasCursos, ['prompt' => 'Nenhum'])->label('Curso'); ?>
-    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success', 'id' => 'guardar']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
-    <?php
-        $this->registerJs(/** @lang JavaScript */"
-            $(document).ready(function () {
-            
-                $(document).on('change', '#leitorform-tipoleitor_id', function () {
-                    var label = $('option:selected', this).closest('optgroup').attr('label');
-                    console.log(label);
-                    if( label == 'aluno' ) {
-                        $('#aluno').show();
-                        $('#departamento').hide();
-                    }else if(label == 'docente' || label == 'funcionario') {
-                        $('#departamento').show();
-                        $('#aluno').hide();
-                    }else if(label == 'externo'){
-                        $('#departamento').hide();
-                        $('#aluno').hide();
-                    }else{
-                        $('#departamento').hide();
-                        $('#aluno').hide();                        
-                    }
-                });
-            });
-        ");
-    ?>
 
 </div>

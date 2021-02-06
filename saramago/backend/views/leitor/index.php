@@ -4,6 +4,7 @@
 /* @var $model \common\models\Leitor */
 
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -43,8 +44,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php Pjax::end(); ?>
             </div>
             <div class="menu-nav-saramago">
-                <?= Html::button(FAS::icon('plus') . ' Adicionar Leitor',
-                    ['value' => 'leitor/create', 'class' => 'btn btn-alt','id' => 'modalButtonCreate']) ?>
+                <?= ButtonDropdown::widget([
+                        'label' => FAS::icon('user') . ' Adicionar Leitores',
+                    'encodeLabel' => false,
+                    'options' => ['class' => 'btn btn-alt dropdown-toggle'],
+                    'dropdown' => [
+                        'encodeLabels' => false,
+                        'options' => ['class' => 'dropdown-menu-right'],
+                        'items' => [
+                            [
+                                'label' => FAS::icon('plus') . ' Adicionar Aluno',
+                                'options' => ['value' => 'leitor/create?scenario=aluno', 'class' => 'btn btn-secondary',
+                                    'id' => 'modalButtonAlunoCreate']
+                            ],
+                            [
+                                'label' => FAS::icon('plus') . ' Adicionar Docente/Funcionario',
+                                'options' => ['value' => 'leitor/create?scenario=docente', 'class' => 'btn btn-secondary',
+                                    'id' => 'modalButtonDocenteCreate']
+                            ],
+                            [
+                                'label' => FAS::icon('plus') . ' Adicionar Externo',
+                                'options' => ['value' => 'leitor/create?scenario=externo', 'class' => 'btn btn-secondary',
+                                    'id' => 'modalButtonExternoCreate']
+                            ],
+                        ],
+                    ],
+                ]); ?>
             </div>
             <div class="menu-table-saramago">
                 <?php Pjax::begin(); ?>
@@ -154,19 +179,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $this->registerJs("
         $(function () {
-            $('#modalButtonCreate').click(function (){
+            $('#modalButtonAlunoCreate').click(function (){
                 $('#modalCreate').modal('show')
-                    .find('#modalContent')
-                    .load($(this).attr('value'))
+                    .find('#modalContent').load($(this).attr('value'));  
             })
         });
         
         $(function () {
-            if(location.hash == '#create'){
-                 $('#modalCreate').modal('show')
-                    .find('#modalContent')
-                    .load('leitor/create')
-            }
+            $('#modalButtonDocenteCreate').click(function (){
+                $('#modalCreate').modal('show')
+                    .find('#modalContent').load($(this).attr('value'));
+            })
+        });
+        
+        $(function () {
+            $('#modalButtonExternoCreate').click(function (){
+                $('#modalCreate').modal('show')
+                    .find('#modalContent').load($(this).attr('value'))
+            })
         });
     ");
     ?>

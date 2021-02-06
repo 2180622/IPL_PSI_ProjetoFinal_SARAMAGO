@@ -126,10 +126,21 @@ class LeitorController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($scenario)
     {
         if ((Yii::$app->user->can('acessoLeitores'))) {
-            $model = new LeitorForm();
+            if($scenario == 'aluno')
+            {
+                $model = new LeitorForm(['scenario' => LeitorForm::ALUNO]);
+
+            }elseif($scenario == 'docente')
+            {
+                $model = new LeitorForm(['scenario' => LeitorForm::DOCENTE]);
+
+            }elseif ($scenario == 'externo')
+            {
+                $model = new LeitorForm(['scenario' => LeitorForm::EXTERNO]);
+            }
 
             $listaBibliotecas = Biblioteca::find()->all();
             $listaTiposLeitors = Tipoleitor::find()->all();
@@ -150,6 +161,7 @@ class LeitorController extends Controller
                 'listaBibliotecas'=>$listaBibliotecas,
                 'listaTiposLeitors'=>$listaTiposLeitors,
                 'listaCursos' => $listaCursos,
+                'scenario'=>$scenario,
             ]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
