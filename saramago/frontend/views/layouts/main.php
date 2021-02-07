@@ -87,14 +87,6 @@ AppAsset::register($this);
 
          ],
         ],
-        [
-            'label' => FAS::icon('book'). ' Reserva de exemplar', 'url'=>['/reserva/exemplar'],
-            'encode'=> false,
-         ],
-         [
-            'label' => FAS::icon('book-reader'). ' Reserva de posto de trabalho', 'url'=>['/reserva/posto'],
-            'encode'=> false,
-         ],
     ];
     if (Yii::$app->user->isGuest) {
         //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -118,7 +110,16 @@ AppAsset::register($this);
                     'url' => ['/conta/password'],
                     'encode'=> false,
                 ],
-            ]
+            ],
+            [
+            'label' => FAS::icon('book'). ' Reserva de exemplar', 'url'=>['/reserva/exemplar'],
+            'encode'=> false,
+         ],
+         [
+            'label' => FAS::icon('book-reader'). ' Reserva de posto de trabalho', 'url'=>['/reserva/posto'],
+            'encode'=> false,
+         ],
+
         ];
     }
     echo Nav::widget([

@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use rmrevin\yii\fontawesome\FAS;
 use common\models\Entidade;
 use common\models\Logotipos;
 use yii\helpers\Html;
@@ -77,16 +78,21 @@ AppAsset::register($this);
         //['label' => 'About', 'url' => ['/site/about']],
         //['label' => 'Contact', 'url' => ['/site/contact']],
 
-        //TODO Pesquisa
-        ['label' => 'Pesquisa', 'url' => ['/site/contact'],
-         'items' =>[
-                 ['label' =>'Pesquisa Avançada', 'url' =>['/site/about']],
+        [
+            'label' => FAS::icon('search'). ' Pesquisar', 'url' => ['\index'],
+            'encode' => false,
+            'items' =>[
+                     ['label' =>'Obras', 'url' =>['/pesquisa/obra']],
+                     ['label' =>'Autores', 'url' =>['/pesquisa/autor']],
 
          ],
-    ]];
+        ],
+    ];
     if (Yii::$app->user->isGuest) {
         //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => FAS::icon('user-circle') .' Login', 'url' => ['/site/login'],
+                        'encode'=> false,
+                        ];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
