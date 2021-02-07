@@ -16,14 +16,14 @@ $this->title = $model->titulo . ' ('. $model->ano .')';
 $this->params['breadcrumbs'][] = ['label' => 'Pesquisar obras', 'url' => ['pesquisa/obra']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="obra-full saramago-table">
+<div class="obra-full saramago-table ">
     <div class="center-block" style="text-align: -webkit-center;">
         <?= Html::img('@web/res/logo-saramago.png',['height' => '75px', 'alt'=> 'Saramago']) ?>
     </div>
     <div> 
         <h1><?= Html::encode($this->title) ?></h1>
 
-        <div class="menu-info-saramago col-lg-3">
+        <div class="menu-info-saramago col-lg-3 panel-default fast-font">
             <?php
             if ($model->imgCapa != null)
             {
