@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Saramago';
+$this->params['breadcrumbs'][] = null;
 ?>
 <div class="rapido-saramago">
     <div class="center-block">

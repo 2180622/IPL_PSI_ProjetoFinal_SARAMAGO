@@ -6,11 +6,17 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\ChangePasswordForm */
 /* @var $form ActiveForm */
-$this->title = 'Saramago';
+$this->title = 'Conta';
+$this->params['breadcrumbs'][] = 'Conta';
 ?>
 <div class="pesquisa-saramago fast-font">
     <div class="body-content">
-		<div class="conta-password-form">
+    	<div class="center-block" style="text-align: -webkit-center;">
+        	<?= Html::img('@web/res/logo-saramago.png',['height' => '75px', 'alt'=> 'Saramago']) ?>
+    	</div>
+
+    	<div class="col-lg-3"></div>
+		<div class="conta-password-form col-lg-6">
 
 		    <?php $form = ActiveForm::begin(['id'=>'password-form', 'options' => ['data' => ['pjax' => true]]]); ?>
 
@@ -24,5 +30,6 @@ $this->title = 'Saramago';
 		    <?php ActiveForm::end(); ?>
 
 		</div>
+		<div class="col-lg-3"></div>
 	</div>
 </div>

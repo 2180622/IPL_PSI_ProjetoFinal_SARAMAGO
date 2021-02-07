@@ -9,10 +9,13 @@ use yii\widgets\ListView;
 /* @var $model app\models\ObraSearch */
 /* @var $form yii\widgets\ActiveForm */
 $this->title = 'Obras';
-$this->params['breadcrumbs'][] = 'Pesquisar autores';
+$this->params['breadcrumbs'][] = 'Encontrar obras';
 ?>
 
 <div class="rapido-pesquisa">
+    <div class="center-block" style="text-align: -webkit-center;">
+        <?= Html::img('@web/res/logo-saramago.png',['height' => '75px', 'alt'=> 'Saramago']) ?>
+    </div>
     <?php $form = ActiveForm::begin([
         'action' => ['obra'],
         'method' => 'get',

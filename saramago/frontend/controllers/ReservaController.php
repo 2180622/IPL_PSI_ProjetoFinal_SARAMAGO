@@ -94,9 +94,8 @@ class ReservaController extends Controller
             $model->Leitor_id = $idDoLeitor->id;
             $model->Exemplar_id = $id;
 
-            var_dump($model->load(Yii::$app->request->post())); die();
-            if ($model->load(Yii::$app->request->post()) && $model->save() && $model->validate()) {
-                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> A reserva da obra "'.$model->exemplar->obra->titulo.'" foi adicionada com sucesso.');
+            if ($model->load(Yii::$app->request->post(), '') && $model->save() && $model->validate()) {
+                Yii::$app->session->setFlash('success', '<strong>Informação:</strong> Um pedido para a reserva da obra "'.$model->exemplar->obra->titulo.'" foi adicionado com sucesso.');
                 return $this->redirect(['obra-full', 'id' => $model->exemplar->obra->id]);
             }
 
@@ -215,7 +214,7 @@ class ReservaController extends Controller
             $postoTrabalhoAll = ArrayHelper::map(PostoTrabalho::find()->all(),'id','designacao',['enctype' => 'multipart/form-data']);
             $model->load(Yii::$app->request->post());
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['posto']);
             }
 
             return $this->render('postocreate', [

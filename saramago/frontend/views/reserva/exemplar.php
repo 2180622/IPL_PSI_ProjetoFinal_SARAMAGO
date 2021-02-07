@@ -9,10 +9,13 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Reservas de exemplares';
+$this->title = 'Reserva de exemplar';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="exemplar saramago-table fast-font">
+    <div class="center-block" style="text-align: -webkit-center;">
+        <?= Html::img('@web/res/logo-saramago.png',['height' => '75px', 'alt'=> 'Saramago']) ?>
+    </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
 

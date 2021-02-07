@@ -88,11 +88,11 @@ AppAsset::register($this);
          ],
         ],
         [
-            'label' => FAS::icon('book'). ' Reservas de exemplares', 'url'=>['/reserva/exemplar'],
+            'label' => FAS::icon('book'). ' Reserva de exemplar', 'url'=>['/reserva/exemplar'],
             'encode'=> false,
          ],
          [
-            'label' => FAS::icon('book-reader'). ' Reservas de postos', 'url'=>['/reserva/posto'],
+            'label' => FAS::icon('book-reader'). ' Reserva de posto de trabalho', 'url'=>['/reserva/posto'],
             'encode'=> false,
          ],
     ];
