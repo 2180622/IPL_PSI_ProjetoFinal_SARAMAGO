@@ -153,26 +153,25 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
     <div class="layout-minor-top fixed-top">
         <?=Html::a(Html::img('@web/res/logo-saramago.png', ['height'=>'30‰', 'alt'=>'SARAMAGO']), ''.Yii::$app->homeurl.'')?>
         <div class="rapido-saramago" id="rapido-saramago">
             <div class="tabbable tabs-below">
                 <div class="tab-content">
                     <div id="tab1" class="tab-pane active">
-                        <form class="form-inline"><input type="search" id="form-rapido" name="emprestimos" placeholder="Digite o código de barras ou o username..."><button type="submit" value="Submit">Submeter</button></form>
+                        <form class="form-inline" action="<?= Url::toRoute('cir/emprestimo')?>"><input type="search" id="form-rapido" name="leitor" placeholder="Digite o código de barras ou o username..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
                     <div id="tab2" class="tab-pane">
-                        <form class="form-inline"><input type="search" id="form-rapido" name="devolucao" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
+                        <form class="form-inline" action="<?= Url::toRoute('cir/devolucao')?>"><input type="text" id="form-rapido" name="exemplar" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
                     <div id="tab3" class="tab-pane">
-                        <form class="form-inline"><input type="search" id="form-rapido" name="renovar" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
+                        <form class="form-inline" action="<?= Url::toRoute('cir/renovacao', '')?>"><input type="text" id="form-rapido" name="exemplar" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
                     <div id="tab4" class="tab-pane">
-                        <form class="form-inline"><input type="search" id="form-rapido" name="pesquisarLeitores" placeholder="Digite o código de barras, numero, alias ou nome do leitor..."><button type="submit" value="Submit">Submeter</button></form>
+                        <form class="form-inline" action="<?= Url::toRoute('leitor')?>"><input type="search" id="form-rapido" name="leitor" placeholder="Digite o código de barras, numero, alias ou nome do leitor..."><button type="Submit" value="Submit">Submeter</button></form>
                     </div>
                     <div id="tab5" class="tab-pane">
-                        <form class="form-inline"><input type="search" id="form-rapido" name="pesquisarCatalogo" placeholder="Digite palavras para pesquisar no cátalogo..."><button type="submit" value="Submit">Submeter</button></form>
+                        <form class="form-inline" action="<?= Url::toRoute('cat')?>"><input type="search" id="form-rapido" name="pesquisarCatalogo" placeholder="Digite palavras para pesquisar no cátalogo..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
                 </div>
                 <ul class="nav nav-tabs">

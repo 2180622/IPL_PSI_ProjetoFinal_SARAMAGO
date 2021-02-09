@@ -42,7 +42,7 @@ class Exemplar extends \yii\db\ActiveRecord
     const ESTADO = [
         self::ESTADO_ARRUMACAO => 'Em Arrumação...',
         self::ESTADO_ESTANTE =>'Na Estante',
-        self::ESTADO_QUARENTENA,
+        self::ESTADO_QUARENTENA =>'Em Quarentena',
         self::ESTADO_PERDIDO =>'Perdido',
         self::ESTADO_RESERVADO=>'Reservado',
         self::ESTADO_EMPRESTADO =>'Emprestado',

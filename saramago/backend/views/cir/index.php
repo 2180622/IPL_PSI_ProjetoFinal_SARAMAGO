@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-4">
                 <h3>Transferências</h3>
-                 <a href="' . Url::to(['index']) . '">
+                 <a href="' . Url::to(['cir/transferencias']) . '">
                     <div class="card card-cir">
                         <div class="card-body"><h5>'. FAS::icon('exchange-alt')->size(FAS::SIZE_LARGE).' Transferências</h5></div>
                     </div>

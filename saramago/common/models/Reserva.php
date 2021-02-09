@@ -20,6 +20,10 @@ use Yii;
  */
 class Reserva extends \yii\db\ActiveRecord
 {
+    const ESTADO_RESERVADO = 'reservado';
+    const ESTADO_CANCELADO = 'cancelado';
+    const ESTADO_CONCLUIDO = 'concluido';
+
     /**
      * {@inheritdoc}
      */

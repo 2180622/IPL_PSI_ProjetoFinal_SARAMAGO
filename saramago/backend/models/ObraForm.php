@@ -254,15 +254,4 @@ class ObraForm extends Obra
                 return false;
             }
     }
-
-    /**
-     * @param $id
-     * @return Obra|null
-     */
-    public function findModel($id)
-    {
-        if (($model = Obra::findOne($id)) !== null) {
-            return $model;
-        }
-    }
 }

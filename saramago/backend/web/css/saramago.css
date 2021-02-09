@@ -722,6 +722,44 @@
 
 }
 
+.site-cir .grid-container{
+    display: grid;
+    grid-template-columns: 350px;
+    grid-template-areas:
+    'search nav'
+    'search table'
+    'search table';
+    grid-gap: 10px;
+}
+
+.site-cir .menu-search-saramago{
+    border: 1px solid #254E58;
+    height: min-content;
+    border-radius: 5px;
+    padding: 10px;
+}
+.site-cir .menu-info-saramago{
+    border: 1px solid #254E58;
+    height: min-content;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.site-cir .menu-nav-saramago{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding:5px;
+    background: #254E58;
+}
+
+.site-cir .menu-table-saramago{
+    border: 1px solid #254E58;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+
 /* endregion */
 
 /* region POSTOS DE TRABALHO */
