@@ -68,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'content'=> GridView::widget([
                             'dataProvider' => $dataProviderExemplar,
                             'filterModel' => $searchModelExemplar,
+                            'summary' => '',
                             'options' => ['style' => 'table-layout:fixed;'],
                             'columns' => [
                                 ['class' => 'yii\grid\ActionColumn',

@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = 'Encontrar obras';
 
         <nobr>
             <?= $form->field($searchModel, 'pesquisaGeral')->textInput(['placeholder' => 'O que procura?'])  ?>
-            <?= Html::submitButton(Yii::t('app', 'Pesquisar'), ['class' => 'btn btn-warning']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Pesquisar'), ['class' => 'btn btn-success button-saramago']) ?>
         </nobr>
 
     <?php ActiveForm::end(); ?>

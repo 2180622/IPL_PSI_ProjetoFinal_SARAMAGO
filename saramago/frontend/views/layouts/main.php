@@ -90,36 +90,47 @@ AppAsset::register($this);
     ];
     if (Yii::$app->user->isGuest) {
         //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => FAS::icon('user-circle') . ' Login', 'url' => ['/site/login'],
+                        'encode' => false];
     } else {
-        $menuItems[] = [
-            'label' => FAS::icon('user-circle') .' '. Yii::$app->user->identity->username,
-            'encode'=> false,
-            'items' => [
-                [
-                    'label'=> FAS::icon('sign-out-alt').' Logout',
-                    'url'=>['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post'],
-                    'encode'=> false,
-
-                ],
-                '<li class="divider"></li>',
-                '<li class="dropdown-header">Conta</li>',
-                [
-                    'label' => FAS::icon('user-cog').' Conta',
-                    'url' => ['/conta/password'],
-                    'encode'=> false,
+        $menuItems = [
+            [
+                'label' => FAS::icon('book'). ' Reserva de exemplar', 'url'=>['/reserva/exemplar'],
+                'encode'=> false,
+            ],
+            [
+                'label' => FAS::icon('book-reader'). ' Reserva de posto de trabalho', 'url'=>['/reserva/posto'],
+                'encode'=> false,
+            ],
+            
+            [
+                'label' => FAS::icon('search'). ' Pesquisar', 'url' => ['\index'],
+                'encode' => false,
+                'items' =>[
+                         ['label' =>'Obras', 'url' =>['/pesquisa/obra']],
+                         ['label' =>'Autores', 'url' =>['/pesquisa/autor']],
                 ],
             ],
             [
-            'label' => FAS::icon('book'). ' Reserva de exemplar', 'url'=>['/reserva/exemplar'],
-            'encode'=> false,
-         ],
-         [
-            'label' => FAS::icon('book-reader'). ' Reserva de posto de trabalho', 'url'=>['/reserva/posto'],
-            'encode'=> false,
-         ],
+                'label' => FAS::icon('user-circle') .' '. Yii::$app->user->identity->username,
+                'encode'=> false,
+                'items' => [
+                    [
+                        'label'=> FAS::icon('sign-out-alt').' Logout',
+                        'url'=>['/site/logout'],
+                        'linkOptions' => ['data-method' => 'post'],
+                        'encode'=> false,
 
+                    ],
+                    '<li class="divider"></li>',
+                    '<li class="dropdown-header">Conta</li>',
+                    [
+                        'label' => FAS::icon('user-cog').' Conta',
+                        'url' => ['/conta/password'],
+                        'encode'=> false,
+                    ],
+                ],
+            ],
         ];
     }
     echo Nav::widget([
