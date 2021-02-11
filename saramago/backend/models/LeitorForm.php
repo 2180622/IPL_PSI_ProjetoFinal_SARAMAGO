@@ -188,7 +188,7 @@ class LeitorForm extends Leitor
             $user->email = $this->email;
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();
-            $user->status = 9;
+            $user->status = 10;
 
             $leitor = new Leitor();
             $leitor->mail2 = $this->mail2;
