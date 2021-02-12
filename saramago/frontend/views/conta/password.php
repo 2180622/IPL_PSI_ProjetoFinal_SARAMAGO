@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = 'Conta';
     <div class="body-content">
     	<div class="center-block" style="text-align: -webkit-center;">
         	<?= Html::img('@web/res/logo-saramago.png',['height' => '75px', 'alt'=> 'Saramago']) ?>
+        	<h1><?= Html::encode($this->title) ?></h1>
     	</div>
 
     	<div class="col-lg-3"></div>
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = 'Conta';
 		    <?= $form->field($model, 'retypePassword')->passwordInput() ?>
 
 		    <div class="form-group">
-		        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+		        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success button-saramago']) ?>
 		    </div>
 		    <?php ActiveForm::end(); ?>
 

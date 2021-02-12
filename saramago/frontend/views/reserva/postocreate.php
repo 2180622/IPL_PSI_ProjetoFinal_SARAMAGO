@@ -11,8 +11,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="posto-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('posto/_form',
         ['model' => $model, 'postoTrabalhoAll' => $postoTrabalhoAll, 'idDoLeitor' => $idDoLeitor]); ?>
 

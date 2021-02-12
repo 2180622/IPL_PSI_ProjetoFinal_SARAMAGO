@@ -3,6 +3,10 @@ namespace api\modules\v1\controllers;
 
 use app\models\ObraForm;
 use common\models\Obra;
+use common\models\Materialav;
+use common\models\Pubperiodica;
+use common\models\Monografia;
+use common\models\Exemplar;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;
@@ -11,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
 use yii\web\HttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 /**
@@ -89,11 +94,32 @@ class CatController extends Controller
 
     public function actionObraDelete($id)
     {
-        if($obra = Obra::findOne($id))
-        {
-            $delete = $obra->delete();
+        if($obra = Obra::findOne($id)) {
+            $exemplares = Exemplar::find()->where(['Obra_id' => $id])->all();
+            if ($exemplares == null) {
+                if ($obra->tipoObra == "materialAv") {
+                    $materialav = Materialav::find()->where(['Obra_Id' => $id])->one();
+                    $materialav->delete();
 
-            return $delete;
+                    $delete = $obra->delete();
+
+                }
+                else if ($obra->tipoObra == "pubPeriodica") {
+                    $pubperiodica = Pubperiodica::find()->where(['Obra_Id' => $id])->one();
+                    $pubperiodica->delete();
+
+                    $delete = $obra->delete();
+                }
+                else {
+                    $monografia = Monografia::find()->where(['Obra_Id' => $id])->one();
+                    $monografia->delete();
+
+                    $delete = $obra->delete();
+                }
+
+                return $delete;
+            }
+            throw new ForbiddenHttpException("Esta obra contém exemplares associados e como tal não pode ser eliminada");
 
         }
         throw new HttpException('404', "Obra não encontrada.");
