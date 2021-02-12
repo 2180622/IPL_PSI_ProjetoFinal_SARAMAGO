@@ -2,11 +2,11 @@ package com.example.saramago.vistas.catalogo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +18,6 @@ import com.example.saramago.listeners.ObrasListener;
 import com.example.saramago.modelos.Obra;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
 import com.example.saramago.utils.ObrasJsonParser;
-import com.example.saramago.vistas.catalogo.AddObraActivity;
-import com.example.saramago.vistas.catalogo.DetalhesObraActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -90,6 +88,12 @@ public class ListaObrasActivity extends AppCompatActivity implements SwipeRefres
     @Override
     public void onRefreshDetalhes() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SingletonGestorBiblioteca.getInstance(getApplicationContext()).getAllObrasAPI(getApplicationContext());
     }
 
     //METODO PARA RETROCEDER A ACTIVITY

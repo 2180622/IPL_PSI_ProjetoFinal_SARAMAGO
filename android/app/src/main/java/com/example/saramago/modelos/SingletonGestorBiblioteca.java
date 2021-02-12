@@ -45,11 +45,12 @@ public class SingletonGestorBiblioteca {
     private static final String urlAPILeitoresCreate = "/v1/leitor/create";
     private static final String urlAPILeitoresEdit = "/v1/leitor/update";
     private static final String urlAPILeitoresDelete = "/v1/leitor/delete";
+    private static final String urlAPIObras = "/v1/cat/obra";
     private static final String urlAPIObrasCreate = "/v1/cat/obra/create";
-    private static final String urlAPIObrasEdit = "/v1/cat/obra/edit/";
+    private static final String urlAPIObrasEdit = "/v1/cat/obra/update/";
+    private static final String urlAPIObrasDelete = "/v1/cat/obra/delete";
     private static final String urlAPIUsers = "/v1/user";
     private static final String urlAPILogin = "/v1/auth/login";
-    private static final String urlAPIObras = "/v1/cat/obra";
     private static final String urlAPIConfig = "/v1/config";
 
     private ObrasListener obrasListener;
@@ -681,6 +682,29 @@ public class SingletonGestorBiblioteca {
                 return params;
             }
         };
+        volleyQueue.add(req);
+    }
+
+    public void removerObraAPI(final Obra obra, final Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        String api = sharedPreferences.getString(API, "");
+        String token = sharedPreferences.getString(TOKEN, "");
+        StringRequest req = new StringRequest(Request.Method.DELETE, api + urlAPIObrasDelete + '/' + obra.getId() +queryParamAuth + token, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onUpdateListaObrasBD(obra, REMOVER_BD);
+
+                if (obrasListener != null) {
+                    obrasListener.onRefreshDetalhes();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Esta obra contém exemplares associados e como tal não pode ser eliminada", Toast.LENGTH_SHORT).show();
+            }
+        });
         volleyQueue.add(req);
     }
 
