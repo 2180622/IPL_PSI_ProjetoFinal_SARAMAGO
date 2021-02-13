@@ -74,8 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="menu-table-saramago">
                 <?php Pjax::begin(); ?>
                 <?php
-                foreach($leitores as $leitor)
-                    if($leitor->user->status == 10){
                 echo GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchLeitor,
@@ -149,7 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                     ]);
-                }
+                //}
     ?>
 
     <?php
