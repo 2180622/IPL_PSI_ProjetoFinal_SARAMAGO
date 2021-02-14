@@ -615,6 +615,7 @@ class m201023_142905_init_rbac extends Migration
         $operadorCirculacao = $auth->createRole('operadorCirculacao');
         $auth->add($operadorCirculacao);
         $auth->addChild($operadorCirculacao, $acessoBackend);
+        $auth->addChild($operadorCirculacao, $acessoFrontend);
         $auth->addChild($operadorCirculacao, $acessoPostosDeTrabalho);
         $auth->addChild($operadorCirculacao, $acessoServicosReprograficos);
         $auth->addChild($operadorCirculacao, $acessoCirculacao);
@@ -643,6 +644,7 @@ class m201023_142905_init_rbac extends Migration
         $operadorCatalogacao = $auth->createRole('operadorCatalogacao');
         $auth->add($operadorCatalogacao);
         $auth->addChild($operadorCatalogacao, $acessoBackend);
+        $auth->addChild($operadorCatalogacao, $acessoFrontend);
         $auth->addChild($operadorCatalogacao, $acessoPostosDeTrabalho);
         $auth->addChild($operadorCatalogacao, $acessoServicosReprograficos);
         $auth->addChild($operadorCatalogacao, $acessoCirculacao);
@@ -685,6 +687,7 @@ class m201023_142905_init_rbac extends Migration
         $operadorChefe = $auth->createRole('operadorChefe');
         $auth->add($operadorChefe);
         $auth->addChild($operadorChefe, $acessoBackend);
+        $auth->addChild($operadorChefe, $acessoFrontend);
         $auth->addChild($operadorChefe, $acessoPostosDeTrabalho);
         $auth->addChild($operadorChefe, $acessoServicosReprograficos);
         $auth->addChild($operadorChefe, $acessoCirculacao);
