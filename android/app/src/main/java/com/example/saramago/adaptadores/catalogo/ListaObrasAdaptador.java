@@ -88,7 +88,15 @@ public class ListaObrasAdaptador extends BaseAdapter {
             SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
             String api = sharedPreferences.getString(API, "");
             tv_titulo_obra.setText(obra.getTitulo()+"");
-            tv_tipo_obra.setText(obra.getTipoObra()+"");
+            if (obra.getTipoObra().equals("pubPeriodica")) {
+                tv_tipo_obra.setText("Publicação periódica");
+            }
+            else if (obra.getTipoObra().equals("materialAv")) {
+                tv_tipo_obra.setText("Material audiovisual");
+            }
+            else {
+                tv_tipo_obra.setText("Monografia");
+            }
             Glide.with(context)
                     .load(api+"/img/"+obra.getImgCapa())
                     .placeholder(R.drawable.ic_undraw_books)

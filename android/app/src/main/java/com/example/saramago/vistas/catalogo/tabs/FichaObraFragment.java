@@ -20,6 +20,7 @@ import com.example.saramago.modelos.Obra;
 import com.example.saramago.modelos.SingletonGestorBiblioteca;
 import com.example.saramago.vistas.MenuMainActivity;
 import com.example.saramago.vistas.catalogo.EditObraActivity;
+import com.example.saramago.vistas.leitores.EditLeitorActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static com.example.saramago.vistas.MenuMainActivity.API;
@@ -63,6 +64,7 @@ public class FichaObraFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EditObraActivity.class);
+                intent.putExtra(EditLeitorActivity.ID, (int) id);
                 startActivity(intent);
             }
         });
@@ -78,7 +80,7 @@ public class FichaObraFragment extends Fragment {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         String api = sharedPreferences.getString(API, "");
         tv_titulo.setText(obra.getTitulo());
-        if (obra.getResumo() == null) {
+        if (obra.getResumo().equals("")) {
             tv_resumo.setText("...");
         }else{
             tv_resumo.setText(obra.getResumo());

@@ -22,6 +22,7 @@ import java.util.Date;
 
 public class EditObraActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
+    public static final String ID = "ID";
     private EditText et_titulo, et_resumo, et_editor, et_ano, et_descricao, et_local, et_edicao, et_assuntos, et_dataRegisto, et_cdu_id, et_colecao_id, et_preco;
     private Obra obra;
     private Spinner sp_tipoObra;
@@ -54,6 +55,9 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
         et_colecao_id = findViewById(R.id.et_fo_colecao_idEdit);
         et_preco = findViewById(R.id.et_fo_precoEdit);
         FloatingActionButton fabSave = findViewById(R.id.fabSave);
+
+        int id = getIntent().getIntExtra(ID, -1);
+        obra = SingletonGestorBiblioteca.getInstance(getApplicationContext()).getObra(id);
 
         if(obra != null){
             carregarConteudoObra();
@@ -119,7 +123,7 @@ public class EditObraActivity extends AppCompatActivity implements DatePickerDia
         et_local.setText(obra.getLocal());
         et_edicao.setText(obra.getEdicao());
         et_assuntos.setText(obra.getAssuntos());
-        et_preco.setText(obra.getPreco());
+        et_preco.setText(obra.getPreco()+"");
         et_cdu_id.setText(obra.getCdu_id()+"");
         et_colecao_id.setText(obra.getColecao_id()+"");
     }
