@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\LeitorRequisicaoSearch;
 use app\models\LeitorSearch;
 use app\models\LeitorUpdate;
 use common\models\Biblioteca;
@@ -108,11 +109,18 @@ class LeitorController extends Controller
 
     public function actionViewFull($id)
     {
-        if ((Yii::$app->user->can('acessoLeitores'))) {
+        if ((Yii::$app->user->can('acessoLeitores')))
+        {
             $this->layout='minor';
+
             if (($model = Leitor::findOne($id)) !== null) {
+
                 $user = User::findOne($model->user_id);
-                return $this->render('view-full', ['model' => $model, 'user' => $user]);
+
+                $searchModelEmp = new LeitorRequisicaoSearch();
+                $dataProviderEmp = $searchModelEmp->search(Yii::$app->request->queryParams);
+
+                return $this->render('view-full', ['model' => $model, 'user' => $user,'dataProviderEmp'=>$dataProviderEmp]);
             }
 
             throw new NotFoundHttpException('Leitor não encontrado.');

@@ -5,6 +5,7 @@ use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -38,8 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 '<p>Departamento: '.$model->funcionarios->departamento.'</p>';
             }
             echo '<p>Biblioteca: '.$model->biblioteca->nome.' ('.$model->biblioteca->codBiblioteca.')'.'</p>';
-            echo'<p>Data Registado: '.Yii::$app->formatter->asDatetime($model->dataRegisto).'</p>';
-            echo'<p>Data Atualizado: '.Yii::$app->formatter->asDatetime($model->dataAtualizado).'</p>';
+            echo '<p>Data Registado: '.Yii::$app->formatter->asDatetime($model->dataRegisto).'</p>';
+            echo '<p>Data Atualizado: '.Yii::$app->formatter->asDatetime($model->dataAtualizado).'</p>';
             ?>
 
         </div>
@@ -62,11 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
             echo Tabs::widget([
                 'items' => [
-                    [
-                        'label' => 'Requisitar',
-                        'content' => 'Anime...',
-                        'active' => true
-                    ],
                     [
                         'label' => 'Ficha do Leitor',
                         'content' => DetailView::widget([
@@ -126,8 +122,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'label' => 'Empréstimos '. Html::tag('span','0',['class'=>'badge badge-light']),
                         'encode'=> false,
-                        'content'=>'t',
-
+                        'active'=>true,
+                        'content'=> GridView::widget([
+                            'dataProvider' => $dataProviderEmp,
+                            'columns' => [
+                                'id',
+                                'dataEmprestimo',
+                                'entregaPrevista',
+                                'dataDevolucao',
+                            ]
+                        ]),
                     ],
                     [
                         'label' => 'Reservas '. Html::tag('span','0',['class'=>'badge badge-light']),
