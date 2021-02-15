@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $exemplar \common\models\Exemplar */
 
+use common\models\Reserva;
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
@@ -16,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-cir">
 
     <?php
+
+
         if($exemplar == null)
         {
             echo'<div class="alert alert-info config" role="alert" id="alert-saramago">
@@ -86,12 +89,16 @@ $this->params['breadcrumbs'][] = $this->title;
             #region Table
             echo '<div class="menu-table-saramago">';
 
-            $req = $exemplar->getRequisicaos()->where(['!=','dataDevolucao',null])->orderBy(['dataDevolucao' => SORT_DESC])->limit('1')->one();
-            $res = $exemplar->getReservas()->where(['dataFecho' => null])->orderBy(['dataReserva' => SORT_ASC])->limit('1')->one();
-            $leitor = $req->leitor;
-            $leitor_2 = $res->leitor;
+            $req = $exemplar->getRequisicaos()->orderBy(['dataDevolucao' => SORT_DESC])->limit('1')->one();
+            $res = $exemplar->getReservas()->where(['estadoReserva' => Reserva::ESTADO_RESERVADO])->orderBy(['dataReserva' => SORT_ASC])->limit('1')->one();
 
-            if($exemplar == 'SARAMAGO_EMP_RES')
+            $leitor = $req->leitor;
+
+            if($res != null)
+            {
+                $leitor_2 = $res->leitor;
+            }
+            if($estadoExemplar == 'SARAMAGO_EMP_RES')
             {
                 echo '<div class="alert alert-info config" role="alert"><strong>Informação:</strong> O exemplar submetido foi devolvido e possui uma reserva.</div>';
                 echo '<div class="row container-fluid">
@@ -144,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         </div>';
             }
-            elseif ($exemplar == 'SARAMAGO_EMP_TRA')
+            elseif ($estadoExemplar == 'SARAMAGO_EMP_TRA')
             {
                 echo '<div class="alert alert-info config" role="alert"><strong>Informação:</strong> O exemplar submetido foi devolvido e precisa de ser transferido para outra biblioteca.</div>';
                 echo '<div class="row container-fluid">
@@ -188,7 +195,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                       </div>';
             }
-            elseif ($exemplar == 'SARAMAGO_EMP_ARR')
+            elseif ($estadoExemplar == 'SARAMAGO_EMP_ARR')
             {
                 echo '<div class="alert alert-info config" role="alert"><strong>Informação:</strong> O exemplar submetido foi devolvido e encontra-se em arrumação.</div>';
                 echo '<div class="row container-fluid">
@@ -220,7 +227,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                       </div>';
             }
-            elseif ($exemplar == 'SARAMAGO_TRA_RES')
+            elseif ($estadoExemplar == 'SARAMAGO_TRA_RES')
             {
                 echo '<div class="alert alert-info config" role="alert"><strong>Informação:</strong> O exemplar submetido foi devolvido e possui uma reserva.</div>';
                 echo '<div class="row container-fluid">
@@ -252,11 +259,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                       </div>';
             }
-            elseif ($exemplar == 'SARAMAGO_TRA_ARR')
+            elseif ($estadoExemplar == 'SARAMAGO_TRA_ARR')
             {
                 echo '<div class="alert alert-info config" role="alert"><strong>Informação:</strong> O exemplar submetido foi devolvido e encontra-se em arrumação.</div>';
             }
-            elseif ($exemplar == 'SARAMAGO_TRA_TRA')
+            elseif ($estadoExemplar == 'SARAMAGO_TRA_TRA')
             {
                 echo '<div class="alert alert-info config" role="alert""><strong>Informação:</strong> O exemplar submetido precisa de ser transferido para outra biblioteca.</div>';
                 echo '<div class="row container-fluid">

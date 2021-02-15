@@ -187,9 +187,12 @@ class CirController extends Controller
     {
         if ((Yii::$app->user->can('acessoCirculacao')))
         {
+            $estadoExemplar = null;
+
             if(strlen($exemplar) >= '1')
             {
                 $exemplar = Exemplar::find()->select([])->where(['codBarras' => $exemplar])->one();
+
                 if($exemplar == null)
                 {
                     $exemplar = '404';
@@ -205,6 +208,8 @@ class CirController extends Controller
                         }
                         else{
 
+                            $estadoExemplar = $estado;
+
                             Yii::$app->session->setFlash('success', "<strong>Informação:</strong> O exemplar foi devolvido com sucesso.");
                         }
                     }
@@ -212,7 +217,7 @@ class CirController extends Controller
 
             $this->layout="minor";
 
-            return $this->render('devolucao/index',['exemplar'=>$exemplar]);
+            return $this->render('devolucao/index',['exemplar'=>$exemplar, 'estadoExemplar'=> $estadoExemplar]);
         }
         throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
