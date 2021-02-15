@@ -47,8 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo '<p>Tipo de Obra: Publicação Periódica</p>';
                 echo '<p> Volume: '.$model->pubperiodicas->volume.'</p>';
                 echo '<p> Série: '.$model->pubperiodicas->serie.'</p>';
-                echo '<p> Número: '.$model->pubperiodicas->duracao.'</p>';
-                echo '<p> ISNN: '.$model->pubperiodicas->ISNN.'</p>';
+                echo '<p> Número: '.$model->pubperiodicas->numero.'</p>';
+                echo '<p> ISNN: '.$model->pubperiodicas->ISSN.'</p>';
             }
 
             echo'<p>Ano: '.$model->ano.'</p><br>';
