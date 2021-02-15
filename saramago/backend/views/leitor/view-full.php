@@ -126,10 +126,31 @@ $this->params['breadcrumbs'][] = $this->title;
                         'content'=> GridView::widget([
                             'dataProvider' => $dataProviderEmp,
                             'columns' => [
-                                'id',
-                                'dataEmprestimo',
-                                'entregaPrevista',
-                                'dataDevolucao',
+                                ['class' => 'yii\grid\SerialColumn'],
+                                [
+                                    'label' => 'Data de Empréstimo',
+                                    'attribute' => 'dataEmprestimo',
+                                    'format' => 'html',
+                                    'value' =>  function ($model){
+                                                    return $model->dataEmprestimo;
+                                                }
+                                ],
+                                [
+                                    'label' => 'Entrega Prevista',
+                                    'attribute' => 'entregaPrevista',
+                                    'format' => 'html',
+                                    'value' =>  function ($model){
+                                        return $model->entregaPrevista;
+                                    }
+                                ],
+                                [
+                                    'label' => 'Data de Devolução',
+                                    'attribute' => 'dataDevolucao',
+                                    'format' => 'html',
+                                    'value' =>  function ($model){
+                                        return $model->dataDevolucao;
+                                    }
+                                ],
                             ]
                         ]),
                     ],

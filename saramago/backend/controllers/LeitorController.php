@@ -158,10 +158,10 @@ class LeitorController extends Controller
             {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
-            }elseif ($model->load(Yii::$app->request->post()) && $model->signup()) { // && $model->sendEmail()
+            }elseif ($model->load(Yii::$app->request->post()) && $id = $model->signup()) { // && $model->sendEmail()
                 Yii::$app->session->setFlash('success', "O Leitor foi adicionado com sucesso.");
 
-                return $this->redirect(['view-full', 'id' => $model->id]);
+                return $this->redirect(['view-full', 'id' => $id]);
             }
 
             return $this->renderAjax('create', [

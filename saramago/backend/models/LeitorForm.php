@@ -125,12 +125,13 @@ class LeitorForm extends Leitor
             ['codPostal', 'string', 'min' => 4, 'max' => 7],
             ['codPostal', 'match', 'pattern' => '/^[0-9]{4}|[0-9]{7}$/', 'message' => 'Formato inválido.'],
 
-            ['telemovel', 'trim'],
             ['telemovel', 'required'],
-            ['telemovel', 'integer'],
+            ['telemovel', 'string', 'min' => 9, 'max' => 9],
+            ['telemovel', 'match', 'pattern' => '/^[0-9]+$/', 'message' => 'Formato inválido.'],
 
             ['telefone', 'trim'],
-            ['telefone', 'integer'],
+            ['telefone', 'string', 'min' => 9, 'max' => 9],
+            ['telefone', 'match', 'pattern' => '/^[0-9]+$/', 'message' => 'Formato inválido.'],
 
             ['notaInterna', 'trim'],
             ['notaInterna', 'string', 'min' => 1, 'max' => 45],
@@ -188,6 +189,7 @@ class LeitorForm extends Leitor
             $user->email = $this->email;
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();
+            $user->status = 10;
 
             $leitor = new Leitor();
             $leitor->mail2 = $this->mail2;
