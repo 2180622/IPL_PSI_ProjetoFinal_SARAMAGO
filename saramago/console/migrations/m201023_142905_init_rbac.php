@@ -629,6 +629,7 @@ class m201023_142905_init_rbac extends Migration
         $auth->addChild($operadorCirculacao, $verExemplaresAtrasados);
         $auth->addChild($operadorCirculacao, $inserirRenovarEmprestimos);
         $auth->addChild($operadorCirculacao, $inserirRenovacao);
+        $auth->addChild($operadorCirculacao, $verLeitores);
         $auth->addChild($operadorCirculacao, $verDevolucoesDia);
         $auth->addChild($operadorCirculacao, $verReservaFilaEspera);
         $auth->addChild($operadorCirculacao, $cancelarReservaFilaEspera);

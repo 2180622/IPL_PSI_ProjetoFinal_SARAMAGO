@@ -165,20 +165,24 @@ class CirController extends Controller
 
     public function actionFecharSessao()
     {
-        $reciboEmprestimo = Config::find()->where(['like','key', "recibo_emprestimo"])->limit('1')->one();
-
-        $session = Yii::$app->session;
-
-        $req = $session->get('requisitados');
-
-        if($reciboEmprestimo->value == 1 && ($req != [] || $req != null))
+        if ((Yii::$app->user->can('acessoCirculacao')))
         {
-            //TODO RECIBOS -> via $req
+            $reciboEmprestimo = Config::find()->where(['like','key', "recibo_emprestimo"])->limit('1')->one();
+
+            $session = Yii::$app->session;
+
+            $req = $session->get('requisitados');
+
+            if($reciboEmprestimo->value == 1 && ($req != [] || $req != null))
+            {
+                //TODO RECIBOS -> via $req
+            }
+
+            $session->remove('requisitados');
+
+            return $this->redirect('emprestimo');
         }
-
-        $session->remove('requisitados');
-
-        return $this->redirect('emprestimo');
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');    
     }
 
     #endregion
@@ -281,14 +285,18 @@ class CirController extends Controller
      */
     public function actionPresencialCreate()
     {
-        $model = new ConsultaTReal();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ((Yii::$app->user->can('acessoCirculacao')))
         {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+            $model = new ConsultaTReal();
 
-        return $this->render('create', ['model' => $model]);
+            if ($model->load(Yii::$app->request->post()) && $model->save())
+            {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('create', ['model' => $model]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -299,9 +307,13 @@ class CirController extends Controller
      */
     public function actionPresencialView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModelPresencial($id),
-        ]);
+        if ((Yii::$app->user->can('acessoCirculacao')))
+        {
+            return $this->render('view', [
+                'model' => $this->findModelPresencial($id),
+            ]);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -313,13 +325,17 @@ class CirController extends Controller
      */
     public function actionPresencialUpdate($id)
     {
-        $model = $this->findModelPresencial($id);
+        if ((Yii::$app->user->can('acessoCirculacao')))
+        {
+            $model = $this->findModelPresencial($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', ['model' => $model]);
         }
-
-        return $this->render('update', ['model' => $model]);
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
@@ -331,9 +347,13 @@ class CirController extends Controller
      */
     public function actionPresencialDelete($id)
     {
-        $this->findModelPresencial($id)->delete();
+        if ((Yii::$app->user->can('acessoCirculacao')))
+        {
+            $this->findModelPresencial($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        throw new ForbiddenHttpException ('Não tem permissões para aceder à página');
     }
 
     /**
