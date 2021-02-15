@@ -1,4 +1,5 @@
-<?php namespace backend\tests\functional;
+<?php
+namespace backend\tests\functional;
 use backend\tests\FunctionalTester;
 
 class LeitorCreateCest
@@ -13,7 +14,9 @@ class LeitorCreateCest
         $I->click('#leitores');
         $I->amOnPage('/leitor');
 
-        $I->click('#modalButtonCreate');
+        /*$I->click('#w0');
+        $I->amOnPage('/leitor');*/
+        $I->click('#modalButtonAlunoCreate');
     }
 
     // tests

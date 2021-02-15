@@ -49,7 +49,7 @@
         android:ems="10"
         android:hint="API"
         android:inputType="textPersonName"
-        android:text="http://10.0.2.2/IPL_PSI_ProjetoFinal2/saramago/api/web"
+        android:text="http://10.0.2.2/IPL_PSI_ProjetoFinalSaramago/saramago/api/web"
         android:textSize="14sp" />
 
     <CheckBox
