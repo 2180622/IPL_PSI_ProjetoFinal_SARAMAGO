@@ -284,28 +284,9 @@ public class SingletonGestorBiblioteca {
     }
 
     public void editarObraBD(Obra obra) {
-        Obra ob = getObra(obra.getId());
-        if (ob != null) {
-            if (saramagoBD.editarObraBD(obra)) {
-                ob.setImgCapa(obra.getImgCapa());
-                ob.setTitulo(obra.getTitulo());
-                ob.setResumo(obra.getResumo());
-                ob.setEditor(obra.getEditor());
-                ob.setAno(obra.getAno());
-                ob.setTipoObra(obra.getTipoObra());
-                ob.setDescricao(obra.getDescricao());
-                ob.setLocal(obra.getLocal());
-                ob.setEdicao(obra.getEdicao());
-                ob.setAssuntos(obra.getAssuntos());
-                ob.setPreco(obra.getPreco());
-                ob.setDataRegisto(obra.getDataRegisto());
-                ob.setDataAtualizado(obra.getDataAtualizado());
-                ob.setCdu_id(obra.getCdu_id());
-                ob.setColecao_id(obra.getColecao_id());
-            }
-
-        }
-
+       Obra obraAux = getObra(obra.getId());
+       if(obraAux != null)
+           saramagoBD.editarObraBD(obraAux);
     }
 
     //endregion

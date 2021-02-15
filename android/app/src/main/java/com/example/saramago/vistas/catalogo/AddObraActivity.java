@@ -60,9 +60,11 @@ public class AddObraActivity extends AppCompatActivity {
                     obra = new Obra(0, "noimage", Integer.parseInt(et_ano.getText().toString()), Integer.parseInt(et_preco.getText().toString()), Integer.parseInt(et_cdu_id.getText().toString()), Integer.parseInt(et_colecao_id.getText().toString()), et_titulo.getText().toString(),
                             et_resumo.getText().toString(), et_editor.getText().toString(), sp_tipoObra.getSelectedItem().toString(), et_descricao.getText().toString(),
                             et_local.getText().toString(), et_edicao.getText().toString(), et_assuntos.getText().toString(), "", "");
-                    System.out.println("---> fez obra:" + obra);
+                    if (obra.getColecao_id() <= 0) {
+                        et_colecao_id.setError("Id Coleção não pode ser menor que 1");
+                        return;
+                    }
                     SingletonGestorBiblioteca.getInstance(getApplicationContext()).adicionarObraAPI(obra, getApplicationContext());
-                    System.out.println("---> saiu addAPI");
                     Intent intent = new Intent(AddObraActivity.this, ListaObrasActivity.class);
                     startActivity(intent);
                     finish();
