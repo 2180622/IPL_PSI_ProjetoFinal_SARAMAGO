@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </a>
                 <br>
-                <a href="' . Url::to(['cir/presencial#go']) . '">
+                <a href="' . Url::to(['index']) . '">
                     <div class="card card-cir">
                         <div class="card-body"><h5>'. FAS::icon('hourglass-half')->size(FAS::SIZE_LARGE).' Consultas Presenciais</h5></div>
                     </div>
