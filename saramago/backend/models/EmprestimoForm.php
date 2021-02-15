@@ -40,9 +40,9 @@ class EmprestimoForm extends Model
             if($this->calcQuantItens($this->Leitor_id) == true)
             {
                 //Se os exemplares não tiverem os seguintes critérios
-                if($exemplar->estado != Exemplar::ESTADO_EMPRESTADO || $exemplar->estado != Exemplar::ESTADO_QUARENTENA ||
-                    $exemplar->estado != Exemplar::ESTADO_PERDIDO || $exemplar->estado != Exemplar::ESTADO_TRANSFERENCIA ||
-                    $exemplar->estado != Exemplar::ESTADO_ND || $exemplar->estatutoExemplar->id == 4)
+                if($exemplar->estado == Exemplar::ESTADO_EMPRESTADO || $exemplar->estado == Exemplar::ESTADO_QUARENTENA ||
+                    $exemplar->estado == Exemplar::ESTADO_PERDIDO || $exemplar->estado == Exemplar::ESTADO_TRANSFERENCIA ||
+                    $exemplar->estado == Exemplar::ESTADO_ND || $exemplar->estatutoExemplar->id == 4)
                 {
                     return 'SARAMAGO400';
                 }

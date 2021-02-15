@@ -1,9 +1,3 @@
-<h3 align="center">
-    <a href="https://github.com/2180622/IPL_PSI_ProjetoFinal_SARAMAGO">
-        <img src="https://github.com/2180622/IPL_PSI_ProjetoFinal_SARAMAGO/blob/master/Documentacao/Logos/background@2x.png?raw=true" width="500" />
-    </a>
-</h3>
-
 # SARAMAGO - Sistema de Gestão de Bibliotecas Académicas
 ### Projeto da UC: Projeto em Sistemas de Informação (PSI)
 

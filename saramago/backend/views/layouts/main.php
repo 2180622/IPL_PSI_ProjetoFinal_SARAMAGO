@@ -130,13 +130,8 @@ AppAsset::register($this);
                 ],
                 '<li class="divider"></li>',
                 [
-                    'label' => FAS::icon('question-circle').' Ajuda',
-                    'url' => ['#'],
-                    'encode'=> false,
-                ],
-                [
                     'label' => FAS::icon('info-circle').' Sobre',
-                    'url' => ['about'],
+                    'url' => ['site/about'],
                     'encode'=> false,
                 ],
             ]
