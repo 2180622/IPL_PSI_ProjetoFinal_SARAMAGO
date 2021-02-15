@@ -25,19 +25,23 @@ $this->title = 'SARAMAGO';
                     <div id="tab3" class="tab-pane">
                         <form class="form-inline" action="<?= Url::toRoute('cir/renovacao', '')?>"><input type="text" id="form-rapido" name="exemplar" placeholder="Digite o código de barras do exemplar..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
+                    <!--
                     <div id="tab4" class="tab-pane">
                         <form class="form-inline" action="<?= Url::toRoute('leitor')?>"><input type="search" id="form-rapido" name="leitor" placeholder="Digite o código de barras, numero, alias ou nome do leitor..."><button type="Submit" value="Submit">Submeter</button></form>
                     </div>
                     <div id="tab5" class="tab-pane">
                         <form class="form-inline" action="<?= Url::toRoute('cat')?>"><input type="search" id="form-rapido" name="pesquisarCatalogo" placeholder="Digite palavras para pesquisar no cátalogo..."><button type="submit" value="Submit">Submeter</button></form>
                     </div>
+                    -->
                 </div>
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab1" data-toggle="tab">Empréstimos</a></li>
                     <li><a href="#tab2" data-toggle="tab">Devolução</a></li>
                     <li><a href="#tab3" data-toggle="tab">Renovar</a></li>
+                    <!--
                     <li><a href="#tab4" data-toggle="tab">Pesquisar Leitores</a></li>
                     <li><a href="#tab5" data-toggle="tab">Pesquisar no Catálogo</a></li>
+                    -->
                 </ul>
             </div>
         </div>
@@ -58,7 +62,8 @@ $this->title = 'SARAMAGO';
                     </div>
                 </a>
                 <br>
-                <a href="'.Url::to(['/sr/']).'">
+                <!--<a href="'.Url::to(['/sr/']).'">-->
+                <a>
                     <div class="card card-dash-saramago">
                         <div class="card-body">
                             <h3 class="card-title">Serviços Reprográficos</h3>
