@@ -95,7 +95,7 @@ class LeitorForm extends Leitor
 
             ['numero', 'trim'],
             ['numero', 'integer'],
-            ['numero', 'unique', 'targetClass' => '\common\models\Aluno', 'message' => 'Número já se encontra em uso.'],
+            ['numero', 'default', 'value'=> 0],
 
             ['nif', 'required'],
             ['nif', 'string', 'min' => 9, 'max' => 9],
