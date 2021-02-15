@@ -35,15 +35,6 @@ class LeitorController extends Controller
 
     public function actionIndex()
     {
-        /*$leitor = Leitor::find()
-            ->select('*')
-            ->join("left join","user as u","u.id = user_id")
-            ->where("status = 10")
-            ->asArray()
-            ->all();
-
-        return $leitor;*/
-
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand(
             "SELECT leitor.id, user.username, user.auth_key, 
@@ -63,16 +54,6 @@ class LeitorController extends Controller
 
     public function actionView($id)
     {
-        /*$leitor = Leitor::find()
-            ->select('*')
-            ->join("left join","user as user","user.id = user_id")
-            ->where("status = 10")
-            ->where('leitor.id ='.$id)
-            ->asArray()
-            ->all();
-
-        return $leitor;*/
-
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand(
             'SELECT leitor.id, user.username, user.auth_key, 

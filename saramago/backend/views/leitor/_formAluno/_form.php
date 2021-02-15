@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nif', ['enableAjaxValidation' => true])->textInput(['maxlength' => true, 'pattern'=>'[0-9]{9}']) ?>
 
-    <?= $form->field($model, 'docId')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'docId')->textInput(['maxlength' => true])->textInput(['maxlength' => true, 'pattern'=>'[0-9]{9}']) ?>
 
     <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
 
@@ -41,9 +41,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'codPostal', ['enableAjaxValidation' => true])->textInput(['maxlength' => true, 'pattern'=>'[0-9]{4}|[0-9]{7}'])->hint('Formato: "1234" ou "1234567') ?>
 
-    <?= $form->field($model, 'telemovel')->textInput(['maxlength' => 15]) ?>
+    <?= $form->field($model, 'telemovel')->textInput(['maxlength' => 9]) ?>
 
-    <?= $form->field($model, 'telefone')->textInput(['maxlength' => 15]) ?>
+    <?= $form->field($model, 'telefone')->textInput(['maxlength' => 9]) ?>
 
     <?= $form->field($model, 'email',['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 

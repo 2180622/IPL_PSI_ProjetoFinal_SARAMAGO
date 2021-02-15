@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nif', ['enableAjaxValidation' => true])->textInput(['maxlength' => true, 'pattern'=>'[0-9]{9}']) ?>
 
-    <?= $form->field($model, 'docId')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'docId')->textInput(['maxlength' => true])->textInput(['maxlength' => true, 'pattern'=>'[0-9]{9}']) ?>
 
     <?= $form->field($model, 'dataNasc')->textInput()->widget(DatePicker::className(), ['options' => ['class' => 'form-control']])?>
 

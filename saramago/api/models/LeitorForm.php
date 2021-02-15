@@ -155,10 +155,9 @@ class LeitorForm extends Leitor
         if($this->validate()) {
             $auth = Yii::$app->authManager;
             $user = new User();
-            $user->username = $this->username; //FIXME
+            $user->username = $this->username;
             $user->email = $this->email;
             $user->generateAuthKey();
-            $user->status = 10;
 
             $leitor = new Leitor();
             $leitor->mail2 = $this->mail2;

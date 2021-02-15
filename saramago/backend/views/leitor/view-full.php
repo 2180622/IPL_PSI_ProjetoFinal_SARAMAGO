@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo '<p>Curso: '.$model->alunos->curso->nome.' ('.$model->alunos->curso->CodCurso.')'.'</p>';
                 }
             }
-            elseif ($model->tipoLeitor->tipo == 'docente' || $leitor->tipoLeitor->tipo == 'funcionário')
+            elseif ($model->tipoLeitor->tipo == 'docente' || $model->tipoLeitor->tipo == 'funcionário')
             {
                 '<p>Departamento: '.$model->funcionarios->departamento.'</p>';
             }

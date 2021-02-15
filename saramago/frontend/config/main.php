@@ -50,6 +50,28 @@ return [
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ],
+        'urlManagerBackend' => [
+            // Disable r= routes
+            'enablePrettyUrl' => true,
+            // Disable index.php
+            'showScriptName' => false,
+            'rules' => [
+                '<controller:\w+>/<action:\w+>/<id:\w+>' => '<controller>/<action>',
+                //catalogação
+                'cat'=>'cat/index',
+                //circulação
+                //leitores
+                'leitor'=>'leitor/index',
+                'leitor/create'=>'leitor/create',
+                'leitor/<id:[a-zA-Z0-9_]+>'=>'leitor/view-full',
+                //FIXME 'leitor/<username:[a-zA-Z0-9_.]+>'=>'leitor/view-full'
+                //postos de trabalho
+                'pto'=>'pto/index',
+                //index site
+                'about'=>'site/about',
+                //serviços reprográficos
+            ],
+        ],
     ],
     'params' => $params,
 
